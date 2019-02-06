@@ -2,6 +2,9 @@ function start()
 {
 	var cvs = document.getElementById("gameScreen");
 
+	//ship parameters
+	var speed = 5;
+
 	//load ship sprite
 	var img1 = new Image();
 	img1.src = "img/ship.png";
@@ -81,8 +84,8 @@ function start()
 
 		else if(e.keyCode == '38')		//up
 		{
-			x += Math.sin(Math.PI/180 * (angle % 360)) * 5;
-			y -= Math.cos(Math.PI/180 * (angle % 360)) * 5;
+			x += Math.sin(Math.PI/180 * (angle % 360)) * speed;
+			y -= Math.cos(Math.PI/180 * (angle % 360)) * speed;
 		}
 
 		else if(e.keyCode == '39')		//right
