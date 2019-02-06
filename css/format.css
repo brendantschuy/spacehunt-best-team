@@ -1,0 +1,11 @@
+body
+{
+    position: fixed; 
+    overflow-y: scroll;
+    width: 100%;
+}
+
+#pic.rotate30
+{
+	-webkit-transform: rotate(30deg);
+}

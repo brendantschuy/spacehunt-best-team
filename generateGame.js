@@ -8,8 +8,10 @@ function start()
 
 
 	//set size of canvas
-	cvs.height = 480;
-	cvs.width = 640;
+	cvs.height = 1280;
+	cvs.width = 1280;
+
+	var angle = 0;
 
 	//the context of canvas is basically what's rendering it
 	var ctx = cvs.getContext('2d');
@@ -18,13 +20,49 @@ function start()
 	ctx.fillStyle = "black";	
 	ctx.fillRect(0, 0, 640, 480);
 
+	//draws grid corresponding with CPs
+	function createGrid()
+	{
+		ctx.beginPath();
+		ctx.strokeStyle = "white";
+		for(w = 0; w < cvs.width; w += 128)
+		{
+			for(h = 0; h < cvs.height; h += 128)
+			{
+				ctx.moveTo(w, 0);
+				ctx.lineTo(w, cvs.height);
+				ctx.stroke();
+				ctx.moveTo(0, h);
+				ctx.lineTo(cvs.width, h);
+				ctx.stroke();
+			}
+		}
+		ctx.closePath();
+	}
+
+	createGrid();
+
 	//actually does the drawing
 	function draw()
 	{
-  		ctx.drawImage(img1, x, y);		//centered at x, y
+		ctx.beginPath();
+
 
     	ctx.fillStyle = "RGBA(0, 0, 0, 0.4)";
     	ctx.fillRect(0, 0, cvs.width, cvs.height);
+
+    	createGrid();
+
+    	ctx.save();
+
+       	imgW = document.getElementById("pic").width;
+    	imgH = document.getElementById("pic").height;
+    	ctx.translate(x, y);
+    	ctx.rotate(angle * Math.PI / 180);
+    	ctx.drawImage(img1, -imgW/2, -imgH/2);		//centered at x, y
+
+    	ctx.restore();
+
 
     	//go to next frame (I think this is at 60 fps max(?))
     	requestAnimationFrame(draw);
@@ -38,22 +76,23 @@ function start()
 	{
 		if(e.keyCode == '37')		//left arrow key
 		{
-			x -= 5;
+			angle -= 30;
 		}
 
-		else if(e.keyCode == '38')		//down
+		else if(e.keyCode == '38')		//up
 		{
-			y -= 5;
+			x += Math.sin(Math.PI/180 * (angle % 360)) * 5;
+			y -= Math.cos(Math.PI/180 * (angle % 360)) * 5;
 		}
 
 		else if(e.keyCode == '39')		//right
 		{
-			x += 5;
+			angle += 30;
 		}
 
-		else if(e.keyCode == '40')		//up
+		else if(e.keyCode == '40')		//down
 		{
-			y += 5;
+
 		}
 	}
 
