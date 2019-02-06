@@ -4,6 +4,7 @@ function start()
 
 	//ship parameters
 	var speed = 5;
+	var energy = 1000;
 
 	//load ship sprite
 	var img1 = new Image();
@@ -60,6 +61,7 @@ function start()
     	ctx.fillText("angle = " + angle, 10, 10);
     	ctx.fillText("x = " + x.toFixed(1) + " y = " + y.toFixed(1), 10, 30);
     	ctx.fillText("current CP = " + cpx + ", " + cpy + " (x, y)", 10, 50);
+    	ctx.fillText("energy = " + energy, 10, 70);
 
     	createGrid();
 
@@ -94,6 +96,7 @@ function start()
 			x += Math.sin(Math.PI/180 * (angle % 360)) * speed;
 			y -= Math.cos(Math.PI/180 * (angle % 360)) * speed;
 			updatecp();
+			energy -= 10;
 		}
 
 		else if(e.keyCode == '39')		//right
