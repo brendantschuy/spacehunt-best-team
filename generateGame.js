@@ -19,6 +19,8 @@ function start()
 	//the context of canvas is basically what's rendering it
 	var ctx = cvs.getContext('2d');
 	var x = cvs.width/2, y = cvs.height/2;
+	var cpx, cpy;
+	updatecp();
 
 	ctx.fillStyle = "black";	
 	ctx.fillRect(0, 0, 640, 480);
@@ -57,6 +59,7 @@ function start()
     	ctx.fillStyle = "#FFFFFF";
     	ctx.fillText("angle = " + angle, 10, 10);
     	ctx.fillText("x = " + x.toFixed(1) + " y = " + y.toFixed(1), 10, 30);
+    	ctx.fillText("current CP = " + cpx + ", " + cpy + " (x, y)", 10, 50);
 
     	createGrid();
 
@@ -90,6 +93,7 @@ function start()
 		{
 			x += Math.sin(Math.PI/180 * (angle % 360)) * speed;
 			y -= Math.cos(Math.PI/180 * (angle % 360)) * speed;
+			updatecp();
 		}
 
 		else if(e.keyCode == '39')		//right
@@ -101,6 +105,12 @@ function start()
 		{
 
 		}
+	}
+
+	function updatecp()
+	{
+		cpx = Math.floor(x / 128) + 1;
+		cpy = Math.floor(y / 128) + 1;
 	}
 
 	//kicks it all off
