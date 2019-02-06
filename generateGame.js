@@ -54,6 +54,10 @@ function start()
     	ctx.fillStyle = "RGBA(0, 0, 0, 0.4)";
     	ctx.fillRect(0, 0, cvs.width, cvs.height);
 
+    	ctx.fillStyle = "#FFFFFF";
+    	ctx.fillText("angle = " + angle, 10, 10);
+    	ctx.fillText("x = " + x.toFixed(1) + " y = " + y.toFixed(1), 10, 30);
+
     	createGrid();
 
     	ctx.save();
@@ -79,7 +83,7 @@ function start()
 	{
 		if(e.keyCode == '37')		//left arrow key
 		{
-			angle -= 30;
+			angle = (angle - 30) % 360;
 		}
 
 		else if(e.keyCode == '38')		//up
@@ -90,7 +94,7 @@ function start()
 
 		else if(e.keyCode == '39')		//right
 		{
-			angle += 30;
+			angle = (angle + 30) % 360;
 		}
 
 		else if(e.keyCode == '40')		//down
