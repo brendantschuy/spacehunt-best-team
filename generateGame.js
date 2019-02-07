@@ -2,20 +2,22 @@ function start()
 {
 	var cvs = document.getElementById("gameScreen");
 
+	//set size of canvas
+	cvs.height = 1280;
+	cvs.width = 1280;
+
+
 	//ship parameters
 	var speed = 5;
 	var energy = 1000;
+	var angle = 0;
+	var distanceToTravel = 0;
+
 
 	//load ship sprite
 	var img1 = new Image();
 	img1.src = "img/ship.png";
 
-
-	//set size of canvas
-	cvs.height = 1280;
-	cvs.width = 1280;
-
-	var angle = 0;
 
 	//the context of canvas is basically what's rendering it
 	var ctx = cvs.getContext('2d');
@@ -25,6 +27,7 @@ function start()
 
 	ctx.fillStyle = "black";	
 	ctx.fillRect(0, 0, 640, 480);
+
 
 	//draws grid corresponding with CPs
 	function createGrid()
@@ -65,6 +68,7 @@ function start()
     	ctx.fillText("x = " + x.toFixed(1) + " y = " + y.toFixed(1), 10, 30);
     	ctx.fillText("current CP = " + cpx + ", " + cpy + " (x, y)", 10, 50);
     	ctx.fillText("energy = " + energy, 10, 70);
+    	ctx.fillText("distance to travel = " + distanceToTravel, 10, 90);
 
     	//creates white grid everywhere
     	createGrid();
@@ -92,6 +96,11 @@ function start()
 
 	function getInput(e)
 	{
+		if(e.keyCode == '32')		//spacebar
+		{
+			commitMovement(distanceToTravel);
+		}
+
 		if(e.keyCode == '37')		//left arrow key
 		{
 			angle = (angle - 30) % 360;
@@ -103,10 +112,7 @@ function start()
 
 		else if(e.keyCode == '38')		//up
 		{
-			x += Math.sin(Math.PI/180 * (angle % 360)) * speed;
-			y -= Math.cos(Math.PI/180 * (angle % 360)) * speed;
-			updatecp();
-			energy -= 10;
+			distanceToTravel += 10;
 		}
 
 		else if(e.keyCode == '39')		//right
@@ -116,7 +122,7 @@ function start()
 
 		else if(e.keyCode == '40')		//down
 		{
-
+			distanceToTravel -= 10;
 		}
 	}
 
@@ -125,6 +131,15 @@ function start()
 	{
 		cpx = Math.floor(x / 128) + 1;
 		cpy = Math.floor(y / 128) + 1;
+	}
+
+	//actually moves ship
+	function commitMovement(distanceToTravel)
+	{
+		x += Math.sin(Math.PI/180 * (angle % 360)) * distanceToTravel;
+		y -= Math.cos(Math.PI/180 * (angle % 360)) * distanceToTravel;
+		updatecp();
+		energy -= 5 * distanceToTravel;
 	}
 
 	//kicks it all off
