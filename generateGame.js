@@ -95,6 +95,10 @@ function start()
 		if(e.keyCode == '37')		//left arrow key
 		{
 			angle = (angle - 30) % 360;
+			if(angle < 0)
+			{
+				angle = 360 - angle;	//angle should never be negative
+			}
 		}
 
 		else if(e.keyCode == '38')		//up
