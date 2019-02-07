@@ -1,17 +1,24 @@
 function start()
 {
+	//==============================
+	//-----Constant Parameters------
+	const gridSize = 128;		//edit to change grid/CP resolution
+	const angleIncrement = 90;		//edit to change what angles we can turn
+	//==============================
+
+	//canvas creation
 	var cvs = document.getElementById("gameScreen");
 
 	//set size of canvas
-	cvs.height = 1280;
-	cvs.width = 1280;
-
+	cvs.height = 5 * gridSize;
+	cvs.width = 5 * gridSize;
 
 	//ship parameters
-	var speed = 5;
+	var speed = gridSize;
 	var energy = 1000;
 	var angle = 0;
-	var distanceToTravel = 0;
+	var distanceToTravel = 0; //distance ship will travel when hit spacebar
+	var energyEfficiency = 1; //decrease if more efficient
 
 
 	//load ship sprite
@@ -21,7 +28,10 @@ function start()
 
 	//the context of canvas is basically what's rendering it
 	var ctx = cvs.getContext('2d');
-	var x = cvs.width/2, y = cvs.height/2;
+	imgW = document.getElementById("pic").width;
+    imgH = document.getElementById("pic").height;
+	var x = 2.5 * gridSize;
+	var y = 2.5 * gridSize;
 	var cpx, cpy;
 	updatecp();
 
@@ -34,9 +44,9 @@ function start()
 	{
 		ctx.beginPath();	//reduces lag
 		ctx.strokeStyle = "white";
-		for(w = 0; w < cvs.width; w += 128)
+		for(w = 0; w < cvs.width; w += gridSize)
 		{
-			for(h = 0; h < cvs.height; h += 128)
+			for(h = 0; h < cvs.height; h += gridSize)
 			{
 				//draws line every 128 px in either direction
 				ctx.moveTo(w, 0);
@@ -67,7 +77,7 @@ function start()
     	ctx.fillText("angle = " + angle, 10, 10);
     	ctx.fillText("x = " + x.toFixed(1) + " y = " + y.toFixed(1), 10, 30);
     	ctx.fillText("current CP = " + cpx + ", " + cpy + " (x, y)", 10, 50);
-    	ctx.fillText("energy = " + energy, 10, 70);
+    	ctx.fillText("energy = " + energy.toFixed(1), 10, 70);
     	ctx.fillText("distance to travel = " + distanceToTravel, 10, 90);
 
     	//creates white grid everywhere
@@ -76,8 +86,7 @@ function start()
     	//to enable rotation save current ctx
     	ctx.save();
 
-       	imgW = document.getElementById("pic").width;
-    	imgH = document.getElementById("pic").height;
+
     	ctx.translate(x, y);						//place center of rotation at current center of ship
     	ctx.rotate(angle * Math.PI / 180);			//rotate the entire ctx/drawing object
     	ctx.drawImage(img1, -imgW/2, -imgH/2);		//centered at x, y
@@ -103,7 +112,7 @@ function start()
 
 		if(e.keyCode == '37')		//left arrow key
 		{
-			angle = (angle - 90) % 360;
+			angle = (angle - angleIncrement) % 360;
 			if(angle < 0)
 			{
 				angle = 360 + angle;	//angle should never be negative
@@ -112,25 +121,29 @@ function start()
 
 		else if(e.keyCode == '38')		//up
 		{
-			distanceToTravel += 10;
+			distanceToTravel += speed;
 		}
 
 		else if(e.keyCode == '39')		//right
 		{
-			angle = (angle + 90) % 360;
+			angle = (angle + angleIncrement) % 360;
 		}
 
 		else if(e.keyCode == '40')		//down
 		{
-			distanceToTravel -= 10;
+			distanceToTravel -= speed;
+			if(distanceToTravel < 0)
+			{
+				distanceToTravel = 0;
+			}
 		}
 	}
 
 	//obstacles etc would just correspond with some CP
 	function updatecp()
 	{
-		cpx = Math.floor(x / 128) + 1;
-		cpy = Math.floor(y / 128) + 1;
+		cpx = Math.floor(x / gridSize) + 1;
+		cpy = Math.floor(y / gridSize) + 1;
 	}
 
 	//actually moves ship
@@ -139,7 +152,7 @@ function start()
 		x += Math.sin(Math.PI/180 * (angle % 360)) * distanceToTravel;
 		y -= Math.cos(Math.PI/180 * (angle % 360)) * distanceToTravel;
 		updatecp();
-		energy -= 5 * distanceToTravel;
+		energy -= energyEfficiency * 0.1 * distanceToTravel;
 	}
 
 	//kicks it all off
