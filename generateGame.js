@@ -29,12 +29,13 @@ function start()
 	//draws grid corresponding with CPs
 	function createGrid()
 	{
-		ctx.beginPath();
+		ctx.beginPath();	//reduces lag
 		ctx.strokeStyle = "white";
 		for(w = 0; w < cvs.width; w += 128)
 		{
 			for(h = 0; h < cvs.height; h += 128)
 			{
+				//draws line every 128 px in either direction
 				ctx.moveTo(w, 0);
 				ctx.lineTo(w, cvs.height);
 				ctx.stroke();
@@ -51,28 +52,33 @@ function start()
 	//actually does the drawing
 	function draw()
 	{
+		//helps reduce lag
 		ctx.beginPath();
 
-
+		//creates backdrop (opacity = 0.4 so it is see-through)
     	ctx.fillStyle = "RGBA(0, 0, 0, 0.4)";
     	ctx.fillRect(0, 0, cvs.width, cvs.height);
 
+    	//writes numbers/info to GUI
     	ctx.fillStyle = "#FFFFFF";
     	ctx.fillText("angle = " + angle, 10, 10);
     	ctx.fillText("x = " + x.toFixed(1) + " y = " + y.toFixed(1), 10, 30);
     	ctx.fillText("current CP = " + cpx + ", " + cpy + " (x, y)", 10, 50);
     	ctx.fillText("energy = " + energy, 10, 70);
 
+    	//creates white grid everywhere
     	createGrid();
 
+    	//to enable rotation save current ctx
     	ctx.save();
 
        	imgW = document.getElementById("pic").width;
     	imgH = document.getElementById("pic").height;
-    	ctx.translate(x, y);
-    	ctx.rotate(angle * Math.PI / 180);
+    	ctx.translate(x, y);						//place center of rotation at current center of ship
+    	ctx.rotate(angle * Math.PI / 180);			//rotate the entire ctx/drawing object
     	ctx.drawImage(img1, -imgW/2, -imgH/2);		//centered at x, y
 
+    	//go back to original ctx
     	ctx.restore();
 
 
@@ -110,6 +116,7 @@ function start()
 		}
 	}
 
+	//obstacles etc would just correspond with some CP
 	function updatecp()
 	{
 		cpx = Math.floor(x / 128) + 1;
