@@ -97,7 +97,7 @@ function start()
 			angle = (angle - 30) % 360;
 			if(angle < 0)
 			{
-				angle = 360 - angle;	//angle should never be negative
+				angle = 360 + angle;	//angle should never be negative
 			}
 		}
 
