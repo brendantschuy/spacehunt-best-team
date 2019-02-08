@@ -12,6 +12,4 @@ class Obstacle
 		this.sprite = new Image();
 		this.sprite.src = "img/rock.png";
 	}
-
-	static 
 }
