@@ -147,10 +147,14 @@ function start()
 		
 		target.setTarget(ship);
 		ctx.beginPath();
+		ctx.moveTo(ship.abs_x, ship.abs_y);
+		ctx.lineTo(target.x, target.y);
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
 		ctx.arc(target.x, target.y, 10, 0, 2 * Math.PI);
 		ctx.closePath();
 		ctx.stroke();
-		
 	}
 
 	//kicks it all off
