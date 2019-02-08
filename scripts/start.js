@@ -63,8 +63,12 @@ function start()
 	    ctx.fillText("angle = " + ship.angle, 10, 10);
 	    ctx.fillText("x = " + ship.x.toFixed(1) + " y = " + ship.y.toFixed(1), 10, 30);
 	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 50);
-	    ctx.fillText("energy = " + ship.energy.toFixed(1), 10, 70);
-	    ctx.fillText("distance to travel = " + ship.distanceToTravel, 10, 90);
+	    ctx.fillStyle = "#00FF00";
+	    ctx.fillText("energy = " + ship.energy.toFixed(1) + " / " + ship.maxEnergy.toFixed(1), 10, 70);
+	    ctx.fillStyle = "#FF0000";
+	    ctx.fillText("supplies = " + ship.supplies.toFixed(1) + " / " + ship.originalSupplies.toFixed(1), 10, 90);
+	    ctx.fillStyle = "#FFFFFF";
+	    ctx.fillText("distance to travel = " + ship.distanceToTravel, 10, 110);
 
 	    //creates white grid everywhere
 	    createGrid();
@@ -141,4 +145,5 @@ function start()
 
 	//kicks it all off
 	draw();
+
 }

@@ -8,10 +8,18 @@ class Ship 	//class names capitalized per js convention
 	constructor()
 	{
 		this.speed = GRID_SIZE;
+		
+		//can be improved probably		
+		this.maxEnergy = 1000;
 		this.energy = 1000;
+
+		//also can be improved probably
+		this.originalSupplies = 1000
+		this.supplies = 1000;
+
 		this.angle = 0;
-		this.distanceToTravel = 0;
-		this.energyEfficiency = 0;
+		this.distanceToTravel = 1;
+		this.energyEfficiency = 10;
 		this.abs_x = 2.5 * GRID_SIZE;		//position on screen
 		this.abs_y = 2.5 * GRID_SIZE;		//position on screen
 		this.x = 1279;						//position on map
@@ -44,7 +52,13 @@ class Ship 	//class names capitalized per js convention
 	{
 		this.x += Math.sin(Math.PI/180 * (this.angle % 360)) * this.distanceToTravel;
 		this.y -= Math.cos(Math.PI/180 * (this.angle % 360)) * this.distanceToTravel;
-		this.energy -= this.energyEfficiency * 0.1 * this.distanceToTravel;
+		
+		//Temporary fix to test the checkEnergy function
+		//this.energy -= (this.energyEfficiency * this.distanceToTravel);
+		this.energy -= 10;
+		this.supplies -= (this.supplies *.02);
+		this.checkEnergy();
+		
 		this.checkBoundary();
 		this.updatecp();
 	}
@@ -76,7 +90,21 @@ class Ship 	//class names capitalized per js convention
 			this.distanceToTravel = 0;
 		}
 	}
-
+	checkEnergy()
+	{
+		if(this.energy == 0){ 
+			alert("You ran out of energy! Game over.");
+			location = location;
+ 
+		} 
+	}
+	//work in progress
+	checkSupplies(){
+		if(this.supplies <= (this.originalSupplies *.02)){
+			alert("You depleted your supplies! Game over.");
+			location = location;
+		}
+	}
 
 }
 
