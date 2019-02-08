@@ -19,7 +19,7 @@ class Ship 	//class names capitalized per js convention
 		this.cpx = 10;						//celestial position
 		this.cpy = 10;						//celestial position
 		this.sprite = new Image();
-		this.sprite.src = "img/ship.png";
+		this.sprite.src = "img/ship1.png";
 	}
 
 	//obstacles etc would just correspond with some CP
