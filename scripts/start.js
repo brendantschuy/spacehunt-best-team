@@ -52,10 +52,7 @@ function start()
 	function draw()
 	{
 	    var ctx = document.getElementById("gameScreen").getContext('2d');
-	    //var img1 = document.getElementById("pic");
-	    //var rockPic = document.getElementById("rock");
-	    var imgW = 88;//img1.width;
-	    var imgH = 65;//img1.height;
+
 	    //helps reduce lag
 	    ctx.beginPath();
 
@@ -140,14 +137,7 @@ function start()
 
 	function confirmDraw(x, y)
 	{
-		if(x > (ship.x - GRID_SIZE * 2.5) && (x < ship.x + GRID_SIZE * 2.5) && (y > ship.y - GRID_SIZE * 2.5) && (y < ship.y + GRID_SIZE * 2.5))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return(x > (ship.x - GRID_SIZE * 2.5) && (x < ship.x + GRID_SIZE * 2.5) && (y > ship.y - GRID_SIZE * 2.5) && (y < ship.y + GRID_SIZE * 2.5));
 	}
 
 	//draws target (spot where ship will end up)
