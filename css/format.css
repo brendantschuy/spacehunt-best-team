@@ -20,3 +20,11 @@ body
 {
 	width: 20%;
 }
+
+
+#gameScreen
+{
+	border: 3px;
+	border-style: ridge;
+	border-color: #A9A9A9;
+}
