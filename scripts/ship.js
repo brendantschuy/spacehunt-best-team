@@ -19,7 +19,7 @@ class Ship 	//class names capitalized per js convention
 		this.supplies = 1000;
 
 		this.angle = 0;
-		this.distanceToTravel = 1;
+		this.distanceToTravel = 0;
 		this.energyEfficiency = 10;
 		this.abs_x = 2.5 * GRID_SIZE;		//position on screen
 		this.abs_y = 2.5 * GRID_SIZE;		//position on screen
