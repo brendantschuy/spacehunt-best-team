@@ -4,6 +4,10 @@
 //------------------Constant Parameters-----------------------
 const GRID_SIZE = 128;		//edit to change grid/CP resolution
 const ANGLE_INCREMENT = 90;		//edit to change what angles we can turn
-const GAME_SCREEN_WIDTH = GRID_SIZE * 5;		//dimensions of game screen
-const GAME_SCREEN_HEIGHT = GRID_SIZE * 5;		//dimensions of game screen
+const MAP_WIDTH = 5;				//how many squares across is map?
+const MAP_HEIGHT = 5;				//how many squares tall is map?
+const GAME_SCREEN_WIDTH = GRID_SIZE * MAP_WIDTH;		//dimensions of game screen
+const GAME_SCREEN_HEIGHT = GRID_SIZE * MAP_HEIGHT;		//dimensions of game screen
+const SHIP_WIDTH = 88;		//dimensions of image
+const SHIP_HEIGHT = 65;		//dimensions of image
 //============================================================

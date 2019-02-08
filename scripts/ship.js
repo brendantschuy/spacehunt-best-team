@@ -4,6 +4,7 @@
 
 class Ship 	//class names capitalized per js convention
 {
+	//currently, CPX = X and CPY = Y but that can change if angles allowed are lower		
 	constructor()
 	{
 		this.speed = GRID_SIZE;
@@ -11,10 +12,12 @@ class Ship 	//class names capitalized per js convention
 		this.angle = 0;
 		this.distanceToTravel = 0;
 		this.energyEfficiency = 0;
-		this.x = 2.5 * GRID_SIZE;
-		this.y = 2.5 * GRID_SIZE;
-		this.cpx = 0;
-		this.cpy = 0;
+		this.abs_x = 2.5 * GRID_SIZE;		//position on screen
+		this.abs_y = 2.5 * GRID_SIZE;		//position on screen
+		this.x = 1279;						//position on map
+		this.y = 1279;						//position on map
+		this.cpx = 10;						//celestial position
+		this.cpy = 10;						//celestial position
 		this.sprite = new Image();
 		this.sprite.src = "img/ship.png";
 	}
@@ -26,13 +29,24 @@ class Ship 	//class names capitalized per js convention
 		this.cpy = Math.floor(this.y / GRID_SIZE) + 1;
 	}
 
+	//is out of bounds? teleports somewhere random if so
+	checkBoundary()
+	{
+		if(this.cpy >= 20 || this.cpy <= 0 || this.cpx >= 20 || this.cpy <= 0)
+		{
+			this.x = Math.floor(Math.random() * 2200) + GRID_SIZE;
+			this.y = Math.floor(Math.random() * 2200) + GRID_SIZE;
+		}
+	}
+
 	//actually moves ship
-	commitMovement(		)
+	commitMovement()
 	{
 		this.x += Math.sin(Math.PI/180 * (this.angle % 360)) * this.distanceToTravel;
 		this.y -= Math.cos(Math.PI/180 * (this.angle % 360)) * this.distanceToTravel;
-		this.updatecp();
 		this.energy -= this.energyEfficiency * 0.1 * this.distanceToTravel;
+		this.checkBoundary();
+		this.updatecp();
 	}
 }
 

@@ -11,6 +11,12 @@ function start()
 	//create ship
 	this.ship = new Ship();
 
+	this.aRock = new Obstacle(1150, 1150);
+	this.bRock = new Obstacle(1400, 1400);
+	this.cRock = new Obstacle(800, 800);
+
+	this.obstacles = new Array(aRock, bRock, cRock);
+
 	ship.updatecp();
 
 	//this section handles user input
@@ -19,9 +25,10 @@ function start()
 	function draw()
 	{
 	    var ctx = document.getElementById("gameScreen").getContext('2d');
-	    var img1 = document.getElementById("pic");
-	    var imgW = img1.width;
-	    var imgH = img1.height;
+	    //var img1 = document.getElementById("pic");
+	    //var rockPic = document.getElementById("rock");
+	    var imgW = 88;//img1.width;
+	    var imgH = 65;//img1.height;
 	    //helps reduce lag
 	    ctx.beginPath();
 
@@ -44,9 +51,21 @@ function start()
 	    ctx.save();
 
 
-	    ctx.translate(ship.x, ship.y);						//place center of rotation at current center of ship
-	    ctx.rotate(ship.angle * Math.PI / 180);			//rotate the entire ctx/drawing object
-	    ctx.drawImage(img1, -imgW/2, -imgH/2);		//centered at x, y
+	    //draws ship
+	    ctx.translate(ship.abs_x, ship.abs_y);				//place center of rotation at current center of ship
+
+	    //draw obstacles
+	    obstacles.forEach(function (rock)
+	    {
+	        if(confirmDraw(rock.x, rock.y))
+	    	{
+	    		ctx.drawImage(aRock.sprite, rock.x - ship.x, rock.y - ship.y);
+	    	}
+	    });
+
+	    //rotate if ship isn't facing upward
+	    ctx.rotate(ship.angle * Math.PI / 180);		//rotate the entire ctx/drawing object
+	    ctx.drawImage(ship.sprite, -SHIP_WIDTH/2, -SHIP_HEIGHT/2);		//centered at x, y
 
 	    //go back to original ctx
 	    ctx.restore();
@@ -91,6 +110,18 @@ function start()
 			{
 				ship.distanceToTravel = 0;
 			}
+		}
+	}
+
+	function confirmDraw(x, y)
+	{
+		if(x > (ship.x - GRID_SIZE * 2.5) && (x < ship.x + GRID_SIZE * 2.5) && (y > ship.y - GRID_SIZE * 2.5) && (y < ship.y + GRID_SIZE * 2.5))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 

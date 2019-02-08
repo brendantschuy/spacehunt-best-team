@@ -9,8 +9,8 @@ function createCanvas()
 	var ctx = cvs.getContext('2d');
 
 	//set size of canvas
-	cvs.height = 5 * GRID_SIZE;
-	cvs.width = 5 * GRID_SIZE;
+	cvs.height = MAP_HEIGHT * GRID_SIZE;
+	cvs.width = MAP_WIDTH * GRID_SIZE;
 
 	ctx.fillStyle = "black";	
 	ctx.fillRect(0, 0, 640, 480);
