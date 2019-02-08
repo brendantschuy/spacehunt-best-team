@@ -43,6 +43,10 @@ function start()
 		{
 			ship.commitMovement();
 		});
+	document.getElementById("devMode").addEventListener("click", function()
+		{
+			ship.toggleDevMode();
+		});
 
 	function draw()
 	{

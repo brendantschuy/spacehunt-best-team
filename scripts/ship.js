@@ -9,6 +9,7 @@ class Ship 	//class names capitalized per js convention
 	{
 		this.speed = GRID_SIZE;
 		
+		this.dev = 0; //tag for toggling developer options like never dying
 		//can be improved probably		
 		this.maxEnergy = 1000;
 		this.energy = 1000;
@@ -92,20 +93,27 @@ class Ship 	//class names capitalized per js convention
 	}
 	checkEnergy()
 	{
-		if(this.energy == 0){ 
-			alert("You ran out of energy! Game over.");
-			location = location;
+		if(this.dev == 0){
+			if(this.energy == 0){ 
+				alert("You ran out of energy! Game over.");
+				location = location;
  
-		} 
+			} 
+		}
 	}
 	//work in progress
 	checkSupplies(){
-		if(this.supplies <= (this.originalSupplies *.02)){
-			alert("You depleted your supplies! Game over.");
-			location = location;
+		if(this.dev == 0){
+			if(this.supplies <= (this.originalSupplies *.02)){
+				alert("You depleted your supplies! Game over.");
+				location = location;
+			}
 		}
 	}
-
+	
+	toggleDevMode(){
+		this.dev = !(this.dev);
+	}
 }
 
 
