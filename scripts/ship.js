@@ -1,4 +1,4 @@
-//ship.js
+//this.js
 
 //contains ship class definition and functions
 
@@ -48,6 +48,36 @@ class Ship 	//class names capitalized per js convention
 		this.checkBoundary();
 		this.updatecp();
 	}
+
+	rotateLeft()
+	{
+		this.angle = (this.angle - ANGLE_INCREMENT) % 360;
+		if(this.angle < 0)
+		{
+			this.angle = 360 + this.angle;	//angle should never be negative
+		}
+	}
+
+	rotateRight()
+	{
+		this.angle = (this.angle + ANGLE_INCREMENT) % 360;
+	}
+
+	increaseDistance()
+	{
+		this.distanceToTravel += this.speed;
+	}
+
+	decreaseDistance()
+	{
+		this.distanceToTravel -= this.speed;
+		if(this.distanceToTravel < 0)
+		{
+			this.distanceToTravel = 0;
+		}
+	}
+
+
 }
 
 

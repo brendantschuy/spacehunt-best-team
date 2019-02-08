@@ -22,6 +22,13 @@ function start()
 	//this section handles user input
 	document.onkeydown = getInput;
 
+	//be able to use buttons too
+	document.getElementById("leftBtn").addEventListener("click", ship.rotateLeft());
+	document.getElementById("rightBtn").addEventListener("click", ship.rotateRight());
+	document.getElementById("upBtn").addEventListener("click", ship.increaseDistance());
+	document.getElementById("downBtn").addEventListener("click", ship.decreaseDistance());
+	document.getElementById("moveBtn").addEventListener("click", ship.commitMovement());
+
 	function draw()
 	{
 	    var ctx = document.getElementById("gameScreen").getContext('2d');
@@ -86,30 +93,22 @@ function start()
 
 		if(e.keyCode == '37')		//left arrow key
 		{
-			ship.angle = (ship.angle - ANGLE_INCREMENT) % 360;
-			if(ship.angle < 0)
-			{
-				ship.angle = 360 + ship.angle;	//angle should never be negative
-			}
+			ship.rotateLeft();
 		}
 
 		else if(e.keyCode == '38')		//up
 		{
-			ship.distanceToTravel += ship.speed;
+			ship.increaseDistance();
 		}
 
 		else if(e.keyCode == '39')		//right
 		{
-			ship.angle = (ship.angle + ANGLE_INCREMENT) % 360;
+			ship.rotateRight();
 		}
 
 		else if(e.keyCode == '40')		//down
 		{
-			ship.distanceToTravel -= ship.speed;
-			if(ship.distanceToTravel < 0)
-			{
-				ship.distanceToTravel = 0;
-			}
+			ship.decreaseDistance();
 		}
 	}
 

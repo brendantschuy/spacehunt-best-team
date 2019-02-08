@@ -5,7 +5,28 @@ body
     width: 100%;
 }
 
-#pic.rotate30
+.ctrls
 {
-	-webkit-transform: rotate(30deg);
+	display:table-cell;
+	vertical-align: middle;
+}
+
+#container
+{
+	display:table;
+}
+#leftSide, #rightSide
+{
+	display:inline-block;
+	float:left;
+}
+
+#leftSide
+{
+	width: 80%;
+}
+
+#rightSide
+{
+	width: 20%;
 }
