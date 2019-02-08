@@ -94,7 +94,7 @@ class Ship 	//class names capitalized per js convention
 	checkEnergy()
 	{
 		if(this.dev == 0){
-			if(this.energy == 0){ 
+			if(this.energy <= 0){ 
 				alert("You ran out of energy! Game over.");
 				location = location;
  
