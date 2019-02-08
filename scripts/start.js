@@ -10,6 +10,7 @@ function start()
 
 	//create ship
 	this.ship = new Ship();
+	this.target = new Target();
 
 	this.aRock = new Obstacle(1150, 1150);
 	this.bRock = new Obstacle(1400, 1400);
@@ -80,7 +81,7 @@ function start()
 	    //to enable rotation save current ctx
 	    ctx.save();
 
-
+		drawTarget();
 	    //draws ship
 	    ctx.translate(ship.abs_x, ship.abs_y);				//place center of rotation at current center of ship
 
@@ -92,6 +93,8 @@ function start()
 	    		ctx.drawImage(aRock.sprite, rock.x - ship.x, rock.y - ship.y);
 	    	}
 	    });
+
+	    
 
 	    //rotate if ship isn't facing upward
 	    ctx.rotate(ship.angle * Math.PI / 180);		//rotate the entire ctx/drawing object
@@ -145,6 +148,19 @@ function start()
 		{
 			return false;
 		}
+	}
+
+	//draws target (spot where ship will end up)
+	function drawTarget()
+	{
+		ctx.strokeStyle="red";
+		
+		target.setTarget(ship);
+		ctx.beginPath();
+		ctx.arc(target.x, target.y, 10, 0, 2 * Math.PI);
+		ctx.closePath();
+		ctx.stroke();
+		
 	}
 
 	//kicks it all off
