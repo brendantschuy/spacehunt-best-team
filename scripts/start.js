@@ -23,11 +23,26 @@ function start()
 	document.onkeydown = getInput;
 
 	//be able to use buttons too
-	document.getElementById("leftBtn").addEventListener("click", ship.rotateLeft());
-	document.getElementById("rightBtn").addEventListener("click", ship.rotateRight());
-	document.getElementById("upBtn").addEventListener("click", ship.increaseDistance());
-	document.getElementById("downBtn").addEventListener("click", ship.decreaseDistance());
-	document.getElementById("moveBtn").addEventListener("click", ship.commitMovement());
+	document.getElementById("leftBtn").addEventListener("click", function()
+		{
+			ship.rotateLeft();
+		});
+	document.getElementById("rightBtn").addEventListener("click", function()
+		{
+			ship.rotateRight();
+		});
+	document.getElementById("upBtn").addEventListener("click", function()
+		{
+			ship.increaseDistance();
+		});
+	document.getElementById("downBtn").addEventListener("click", function()
+		{
+			ship.decreaseDistance();
+		});
+	document.getElementById("moveBtn").addEventListener("click", function()
+		{
+			ship.commitMovement();
+		});
 
 	function draw()
 	{

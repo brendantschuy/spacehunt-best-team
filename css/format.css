@@ -5,16 +5,6 @@ body
     width: 100%;
 }
 
-.ctrls
-{
-	display:table-cell;
-	vertical-align: middle;
-}
-
-#container
-{
-	display:table;
-}
 #leftSide, #rightSide
 {
 	display:inline-block;
