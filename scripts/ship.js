@@ -16,7 +16,7 @@ class Ship 	//class names capitalized per js convention
 
 		//also can be improved probably
 		this.originalSupplies = 1000
-		this.supplies = 100;
+		this.supplies = 1000;
 
 		this.angle = 0;
 		this.distanceToTravel = 0;
