@@ -104,6 +104,7 @@ function start()
 	    //go to next frame (I think this is at 60 fps max(?))
 	    requestAnimationFrame(draw);
 
+		
 	    //check if rocket hits an obstacle after move. just experimental. far from perfect.
 	    hitObstacle();		
 
