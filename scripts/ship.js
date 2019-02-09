@@ -16,7 +16,7 @@ class Ship 	//class names capitalized per js convention
 
 		//also can be improved probably
 		this.originalSupplies = 1000
-		this.supplies = 1000;
+		this.supplies = 100;
 
 		this.angle = 0;
 		this.distanceToTravel = 0;
@@ -57,8 +57,9 @@ class Ship 	//class names capitalized per js convention
 		//Temporary fix to test the checkEnergy function
 		//this.energy -= (this.energyEfficiency * this.distanceToTravel);
 		this.energy -= 10;
-		this.supplies -= (this.supplies *.02);
+		this.supplies -= (this.originalSupplies *.02);
 		this.checkEnergy();
+		this.checkSupplies();
 		
 		this.checkBoundary();
 		this.updatecp();
@@ -104,7 +105,7 @@ class Ship 	//class names capitalized per js convention
 	//work in progress
 	checkSupplies(){
 		if(this.dev == 0){
-			if(this.supplies <= (this.originalSupplies *.02)){
+			if(this.supplies < (this.originalSupplies *.02)){
 				alert("You depleted your supplies! Game over.");
 				location = location;
 			}
