@@ -12,9 +12,9 @@ function start()
 	this.ship = new Ship();
 	this.target = new Target();
 
-	this.aRock = new Obstacle(1150, 1150);
-	this.bRock = new Obstacle(1400, 1400);
-	this.cRock = new Obstacle(800, 800);
+	this.aRock = new Obstacle(1150, 1150, 9, 9);
+	this.bRock = new Obstacle(1400, 1400, 11, 11);
+	this.cRock = new Obstacle(800, 800, 6, 6);
 
 	this.obstacles = new Array(aRock, bRock, cRock);
 
@@ -90,19 +90,22 @@ function start()
 	    		ctx.drawImage(aRock.sprite, rock.x - ship.x, rock.y - ship.y);
 	    	}
 	    });
-
-	    
+  
 
 	    //rotate if ship isn't facing upward
 	    ctx.rotate(ship.angle * Math.PI / 180);		//rotate the entire ctx/drawing object
 	    ctx.drawImage(ship.sprite, -SHIP_WIDTH/2, -SHIP_HEIGHT/2);		//centered at x, y
 
+	    	    
 	    //go back to original ctx
 	    ctx.restore();
 
 
 	    //go to next frame (I think this is at 60 fps max(?))
 	    requestAnimationFrame(draw);
+
+	    //check if rocket hits an obstacle after move. just experimental. far from perfect.
+	    hitObstacle();		
 
 	}
 
@@ -156,6 +159,18 @@ function start()
 		ctx.closePath();
 		ctx.stroke();
 	}
+	
+	//work in progress.
+	function hitObstacle()
+	{
+		for(i = 0; i < this.obstacles.length; i++){
+			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy)){
+				alert("You hit an asteroid! Game over!");
+				location = location;
+			}
+		}
+	}
+
 
 	//kicks it all off
 	draw();
