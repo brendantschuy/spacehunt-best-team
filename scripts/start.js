@@ -126,7 +126,8 @@ function start()
 		
 	    //check if rocket hits an obstacle after move. just experimental. far from perfect.
 	    hitObstacle();
-	    getPotion();		
+	    getPotion();
+	    win();		
 
 	}
 
@@ -211,7 +212,12 @@ function start()
 		}
 		
 	}
-
+	function win(){
+		if((this.ship.cpx == this.recipe.cpx) && (this.ship.cpy == this.recipe.cpy)){
+			alert("You found the recipe! Congratulations! You win!");
+			location = location;
+		}
+	}
 	//kicks it all off
 	draw();
 
