@@ -19,9 +19,10 @@ function start()
 	this.obstacles = new Array(aRock, bRock, cRock);
 
 	//test energy potion
-	this.potion = new EnergyPotion(1150, 1400, 9, 11);
+	this.potion = new EnergyPotion(1150, 1400, 9, 11, 200);
 
-
+	//test recipe
+	this.recipe = new Recipe(1400, 1150, 11, 9);
 	ship.updatecp();
 
 	//this section handles user input
@@ -98,6 +99,9 @@ function start()
 	    //draw 1 potion
 	    if(confirmDraw(this.potion.x, this.potion.y)){ ctx.drawImage(potion.sprite, potion.x - ship.x, potion.y - ship.y); }
 
+	    //draw recipe
+	    if(confirmDraw(this.recipe.x, this.recipe.y)){ ctx.drawImage(recipe.sprite, recipe.x - ship.x, recipe.y - ship.y); }
+
 	    //draw potion if array of items?
 	    //potion.forEach(function (p)
 	    //{
@@ -106,6 +110,7 @@ function start()
 	    //		ctx.drawImage(potion.sprite, p.x - ship.x, p.y - ship.y);
 	    //	}
 	    //});
+	    
 	    //rotate if ship isn't facing upward
 	    ctx.rotate(ship.angle * Math.PI / 180);		//rotate the entire ctx/drawing object
 	    ctx.drawImage(ship.sprite, -SHIP_WIDTH/2, -SHIP_HEIGHT/2);		//centered at x, y
@@ -187,7 +192,7 @@ function start()
 		}
 	}
 	
-	//experimental.
+	//experimental
 	function getPotion()
 	{
 		//if array (not tested / working yet)
@@ -195,7 +200,7 @@ function start()
 		//	if((this.ship.cpx == this.potionArray[i].cpx) && (this.ship.cpy == this.potionArray[i].cpy)){
 		
 		if((this.ship.cpx == this.potion.cpx) && (this.ship.cpy == this.potion.cpy)){
-			this.ship.energy += 200;
+			this.ship.energy += this.potion.hp;
 			if(this.ship.energy > this.ship.maxEnergy){
 				this.ship.energy = this.ship.maxEnergy;
 			}
