@@ -54,6 +54,7 @@ function start()
 			ship.toggleDevMode();
 		});
 
+	//this function goes off several times per second
 	function draw()
 	{
 	    var ctx = document.getElementById("gameScreen").getContext('2d');
@@ -160,9 +161,11 @@ function start()
 		}
 	}
 
+	//only draws things if they're in the vicinity of the ship
 	function confirmDraw(x, y)
 	{
-		return(x > (ship.x - GRID_SIZE * 2.5) && (x < ship.x + GRID_SIZE * 2.5) && (y > ship.y - GRID_SIZE * 2.5) && (y < ship.y + GRID_SIZE * 2.5));
+		return(x > (ship.x - GRID_SIZE * 2.5) && (x < ship.x + GRID_SIZE * 2.5) && 
+			(y > ship.y - GRID_SIZE * 2.5) && (y < ship.y + GRID_SIZE * 2.5));
 	}
 
 	//draws target (spot where ship will end up)
@@ -212,6 +215,7 @@ function start()
 		}
 		
 	}
+	
 	function win(){
 		if((this.ship.cpx == this.recipe.cpx) && (this.ship.cpy == this.recipe.cpy)){
 			alert("You found the recipe! Congratulations! You win!");
