@@ -18,6 +18,10 @@ function start()
 
 	this.obstacles = new Array(aRock, bRock, cRock);
 
+	//test energy potion
+	this.potion = new EnergyPotion(1150, 1400, 9, 11);
+
+
 	ship.updatecp();
 
 	//this section handles user input
@@ -91,7 +95,17 @@ function start()
 	    	}
 	    });
   
+	    //draw 1 potion
+	    if(confirmDraw(this.potion.x, this.potion.y)){ ctx.drawImage(potion.sprite, potion.x - ship.x, potion.y - ship.y); }
 
+	    //draw potion if array of items?
+	    //potion.forEach(function (p)
+	    //{
+	    //	if(confirmDraw(p.x, p.y))
+	    //	{
+	    //		ctx.drawImage(potion.sprite, p.x - ship.x, p.y - ship.y);
+	    //	}
+	    //});
 	    //rotate if ship isn't facing upward
 	    ctx.rotate(ship.angle * Math.PI / 180);		//rotate the entire ctx/drawing object
 	    ctx.drawImage(ship.sprite, -SHIP_WIDTH/2, -SHIP_HEIGHT/2);		//centered at x, y
@@ -106,7 +120,8 @@ function start()
 
 		
 	    //check if rocket hits an obstacle after move. just experimental. far from perfect.
-	    hitObstacle();		
+	    hitObstacle();
+	    getPotion();		
 
 	}
 
@@ -171,7 +186,26 @@ function start()
 			}
 		}
 	}
-
+	
+	//experimental.
+	function getPotion()
+	{
+		//if array (not tested / working yet)
+		//for(i = 0; i < this.potionArray.length; i++){
+		//	if((this.ship.cpx == this.potionArray[i].cpx) && (this.ship.cpy == this.potionArray[i].cpy)){
+		
+		if((this.ship.cpx == this.potion.cpx) && (this.ship.cpy == this.potion.cpy)){
+			this.ship.energy += 200;
+			if(this.ship.energy > this.ship.maxEnergy){
+				this.ship.energy = this.ship.maxEnergy;
+			}
+			delete potion.x;
+			delete potion.y;
+			delete potion.cpx;
+			delete potion.cpy;
+		}
+		
+	}
 
 	//kicks it all off
 	draw();
