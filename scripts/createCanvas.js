@@ -15,7 +15,7 @@ function createCanvas()
 	ctx.fillStyle = "black";	
 	ctx.fillRect(0, 0, 640, 480);
 
-	createGrid();
+	//createGrid();
 
 	return cvs;
 }

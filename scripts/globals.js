@@ -10,6 +10,7 @@ const GAME_SCREEN_WIDTH = GRID_SIZE * MAP_WIDTH;		//dimensions of game screen
 const GAME_SCREEN_HEIGHT = GRID_SIZE * MAP_HEIGHT;		//dimensions of game screen
 const SHIP_WIDTH = 54;		//dimensions of image
 const SHIP_HEIGHT = 98;		//dimensions of image
+const SHIP_SPEED = 10;
 
 //map dimensions:
 const MAP_MIN_X = 0;
