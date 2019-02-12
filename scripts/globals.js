@@ -10,7 +10,9 @@ const GAME_SCREEN_WIDTH = GRID_SIZE * MAP_WIDTH;		//dimensions of game screen
 const GAME_SCREEN_HEIGHT = GRID_SIZE * MAP_HEIGHT;		//dimensions of game screen
 const SHIP_WIDTH = 54;		//dimensions of image
 const SHIP_HEIGHT = 98;		//dimensions of image
-const SHIP_SPEED = 10;
+const SHIP_SPEED = GRID_SIZE / 32;
+const SHIP_ABS_X = GRID_SIZE * 2.5;		//absolute position of ship on screen (shouldn't change)
+const SHIP_ABS_Y = GRID_SIZE * 2.5;		//absolute position of ship on screen (shouldn't change)
 
 //map dimensions:
 const MAP_MIN_X = 0;

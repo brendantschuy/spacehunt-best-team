@@ -12,8 +12,8 @@ class Target
 
 	setTarget(ship)
 	{
-		this.x = ship.abs_x + Math.sin(Math.PI/180 * (ship.angle % 360)) * ship.distanceToTravel;
-		this.y = ship.abs_y - Math.cos(Math.PI/180 * (ship.angle % 360)) * ship.distanceToTravel;
+		this.x = SHIP_ABS_X + Math.sin(Math.PI/180 * (ship.angle % 360)) * ship.distanceToTravel;
+		this.y = SHIP_ABS_Y - Math.cos(Math.PI/180 * (ship.angle % 360)) * ship.distanceToTravel;
 	}
 
 }

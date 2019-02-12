@@ -91,7 +91,7 @@ function start()
 		
 		target.setTarget(ship);
 		ctx.beginPath();
-		ctx.moveTo(ship.abs_x, ship.abs_y);
+		ctx.moveTo(SHIP_ABS_X, SHIP_ABS_Y);
 		ctx.lineTo(target.x, target.y);
 		ctx.stroke();
 		ctx.closePath();
@@ -226,7 +226,7 @@ function start()
 		var ctx = document.getElementById("gameScreen").getContext('2d');
 		ctx.beginPath();
 		ctx.save();
-	    ctx.translate(ship.abs_x, ship.abs_y);				//place center of rotation at current center of ship
+	    ctx.translate(SHIP_ABS_X, SHIP_ABS_Y);				//place center of rotation at current center of ship
 
 	    drawObstacles(ctx);
 	    drawItems(ctx);
@@ -281,7 +281,6 @@ function start()
 	    if(ship.isMoving == true)
 	    {
 	    	ctx.beginPath();
-	    	ship.distanceGoal = ship.distanceToTravel;
 	    	ship.commitMovement();
 	    }
 
