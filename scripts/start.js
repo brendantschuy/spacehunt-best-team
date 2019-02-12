@@ -10,8 +10,6 @@ function start()
 	//this section handles user input
 	document.onkeydown = getInput;
 
-
-
 	//draws grid corresponding with CPs
 	function createGrid()
 	{
@@ -37,36 +35,11 @@ function start()
 	//this function goes off several times per second
 	function drawFrame()
 	{
-		var ctx = document.getElementById("gameScreen").getContext('2d');
-
-		//write text to top left of screen
-		writeHud(ctx);
-
-	    //creates white grid everywhere
-	    createGrid();
-
-	    //to enable rotation save current ctx
-		drawTarget();
-
-	    //draws things
-	    drawThings(ctx);
-
-	    //draw potion if array of items?
-	    //potion.forEach(function (p)
-	    //{
-	    //	if(confirmDraw(p.x, p.y))
-	    //	{
-	    //		ctx.drawImage(potion.sprite, p.x - ship.x, p.y - ship.y);
-	    //	}
-	    //});
-
-		
-	    //check if rocket hits an obstacle after move. just experimental. far from perfect.
-	    hitObstacle();
-	    getPotion();
-	    win();
-
-
+		writeHud();		//write text to top left of screen
+	    createGrid();	//creates white grid everywhere
+		drawTarget();	//to enable rotation save current ctx
+	    drawThings();   //draws things: ship, items, obstacles
+	    hitObstacle();	//check if rocket hits an obstacle after move. just experimental. far from perfect.
 
 	    //go to next frame (I think this is at 60 fps max(?))
 	    requestAnimationFrame(drawFrame);		
@@ -222,6 +195,8 @@ function start()
 
 	function writeHud(ctx)
 	{
+
+		var ctx = document.getElementById("gameScreen").getContext('2d');
 	    //helps reduce lag
 	    ctx.beginPath();
 
@@ -244,11 +219,14 @@ function start()
 
 	function drawThings(ctx)
 	{
+		var ctx = document.getElementById("gameScreen").getContext('2d');
 		ctx.save();
 	    ctx.translate(ship.abs_x, ship.abs_y);				//place center of rotation at current center of ship
 
 	    drawObstacles(ctx);
+	    drawItems(ctx);
 	    drawShip(ctx);
+
 	    //draw obstacles
 	}
 
@@ -261,12 +239,24 @@ function start()
 	    		ctx.drawImage(rock.sprite, rock.x - ship.x, rock.y - ship.y);
 	    	}
 	    });
-  
+  	}
+
+  	function drawItems(ctx)
+  	{
 	    //draw 1 potion
 	    if(confirmDraw(this.potion.x, this.potion.y)){ ctx.drawImage(potion.sprite, potion.x - ship.x, potion.y - ship.y); }
 
 	    //draw recipe
 	    if(confirmDraw(this.recipe.x, this.recipe.y)){ ctx.drawImage(recipe.sprite, recipe.x - ship.x, recipe.y - ship.y); }
+
+	   	//draw potion if array of items?
+	    //potion.forEach(function (p)
+	    //{
+	    //	if(confirmDraw(p.x, p.y))
+	    //	{
+	    //		ctx.drawImage(potion.sprite, p.x - ship.x, p.y - ship.y);
+	    //	}
+	    //});
 	}
 
 	function drawShip(ctx)
@@ -287,6 +277,9 @@ function start()
 	    	ship.distanceGoal = ship.distanceToTravel;
 	    	ship.commitMovement();
 	    }
+
+	    getPotion();
+	    win();
 	}
 
 	//kicks it all off
