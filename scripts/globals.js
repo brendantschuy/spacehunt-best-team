@@ -13,7 +13,7 @@ const SHIP_HEIGHT = 98;		//dimensions of image
 
 //map dimensions:
 const MAP_MIN_X = 0;
-const MAP_MAX_X = 20;
-const MAP_MIN_Y = 0;
-const MAP_MAX_Y = 20;
+const MAP_MAX_X = 20;	//20 for testing purposes; eventually will be 128
+const MAP_MIN_Y = 0;	
+const MAP_MAX_Y = 20;	//20 for testing purposes; eventually will be 128
 //============================================================
