@@ -189,7 +189,7 @@ function start()
 	function hitObstacle()
 	{
 		for(i = 0; i < this.obstacles.length; i++){
-			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy)){
+			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy) && !(this.ship.dev)){
 				alert("You hit an asteroid! Game over!");
 				location = location;
 			}
