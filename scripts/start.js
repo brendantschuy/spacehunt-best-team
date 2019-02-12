@@ -4,33 +4,12 @@
 
 function start()
 {
-	initializeObjects();
-	setUpEventListeners();
+	initializeObjects();	//creates objects
+	setUpEventListeners();	//creates event listeners, which hook up the
+							//on-screen buttons with in-game functionality
 
 	//this section handles user input
 	document.onkeydown = getInput;
-
-	//draws grid corresponding with CPs
-	function createGrid()
-	{
-	    var ctx = document.getElementById("gameScreen").getContext('2d');
-	    ctx.beginPath();    //reduces lag       
-	    ctx.strokeStyle = "white";
-	    for(w = ship.offset_x; w < GAME_SCREEN_WIDTH; w += GRID_SIZE)
-	    {
-	        for(h = ship.offset_y; h < GAME_SCREEN_HEIGHT; h += GRID_SIZE)
-	        {
-	            //draws line every 128 px in either direction
-	            ctx.moveTo(w, 0);
-	            ctx.lineTo(w, GAME_SCREEN_WIDTH);
-	            ctx.stroke();
-	            ctx.moveTo(0, h);
-	            ctx.lineTo(GAME_SCREEN_HEIGHT, h);
-	            ctx.stroke();
-	        }
-	    }
-	    ctx.closePath();
-	}
 
 	//this function goes off several times per second
 	function drawFrame()
@@ -45,7 +24,7 @@ function start()
 	    requestAnimationFrame(drawFrame);		
 	}
 
-
+	//handles user input
 	function getInput(e)
 	{
 		if(e.keyCode == '32')		//spacebar
@@ -74,6 +53,28 @@ function start()
 		{
 			ship.decreaseDistance();
 		}
+	}
+
+	//draws grid corresponding with CPs
+	function createGrid()
+	{
+	    var ctx = document.getElementById("gameScreen").getContext('2d');
+	    ctx.beginPath();    //reduces lag       
+	    ctx.strokeStyle = "white";
+	    for(w = ship.offset_x; w < GAME_SCREEN_WIDTH; w += GRID_SIZE)
+	    {
+	        for(h = ship.offset_y; h < GAME_SCREEN_HEIGHT; h += GRID_SIZE)
+	        {
+	            //draws line every 128 px in either direction
+	            ctx.moveTo(w, 0.5);
+	            ctx.lineTo(w, GAME_SCREEN_WIDTH);
+	            ctx.stroke();
+	            ctx.moveTo(0.5, h);
+	            ctx.lineTo(GAME_SCREEN_HEIGHT, h);
+	            ctx.stroke();
+	        }
+	    }
+	    ctx.closePath();
 	}
 
 	//only draws things if they're in the vicinity of the ship
@@ -193,6 +194,8 @@ function start()
 		});
 	}
 
+
+	//writes to top left of screen (Hud == heads up display)
 	function writeHud(ctx)
 	{
 
@@ -207,29 +210,30 @@ function start()
 	    //writes numbers/info to GUI
 	    ctx.fillStyle = "#FFFFFF";
 	    ctx.fillText("angle = " + ship.angle, 10, 10);
-	    ctx.fillText("x = " + ship.x.toFixed(1) + " y = " + ship.y.toFixed(1), 10, 30);
+	    ctx.fillText("x = " + ship.x.toFixed(0) + " y = " + ship.y.toFixed(0), 10, 30);
 	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 50);
 	    ctx.fillStyle = "#00FF00";
-	    ctx.fillText("energy = " + ship.energy.toFixed(1) + " / " + ship.maxEnergy.toFixed(1), 10, 70);
+	    ctx.fillText("energy = " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 70);
 	    ctx.fillStyle = "#FF0000";
-	    ctx.fillText("supplies = " + ship.supplies.toFixed(1) + " / " + ship.originalSupplies.toFixed(1), 10, 90);
+	    ctx.fillText("supplies = " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 90);
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(1), 10, 110);
+	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 110);
 	}
 
-	function drawThings(ctx)
+	//draws obstacles, ship, other items on the canvas
+	function drawThings()
 	{
 		var ctx = document.getElementById("gameScreen").getContext('2d');
+		ctx.beginPath();
 		ctx.save();
 	    ctx.translate(ship.abs_x, ship.abs_y);				//place center of rotation at current center of ship
 
 	    drawObstacles(ctx);
 	    drawItems(ctx);
 	    drawShip(ctx);
-
-	    //draw obstacles
 	}
 
+	//draws all obstacles (for now, just asteroids)
 	function drawObstacles(ctx)
 	{
 		obstacles.forEach(function (rock)
@@ -241,6 +245,7 @@ function start()
 	    });
   	}
 
+  	//draws potions and recipe, etc
   	function drawItems(ctx)
   	{
 	    //draw 1 potion
@@ -259,6 +264,7 @@ function start()
 	    //});
 	}
 
+	//draws the user's ship
 	function drawShip(ctx)
 	{
 		//rotate if ship isn't facing upward
@@ -274,6 +280,7 @@ function start()
 
 	    if(ship.isMoving == true)
 	    {
+	    	ctx.beginPath();
 	    	ship.distanceGoal = ship.distanceToTravel;
 	    	ship.commitMovement();
 	    }

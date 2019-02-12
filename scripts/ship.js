@@ -7,7 +7,7 @@ class Ship 	//class names capitalized per js convention
 	//currently, CPX = X and CPY = Y but that can change if angles allowed are lower		
 	constructor()
 	{
-		this.speed = GRID_SIZE/31;
+		this.speed = GRID_SIZE/32;
 		
 		this.dev = 0; //tag for toggling developer options like never dying
 		//can be improved probably		
@@ -25,7 +25,7 @@ class Ship 	//class names capitalized per js convention
 		this.angle = 0;
 		this.distanceToTravel = 0;
 		this.distanceGoal = 0;
-		this.energyEfficiency = 0.01;
+		this.energyEfficiency = 20;
 		this.abs_x = 2.5 * GRID_SIZE;		//position on screen
 		this.abs_y = 2.5 * GRID_SIZE;		//position on screen
 		this.x = 1279;						//position on map
@@ -39,8 +39,12 @@ class Ship 	//class names capitalized per js convention
 	//obstacles etc would just correspond with some CP
 	updatecp()
 	{
+		var oldcpx = this.cpx;
+		var oldcpy = this.cpy;
 		this.cpx = Math.floor(this.x / GRID_SIZE) + 1;
 		this.cpy = Math.floor(this.y / GRID_SIZE) + 1;
+
+		this.energy -= Math.abs((this.cpx - oldcpx) + (this.cpy - oldcpy)) * this.energyEfficiency;
 
 		this.offset_x %= GRID_SIZE;
 		this.offset_y %= GRID_SIZE;
@@ -59,13 +63,13 @@ class Ship 	//class names capitalized per js convention
 	//actually moves ship
 	commitMovement()
 	{
-		this.distanceGoal -= this.speed;
-		this.distanceToTravel -= this.speed;
 		if(this.distanceGoal < 0.001)
 		{
 			this.isMoving = false;
 			return;
 		}
+		this.distanceGoal -= this.speed;
+		this.distanceToTravel -= this.speed;
 		var old_x = this.x;
 		var old_y = this.y;
 		this.x += Math.sin(Math.PI/180 * (this.angle % 360)) * this.speed;
@@ -75,7 +79,7 @@ class Ship 	//class names capitalized per js convention
 		this.offset_y -= (this.y - old_y);
 		
 		//Temporary fix to test the checkEnergy function
-		this.energy -= (this.energyEfficiency * this.distanceToTravel);
+		//this.energy -= (this.energyEfficiency * this.distanceToTravel);
 		
 		//this.supplies -= (this.originalSupplies *.02);
 		this.checkEnergy();
