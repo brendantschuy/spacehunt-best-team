@@ -103,16 +103,26 @@ class Ship 	//class names capitalized per js convention
 
 	rotateLeft()
 	{
-		this.angle = (this.angle - ANGLE_INCREMENT) % 360;
-		if(this.angle < 0)
+		//disabling turning while moving for now, or else it gets into some pretty 
+		//funky floating point errors
+		if(!this.isMoving)
 		{
-			this.angle = 360 + this.angle;	//angle should never be negative
+			this.angle = (this.angle - ANGLE_INCREMENT) % 360;
+			if(this.angle < 0)
+			{
+				this.angle = 360 + this.angle;	//angle should never be negative
+			}
 		}
 	}
 
 	rotateRight()
 	{
-		this.angle = (this.angle + ANGLE_INCREMENT) % 360;
+		//disabling turning while moving for now, or else it gets into some pretty
+		//funky floating point errors
+		if(!this.isMoving)
+		{
+			this.angle = (this.angle + ANGLE_INCREMENT) % 360;
+		}
 	}
 
 	increaseDistance()
