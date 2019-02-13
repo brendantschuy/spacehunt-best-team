@@ -66,11 +66,25 @@ class Ship 	//class names capitalized per js convention
 	//is out of bounds? teleports somewhere random if so
 	checkBoundary()
 	{
+		if(this.cpy >= MAP_MAX_Y){
+			this.y = MAP_MIN_Y + 1;
+		}
+		else if(this.cpy <= MAP_MIN_Y){
+			this.y = MAP_MAX_Y - 1;
+		}
+		if(this.cpx >= MAP_MAX_X){
+			this.x = MAP_MIN_X + 1;
+		}
+		else if(this.cpx <= MAP_MIN_X){
+			this.x = MAP_MAX_X - 1;
+		}
+
+		/* This was implemented before wormholes were added
 		if(this.cpy >= MAP_MAX_Y || this.cpy <= MAP_MIN_Y || this.cpx >= MAP_MAX_X || this.cp <= MAP_MIN_X)
 		{
 			this.x = Math.floor(Math.random() * 2200) + GRID_SIZE;
 			this.y = Math.floor(Math.random() * 2200) + GRID_SIZE;
-		}
+		}*/
 	}
 
 	//actually moves ship
