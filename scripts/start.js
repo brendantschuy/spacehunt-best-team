@@ -4,6 +4,8 @@
 
 function start()
 {
+	this.gameOver = false;
+
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
 							//on-screen buttons with in-game functionality
@@ -20,8 +22,11 @@ function start()
 	    drawThings();   //draws things: ship, items, obstacles
 	    hitObstacle();	//check if rocket hits an obstacle after move. just experimental. far from perfect.
 
-	    //go to next frame (I think this is at 60 fps max(?))
-	    requestAnimationFrame(drawFrame);		
+	    if(!this.gameOver)	//bug fix: eliminates double messages
+	    {
+	    	//go to next frame (I think this is at 60 fps max(?))
+	    	requestAnimationFrame(drawFrame);		
+	    }
 	}
 
 	//handles user input
@@ -107,7 +112,8 @@ function start()
 		for(i = 0; i < this.obstacles.length; i++){
 			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy) && !(this.ship.dev)){
 				alert("You hit an asteroid! Game over!");
-				location = location;
+				this.gameOver = true;
+				window.location.reload();	//changed to be a bit more clear than location = location
 			}
 		}
 	}
@@ -135,7 +141,8 @@ function start()
 	function win(){
 		if((this.ship.cpx == this.recipe.cpx) && (this.ship.cpy == this.recipe.cpy)){
 			alert("You found the recipe! Congratulations! You win!");
-			location = location;
+			this.gameOver = true;
+			window.location.reload();	//changed to be a bit more clear than location = location
 		}
 	}
 
@@ -240,7 +247,7 @@ function start()
 	    {
 	        if(confirmDraw(rock.x, rock.y))
 	    	{
-	    		ctx.drawImage(rock.sprite, rock.x - ship.x, rock.y - ship.y);
+	    		ctx.drawImage(rock.sprite, rock.x - ship.x - GRID_SIZE/4, rock.y - ship.y - GRID_SIZE/4);
 	    	}
 	    });
   	}
@@ -249,10 +256,12 @@ function start()
   	function drawItems(ctx)
   	{
 	    //draw 1 potion
-	    if(confirmDraw(this.potion.x, this.potion.y)){ ctx.drawImage(potion.sprite, potion.x - ship.x, potion.y - ship.y); }
+	    if(confirmDraw(this.potion.x, this.potion.y)){ ctx.drawImage(potion.sprite, 
+	    	potion.x - ship.x - GRID_SIZE/4, potion.y - ship.y - GRID_SIZE/4); }
 
 	    //draw recipe
-	    if(confirmDraw(this.recipe.x, this.recipe.y)){ ctx.drawImage(recipe.sprite, recipe.x - ship.x, recipe.y - ship.y); }
+	    if(confirmDraw(this.recipe.x, this.recipe.y)){ ctx.drawImage(recipe.sprite,
+	    	recipe.x - ship.x - GRID_SIZE/4, recipe.y - ship.y - GRID_SIZE/4); }
 
 	   	//draw potion if array of items?
 	    //potion.forEach(function (p)
