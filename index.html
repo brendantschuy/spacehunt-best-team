@@ -1,36 +1,44 @@
 <html>
 
 <head>
+	<title>SpaceHunt Game - CS300 - Best Team</title>
 
-<title>SpaceHunt - CS300 - Best Team</title>
+	<script src="scripts/globals.js" type="text/javascript"></script>
+	<script src="scripts/createCanvas.js" type="text/javascript"></script>
+	<script src="scripts/energypotion.js" type="text/javascript"></script>
+	<script src="scripts/ship.js" type="text/javascript"></script>	
+	<script src="scripts/target.js" type="text/javascript"></script>
+	<script src="scripts/obstacle.js" type="text/javascript"></script>
+	<script src="scripts/grid.js" type="text/javascript"></script>
+	<script src="scripts/start.js" type="text/javascript"></script>
+	<script src="scripts/recipe.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="css/format.css" />
 
-<script src="scripts/globals.js" type="text/javascript"></script>
-<script src="scripts/createCanvas.js" type="text/javascript"></script>
-<script src="scripts/energypotion.js" type="text/javascript"></script>
-<script src="scripts/ship.js" type="text/javascript"></script>
-<script src="scripts/target.js" type="text/javascript"></script>
-<script src="scripts/obstacle.js" type="text/javascript"></script>
-<script src="scripts/grid.js" type="text/javascript"></script>
-<script src="scripts/start.js" type="text/javascript"></script>
-<script src="scripts/recipe.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="css/format.css" />
-
+	<header class="game title">
+		<h1>Space Hunt</h1>
+	</header>
 </head>
 
 <body onload="start()">
 
-	<div id="leftSide">
+	<div class="leftside">
 		<canvas  id="gameScreen" ></canvas>
 	</div>
 
-	<div id="rightSide">
-		<button class="ctrls" id="upBtn" type="button">UP</button><br />
-		<button class="ctrls" id="leftBtn" type="button">LEFT</button>
-		<button class="ctrls" id="rightBtn" type="button">RIGHT</button><br />
-		<button class="ctrls" id="downBtn" type="button">DOWN</button><br />
-		<button class="ctrls" id="moveBtn" type="button">MOVE</button>
-		<input type="checkbox" id="devMode" name="devMode">Developer Mode</input>
+	<div class="rightside">
+		<h2>Controls</h2>
+		<div id="controls">
+			<button class="ctrls" id="upBtn" type="button">UP</button><br />
+			<button class="ctrls" id="leftBtn" type="button">LEFT</button>
+			<button class="ctrls" id="rightBtn" type="button">RIGHT</button><br />
+			<button class="ctrls" id="downBtn" type="button">DOWN</button><br />
+			<button class="ctrls" id="moveBtn" type="button">MOVE</button>
+		</div>
+
+		<h2>Development Options</h2>
+		<div id="dev options">
+			<input type="checkbox" id="devMode" name="devMode">Developer Mode</input>
+		</div>
 	</div>
 
 

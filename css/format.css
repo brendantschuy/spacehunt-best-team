@@ -1,29 +1,60 @@
-body
-{
-    position: fixed; 
+body {
+	font-family: Impact, Charcoal, sans-serif;
+	background-image: url("/../img/starsbackground.jpg");
+	/*background-color: black;*/
+	background-position: center;
+	background-repeat: repeat-y;
+	position: fixed; 
     overflow-y: scroll;
-    width: 100%;
+	width: 100%;
+	padding-top: 5px;
+  	padding-right: 5px;
+  	padding-bottom: 5px;
+  	padding-left: 5px;
 }
 
-#leftSide, #rightSide
-{
-	display:inline-block;
-	float:left;
+h1 {
+	/*color: white;*/
+	font-size: 3em;
+	text-align: center;
 }
 
-#leftSide
-{
-	width: 80%;
+h2 {
+	/*color: white;*/
+	font-size: 1.7em;
 }
 
-#rightSide
-{
-	width: 20%;
+.rightside, .leftside {
+	display: inline-block;
+	/*float: left;*/
+}
+
+.leftSide {
+	/*background-color: blue;*/
+	width: 690px;
+	height: 725px;
+	float: left;
+	padding-top: 30px;
+  	padding-right: 30px;
+  	padding-bottom: 30px;
+  	padding-left: 30px;
+}
+
+.rightSide {
+	/*background-color: rbga(107, 18, 18, 0.6);
+	background-color: rgb(107, 18, 18);
+	color: white;*/
+	float: right;
+	width: 30%;
+	height: 600px;
+	padding-top: 30px;
+  	padding-right: 30px;
+  	padding-bottom: 30px;
+  	padding-left: 30px;
 }
 
 
-#gameScreen
-{
+#gameScreen {
 	border: 3px;
 	border-style: ridge;
 	border-color: #A9A9A9;
