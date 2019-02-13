@@ -58,6 +58,7 @@ class Ship 	//class names capitalized per js convention
 		this.cpy = Math.floor(this.y / GRID_SIZE) + 1;
 
 		this.energy -= Math.abs((this.cpx - oldcpx) + (this.cpy - oldcpy)) * this.energyEfficiency;
+		this.supplies -= Math.abs((this.cpx - oldcpx) + (this.cpy - oldcpy)) * 0.02 * this.originalSupplies;
 
 		this.offset_x %= GRID_SIZE;
 		this.offset_y %= GRID_SIZE;
@@ -93,7 +94,6 @@ class Ship 	//class names capitalized per js convention
 		//Temporary fix to test the checkEnergy function
 		//this.energy -= (this.energyEfficiency * this.distanceToTravel);
 		
-		//this.supplies -= (this.originalSupplies *.02);
 		this.checkEnergy();
 		this.checkSupplies();
 		
