@@ -115,6 +115,12 @@ class Ship 	//class names capitalized per js convention
 		this.updatecp();
 	}
 
+	beginMoving()
+	{
+		this.isMoving = true;
+		this.distanceGoal = this.distanceToTravel;
+	}
+
 	rotateLeft()
 	{
 		//disabling turning while moving for now, or else it gets into some pretty 

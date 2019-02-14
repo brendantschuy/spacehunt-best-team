@@ -34,8 +34,7 @@ function start()
 	{
 		if(e.keyCode == '32')		//spacebar
 		{
-			ship.isMoving = true;
-			ship.distanceGoal = ship.distanceToTravel;
+			ship.beginMoving();
 			ship.commitMovement();
 		}
 
@@ -192,6 +191,7 @@ function start()
 		});
 		document.getElementById("moveBtn").addEventListener("click", function()
 		{
+			ship.beginMoving();
 			ship.commitMovement();
 		});
 		document.getElementById("devMode").addEventListener("click", function()
