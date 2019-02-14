@@ -88,3 +88,13 @@ h2 {
 	border-style: ridge;
 	border-color: #A9A9A9;
 }
+
+#mapicon{
+  	background: url("..\\img\\rock.png") no-repeat 0px 0px;
+	position: relative;
+  	display: inline-block;
+  	border: 0;
+  	width: 100px;
+  	height: 100px;
+  	background-size: 100px 100px;
+}

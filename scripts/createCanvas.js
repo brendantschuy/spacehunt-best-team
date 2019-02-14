@@ -16,6 +16,6 @@ function createCanvas()
 	ctx.fillRect(0, 0, 640, 480);
 
 	//createGrid();
-
+	drawMapButton();
 	return cvs;
 }
