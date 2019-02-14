@@ -203,6 +203,10 @@ function start()
 		{
 			ship.toggleDevMode();
 		});
+		document.getElementById("randWormholes").addEventListener("click", function()
+		{
+			ship.toggleRandWormholesMode();
+		});
 	}
 
 

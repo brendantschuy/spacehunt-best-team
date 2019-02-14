@@ -8,7 +8,8 @@ class Ship 	//class names capitalized per js convention
 	constructor()
 	{	
 		this.dev = 0; //tag for toggling developer options like never dying
-		//can be improved probably		
+		//can be improved probably
+		this.randWormholes = 0; // Following above example for development		
 		this.maxEnergy = 1000;
 		this.energy = 1000;
 
@@ -67,17 +68,31 @@ class Ship 	//class names capitalized per js convention
 	//is out of bounds? teleports somewhere random if so
 	checkBoundary()
 	{
-		if(this.cpy >= MAP_MAX_Y){
-			this.y = MAP_MIN_Y + 1;
+		if(this.randWormholes == 1){
+			if(this.cpy > MAP_MAX_Y || this.cpy < MAP_MIN_Y ||
+			   this.cpx > MAP_MAX_X || this.cpx < MAP_MIN_X){
+				//alert("You entered a wormhole! You will now be transported to another random wormhole!");
+				this.x = 10 * GRID_SIZE;
+				this.y = 10 * GRID_SIZE;
+			}
 		}
-		else if(this.cpy <= MAP_MIN_Y){
-			this.y = MAP_MAX_Y - 1;
-		}
-		if(this.cpx >= MAP_MAX_X){
-			this.x = MAP_MIN_X + 1;
-		}
-		else if(this.cpx <= MAP_MIN_X){
-			this.x = MAP_MAX_X - 1;
+		else {
+	 		if(this.cpy >= MAP_MAX_Y){
+				//alert("You entered a wormhole! You will now be transported to the other side of space!");
+				this.y = (MAP_MIN_Y * GRID_SIZE) + GRID_SIZE;
+			}
+			else if(this.cpy <= MAP_MIN_Y){
+				//alert("You entered a wormhole! You will now be transported to the other side of space!");
+				this.y = (MAP_MAX_Y * GRID_SIZE) - GRID_SIZE;
+			}
+			if(this.cpx >= MAP_MAX_X){
+				//alert("You entered a wormhole! You will now be transported to the other side of space!");
+				this.x = (MAP_MIN_X * GRID_SIZE) + GRID_SIZE;
+			}
+			else if(this.cpx <= MAP_MIN_X){
+				//alert("You entered a wormhole! You will now be transported to the other side of space!");
+				this.x = (MAP_MAX_X * GRID_SIZE) - GRID_SIZE;
+			}
 		}
 
 		/* This was implemented before wormholes were added
@@ -180,6 +195,10 @@ class Ship 	//class names capitalized per js convention
 	
 	toggleDevMode(){
 		this.dev = !(this.dev);
+	}
+
+	toggleRandWormholesMode(){
+		this.randWormholes = !(this.randWormholes);
 	}
 }
 
