@@ -74,6 +74,7 @@ class Ship 	//class names capitalized per js convention
 				//alert("You entered a wormhole! You will now be transported to another random wormhole!");
 				this.x = 10 * GRID_SIZE;
 				this.y = 10 * GRID_SIZE;
+				this.restoreDefaults();
 			}
 		}
 		else {
@@ -199,6 +200,15 @@ class Ship 	//class names capitalized per js convention
 
 	toggleRandWormholesMode(){
 		this.randWormholes = !(this.randWormholes);
+	}
+
+	//restores default info about ship 
+	restoreDefaults()
+	{
+		this.isMoving = false;
+		this.distanceToTravel = 0;
+		this.offset_y = 0;
+		this.offset_x = 0;
 	}
 }
 
