@@ -111,20 +111,19 @@ function start()
 	{
 		for(i = 0; i < this.obstacles.length; i++){
 			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy) && !(this.ship.dev)){
-				alert("You hit an asteroid! Game over!");
-				this.gameOver = true;
-				window.location.reload();	//changed to be a bit more clear than location = location
+				setTimeout(function()
+				{
+					alert("You hit an asteroid! Game over!");
+					this.gameOver = true;
+					window.location.reload();	//changed to be a bit more clear than location = location
+				}, 100);
 			}
 		}
 	}
 	
 	//experimental
 	function getPotion()
-	{
-		//if array (not tested / working yet)
-		//for(i = 0; i < this.potionArray.length; i++){
-		//	if((this.ship.cpx == this.potionArray[i].cpx) && (this.ship.cpy == this.potionArray[i].cpy)){
-		
+	{		
 		if((this.ship.cpx == this.potion.cpx) && (this.ship.cpy == this.potion.cpy)){
 			this.ship.energy += this.potion.hp;
 			if(this.ship.energy > this.ship.maxEnergy){
