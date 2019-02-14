@@ -16,7 +16,7 @@ const SHIP_ABS_Y = GRID_SIZE * 2.5;		//absolute position of ship on screen (shou
 
 //map dimensions:
 const MAP_MIN_X = 0;
-const MAP_MAX_X = 20; //128;
+const MAP_MAX_X = 128;
 const MAP_MIN_Y = 0;	
-const MAP_MAX_Y = 20; //128;
+const MAP_MAX_Y = 128;
 //============================================================
