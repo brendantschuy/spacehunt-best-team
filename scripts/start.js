@@ -6,6 +6,11 @@ function start()
 {
 	this.gameOver = false;
 
+	//for debugging purposes
+	this.numFrames = 0;
+	this.fps = 0;
+	this.startTime = (new Date()).getTime();
+
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
 							//on-screen buttons with in-game functionality
@@ -204,6 +209,9 @@ function start()
 	//writes to top left of screen (Hud == heads up display)
 	function writeHud(ctx)
 	{
+		this.fps = (numFrames + 1)/(((new Date()).getTime() - this.startTime)/1000);
+		this.numFrames++;
+
 
 		var ctx = document.getElementById("gameScreen").getContext('2d');
 	    //helps reduce lag
@@ -224,6 +232,7 @@ function start()
 	    ctx.fillText("supplies = " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 90);
 	    ctx.fillStyle = "#FFFFFF";
 	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 110);
+	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 150);
 	}
 
 	//draws obstacles, ship, other items on the canvas
