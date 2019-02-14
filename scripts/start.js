@@ -207,6 +207,12 @@ function start()
 		{
 			ship.toggleRandWormholesMode();
 		});
+		document.getElementById("scan").addEventListener("click", function()
+		{
+			scan();
+			//recipe.hidden = 0;
+			//recipe.sprite.src = "img/recipe.png";
+		});
 	}
 
 
@@ -307,6 +313,21 @@ function start()
 
 	    getPotion();
 	    win();
+	}
+	function scan(){
+		if(((Math.abs(this.recipe.x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.recipe.y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
+			//this.recipe.hidden = 0;
+			this.recipe.sprite.src = "img/recipe.png";
+		}
+		for(i = 0; i< this.obstacles.length; ++i){
+			if(((Math.abs(this.obstacles[i].x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.obstacles[i].y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
+				this.obstacles[i].sprite.src = "img/rock.png";
+			}
+		}
+		if(((Math.abs(this.potion.x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.potion.y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
+			//this.recipe.hidden = 0;
+			this.potion.sprite.src = "img/energypotion.png";
+		}
 	}
 
 	//kicks it all off
