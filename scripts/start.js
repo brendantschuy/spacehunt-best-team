@@ -39,27 +39,32 @@ function start()
 	{
 		if(e.keyCode == '32')		//spacebar
 		{
+			e.preventDefault();		//prevents this from moving the window/canvas around
 			ship.beginMoving();
 			ship.commitMovement();
 		}
 
 		if(e.keyCode == '37')		//left arrow key
 		{
+			e.preventDefault();
 			ship.rotateLeft();
 		}
 
 		else if(e.keyCode == '38')		//up
 		{
+			e.preventDefault();
 			ship.increaseDistance();
 		}
 
 		else if(e.keyCode == '39')		//right
 		{
+			e.preventDefault();
 			ship.rotateRight();
 		}
 
 		else if(e.keyCode == '40')		//down
 		{
+			e.preventDefault();
 			ship.decreaseDistance();
 		}
 	}
