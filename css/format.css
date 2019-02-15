@@ -1,11 +1,10 @@
+html { 
+	background:  url("..\\video\\background.gif") no-repeat center center fixed; 
+	background-size: cover;
+}
+
 body {
 	font-family: Impact, Charcoal, sans-serif;
-	background-color: rgb(32, 32, 32);
-	/*background-image: url("/../img/starsbackground.jpg");
-	background-image: url("/../img/black-galaxy-background.jpg");*/
-	background-position: center;
-	background-repeat: repeat-y;
-	position: fixed; 
 	overflow-y: scroll;
 	overflow: auto;
 	width: 100%;
