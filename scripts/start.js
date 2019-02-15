@@ -25,10 +25,10 @@ function start()
 	    createGrid();	//creates white grid everywhere
 		drawTarget();	//to enable rotation save current ctx
 	    drawThings();   //draws things: ship, items, obstacles
-	    hitObstacle();	//check if rocket hits an obstacle after move. just experimental. far from perfect.
 
 	    if(!this.gameOver)	//bug fix: eliminates double messages
 	    {
+	    	hitObstacle();	//check if rocket hits an obstacle after move. just experimental. far from perfect.
 	    	//go to next frame (I think this is at 60 fps max(?))
 	    	requestAnimationFrame(drawFrame);		
 	    }
@@ -119,11 +119,12 @@ function start()
 	function hitObstacle()
 	{
 		for(i = 0; i < this.obstacles.length; i++){
-			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy) && !(this.ship.dev)){
+			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy) && !(this.ship.dev) && !(this.gameOver)){
 				setTimeout(function()
 				{
 					alert("You hit an asteroid! Game over!");
 					this.gameOver = true;
+					this.ship.restoreDefaults();
 					window.location.reload();	//changed to be a bit more clear than location = location
 				}, 100);
 			}
