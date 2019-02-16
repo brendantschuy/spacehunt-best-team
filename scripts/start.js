@@ -36,8 +36,9 @@ function start()
 	    {
 	    	hitObstacle();	//check if rocket hits an obstacle after move. just experimental. far from perfect.
 	    	//go to next frame (I think this is at 60 fps max(?))
-	    	requestAnimationFrame(drawFrame);		
 	    }
+	    requestAnimationFrame(drawFrame);		
+	    
 	}
 
 	//handles user input
@@ -133,13 +134,17 @@ function start()
 	{
 		for(i = 0; i < this.obstacles.length; i++){
 			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy) && !(this.ship.dev) && !(this.gameOver)){
+				if(!this.gameOver)
+				{
+					this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
+				}
 				this.gameOver = true;
+				
 				setTimeout(function()
 				{
 					alert("You hit an asteroid! Game over!");
-					this.ship.restoreDefaults();
 					window.location.reload();	//changed to be a bit more clear than location = location
-				}, 100);
+				}, 1000);
 			}
 		}
 	}
@@ -317,12 +322,24 @@ function start()
 		//rotate if ship isn't facing upward
 	    ctx.rotate(ship.angle * Math.PI / 180);		//rotate the entire ctx/drawing object
 	    ctx.drawImage(ship.sprite, -SHIP_WIDTH/2, -SHIP_HEIGHT/2);		//centered at x, y
-
-	    	    
+   
 	    //go back to original ctx
 	    ctx.restore();
 
 	    ship.updatecp();
+
+	    if(this.gameOver)
+	    {
+	    	this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
+	    	if(this.ship.animationFrame == 16)
+	    	{
+	    		this.ship.sprite.src = "";
+	    	}
+	    	else
+	    	{
+	    		this.ship.animationFrame = (this.ship.animationFrame + 1);
+	    	}
+	    }
 
 
 	    if(ship.isMoving == true)
@@ -334,6 +351,8 @@ function start()
 	    getPotion();
 	    win();
 	}
+
+
 	function scan(){
 		if(((Math.abs(this.recipe.x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.recipe.y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
 			//this.recipe.hidden = 0;

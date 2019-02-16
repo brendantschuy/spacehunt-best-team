@@ -47,6 +47,7 @@ class Ship 	//class names capitalized per js convention
 
 		//ship graphics
 		this.sprite = new Image();
+		this.animationFrame = 0;
 		this.sprite.src = "img/ship1.png";
 	}
 
