@@ -5,6 +5,7 @@
 function start()
 {
 	this.gameOver = false;
+	this.displayHud = document.getElementById("hud").checked;
 
 	//for debugging purposes
 	this.numFrames = 0;
@@ -21,10 +22,15 @@ function start()
 	//this function goes off several times per second
 	function drawFrame()
 	{
-		writeHud();		//write text to top left of screen
-	    createGrid();	//creates white grid everywhere
-		drawTarget();	//to enable rotation save current ctx
-	    drawThings();   //draws things: ship, items, obstacles
+		//allows toggling of HUD
+		if(this.displayHud)
+		{
+			writeHud();
+		}
+
+	    drawBackground();	//creates background and white grid
+		drawTarget();		//draws red target indicating where ship will travel to
+	    drawThings();   	//draws things: ship, items, obstacles...
 
 	    if(!this.gameOver)	//bug fix: eliminates double messages
 	    {
@@ -70,9 +76,14 @@ function start()
 	}
 
 	//draws grid corresponding with CPs
-	function createGrid()
+	function drawBackground()
 	{
-	    var ctx = document.getElementById("gameScreen").getContext('2d');
+		var ctx = document.getElementById("gameScreen").getContext('2d');
+
+		//creates backdrop (opacity = 0.4 so it is see-through)
+	    ctx.fillStyle = "RGBA(0, 0, 0, 0.4)";
+	    ctx.fillRect(0, 0, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+
 	    ctx.beginPath();    //reduces lag       
 	    ctx.strokeStyle = "white";
 	    for(w = ship.offset_x; w < GAME_SCREEN_WIDTH; w += GRID_SIZE)
@@ -89,6 +100,8 @@ function start()
 	        }
 	    }
 	    ctx.closePath();
+
+	    this.numFrames++;	//for use in FPS calculation
 	}
 
 	//only draws things if they're in the vicinity of the ship
@@ -120,10 +133,10 @@ function start()
 	{
 		for(i = 0; i < this.obstacles.length; i++){
 			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy) && !(this.ship.dev) && !(this.gameOver)){
+				this.gameOver = true;
 				setTimeout(function()
 				{
 					alert("You hit an asteroid! Game over!");
-					this.gameOver = true;
 					this.ship.restoreDefaults();
 					window.location.reload();	//changed to be a bit more clear than location = location
 				}, 100);
@@ -219,6 +232,10 @@ function start()
 			//recipe.hidden = 0;
 			//recipe.sprite.src = "img/recipe.png";
 		});
+		document.getElementById("hud").addEventListener("click", function()
+		{
+			toggleHud();
+		})
 	}
 
 
@@ -226,16 +243,13 @@ function start()
 	function writeHud(ctx)
 	{
 		this.fps = (numFrames + 1)/(((new Date()).getTime() - this.startTime)/1000);
-		this.numFrames++;
+		
 
 
 		var ctx = document.getElementById("gameScreen").getContext('2d');
 	    //helps reduce lag
 	    ctx.beginPath();
 
-	    //creates backdrop (opacity = 0.4 so it is see-through)
-	    ctx.fillStyle = "RGBA(0, 0, 0, 0.4)";
-	    ctx.fillRect(0, 0, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
 
 	    //writes numbers/info to GUI
 	    ctx.fillStyle = "#FFFFFF";
@@ -337,8 +351,13 @@ function start()
 		ship.supplies -= (ship.originalSupplies * .02);
 	}
 
+	function toggleHud()
+	{
+		this.displayHud = !(this.displayHud);
+	}
+
 	//kicks it all off
-	createGrid();
+	drawBackground();
 	drawFrame();
 
 }
