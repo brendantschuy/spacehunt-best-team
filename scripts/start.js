@@ -334,6 +334,7 @@ function start()
 			//this.recipe.hidden = 0;
 			this.potion.sprite.src = "img/energypotion.png";
 		}
+		ship.supplies -= (ship.originalSupplies * .02);
 	}
 
 	//kicks it all off
