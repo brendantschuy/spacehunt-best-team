@@ -10,12 +10,14 @@
 	<script src="scripts/ship.js" type="text/javascript"></script>	
 	<script src="scripts/target.js" type="text/javascript"></script>
 	<script src="scripts/obstacle.js" type="text/javascript"></script>
-	<script src="scripts/grid.js" type="text/javascript"></script>
 	<script src="scripts/start.js" type="text/javascript"></script>
 	<script src="scripts/recipe.js" type="text/javascript"></script>
 	<script src="scripts/celestialmap.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="css/format.css" />
 
+	<!-- <header class="game title">
+		<h1>Space Hunt</h1>
+	</header> -->
 	<iframe src="audio/bgm.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
 
 	<p><img src="img/spacehunt_logo.png" alt="SpaceHunt" class="center" height=120px width=115px></p>
@@ -27,13 +29,13 @@
 	</div>
 
 	<div class="rightside">
-		<h2><p><img src="img/controls.png" alt="Controls" height=73px width=286px></p></h2>
+		<h2>Controls</h2>
 		<div id="controls">
 			<div id="controls-up">
 				<button class="ctrls" id="upBtn" type="button">UP</button><br />
 			</div>
 			<div id="controls-left">
-				<button class="ctrls" id="leftBtn" type="button">LEFT</button><br />
+				<button class="ctrls" id="leftBtn" type="button">LEFT</button>
 			</div>
 			<div id="controls-right">
 				<button class="ctrls" id="rightBtn" type="button">RIGHT</button><br />
@@ -45,11 +47,11 @@
 				<button class="ctrls" id="moveBtn" type="button">MOVE</button>
 			</div>
 			<div id="controls-scan">
-				<button class="scan" id="scan" type="button">SCAN</button><br />
+				<button class="ctrls" id="scan" type="button">SCAN</button><br />
 			</div>
 		</div>
 
-		<h2><p><img src="img/development_options.png" alt="dev-options" height=73px width=500px></p></h2>
+		<h2>Development Options</h2>
 		<div id="dev-options">
 			<div id="dev-mode">
 				<input type="checkbox" id="devMode" name="devMode">Developer Mode</input>
@@ -60,6 +62,9 @@
 		<!--This checkbox does not work yet. Attempted to add some functionality but haven't gotten far. -->
 			<div id="bgmusic">
 				<input type="checkbox" id="bgm" onchange="togglePlay();">Background Music</input>
+			</div>
+			<div id="dev-options-hud">
+				<input type="checkbox" id="hud" name="hud">Toggle HUD</input>
 			</div>
 		</div>
 </body>
