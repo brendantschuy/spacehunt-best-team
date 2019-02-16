@@ -179,8 +179,6 @@ function start()
 		var cvs = createCanvas();
 		this.ctx = cvs.getContext('2d');
 
-
-
 		//create ship
 		this.ship = new Ship();
 		this.target = new Target();
@@ -240,7 +238,15 @@ function start()
 		document.getElementById("hud").addEventListener("click", function()
 		{
 			toggleHud();
-		})
+		});
+		document.getElementById("bgmusic").addEventListener("click", function()
+		{
+			backgroundMusic();
+		});
+	}
+
+	function backgroundMusic(){
+		document.getElementById("bgmusic").innerHTML = '<iframe src="audio/bgm.mp3" allow="autoplay" id="audio" style="display:none"></iframe>';
 	}
 
 
@@ -374,7 +380,7 @@ function start()
 	{
 		this.displayHud = !(this.displayHud);
 	}
-
+	
 	//kicks it all off
 	drawBackground();
 	drawFrame();
