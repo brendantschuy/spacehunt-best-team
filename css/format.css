@@ -107,6 +107,7 @@ h2 {
 
 .ctrls:hover {
   	color: white;
+  	text-indent: -9999px; /*hacky way to make text disappear on hover without delving into javascript*/
 }
 
 #gameScreen {
