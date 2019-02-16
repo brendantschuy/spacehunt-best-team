@@ -78,8 +78,10 @@ h2 {
 }
 
 #controls-scan {
-	background: url("..\\img\\scan.gif") no-repeat center;
+	background: url("..\\img\\scan.gif") no-repeat right;
 	display: inline-block;
+	margin-top: 10px;
+	padding-left: 75px;
 }
 
 .ctrls {
@@ -90,7 +92,6 @@ h2 {
 	width: 90px;
 	height: 90px;
 	padding: 6px;
-	/*border-radius: 8px;*/
 }
 
 .scan {
