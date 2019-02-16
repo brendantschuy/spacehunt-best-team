@@ -60,14 +60,14 @@ h2 {
 #controls-left {
 	background: url("..\\img\\left_button.png") no-repeat center;
 	display: inline-block;
-	padding-left: 40px;
+	padding-left: 20px;
 	padding-bottom: 6px;
 }
 
 #controls-right {
 	background: url("..\\img\\right_button.png") no-repeat right;
 	display: inline-block;
-	padding-left: 75px;
+	padding-left: 70px;
 	padding-bottom: 6px;
 }
 
@@ -77,16 +77,32 @@ h2 {
 	padding-left: 100px;
 }
 
+#controls-scan {
+	background: url("..\\img\\scan.gif") no-repeat center;
+	display: inline-block;
+}
+
 .ctrls {
 	color: transparent;
 	font-size: 12px;
 	text-align: center;
 	display: inline-block;
-	width: 75px;
-	height: 75px;
+	width: 90px;
+	height: 90px;
 	padding: 6px;
 	/*border-radius: 8px;*/
 }
+
+.scan {
+	color: transparent;
+	font-size: 12px;
+	text-align: center;
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	padding: 6px;
+}
+
 
 .ctrls:hover {
   	color: white;
@@ -109,23 +125,23 @@ h2 {
 }
 
 .center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
 }
 
 button {
-    background-color: transparent;
-    border: none;
-    display: none;
-    height: 50px;
-    padding: 0;
-    margin: 0;
-    vertical-align: top;
-    width: 104px;
+	background-color: transparent;
+	border: none;
+	display: none;
+	height: 50px;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+	width: 104px;
 }
 
 button span {
-  display: none;
+	display: none;
 }
