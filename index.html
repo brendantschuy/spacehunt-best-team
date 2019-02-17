@@ -1,7 +1,6 @@
 <html>
-
 <head>
-	<title>SpaceHunt Game - CS300 - Best Team</title>
+	<title>SpaceHunt - CS300 - Best Team</title>
 
 	<script src="scripts/audio.js" type="text/javascript"></script>
 	<script src="scripts/globals.js" type="text/javascript"></script>
@@ -13,23 +12,18 @@
 	<script src="scripts/start.js" type="text/javascript"></script>
 	<script src="scripts/recipe.js" type="text/javascript"></script>
 	<script src="scripts/celestialmap.js" type="text/javascript"></script>
-	<link rel="stylesheet" href="css/format.css" />
+	<link rel="stylesheet" media="screen and (min-width: 1510px)" href="css/format.css" />
+	<link rel="stylesheet" media="screen and (max-width: 1509px)" href="css/smallscreen.css" />
 
-	<!-- <header class="game title">
-		<h1>Space Hunt</h1>
-	</header> -->
-	
-	<p><img src="img/spacehunt_logo.png" alt="SpaceHunt" class="center" height=120px width=115px></p>
+	<header>
+		<p><img src="img/spacehunt_logo.png" alt="SpaceHunt" height=120px width=715px></p>
+	</header>
 </head>
 
 <body onload="start()">
-	<div class="leftside" id="leftside">
-		<canvas  id="gameScreen" ></canvas>
-	</div>
-
-	<div class="rightside">
-		<h2<p><img src="img/controls.png" alt="Controls" height=65px width=325px></p></h2>
-		<div id="controls">
+	<div class="controls">
+		<h2<p><img src="img/controls.png" alt="Controls" height=55px width=320px></p></h2>
+		<div id="control-buttons">
 			<div id="controls-up">
 				<button class="ctrls" id="upBtn" type="button">UP</button><br />
 			</div>
@@ -49,16 +43,18 @@
 				<button class="scan" id="scan" type="button">SCAN</button><br />
 			</div>
 		</div>
+	</div>
 
-		<h2><p><img src="img/development_options.png" alt="dev-options" height=70px width=575px></p></h2>
-		<div id="dev-options">
+	<div class="dev-options" id="widescreenOnly">
+		<h2><p><img src="img/development_options.png" alt="Development Options" height=55px width=315px></p></h2>
+		<div id="dev">
 			<div id="dev-mode">
 				<input type="checkbox" id="devMode" name="devMode">Developer Mode</input>
 			</div>
 			<div id="wormhole-mode">
 				<input type="checkbox" id="randWormholes" name="randWormholes">Random Wormholes Mode</input>
 			</div>
-		<!--This checkbox does not work yet. Attempted to add some functionality but haven't gotten far. -->
+			<!--This checkbox does not work yet. Attempted to add some functionality but haven't gotten far. -->
 			<div id="bgmusic">
 				<input type="checkbox" id="bgm" onchange="togglePlay();">Background Music</input>
 			</div>
@@ -66,6 +62,29 @@
 				<input type="checkbox" id="hud" name="hud">Toggle HUD</input>
 			</div>
 		</div>
-</body>
+	</div>
 
+	<div class="game">
+			<canvas  id="gameScreen" ></canvas>
+	</div>
+
+	<div class="dev-options" id="smallscreenOnly">
+		<h2><p><img src="img/development_options.png" alt="Development Options" height=55px width=315px></p></h2>
+		<div id="dev">
+			<div id="dev-mode">
+					<input type="checkbox" id="devMode" name="devMode">Developer Mode</input>
+			</div>
+			<div id="wormhole-mode">
+					<input type="checkbox" id="randWormholes" name="randWormholes">Random Wormholes Mode</input>
+			</div>
+			<!--This checkbox does not work yet. Attempted to add some functionality but haven't gotten far. -->
+			<div id="bgmusic">
+					<input type="checkbox" id="bgm" onchange="togglePlay();">Background Music</input>
+			</div>
+			<div id="dev-options-hud">
+					<input type="checkbox" id="hud" name="hud">Toggle HUD</input>
+			</div>			
+		</div>
+	</div>
+</body>
 </html>

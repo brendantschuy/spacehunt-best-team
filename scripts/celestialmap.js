@@ -11,7 +11,10 @@ function drawMapButton(){
   	  showMap();
   	}
     //element.style.right = GAME_SCREEN_WIDTH;
-    left.appendChild(element);
+    
+    // Not sure what this does exactly, but causes a null and game screen will not 
+    //   show on index.html when uncommented <---------------------------------------
+    //left.appendChild(element);
   }else {
     removeElement("mapicon");
     drawMapButton();
