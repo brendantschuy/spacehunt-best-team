@@ -70,29 +70,29 @@ class Ship 	//class names capitalized per js convention
 	checkBoundary()
 	{
 		if(this.randWormholes == 1){
-			if(this.cpy > MAP_MAX_Y || this.cpy < MAP_MIN_Y ||
-			   this.cpx > MAP_MAX_X || this.cpx < MAP_MIN_X){
-				//alert("You entered a wormhole! You will now be transported to another random wormhole!");
-				this.x = 10 * GRID_SIZE;
-				this.y = 10 * GRID_SIZE;
+			if(this.cpy >= MAP_MAX_Y || this.cpy <= MAP_MIN_Y ||
+			   this.cpx >= MAP_MAX_X || this.cpx <= MAP_MIN_X){
+				alert("You entered a wormhole! You will now be transported to somewhere random in space!");
+				this.x = (Math.floor(Math.random() * (MAP_MAX_X-3)) + 2) * GRID_SIZE;
+				this.y = (Math.floor(Math.random() * (MAP_MAX_Y-3)) + 2) * GRID_SIZE;
 				this.restoreDefaults();
 			}
 		}
 		else {
 	 		if(this.cpy >= MAP_MAX_Y){
-				//alert("You entered a wormhole! You will now be transported to the other side of space!");
+				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.y = (MAP_MIN_Y * GRID_SIZE) + GRID_SIZE;
 			}
 			else if(this.cpy <= MAP_MIN_Y){
-				//alert("You entered a wormhole! You will now be transported to the other side of space!");
+				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.y = (MAP_MAX_Y * GRID_SIZE) - GRID_SIZE;
 			}
 			if(this.cpx >= MAP_MAX_X){
-				//alert("You entered a wormhole! You will now be transported to the other side of space!");
+				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.x = (MAP_MIN_X * GRID_SIZE) + GRID_SIZE;
 			}
 			else if(this.cpx <= MAP_MIN_X){
-				//alert("You entered a wormhole! You will now be transported to the other side of space!");
+				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.x = (MAP_MAX_X * GRID_SIZE) - GRID_SIZE;
 			}
 		}
