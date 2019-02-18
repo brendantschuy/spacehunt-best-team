@@ -366,6 +366,7 @@ function start()
 		}
 		for(i = 0; i< this.obstacles.length; ++i){
 			if(((Math.abs(this.obstacles[i].x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.obstacles[i].y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
+				this.obstacles[i].visible = true;
 				this.obstacles[i].sprite.src = "img/rock.png";
 			}
 		}
@@ -374,6 +375,7 @@ function start()
 			this.potion.sprite.src = "img/energypotion.png";
 		}
 		ship.supplies -= (ship.originalSupplies * .02);
+		showMap(obstacles);
 	}
 
 	function toggleHud()
@@ -384,5 +386,6 @@ function start()
 	//kicks it all off
 	drawBackground("gameScreen");
 	drawFrame();
+	showMap(obstacles);
 
 }

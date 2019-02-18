@@ -11,6 +11,7 @@ class Obstacle
 		this.cpx = cpx;
 		this.cpy = cpy;
 
+		var visible = false;
 		this.sprite = new Image();
 		//this.sprite.src = "img/rock.png";
 	}
