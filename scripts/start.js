@@ -28,9 +28,9 @@ function start()
 			writeHud();
 		}
 
-	    drawBackground();	//creates background and white grid
+	    drawBackground("gameScreen");	//creates background and white grid
 		drawTarget();		//draws red target indicating where ship will travel to
-	    drawThings();   	//draws things: ship, items, obstacles...
+	    drawThings("gameScreen");   	//draws things: ship, items, obstacles...
 
 	    if(!this.gameOver)	//bug fix: eliminates double messages
 	    {
@@ -77,9 +77,9 @@ function start()
 	}
 
 	//draws grid corresponding with CPs
-	function drawBackground()
+	function drawBackground(elementID)
 	{
-		var ctx = document.getElementById("gameScreen").getContext('2d');
+		var ctx = document.getElementById(elementID).getContext('2d');
 
 		//creates backdrop (opacity = 0.4 so it is see-through)
 	    ctx.fillStyle = "RGBA(0, 0, 0, 0.4)";
@@ -277,9 +277,9 @@ function start()
 	}
 
 	//draws obstacles, ship, other items on the canvas
-	function drawThings()
+	function drawThings(elementID)
 	{
-		var ctx = document.getElementById("gameScreen").getContext('2d');
+		var ctx = document.getElementById(elementID).getContext('2d');
 		ctx.beginPath();
 		ctx.save();
 	    ctx.translate(SHIP_ABS_X, SHIP_ABS_Y);				//place center of rotation at current center of ship
@@ -382,7 +382,7 @@ function start()
 	}
 	
 	//kicks it all off
-	drawBackground();
+	drawBackground("gameScreen");
 	drawFrame();
 
 }

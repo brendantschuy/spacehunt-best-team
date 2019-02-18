@@ -152,6 +152,10 @@ h2 {
   	width: 100px;
   	height: 100px;
   	background-size: 100px 100px;
+  	color: transparent;
+	font-size: 12px;
+	text-align: center;
+	padding: 6px;
 }
 
 #center, .center {
