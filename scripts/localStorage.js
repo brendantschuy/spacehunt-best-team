@@ -1,4 +1,4 @@
-// localStorage functions, work in progress 
+// localStorage.js, work in progress 
 
 // checks whether browser supports localStorage
 function supportsLocalStorage() {
@@ -9,7 +9,7 @@ function supportsLocalStorage() {
     }
   }
 
-// game state object
+// game state object, work in progress 
 var gameState = {
   shipXCoord: 0,
   shipYCoord: 0,
@@ -20,19 +20,24 @@ var gameState = {
   activeGame: false
 };
 
-// loads game from browser 
-function resume(gameState) {
-  if (!supportsLocalStorage() || localStorage["activeGame"] == "false")
-      return false; 
-	localStorage.getItem("state", JSON.parse(gameState));
-}
-
-// saves game state to browser, called whenever game state is changed
+// saves game state to browser 
 function save(gameState) {
-  if (!supportsLocalStorage()) 
-      return false; 
+  if (!supportsLocalStorage()) {
+    console.log("Browser does not support localStorage!");
+    return false; 
+  }
   localStorage.setItem("state", JSON.stringify(gameState));
   activeGame = true;
+}
+
+// loads game from browser 
+function resume(gameState) {
+  if (!supportsLocalStorage() || localStorage["activeGame"] == "false") {
+    console.log("Browser does not support localStorage!");
+    return false; 
+  }  
+  gameState = localStorage.getItem("state");
+  
 }
 
 // clears entire storage (might not need as separate function)
