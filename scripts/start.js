@@ -183,6 +183,8 @@ function start()
 
 	function initializeObjects()
 	{
+		// check for saved state. if it exists, load state. else, continue with new game
+
 		//create canvas, get context
 		var cvs = createCanvas();
 		this.ctx = cvs.getContext('2d');
@@ -204,6 +206,8 @@ function start()
 		this.recipe = new Recipe(1400, 1150, 11, 9);
 		ship.updatecp();
 	}
+
+	
 
 	function setUpEventListeners()
 	{	
