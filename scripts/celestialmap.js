@@ -70,7 +70,7 @@ function drawGridMap(elementID) {
   function drawObstaclesMap(ctx,obstacles) {
     obstacles.forEach(function (rock)
       {
-        if(!rock.visible){
+        if(rock.visible){
           ctx.beginPath();
           ctx.fillStyle = "red";
           ctx.fillRect(rock.x/(128/4),rock.y/(128/4),5,5);
