@@ -1,4 +1,4 @@
-// localStorage functions, work in progress 
+/*// localStorage functions, work in progress 
 
 // checks whether browser supports localStorage
 function supportsLocalStorage() {
@@ -38,7 +38,7 @@ function save(gameState) {
 // clears entire storage (might not need as separate function)
 function clearAll() {
 	return localStorage.clear();
-}
+}*/
 
 
 /* still need to figure out where to get ship's location, remaining supplies, remaining energy,
