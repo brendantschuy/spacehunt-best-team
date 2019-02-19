@@ -9,7 +9,7 @@ function supportsLocalStorage() {
     }
   }
 
-// game state object
+// game state object, work in progress 
 var gameState = {
   shipXCoord: 0,
   shipYCoord: 0,
@@ -27,7 +27,7 @@ function resume(gameState) {
 	localStorage.getItem("state", JSON.parse(gameState));
 }
 
-// saves game state to browser, called whenever game state is changed
+// saves game state to browser 
 function save(gameState) {
   if (!supportsLocalStorage()) 
       return false; 
