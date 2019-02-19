@@ -158,6 +158,10 @@ h2 {
 	padding: 6px;
 }
 
+#map{
+	background: url("..\\img\\parchment.jpg") no-repeat 0px 0px;
+}
+
 #center, .center {
 	margin-left: auto;
 	margin-right: auto;

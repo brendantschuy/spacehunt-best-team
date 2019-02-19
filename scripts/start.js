@@ -196,8 +196,15 @@ function start()
 		this.aRock = new Obstacle(1150, 1150, 9, 9);
 		this.bRock = new Obstacle(1400, 1400, 11, 11);
 		this.cRock = new Obstacle(800, 800, 6, 6);
+		this.dRock = new Obstacle(16383, 16383, 128, 128);
+		this.eRock = new Obstacle(16383/2, 16383/2, 128/2, 128/2);
+		this.fRock = new Obstacle(16383, 0, 128, 0);
+		this.gRock = new Obstacle(0, 16383, 0, 128);
+		this.hRock = new Obstacle(0, 0, 0, 0);
+		this.iRock = new Obstacle(128, 128, 1, 1);
 
-		this.obstacles = new Array(aRock, bRock, cRock);
+		this.obstacles = new Array(aRock, bRock, cRock, dRock, eRock, fRock, gRock, hRock, iRock);
+
 
 		//test energy potion
 		this.potion = new EnergyPotion(1150, 1400, 9, 11, 200);
