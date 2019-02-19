@@ -177,3 +177,12 @@ button {
 button span {
 	display: none;
 }
+
+.time {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	color: red;
+	padding-top: 12px;
+	padding-bottom: 1px;
+}
