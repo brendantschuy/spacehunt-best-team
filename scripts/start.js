@@ -5,6 +5,7 @@
 function start()
 {
 	this.gameOver = false;
+	this.gameWon = false;
 	this.displayHud = document.getElementById("hud").checked;
 	this.speedRun = document.getElementById("speedrun").checked;
 
@@ -171,9 +172,12 @@ function start()
 	
 	function win(){
 		if((this.ship.cpx == this.recipe.cpx) && (this.ship.cpy == this.recipe.cpy)){
-			alert("You found the recipe! Congratulations! You win!");
-			this.gameOver = true;
-			window.location.reload();	//changed to be a bit more clear than location = location
+			if(!this.gameWon)
+			{
+				alert("You found the recipe! Congratulations! You win!");
+				window.location.reload();	//changed to be a bit more clear than location = location
+			}
+			this.gameWon = true;
 		}
 	}
 
@@ -400,11 +404,12 @@ function start()
 	function SpeedRunMode(){
 		var confirmStart = confirm("You will enter speed run mode. Is this okay?");
 		if(confirmStart == true){
+			document.getElementById("bgmusic").innerHTML = '<iframe src="audio/speedrun.mp3" allow="autoplay" id="audio" style="display:none"></iframe>';
 			var timelimit = 10;
 			var downloadTimer = setInterval(function(){
-			document.getElementById("speedrun").textContent = "Time: " + timelimit;
+			document.getElementById("timer").textContent = "Time: " + timelimit;
 			timelimit--;
-			if(timelimit <= 0) {
+			if(timelimit < 0) {
 				if(!this.gameOver){
 					this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
 				}
@@ -423,6 +428,8 @@ function start()
 	drawBackground("gameScreen");
 	drawFrame();
 	showMap(obstacles);
+	//For testing purposes
+	//SpeedRunMode();
 
 }
 
