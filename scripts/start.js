@@ -29,9 +29,9 @@ function start()
 		{
 			writeHud();
 		}
-		if(this.speedRun){ 
-			SpeedRunMode();
-		}
+		//if(this.speedRun){ //if this is called every tinme a frame is drawn the user will just be spammed with prompts
+		//	SpeedRunMode();
+		//}
 
 	    drawBackground("gameScreen");	//creates background and white grid
 		drawTarget();		//draws red target indicating where ship will travel to
@@ -247,6 +247,10 @@ function start()
 		{
 			toggleHud();
 		});
+		document.getElementById("speedrun").addEventListener("click", function()
+		{
+			toggleSpeedRun();
+		});
 		document.getElementById("bgmusic").addEventListener("click", function()
 		{
 			backgroundMusic();
@@ -400,6 +404,7 @@ function start()
 	
 	function toggleSpeedRun(){ 
 		this.speedRun = !(this.speedRun);
+		if(this.speedRun) SpeedRunMode();
 	}
 	function SpeedRunMode(){
 		var confirmStart = confirm("You will enter speed run mode. Is this okay?");
@@ -430,7 +435,7 @@ function start()
 	showMap(obstacles);
 	//For testing purposes
 	//SpeedRunMode();
-
+	
 }
 
 	
