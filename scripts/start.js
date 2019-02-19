@@ -327,7 +327,14 @@ function start()
 	{
 		//rotate if ship isn't facing upward
 	    ctx.rotate(ship.angle * Math.PI / 180);		//rotate the entire ctx/drawing object
-	    ctx.drawImage(ship.sprite, -SHIP_WIDTH/2, -SHIP_HEIGHT/2);		//centered at x, y
+	    if(this.gameOver)
+	    {
+	    	ctx.drawImage(ship.sprite, -SHIP_WIDTH/2 - GRID_SIZE/4, -SHIP_HEIGHT/2 - GRID_SIZE/4)
+	    }
+	    else
+	    {
+	    	ctx.drawImage(ship.sprite, -SHIP_WIDTH/2, -SHIP_HEIGHT/2);		//centered at x, y
+	    }
    
 	    //go back to original ctx
 	    ctx.restore();

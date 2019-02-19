@@ -25,8 +25,7 @@ function showMap(obstacles){
   }
 }
 
-function drawGridMap(elementID,obstacles)
-  {
+function drawGridMap(elementID) {
     var ctx = document.getElementById(elementID).getContext('2d');
 
     //creates backdrop (opacity = 0.4 so it is see-through)
@@ -51,19 +50,17 @@ function drawGridMap(elementID,obstacles)
       ctx.closePath();
   }
 
-  function drawThingsMap(elementID)
-  {
+  function drawThingsMap(elementID,obstacles) {
     var ctx = document.getElementById(elementID).getContext('2d');
     ctx.beginPath();
     ctx.save();
 
-    drawObstaclesMap(ctx);
+    drawObstaclesMap(ctx,obstacles);
     drawItemsMap(ctx);
   }
 
   //draws all obstacles (for now, just asteroids)
-  function drawObstaclesMap(ctx)
-  {
+  function drawObstaclesMap(ctx,obstacles) {
     obstacles.forEach(function (rock)
       {
         if(rock.visible){
