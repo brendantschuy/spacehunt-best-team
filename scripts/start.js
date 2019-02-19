@@ -5,6 +5,7 @@
 function start()
 {
 	this.gameOver = false;
+	this.gameWon = false;
 	this.displayHud = document.getElementById("hud").checked;
 	this.speedRun = document.getElementById("speedrun").checked;
 
@@ -171,9 +172,12 @@ function start()
 	
 	function win(){
 		if((this.ship.cpx == this.recipe.cpx) && (this.ship.cpy == this.recipe.cpy)){
-			alert("You found the recipe! Congratulations! You win!");
-			this.gameOver = true;
-			window.location.reload();	//changed to be a bit more clear than location = location
+			if(!this.gameWon)
+			{
+				alert("You found the recipe! Congratulations! You win!");
+				window.location.reload();	//changed to be a bit more clear than location = location
+			}
+			this.gameWon = true;
 		}
 	}
 
