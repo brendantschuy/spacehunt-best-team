@@ -6,6 +6,7 @@ function start()
 {
 	this.gameOver = false;
 	this.displayHud = document.getElementById("hud").checked;
+	this.speedRun = document.getElementById("speedrun").checked;
 
 	//for debugging purposes
 	this.numFrames = 0;
@@ -26,6 +27,9 @@ function start()
 		if(this.displayHud)
 		{
 			writeHud();
+		}
+		if(this.speedRun){ 
+			SpeedRunMode();
 		}
 
 	    drawBackground("gameScreen");	//creates background and white grid
@@ -390,9 +394,36 @@ function start()
 		this.displayHud = !(this.displayHud);
 	}
 	
+	function toggleSpeedRun(){ 
+		this.speedRun = !(this.speedRun);
+	}
+	function SpeedRunMode(){
+		var confirmStart = confirm("You will enter speed run mode. Is this okay?");
+		if(confirmStart == true){
+			var timelimit = 10;
+			var downloadTimer = setInterval(function(){
+			document.getElementById("speedrun").textContent = "Time: " + timelimit;
+			timelimit--;
+			if(timelimit <= 0) {
+				if(!this.gameOver){
+					this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
+				}
+				this.gameOver = true;
+				setTimeout(function(){
+					alert("You ran out of time! Game over!");
+					window.location.reload();	
+				}, 1000);
+				clearInterval(downloadTimer);
+			}
+    			}, 1000);
+		} 
+	}
+
 	//kicks it all off
 	drawBackground("gameScreen");
 	drawFrame();
 	showMap(obstacles);
 
 }
+
+	
