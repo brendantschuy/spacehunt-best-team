@@ -42,7 +42,8 @@ class Celeron {
 		this.maxHeight = cpy + 1;	
 
 		this.sprite = new Image();
-		//this.sprite.src = "img/celeron.png";
+		this.visible = true;
+		this.sprite.src = "img/celeron.png";
 	}
 }
 
@@ -62,7 +63,8 @@ class Xeon{
 		this.maxHeight = cpy + 1;	
 
 		this.sprite = new Image();
-		//this.sprite.src = "img/xeon.png";
+		this.visible = true;
+		this.sprite.src = "img/xeon.png";
 	}
 }
 
@@ -82,6 +84,7 @@ class Ryzen {
 		this.maxHeight = cpy + 1;	
 
 		this.sprite = new Image();
-		//this.sprite.src = "img/ryzen.png";
+		this.visible = true;	
+		this.sprite.src = "img/ryzen.png";
 	}
 }

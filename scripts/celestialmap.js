@@ -4,8 +4,8 @@ function showMap(obstacles){
     var themap = document.createElement("canvas");
     themap.id = "mapCanvas";
     var map = themap.getContext('2d');
-    themap.height = (MAP_HEIGHT * GRID_SIZE)/1.1;
-    themap.width = (MAP_WIDTH * GRID_SIZE)/1.1;
+    themap.height = (MAP_HEIGHT * GRID_SIZE)/1.1; //581 px
+    themap.width = (MAP_WIDTH * GRID_SIZE)/1.1;   //581 px
     themap.style.left = 29.5;
     themap.style.top = -3.5;
     document.getElementById("map").style.backgroundSize = themap.height + "px " +  themap.width + "px";
@@ -80,7 +80,11 @@ function showMap(obstacles){
             case("Asteroid") : 
               ctx.fillStyle = "red";
               break;
-            case("Planet") :
+            case("Celeron") : case("Xeon") : case ("Ryzen") : 
+              ctx.fillStyle = "blue";
+              ctx.fillText(objName, rock.x/(128/4) + 5, rock.y/(128/4));
+              break;
+            case("Planet") : 
               ctx.fillStyle = "blue";
               break;
             case("EnergyPotion") : 
@@ -95,7 +99,7 @@ function showMap(obstacles){
           ctx.closePath();
         }
       });
-    
+
     }
 
     //draws potions and recipe, etc

@@ -225,10 +225,10 @@ function start()
 		obstacles.push(new Asteroid(128, 128, 1, 1));
 		obstacles.push(new EnergyPotion(1150, 1400, 9, 11, 200));
 		obstacles.push(new Recipe(1400, 1150, 11, 9));
-		obstacles.push(new Planet(1, 1500, 1500, 11, 11));
-		obstacles.push(new Planet(2, 1600, 1600, 12, 12));
-		obstacles.push(new Planet(3, 1000, 1000, 7, 7));
-		
+		obstacles.push(new Celeron(500, 500, 4, 4));
+		obstacles.push(new Xeon(1600, 1600, 12, 12));
+		obstacles.push(new Ryzen(2400, 2400, 18, 18));
+
 		ship.updatecp();
 	}
 

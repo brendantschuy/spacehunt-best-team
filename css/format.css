@@ -1,16 +1,27 @@
 html { 
-	background:  url("..\\video\\background.gif") no-repeat center center fixed;
+	background:  url("../video/background.gif") no-repeat center center fixed;
 	background-size: cover;
 }
 
-header {
+#widescreen-header {
 	color: white;
 	height: 115px;
 	display: block;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 10px;
+	padding: 0px;
+}
+
+#smallscreen-header
+{
+	color: white;
+	height: 0px;
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0px;
 }
 
 body {
@@ -33,7 +44,7 @@ h2 {
 	font-size: 1.7em;
 }
 
-.controls {
+.controls-div{
 	background-color: rgba(0, 0, 0, 0.45);
 	color: white;
 	width: 300px;
@@ -66,6 +77,11 @@ h2 {
 	float: right;
 }
 
+.dev-options-button-text
+{
+	font-size: 18px;
+}
+
 /*For testing purposes: to see dimensions of divs*/
 /*.dev-options, .controls, .game {
 	background-color: purple;
@@ -76,44 +92,44 @@ h2 {
 }
 
 #controls-up {
-	background: url("..\\img\\up_button.png") no-repeat center;
+	background: url("../img/up_button.png") no-repeat center;
 	padding-left: 100px;
 }
 
 #controls-down {
-	background: url("..\\img\\down_button.png") no-repeat center;
+	background: url("../img/down_button.png") no-repeat center;
 	padding-left: 100px;
 	padding-bottom: 30px;
 }
 
 #controls-left {
-	background: url("..\\img\\left_button.png") no-repeat center;
+	background: url("../img/left_button.png") no-repeat center;
 	display: inline-block;
 	padding-left: 10px;
 	padding-bottom: 6px;
 }
 
 #controls-right {
-	background: url("..\\img\\right_button.png") no-repeat right;
+	background: url("../img/right_button.png") no-repeat right;
 	display: inline-block;
 	padding-left: 95px;
 	padding-bottom: 6px;
 }
 
 #controls-move {
-	background: url("..\\img\\move_button.png") no-repeat center;
+	background: url("../img/move_button.png") no-repeat center;
 	margin-top: 10px;
 	padding-left: 100px;
 }
 
 #controls-scan {
-	background: url("..\\img\\scan.gif") no-repeat right;
+	background: url("../img/scan.gif") no-repeat right;
 	display: inline-block;
 	margin-top: 10px;
 	padding-left: 75px;
 }
 
-.ctrls {
+.controls-button {
 	color: transparent;
 	font-size: 12px;
 	text-align: center;
@@ -122,6 +138,32 @@ h2 {
 	height: 90px;
 	padding: 6px;
 }
+
+#main-logo
+{
+	 height: 120px;
+	 width: 715px;
+}
+
+#controls-banner
+{
+	height: 55px;
+	width: 320px;
+}
+
+#dev-options-banner
+{
+	height: 110px;
+	width: 400px;
+}
+
+#celestial-map-banner
+{
+	height: 110px;
+	width: 400px;
+}
+
+
 
 .scan {
 	color: transparent;
@@ -145,7 +187,7 @@ h2 {
 }
 
 #mapicon{
-  	background: url("..\\img\\map.png") no-repeat 0px 0px;
+  	background: url("../img/map.png") no-repeat 0px 0px;
 	position: relative;
   	display: inline-block;
   	border: 0;

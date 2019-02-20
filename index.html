@@ -17,30 +17,30 @@
 	<link rel="stylesheet" media="screen and (min-width: 1510px)" href="css/format.css" />
 	<link rel="stylesheet" media="screen and (max-width: 1509px)" href="css/smallscreen.css" />
 
-	<header>
-		<p><img src="img/spacehunt_logo.png" alt="SpaceHunt" height=120px width=715px></p>
-	</header>
-	<div class="time" id="timer"></div>
 </head>
 
 <body onload="start()">
-	<div class="controls">
-		<h2<p><img src="img/controls.png" alt="Controls" height=55px width=320px></p></h2>
-		<div id="control-buttons">
+	<div id="widescreen-header">
+	<div><img src="img/spacehunt_logo.png" id="main-logo" alt="SpaceHunt"></div>
+	</div>
+	<div class="time" id="timer"></div>
+	<div class="controls-div">
+		<h2><div><img src="img/controls.png" alt="Controls" id="controls-banner"></div></h2>
+		<div id="control-buttons-div">
 			<div id="controls-up">
-				<button class="ctrls" id="upBtn" type="button">UP</button><br />
+				<button class="controls-button" id="upBtn" type="button">UP</button><br />
 			</div>
 			<div id="controls-left">
-				<button class="ctrls" id="leftBtn" type="button">LEFT</button>
+				<button class="controls-button" id="leftBtn" type="button">LEFT</button>
 			</div>
 			<div id="controls-right">
-				<button class="ctrls" id="rightBtn" type="button">RIGHT</button><br />
+				<button class="controls-button" id="rightBtn" type="button">RIGHT</button><br />
 			</div>
 			<div id="controls-down">
-				<button class="ctrls" id="downBtn" type="button">DOWN</button><br />
+				<button class="controls-button" id="downBtn" type="button">DOWN</button><br />
 			</div>
 			<div id="controls-move">
-				<button class="ctrls" id="moveBtn" type="button">MOVE</button>
+				<button class="controls-button" id="moveBtn" type="button">MOVE</button>
 			</div>
 			<div id="controls-scan">
 				<button class="scan" id="scan" type="button">SCAN</button><br />
@@ -55,26 +55,26 @@
 
 		<!-- Repeat all functions in the "smallscreenOnly" div down below the game console -->
 
-		<h2><p><img src="img/development_options.png" alt="Development Options" height=110px width=400px></p></h2>
+		<h2><div><img src="img/development_options.png" alt="Development Options" id="dev-options-banner"></div></h2>
 		<div id="dev">
 			<div id="dev-mode">
-				<input type="checkbox" id="devMode" name="devMode">Developer Mode</input>
+				<input type="checkbox" id="devMode" name="devMode"><div class="dev-options-button-text">Developer Mode</div>
 			</div>
 			<div id="wormhole-mode">
-				<input type="checkbox" id="randWormholes" name="randWormholes">Random Wormholes Mode</input>
+				<input type="checkbox" id="randWormholes" name="randWormholes"><div class="dev-options-button-text">Random Wormholes Mode</div>
 			</div>
 			<!--This checkbox does not work yet. Attempted to add some functionality but haven't gotten far. -->
 			<div id="bgmusic">
-				<input type="checkbox" id="bgm" onchange="togglePlay();">Background Music</input>
+				<input type="checkbox" id="bgm" onchange="togglePlay();"><div class="dev-options-button-text">Background Music</div>
 			</div>
 			<div id="dev-options-hud">
-				<input type="checkbox" id="hud" name="hud">Toggle HUD</input>
+				<input type="checkbox" id="hud" name="hud"><div class="dev-options-button-text">Toggle HUD</div>
 			</div>
 			<div id="speedRunMode">
-				<input type="checkbox" id="speedrun" name="speedrun">Speed Run Mode</input>
+				<input type="checkbox" id="speedrun" name="speedrun"><div class="dev-options-button-text">Speed Run Mode</div>
 			</div>
 		</div>
-		<h2><p><img src="img/celestial_map_banner.png" alt="Celestial Map" height=70px width=400px></p></h2>
+		<h2><div><img src="img/celestial_map_banner.png"  id="celestial-map-banner" alt="Celestial Map"</div></h2>
 		<div class="map" id="map">
 			<br>
 		</div>
@@ -84,28 +84,31 @@
 			<canvas  id="gameScreen" ></canvas>
 	</div>
 
-	<div class="dev-options" id="smallscreenOnly">
-		<h2><p><img src="img/development_options.png" alt="Development Options" height=110px width=400px></p></h2>
-		<div id="dev">
+	<div class="right-side" id="smallscreenOnly">
+		<div id="smallscreen-header">
+		<div><img src="img/spacehunt_logo.png" id="main-logo" alt="SpaceHunt"></div>
+		</div>
+		<div id="dev-buttons">
 			<div id="dev-mode">
-					<input type="checkbox" id="devMode" name="devMode">Developer Mode</input>
+				<div class="dev-options-button-text"><input type="checkbox" id="devMode" name="devMode">Developer Mode</div>
 			</div>
 			<div id="wormhole-mode">
-					<input type="checkbox" id="randWormholes" name="randWormholes">Random Wormholes Mode</input>
+				<div class="dev-options-button-text"><input type="checkbox" id="randWormholes" name="randWormholes">Random Wormholes Mode</div>
 			</div>
 			<!--This checkbox does not work yet. Attempted to add some functionality but haven't gotten far. -->
 			<div id="bgmusic">
-					<input type="checkbox" id="bgm" onchange="togglePlay();">Background Music</input>
+				<div class="dev-options-button-text"><input type="checkbox" id="bgm" onchange="togglePlay();">Background Music</div>
 			</div>
 			<div id="dev-options-hud">
-					<input type="checkbox" id="hud" name="hud">Toggle HUD</input>
-			</div>		
+				<div class="dev-options-button-text"><input type="checkbox" id="hud" name="hud">Toggle HUD</div>
+			</div>
 			<div id="speedRunMode">
-				<input type="checkbox" id="speedrun" name="speedrun">Speed Run</input>
-			</div>	
-			
+				<div class="dev-options-button-text"><input type="checkbox" id="speedrun" name="speedrun">Speed Run Mode</div>
+			</div>
 		</div>
-		<h2><p><img src="img/celestial_map_banner.png" alt="Celestial Map" height=70px width=400px></p></h2>
+		<div id="dev-options-banner-container"><img src="img/development_options.png" alt="Development Options" id="dev-options-banner"></div>
+
+		<h2><div><img src="img/celestial_map_banner.png" id="celestial-map-banner" alt="Celestial Map"></div></h2>
 		<div class="map" id="map">
 			<br>
 		</div>
