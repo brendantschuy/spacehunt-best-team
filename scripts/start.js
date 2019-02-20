@@ -2,13 +2,15 @@
 
 //this is the first javascript function to be called
 
+var explosionSound;
+
 function start()
 {
 	this.gameOver = false;
 	this.gameWon = false;
 	this.displayHud = document.getElementById("hud").checked;
 	this.speedRun = document.getElementById("speedrun").checked;
-	//this.explosionSound = new sound("explosion.mp3");
+	explosionSound = new sound("explosion.mp3");
 
 	//for debugging purposes
 	this.numFrames = 0;
@@ -143,6 +145,7 @@ function start()
 				if(!this.gameOver)
 				{
 					this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
+					explosionSound.play();
 				}
 				this.gameOver = true;
 				
@@ -368,6 +371,7 @@ function start()
 	    if(this.gameOver)
 	    {
 	    	this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
+		explosionSound.play();
 	    	if(this.ship.animationFrame == 16)
 	    	{
 	    		this.ship.sprite.src = "";
@@ -447,7 +451,21 @@ function start()
 	showMap(obstacles);
 	//For testing purposes
 	//SpeedRunMode();
-	
+}
+
+function sound(src) {
+	this.sound = document.createElement("audio");
+	this.sound.src = src;
+	this.sound.setAttribute("preload", "auto");
+	this.sound.setAttribute("controls", "none");
+	this.sound.style.display = "none";
+	document.body.appendChild(this.sound);
+	this.play = function(){
+		this.sound.play();
+  	}
+  	this.stop = function(){
+    		this.sound.pause();
+  	}
 }
 
 	
