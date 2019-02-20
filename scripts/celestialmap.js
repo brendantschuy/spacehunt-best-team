@@ -1,11 +1,22 @@
+var mapRatio = 1;   //increases for smaller screen resolution
+var mapScale = 32;  //ratio of px on game to px on map
+
 function showMap(obstacles){
   var test = document.getElementById("mapCanvas");
   if(!test){
     var themap = document.createElement("canvas");
     themap.id = "mapCanvas";
     var map = themap.getContext('2d');
-    themap.height = (MAP_HEIGHT * GRID_SIZE)/1.1; //581 px
-    themap.width = (MAP_WIDTH * GRID_SIZE)/1.1;   //581 px
+
+    /*WIP: Trying to get map to work better at lower screen resolution
+    if(window.screen.availWidth < 1367)
+    {
+      mapRatio = 1.5;
+    }*/
+
+    themap.height = (MAP_HEIGHT * GRID_SIZE)/mapRatio/1.1; //581 px or 387 px, depending on screen res
+    themap.width = (MAP_WIDTH * GRID_SIZE)/mapRatio/1.1;   //581 px or 387 px, depending on screen res
+
     themap.style.left = 29.5;
     themap.style.top = -3.5;
     document.getElementById("map").style.backgroundSize = themap.height + "px " +  themap.width + "px";
@@ -22,8 +33,10 @@ function showMap(obstacles){
     //map.beginPath();
     //map.save();
     //map.translate(SHIP_ABS_X, SHIP_ABS_Y); 
+
     document.getElementById("map").appendChild(themap);
     //drawGridMap("theMap");
+
     drawThingsMap("mapCanvas",obstacles);   
 
   }else {
@@ -58,64 +71,67 @@ function showMap(obstacles){
       ctx.closePath();
   }*/
 
-  function drawThingsMap(elementID,obstacles) {
-    var ctx = document.getElementById(elementID).getContext('2d');
-    ctx.beginPath();
-    ctx.save();
+function drawThingsMap(elementID,obstacles) {
+  var ctx = document.getElementById(elementID).getContext('2d');
+  ctx.beginPath();
+  ctx.save();
 
-    drawObstaclesMap(ctx,obstacles);
-    drawItemsMap(ctx);
-  }
+  drawObstaclesMap(ctx,obstacles);
+  drawItemsMap(ctx);
+}
 
-  //draws all obstacles (for now, just asteroids)
-  function drawObstaclesMap(ctx,obstacles) {
-    obstacles.forEach(function (rock)
+//draws all obstacles (for now, just asteroids)
+function drawObstaclesMap(ctx,obstacles) {
+  themap = document.getElementById("map");
+  obstacles.forEach(function (item)
+  {
+    if(item.visible){
+      objName = item.constructor.name;
+      ctx.beginPath();
+
+      switch(objName)
       {
-        if(rock.visible){
-          objName = rock.constructor.name;
-          ctx.beginPath();
+        case("Asteroid") : 
+          ctx.fillStyle = "red";
+          break;
+        case("Celeron") : case("Xeon") : case ("Ryzen") : 
+          ctx.fillStyle = "blue";
+          ctx.fillText(objName, (item.x/mapScale)/mapRatio + 5, (item.y/mapScale)/mapRatio);
+          break;
+        case("Planet") : 
+          ctx.fillStyle = "blue";
+          break;
+        case("EnergyPotion") : 
+          ctx.fillStyle = "green";
+          break;
+        case("Recipe") :
+          ctx.fillStyle = "white";
+          break;
+      }
 
-          switch(objName)
-          {
-            case("Asteroid") : 
-              ctx.fillStyle = "red";
-              break;
-            case("Celeron") : case("Xeon") : case ("Ryzen") : 
-              ctx.fillStyle = "blue";
-              ctx.fillText(objName, rock.x/(128/4) + 5, rock.y/(128/4));
-              break;
-            case("Planet") : 
-              ctx.fillStyle = "blue";
-              break;
-            case("EnergyPotion") : 
-              ctx.fillStyle = "green";
-              break;
-            case("Recipe") :
-              ctx.fillStyle = "white";
-              break;
-          }
-          ctx.fillRect(rock.x/(128/4),rock.y/(128/4),5,5);
+      //alert(rock.x/mapScale/mapRatio + " and " + rock.y/mapScale/mapRatio);
+      ctx.fillRect((item.x/mapScale)/mapRatio,(item.y/mapScale)/mapRatio,5,5);
 
-          ctx.closePath();
-        }
-      });
-
+      ctx.closePath();
     }
+  });
 
-    //draws potions and recipe, etc
-    function drawItemsMap(ctx)
-    {
-      //draw 1 potion
-      
-      //draw potion if array of items?
-      //potion.forEach(function (p)
-      //{
-      //  if(confirmDraw(p.x, p.y))
-      //  {
-      //    ctx.drawImage(potion.sprite, p.x - ship.x, p.y - ship.y);
-      //  }
-      //});
-  }
+}
+
+  //draws potions and recipe, etc
+function drawItemsMap(ctx)
+{
+    //draw 1 potion
+    
+    //draw potion if array of items?
+    //potion.forEach(function (p)
+    //{
+    //  if(confirmDraw(p.x, p.y))
+    //  {
+    //    ctx.drawImage(potion.sprite, p.x - ship.x, p.y - ship.y);
+    //  }
+    //});
+}
 
 function removeElement(elementId) {
     // Removes an element from the document

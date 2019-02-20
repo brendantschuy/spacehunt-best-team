@@ -17,12 +17,13 @@ html {
 
 #smallscreen-header {
 	color: white;
-	height: 100px;
-	width: 300px;
+	height: 70px;
+	width: 420px;
 	display: block;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
+	float: left;
 	padding: 0px;
 }
 
@@ -74,7 +75,6 @@ h2 {
 	width: 400px;
 	height: 225px;
 	padding: 2px;
-	margin: 10px 10px 20px 10px;
     float: left;
 }
 
@@ -168,8 +168,8 @@ h2 {
 	height: 100px;
 	width: 300px;
 	float: left;
-	padding-top: 33px;
-	padding-bottom: 33px;
+	padding-top: 15px;
+	padding-bottom: 0px;
 }
 #dev-options-banner
 {
@@ -181,8 +181,8 @@ h2 {
 
 #celestial-map-banner
 {
-	height: 55px;
-	width: 200px;
+	height: 1px;
+	width: 1px;
 }
 
 
@@ -221,6 +221,15 @@ h2 {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+#map
+{
+	/*background-color: orange;*/
+	height: 426px;
+	width: 426px;
+}
+
+
 
 button {
 	background-color: transparent;
