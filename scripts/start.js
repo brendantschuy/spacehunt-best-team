@@ -52,6 +52,7 @@ function start()
 	//handles user input
 	function getInput(e)
 	{
+
 		if(e.keyCode == '32')		//spacebar
 		{
 			e.preventDefault();		//prevents this from moving the window/canvas around
@@ -59,28 +60,33 @@ function start()
 			ship.commitMovement();
 		}
 
-		if(e.keyCode == '37')		//left arrow key
+		if(e.keyCode == '37' || e.keyCode == '65')		//left arrow key
 		{
 			e.preventDefault();
 			ship.rotateLeft();
 		}
 
-		else if(e.keyCode == '38')		//up
+		else if(e.keyCode == '38' || e.keyCode == '87')		//up
 		{
 			e.preventDefault();
 			ship.increaseDistance();
 		}
 
-		else if(e.keyCode == '39')		//right
+		else if(e.keyCode == '39' || e.keyCode == '68')		//right
 		{
 			e.preventDefault();
 			ship.rotateRight();
 		}
 
-		else if(e.keyCode == '40')		//down
+		else if(e.keyCode == '40' || e.keyCode == '83')		//down
 		{
 			e.preventDefault();
 			ship.decreaseDistance();
+		}
+
+		else if(e.keyCode == '81' || e.keyCode == '17')
+		{
+			scan();
 		}
 	}
 
