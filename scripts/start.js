@@ -8,6 +8,7 @@ function start()
 	this.gameWon = false;
 	this.displayHud = document.getElementById("hud").checked;
 	this.speedRun = document.getElementById("speedrun").checked;
+	//this.explosionSound = new sound("explosion.mp3");
 
 	//for debugging purposes
 	this.numFrames = 0;
