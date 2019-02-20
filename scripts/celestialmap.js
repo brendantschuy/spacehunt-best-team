@@ -32,7 +32,8 @@ function showMap(obstacles){
   }
 }
 
-function drawGridMap(elementID) {
+//Never actually called:
+/*function drawGridMap(elementID) {
     var ctx = document.getElementById(elementID).getContext('2d');
 
     //creates backdrop (opacity = 0.4 so it is see-through)
@@ -55,7 +56,7 @@ function drawGridMap(elementID) {
           }
       }
       ctx.closePath();
-  }
+  }*/
 
   function drawThingsMap(elementID,obstacles) {
     var ctx = document.getElementById(elementID).getContext('2d');
@@ -71,14 +72,30 @@ function drawGridMap(elementID) {
     obstacles.forEach(function (rock)
       {
         if(rock.visible){
+          objName = rock.constructor.name;
           ctx.beginPath();
-          ctx.fillStyle = "red";
+
+          switch(objName)
+          {
+            case("Asteroid") : 
+              ctx.fillStyle = "red";
+              break;
+            case("Planet") :
+              ctx.fillStyle = "blue";
+              break;
+            case("EnergyPotion") : 
+              ctx.fillStyle = "green";
+              break;
+            case("Recipe") :
+              ctx.fillStyle = "white";
+              break;
+          }
           ctx.fillRect(rock.x/(128/4),rock.y/(128/4),5,5);
-          ctx.strokeStyle = "red";
-          ctx.stroke();
+
           ctx.closePath();
         }
       });
+    
     }
 
     //draws potions and recipe, etc

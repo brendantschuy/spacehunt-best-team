@@ -2,7 +2,7 @@
 
 //contains obstacle definition etc
 
-class Obstacle
+class Asteroid
 {
 	constructor(x, y, cpx, cpy)
 	{
@@ -13,6 +13,6 @@ class Obstacle
 
 		var visible = false;
 		this.sprite = new Image();
-		//this.sprite.src = "img/rock.png";
+		this.sprite.src = "img/rock.png";
 	}
 }

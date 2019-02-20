@@ -11,7 +11,7 @@ class Recipe
 		this.cpx = cpx;
 		this.cpy = cpy;	
 		this.sprite = new Image();
-		//this.sprite.src = "img/recipe.png"; //commented out because scan function sets the source now
+		this.sprite.src = "img/recipe.png"; //commented out because scan function sets the source now
 		
 	}
 }

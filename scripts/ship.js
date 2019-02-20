@@ -7,9 +7,9 @@ class Ship 	//class names capitalized per js convention
 	//currently, CPX = X and CPY = Y but that can change if angles allowed are lower		
 	constructor()
 	{	
-		this.dev = 0; //tag for toggling developer options like never dying
+		this.dev = false; //tag for toggling developer options like never dying
 		//can be improved probably
-		this.randWormholes = 0; // Following above example for development		
+		this.randWormholes = false; // Following above example for development		
 		this.maxEnergy = 1000;
 		this.energy = 1000;
 
@@ -69,7 +69,7 @@ class Ship 	//class names capitalized per js convention
 	//is out of bounds? teleports somewhere random if so
 	checkBoundary()
 	{
-		if(this.randWormholes == 1){
+		if(this.randWormholes == true){
 			if(this.cpy >= MAP_MAX_Y || this.cpy <= MAP_MIN_Y ||
 			   this.cpx >= MAP_MAX_X || this.cpx <= MAP_MIN_X){
 				alert("You entered a wormhole! You will now be transported to somewhere random in space!");
@@ -177,7 +177,7 @@ class Ship 	//class names capitalized per js convention
 	}
 	checkEnergy()
 	{
-		if(this.dev == 0){
+		if(this.dev == false){
 			if(this.energy <= 0){ 
 				alert("You ran out of energy! Game over.");
 				location = location;
@@ -187,7 +187,7 @@ class Ship 	//class names capitalized per js convention
 	}
 	//work in progress
 	checkSupplies(){
-		if(this.dev == 0){
+		if(this.dev == false){
 			if(this.supplies < (this.originalSupplies *.02)){
 				alert("You depleted your supplies! Game over.");
 				location = location;

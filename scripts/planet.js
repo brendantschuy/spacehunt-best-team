@@ -4,8 +4,9 @@
 
 class Planet
 {
-	constructor(x, y, cpx, cpy)
+	constructor(id, x, y, cpx, cpy)
 	{
+		this.idNumber = id;
 		this.x = x;
 		this.y = y;
 		this.cpx = cpx;
@@ -19,8 +20,9 @@ class Planet
 		this.maxHeight = cpy + 1;	
 
 		this.sprite = new Image();
+		this.visible = true;
 		//x is the number of each planet (1 - 7)
-		//this.sprite.src = "img/planet[x].png";
+		this.sprite.src = "img/planet" + this.idNumber + ".png";
 	}		
 }
 

@@ -10,7 +10,7 @@ function start()
 	this.gameWon = false;
 	this.displayHud = document.getElementById("hud").checked;
 	this.speedRun = document.getElementById("speedrun").checked;
-	explosionSound = new sound("explosion.mp3");
+	//var explosionSound = new sound("explosion.mp3");
 
 	//for debugging purposes
 	this.numFrames = 0;
@@ -42,8 +42,7 @@ function start()
 
 	    if(!this.gameOver)	//bug fix: eliminates double messages
 	    {
-	    	hitObstacle();	//check if rocket hits an obstacle after move. just experimental. far from perfect.
-	    	//go to next frame (I think this is at 60 fps max(?))
+	    	interact();	//check if we hit anything
 	    }
 	    requestAnimationFrame(drawFrame);		
 	    
@@ -144,51 +143,60 @@ function start()
 	}
 	
 	//work in progress.
+	function interact()
+	{
+		//not optimized at all (will search every obstacle regardless of how far away it is)
+		for(var i = 0; i < this.obstacles.length; i++)
+		{
+			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy))	
+			{
+				objName = this.obstacles[i].constructor.name;
+				if(objName == "EnergyPotion")
+				{
+					i = getPotion(i);		
+				}
+				else if(objName == "Recipe" && !this.gameWon)
+				{
+					win();
+				}
+				else if((objName == "Asteroid" || objName == "Planet") && !this.ship.dev && !this.gameOver)
+				{
+					hitObstacle();
+				}
+			}
+		}
+	}
+
 	function hitObstacle()
 	{
-		for(i = 0; i < this.obstacles.length; i++){
-			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy) && !(this.ship.dev) && !(this.gameOver)){
-				if(!this.gameOver)
-				{
-					this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
-					explosionSound.play();
-				}
-				this.gameOver = true;
-				
-				setTimeout(function()
-				{
-					alert("You hit an asteroid! Game over!");
-					window.location.reload();	//changed to be a bit more clear than location = location
-				}, 1000);
-			}
+		if(!this.gameOver)
+		{
+			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
 		}
+		this.gameOver = true;
+
+		setTimeout(function()
+		{
+			alert("You hit an asteroid! Game over!");
+			window.location.reload();	//changed to be a bit more clear than location = location
+		}, 1000);
 	}
 	
+	function win()
+	{
+		this.gameWon = true;
+		setTimeout(function()
+		{
+			alert("You've won the game!");
+			window.location.reload();
+		}, 1000);
+	}
 	//experimental
-	function getPotion()
-	{		
-		if((this.ship.cpx == this.potion.cpx) && (this.ship.cpy == this.potion.cpy)){
-			this.ship.energy += this.potion.hp;
-			if(this.ship.energy > this.ship.maxEnergy){
-				this.ship.energy = this.ship.maxEnergy;
-			}
-			delete potion.x;
-			delete potion.y;
-			delete potion.cpx;
-			delete potion.cpy;
-		}
-		
-	}
-	
-	function win(){
-		if((this.ship.cpx == this.recipe.cpx) && (this.ship.cpy == this.recipe.cpy)){
-			if(!this.gameWon)
-			{
-				alert("You found the recipe! Congratulations! You win!");
-				window.location.reload();	//changed to be a bit more clear than location = location
-			}
-			this.gameWon = true;
-		}
+	function getPotion(index)
+	{	
+		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
+		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
+		return index + 1;
 	}
 
 	function initializeObjects()
@@ -203,24 +211,24 @@ function start()
 		this.ship = new Ship();
 		this.target = new Target();
 
-		this.aRock = new Obstacle(1150, 1150, 9, 9);
-		this.bRock = new Obstacle(1400, 1400, 11, 11);
-		this.cRock = new Obstacle(800, 800, 6, 6);
-		this.dRock = new Obstacle(16383, 16383, 128, 128);
-		this.eRock = new Obstacle(16383/2, 16383/2, 128/2, 128/2);
-		this.fRock = new Obstacle(16383, 0, 128, 0);
-		this.gRock = new Obstacle(0, 16383, 0, 128);
-		this.hRock = new Obstacle(0, 0, 0, 0);
-		this.iRock = new Obstacle(128, 128, 1, 1);
+		this.obstacles = new Array();
 
-		this.obstacles = new Array(aRock, bRock, cRock, dRock, eRock, fRock, gRock, hRock, iRock);
-
-
-		//test energy potion
-		this.potion = new EnergyPotion(1150, 1400, 9, 11, 200);
-
-		//test recipe
-		this.recipe = new Recipe(1400, 1150, 11, 9);
+		//Later, this will be turned into a loop for either a) random gen or b) load from file.
+		obstacles.push(new Asteroid(1150, 1150, 9, 9));
+		obstacles.push(new Asteroid(1400, 1400, 11, 11));
+		obstacles.push(new Asteroid(800, 800, 6, 6));
+		obstacles.push(new Asteroid(16383, 16383, 128, 128));
+		obstacles.push(new Asteroid(16383/2, 16383/2, 128/2, 128/2));
+		obstacles.push(new Asteroid(16383, 0, 128, 0));
+		obstacles.push(new Asteroid(0, 16383, 0, 128));
+		obstacles.push(new Asteroid(0, 0, 0, 0));
+		obstacles.push(new Asteroid(128, 128, 1, 1));
+		obstacles.push(new EnergyPotion(1150, 1400, 9, 11, 200));
+		obstacles.push(new Recipe(1400, 1150, 11, 9));
+		obstacles.push(new Planet(1, 1500, 1500, 11, 11));
+		obstacles.push(new Planet(2, 1600, 1600, 12, 12));
+		obstacles.push(new Planet(3, 1000, 1000, 7, 7));
+		
 		ship.updatecp();
 	}
 
@@ -318,24 +326,27 @@ function start()
 	    ctx.translate(SHIP_ABS_X, SHIP_ABS_Y);				//place center of rotation at current center of ship
 
 	    drawObstacles(ctx);
-	    drawItems(ctx);
+	    //drawItems(ctx);
 	    drawShip(ctx);
 	}
 
 	//draws all obstacles (for now, just asteroids)
 	function drawObstacles(ctx)
 	{
-		obstacles.forEach(function (rock)
+		obstacles.forEach(function (obj)
 	    {
-	        if(confirmDraw(rock.x, rock.y))
+	        //if(confirmDraw(obj.x, obj.y))
+	    	//{
+	    	if(obj.visible)
 	    	{
-	    		ctx.drawImage(rock.sprite, rock.x - ship.x - GRID_SIZE/4, rock.y - ship.y - GRID_SIZE/4);
+	    		ctx.drawImage(obj.sprite, obj.x - ship.x - GRID_SIZE/4, obj.y - ship.y - GRID_SIZE/4);
 	    	}
-	    });
+	    	//}
+	    }, this);
   	}
 
   	//draws potions and recipe, etc
-  	function drawItems(ctx)
+  	/*function drawItems(ctx)
   	{
 	    //draw 1 potion
 	    if(confirmDraw(this.potion.x, this.potion.y)){ ctx.drawImage(potion.sprite, 
@@ -345,15 +356,7 @@ function start()
 	    if(confirmDraw(this.recipe.x, this.recipe.y)){ ctx.drawImage(recipe.sprite,
 	    	recipe.x - ship.x - GRID_SIZE/4, recipe.y - ship.y - GRID_SIZE/4); }
 
-	   	//draw potion if array of items?
-	    //potion.forEach(function (p)
-	    //{
-	    //	if(confirmDraw(p.x, p.y))
-	    //	{
-	    //		ctx.drawImage(potion.sprite, p.x - ship.x, p.y - ship.y);
-	    //	}
-	    //});
-	}
+	}*/
 
 	//draws the user's ship
 	function drawShip(ctx)
@@ -362,7 +365,7 @@ function start()
 	    ctx.rotate(ship.angle * Math.PI / 180);		//rotate the entire ctx/drawing object
 	    if(this.gameOver)
 	    {
-	    	ctx.drawImage(ship.sprite, -SHIP_WIDTH/2 - GRID_SIZE/4, -SHIP_HEIGHT/2 - GRID_SIZE/4)
+	    	ctx.drawImage(ship.sprite, -SHIP_WIDTH/2 - GRID_SIZE/4, -SHIP_HEIGHT/2 - GRID_SIZE/4);
 	    }
 	    else
 	    {
@@ -377,7 +380,7 @@ function start()
 	    if(this.gameOver)
 	    {
 	    	this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
-		explosionSound.play();
+			//explosionSound.play();
 	    	if(this.ship.animationFrame == 16)
 	    	{
 	    		this.ship.sprite.src = "";
@@ -394,27 +397,25 @@ function start()
 	    	ctx.beginPath();
 	    	ship.commitMovement();
 	    }
-
-	    getPotion();
-	    win();
 	}
 
 
 	function scan(){
-		if(((Math.abs(this.recipe.x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.recipe.y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
+		/*if(((Math.abs(this.recipe.x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.recipe.y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
 			//this.recipe.hidden = 0;
 			this.recipe.sprite.src = "img/recipe.png";
-		}
+		}*/
 		for(i = 0; i< this.obstacles.length; ++i){
 			if(((Math.abs(this.obstacles[i].x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.obstacles[i].y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
 				this.obstacles[i].visible = true;
-				this.obstacles[i].sprite.src = "img/rock.png";
+				//this.obstacles[i].sprite.src = "img/rock.png";
+				//this.obstacles[i].sprite.src = "img/" + obstacles[i].constructor.name + ".png";
 			}
 		}
-		if(((Math.abs(this.potion.x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.potion.y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
+		/*if(((Math.abs(this.potion.x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.potion.y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
 			//this.recipe.hidden = 0;
 			this.potion.sprite.src = "img/energypotion.png";
-		}
+		}*/
 		ship.supplies -= (ship.originalSupplies * .02);
 		showMap(obstacles);
 	}
