@@ -4,10 +4,10 @@
 
 class Asteroid
 {
-	constructor(x, y, cpx, cpy)
+	constructor(cpx, cpy)
 	{
-		this.x = x;
-		this.y = y;
+		this.x = cpx*GRID_SIZE;
+		this.y = cpy*GRID_SIZE;
 		this.cpx = cpx;
 		this.cpy = cpy;
 

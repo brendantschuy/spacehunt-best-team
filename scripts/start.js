@@ -167,9 +167,9 @@ function start()
 					drawCommBox("asteroid");
 					hitObstacle();
 				}
-				else if(objName == "Xeon")
+				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen")
 				{
-					drawCommBox("Xeon");
+					drawCommBox(objName);
 				}
 			}
 		}
@@ -221,21 +221,21 @@ function start()
 		this.obstacles = new Array();
 
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
-		obstacles.push(new Asteroid(1150, 1150, 9, 9));
-		obstacles.push(new Asteroid(1400, 1400, 11, 11));
-		obstacles.push(new Asteroid(768, 768, 6, 6));
-		obstacles.push(new Asteroid(16383, 16383, 128, 128));
-		obstacles.push(new Asteroid(16383/2, 16383/2, 128/2, 128/2));
-		obstacles.push(new Asteroid(16383, 0, 128, 0));
-		obstacles.push(new Asteroid(0, 16383, 0, 128));
-		obstacles.push(new Asteroid(0, 0, 0, 0));
-		obstacles.push(new Asteroid(128, 128, 1, 1));
-		obstacles.push(new EnergyPotion(1150, 1400, 9, 11, 200));
-		obstacles.push(new Recipe(1400, 1150, 11, 9));
-		obstacles.push(new Celeron(500, 500, 4, 4));
-		obstacles.push(new Xeon(1600, 1600, 12, 12));
-		obstacles.push(new Ryzen(2400, 2400, 18, 18));
-		obstacles.push(new DeathStar(12000, 12000, 93, 93));
+		obstacles.push(new Asteroid(9, 9));
+		obstacles.push(new Asteroid(11, 11));
+		obstacles.push(new Asteroid(6, 6));
+		obstacles.push(new Asteroid(128, 128));
+		obstacles.push(new Asteroid(64, 64));
+		obstacles.push(new Asteroid(128, 0));
+		obstacles.push(new Asteroid(0, 128));
+		obstacles.push(new Asteroid(0, 0));
+		obstacles.push(new Asteroid(1, 1));
+		obstacles.push(new EnergyPotion(9, 11, 200));
+		obstacles.push(new Recipe(11, 9));
+		obstacles.push(new Celeron(4, 4));
+		obstacles.push(new Xeon(12, 12));
+		obstacles.push(new Ryzen(18, 18));
+		obstacles.push(new DeathStar(2, 13));
 
 		ship.updatecp();
 	}
@@ -460,29 +460,28 @@ function sound(src) {
 }
 
 //Displays messages to player
-function drawCommBox(planetName)
+function drawCommBox(obstacleName)
 {
 	var ctx = document.getElementById("gameScreen").getContext('2d');
 	ctx.fillStyle = "white";
 	ctx.fillRect(0, 512, 640, 128);
 	ctx.fillStyle = "black";
 	ctx.font = "20px Arial";
-	if(planetName == "asteroid")
+	switch(obstacleName)
 	{
-		ctx.fillText("You hit an asteroid. Game over.", 20, 560);
-	}
-	else if(planetName == "Xeon")
-	{
-		ctx.fillText("Welcome to the planet of " + planetName + "!", 20, 560);
-		ctx.fillText("Press L to land or O to orbit (not implemented).", 20, 590);
-	}
-	else if(planetName == "recipe")
-	{
-		ctx.fillText("You win the game :)", 20, 560);
-	}
-	else if(planetName == "DeathStar")
-	{
-		ctx.fillText("Resistance is futile. Wait, wrong universe.")
+		case("asteroid") : 
+			ctx.fillText("You hit an asteroid. Game over.", 20, 560);
+			break;
+		case("Xeon") : case ("Celeron") : case("Ryzen") : 
+			ctx.fillText("Welcome to the planet of " + obstacleName + "!", 20, 560);
+			//ctx.fillText("Press L to land or O to orbit (not implemented).", 20, 590);
+			break;
+		case("recipe") : 
+			ctx.fillText("You win the game :)", 20, 560);
+			break;
+		case("DeathStar") : 
+			ctx.fillText("Resistance is futile. Wait, wrong universe.");
+			break;
 	}
 }
 

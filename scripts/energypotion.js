@@ -4,10 +4,10 @@
 
 class EnergyPotion
 {
-	constructor(x, y, cpx, cpy, hp)
+	constructor(cpx, cpy, hp)
 	{
-		this.x = x;
-		this.y = y;
+		this.x = cpx*GRID_SIZE;
+		this.y = cpy*GRID_SIZE;
 		this.cpx = cpx;
 		this.cpy = cpy;
 		this.hp = hp;		//potion restores this much HP/energy	

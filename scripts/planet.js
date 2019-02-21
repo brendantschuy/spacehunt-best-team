@@ -4,11 +4,11 @@
 
 class Planet
 {
-	constructor(id, x, y, cpx, cpy)
+	constructor(cpx, cpy)
 	{
 		this.idNumber = id;
-		this.x = x;
-		this.y = y;
+		this.x = cpx*GRID_SIZE;
+		this.y = cpy*GRID_SIZE;
 		this.cpx = cpx;
 		this.cpy = cpy;
 		
@@ -28,10 +28,10 @@ class Planet
 }
 
 class Celeron {
-	constructor(x, y, cpx, cpy)
+	constructor(cpx, cpy)
 	{
-		this.x = x;
-		this.y = y;
+		this.x = cpx*GRID_SIZE;
+		this.y = cpy*GRID_SIZE;
 		this.cpx = cpx;
 		this.cpy = cpy;
 		
@@ -50,10 +50,10 @@ class Celeron {
 }
 
 class Xeon{ 
-	constructor(x, y, cpx, cpy)
+	constructor(cpx, cpy)
 	{
-		this.x = x;
-		this.y = y;
+		this.x = cpx*GRID_SIZE;
+		this.y = cpy*GRID_SIZE;
 		this.cpx = cpx;
 		this.cpy = cpy;
 		
@@ -72,10 +72,10 @@ class Xeon{
 }
 
 class Ryzen { 
-	constructor(x, y, cpx, cpy)
+	constructor(cpx, cpy)
 	{
-		this.x = x;
-		this.y = y;
+		this.x = cpx*GRID_SIZE;
+		this.y = cpy*GRID_SIZE;
 		this.cpx = cpx;
 		this.cpy = cpy;
 		
@@ -97,10 +97,10 @@ class Ryzen {
 
 //secret
 class DeathStar { 
-	constructor(x, y, cpx, cpy)
+	constructor(cpx, cpy)
 	{
-		this.x = x;
-		this.y = y;
+		this.x = cpx*GRID_SIZE;
+		this.y = cpy*GRID_SIZE;
 		this.cpx = cpx;
 		this.cpy = cpy;
 		
