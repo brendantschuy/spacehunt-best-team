@@ -459,7 +459,7 @@ function sound(src) {
   	}
 }
 
-
+//Displays messages to player
 function drawCommBox(planetName)
 {
 	var ctx = document.getElementById("gameScreen").getContext('2d');
@@ -479,6 +479,10 @@ function drawCommBox(planetName)
 	else if(planetName == "recipe")
 	{
 		ctx.fillText("You win the game :)", 20, 560);
+	}
+	else if(planetName == "DeathStar")
+	{
+		ctx.fillText("Resistance is futile. Wait, wrong universe.")
 	}
 }
 
