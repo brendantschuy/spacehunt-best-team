@@ -40,10 +40,7 @@ function start()
 		drawTarget();		//draws red target indicating where ship will travel to
 	    drawThings("gameScreen");   	//draws things: ship, items, obstacles...
 
-	    if(!this.gameOver)	//bug fix: eliminates double messages
-	    {
-	    	interact();	//check if we hit anything
-	    }
+	    interact();	//check if we hit anything
 	    requestAnimationFrame(drawFrame);		
 	    
 	}
@@ -162,11 +159,17 @@ function start()
 				}
 				else if(objName == "Recipe" && !this.gameWon)
 				{
+					drawCommBox("recipe");
 					win();
 				}
-				else if((objName == "Asteroid" || objName == "Planet") && !this.ship.dev && !this.gameOver)
+				else if((objName == "Asteroid" || objName == "Planet") && !this.ship.dev)
 				{
+					drawCommBox("asteroid");
 					hitObstacle();
+				}
+				else if(objName == "Xeon")
+				{
+					drawCommBox("Xeon");
 				}
 			}
 		}
@@ -182,20 +185,19 @@ function start()
 
 		setTimeout(function()
 		{
-			alert("You hit an asteroid! Game over!");
 			window.location.reload();	//changed to be a bit more clear than location = location
 		}, 1000);
 	}
 	
 	function win()
 	{
-		this.gameWon = true;
+		//play win sound
 		setTimeout(function()
 		{
-			alert("You've won the game!");
 			window.location.reload();
 		}, 1000);
 	}
+
 	//experimental
 	function getPotion(index)
 	{	
@@ -219,13 +221,9 @@ function start()
 		this.obstacles = new Array();
 
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
-		obstacles.push(new Celeron(500, 500, 4, 4));
-		obstacles.push(new Xeon(1600, 1600, 12, 12));
-		obstacles.push(new Ryzen(2400, 2400, 18, 18));
-		obstacles.push(new DeathStar(12000, 12000, 93, 93));
 		obstacles.push(new Asteroid(1150, 1150, 9, 9));
 		obstacles.push(new Asteroid(1400, 1400, 11, 11));
-		obstacles.push(new Asteroid(800, 800, 6, 6));
+		obstacles.push(new Asteroid(768, 768, 6, 6));
 		obstacles.push(new Asteroid(16383, 16383, 128, 128));
 		obstacles.push(new Asteroid(16383/2, 16383/2, 128/2, 128/2));
 		obstacles.push(new Asteroid(16383, 0, 128, 0));
@@ -234,6 +232,10 @@ function start()
 		obstacles.push(new Asteroid(128, 128, 1, 1));
 		obstacles.push(new EnergyPotion(1150, 1400, 9, 11, 200));
 		obstacles.push(new Recipe(1400, 1150, 11, 9));
+		obstacles.push(new Celeron(500, 500, 4, 4));
+		obstacles.push(new Xeon(1600, 1600, 12, 12));
+		obstacles.push(new Ryzen(2400, 2400, 18, 18));
+		obstacles.push(new DeathStar(12000, 12000, 93, 93));
 
 		ship.updatecp();
 	}
@@ -312,15 +314,14 @@ function start()
 	    //writes numbers/info to GUI
 	    ctx.fillStyle = "#FFFFFF";
 	    ctx.fillText("angle = " + ship.angle, 10, 10);
-	    ctx.fillText("x = " + ship.x.toFixed(0) + " y = " + ship.y.toFixed(0), 10, 30);
-	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 50);
+	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 30);
 	    ctx.fillStyle = "#00FF00";
-	    ctx.fillText("energy = " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 70);
+	    ctx.fillText("energy = " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 50);
 	    ctx.fillStyle = "#FF0000";
-	    ctx.fillText("supplies = " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 90);
+	    ctx.fillText("supplies = " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 70);
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 110);
-	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 150);
+	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 90);
+	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 110);
 	}
 
 	//draws obstacles, ship, other items on the canvas
@@ -341,34 +342,19 @@ function start()
 	{
 		obstacles.forEach(function (obj)
 	    {
-	        //if(confirmDraw(obj.x, obj.y))
-	    	//{
 	    	if(obj.visible)
 	    	{
 	    		ctx.drawImage(obj.sprite, obj.x - ship.x - GRID_SIZE/4, obj.y - ship.y - GRID_SIZE/4);
 	    	}
-	    	//}
 	    }, this);
   	}
-
-  	//draws potions and recipe, etc
-  	/*function drawItems(ctx)
-  	{
-	    //draw 1 potion
-	    if(confirmDraw(this.potion.x, this.potion.y)){ ctx.drawImage(potion.sprite, 
-	    	potion.x - ship.x - GRID_SIZE/4, potion.y - ship.y - GRID_SIZE/4); }
-
-	    //draw recipe
-	    if(confirmDraw(this.recipe.x, this.recipe.y)){ ctx.drawImage(recipe.sprite,
-	    	recipe.x - ship.x - GRID_SIZE/4, recipe.y - ship.y - GRID_SIZE/4); }
-
-	}*/
 
 	//draws the user's ship
 	function drawShip(ctx)
 	{
 		//rotate if ship isn't facing upward
-	    ctx.rotate(ship.angle * Math.PI / 180);		//rotate the entire ctx/drawing object
+	    ctx.rotate(ship.angle * Math.PI / 180);
+
 	    if(this.gameOver)
 	    {
 	    	ctx.drawImage(ship.sprite, -SHIP_WIDTH/2 - GRID_SIZE/4, -SHIP_HEIGHT/2 - GRID_SIZE/4);
@@ -407,21 +393,13 @@ function start()
 
 
 	function scan(){
-		/*if(((Math.abs(this.recipe.x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.recipe.y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
-			//this.recipe.hidden = 0;
-			this.recipe.sprite.src = "img/recipe.png";
-		}*/
-		for(i = 0; i< this.obstacles.length; ++i){
-			if(((Math.abs(this.obstacles[i].x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.obstacles[i].y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
+		//checks to see if obstacles are within half the screen distance from the ship
+		for(i = 0; i< this.obstacles.length; ++i)
+		{
+			if(Math.abs(this.obstacles[i].cpx - this.ship.cpx) <= SCAN_RANGE &&(Math.abs(this.obstacles[i].cpy - this.ship.cpy)) <= SCAN_RANGE){
 				this.obstacles[i].visible = true;
-				//this.obstacles[i].sprite.src = "img/rock.png";
-				//this.obstacles[i].sprite.src = "img/" + obstacles[i].constructor.name + ".png";
 			}
 		}
-		/*if(((Math.abs(this.potion.x - this.ship.x)) <= (MAP_WIDTH*GRID_SIZE/2))&&((Math.abs(this.potion.y - this.ship.y)) <= (MAP_HEIGHT*GRID_SIZE/2))){
-			//this.recipe.hidden = 0;
-			this.potion.sprite.src = "img/energypotion.png";
-		}*/
 		ship.supplies -= (ship.originalSupplies * .02);
 		showMap(obstacles);
 	}
@@ -477,8 +455,31 @@ function sound(src) {
 		this.sound.play();
   	}
   	this.stop = function(){
-    		this.sound.pause();
+    	this.sound.pause();
   	}
+}
+
+
+function drawCommBox(planetName)
+{
+	var ctx = document.getElementById("gameScreen").getContext('2d');
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, 512, 640, 128);
+	ctx.fillStyle = "black";
+	ctx.font = "20px Arial";
+	if(planetName == "asteroid")
+	{
+		ctx.fillText("You hit an asteroid. Game over.", 20, 560);
+	}
+	else if(planetName == "Xeon")
+	{
+		ctx.fillText("Welcome to the planet of " + planetName + "!", 20, 560);
+		ctx.fillText("Press L to land or O to orbit (not implemented).", 20, 590);
+	}
+	else if(planetName == "recipe")
+	{
+		ctx.fillText("You win the game :)", 20, 560);
+	}
 }
 
 	

@@ -61,36 +61,35 @@ function drawThingsMap(elementID,obstacles) {
   drawItemsMap(ctx);
 }
 
-//draws all obstacles (for now, just asteroids)
+//draws all obstacles
 function drawObstaclesMap(ctx,obstacles) {
-  //mapCvs = document.getElementById("map");
   obstacles.forEach(function (item)
   {
     if(item.visible && !item.onMapList){
-      objName = item.constructor.name;
+      objName = item.constructor.name;  //gets exact name of user-defined type
       ctx.beginPath();
 
+      //Color codes objects based on names
       switch(objName)
       {
         case("Asteroid") : 
-          ctx.fillStyle = "red";
-
+          ctx.fillStyle = "coral";
           break;
         case("Celeron") : case("Xeon") : case ("Ryzen") : 
-          //Write names on map too, to make sure we fulfill user story
-          ctx.fillStyle = "blue";
+          ctx.fillStyle = "aquamarine";
           break;
         case("Planet") : 
-          ctx.fillStyle = "blue";
+          ctx.fillStyle = "aquamarine";
           break;
         case("EnergyPotion") : 
-          ctx.fillStyle = "green";
+          ctx.fillStyle = "greenyellow";
           break;
         case("Recipe") :
           ctx.fillStyle = "white";
           break;
       }
 
+      ctx.font = "bold";
       ctx.fillText(objName + ": " + item.cpx + ", " + item.cpy, map_x, map_y);
       map_y += 20;
 

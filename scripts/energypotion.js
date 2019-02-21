@@ -10,7 +10,7 @@ class EnergyPotion
 		this.y = y;
 		this.cpx = cpx;
 		this.cpy = cpy;
-		this.hp = hp;		
+		this.hp = hp;		//potion restores this much HP/energy	
 
 		this.sprite = new Image();
 		this.onMapList = false;
