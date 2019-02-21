@@ -27,6 +27,11 @@ html {
 	padding: 0px;
 }
 
+#map
+{
+	margin-top: 20px;
+}
+
 
 body {
 	font-family: Impact, Charcoal, sans-serif;
@@ -222,12 +227,7 @@ h2 {
 	margin-right: auto;
 }
 
-#map
-{
-	/*background-color: orange;*/
-	height: 426px;
-	width: 426px;
-}
+
 
 
 

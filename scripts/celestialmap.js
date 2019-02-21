@@ -8,33 +8,38 @@ function showMap(obstacles){
     themap.id = "mapCanvas";
     var map = themap.getContext('2d');
 
-    /*WIP: Trying to get map to work better at lower screen resolution
+    //WIP: Trying to get map to work better at lower screen resolution
     if(window.screen.availWidth < 1367)
     {
       mapRatio = 1.5;
-    }*/
+    }
 
+    //map.fillStyle = "red";
+    //map.fillRect(0, 0, 300, 300);
     themap.height = (MAP_HEIGHT * GRID_SIZE)/mapRatio/1.1; //581 px or 387 px, depending on screen res
     themap.width = (MAP_WIDTH * GRID_SIZE)/mapRatio/1.1;   //581 px or 387 px, depending on screen res
 
-    themap.style.left = 29.5;
-    themap.style.top = -3.5;
-    document.getElementById("map").style.backgroundSize = themap.height + "px " +  themap.width + "px";
+    map.fillStyle = "RGBA(100, 100, 100, 0.3)";
+    map.fillRect(0, 0, themap.height, themap.width);
+
+
+    //themap.style.left = 29.5;
+    //themap.style.top = -3.5;
+    //document.getElementById("map").style.backgroundSize = themap.height + "px " +  themap.width + "px";
     //var backgroundImage = new Image();
     //backgroundImage.src = "img/parchment.jpg";
     //map.drawImage(backgroundImage, 0, 0);
-    //map.fillStyle = "img/parchment.jpg";
-    //map.fillRect(0, 0, 640, 480);
+
     //context.fillRect(0, 0, canvas.width, canvas.height);
     
-    themap.style.position = "relative";
+    //themap.style.position = "relative";
     //themap.style.left = (MAP_WIDTH * GRID_SIZE)/3.5;
     //themap.style.top = (MAP_HEIGHT * GRID_SIZE)/2.5;
     //map.beginPath();
     //map.save();
     //map.translate(SHIP_ABS_X, SHIP_ABS_Y); 
 
-    document.getElementById("map").appendChild(themap);
+    document.getElementById("dev-buttons").appendChild(themap);
     //drawGridMap("theMap");
 
     drawThingsMap("mapCanvas",obstacles);   
@@ -82,7 +87,7 @@ function drawThingsMap(elementID,obstacles) {
 
 //draws all obstacles (for now, just asteroids)
 function drawObstaclesMap(ctx,obstacles) {
-  themap = document.getElementById("map");
+  //themap = document.getElementById("map");
   obstacles.forEach(function (item)
   {
     if(item.visible){
