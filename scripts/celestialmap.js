@@ -38,8 +38,16 @@ function showMap(obstacles){
     //map.beginPath();
     //map.save();
     //map.translate(SHIP_ABS_X, SHIP_ABS_Y); 
-
-    document.getElementById("dev-buttons").appendChild(themap);
+    var largeMap = document.getElementById("widescreenOnly");
+    if(window.getComputedStyle(largeMap).display === "none")
+    {
+      document.getElementById("dev-buttons").appendChild(themap);
+    }
+    else
+    {
+      document.getElementById("dev").appendChild(themap);
+    }
+    //document.getElementById("dev").appendChild(themap);
     //drawGridMap("theMap");
 
     drawThingsMap("mapCanvas",obstacles);   
