@@ -21,6 +21,7 @@ class Planet
 
 		this.sprite = new Image();
 		this.visible = true;
+		this.onmapList = false;
 		//x is the number of each planet (1 - 7)
 		this.sprite.src = "img/planet" + this.idNumber + ".png";
 	}		
@@ -43,6 +44,7 @@ class Celeron {
 
 		this.sprite = new Image();
 		this.visible = true;
+		this.onMapList = false;
 		this.sprite.src = "img/celeron.png";
 	}
 }
@@ -64,6 +66,7 @@ class Xeon{
 
 		this.sprite = new Image();
 		this.visible = true;
+		this.onMapList = false;
 		this.sprite.src = "img/xeon.png";
 	}
 }
@@ -84,7 +87,8 @@ class Ryzen {
 		this.maxHeight = cpy + 1;	
 
 		this.sprite = new Image();
-		this.visible = true;	
+		this.visible = true;
+		this.onMapList = false;	
 		this.sprite.src = "img/ryzen.png";
 	}
 }
@@ -109,6 +113,7 @@ class DeathStar {
 
 		this.sprite = new Image();
 		this.visible = false;	
+		this.onMapList = false;
 		this.sprite.src = "img/ryzen.png";
 	}
 }

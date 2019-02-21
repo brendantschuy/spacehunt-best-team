@@ -11,7 +11,8 @@ class Asteroid
 		this.cpx = cpx;
 		this.cpy = cpy;
 
-		var visible = false;
+		this.visible = false;
+		this.onMapList = false;
 		this.sprite = new Image();
 		this.sprite.src = "img/rock.png";
 	}

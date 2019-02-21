@@ -219,6 +219,10 @@ function start()
 		this.obstacles = new Array();
 
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
+		obstacles.push(new Celeron(500, 500, 4, 4));
+		obstacles.push(new Xeon(1600, 1600, 12, 12));
+		obstacles.push(new Ryzen(2400, 2400, 18, 18));
+		obstacles.push(new DeathStar(12000, 12000, 93, 93));
 		obstacles.push(new Asteroid(1150, 1150, 9, 9));
 		obstacles.push(new Asteroid(1400, 1400, 11, 11));
 		obstacles.push(new Asteroid(800, 800, 6, 6));
@@ -230,10 +234,6 @@ function start()
 		obstacles.push(new Asteroid(128, 128, 1, 1));
 		obstacles.push(new EnergyPotion(1150, 1400, 9, 11, 200));
 		obstacles.push(new Recipe(1400, 1150, 11, 9));
-		obstacles.push(new Celeron(500, 500, 4, 4));
-		obstacles.push(new Xeon(1600, 1600, 12, 12));
-		obstacles.push(new Ryzen(2400, 2400, 18, 18));
-		obstacles.push(new DeathStar(12000, 12000, 93, 93));
 
 		ship.updatecp();
 	}

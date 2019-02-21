@@ -1,5 +1,7 @@
 var mapRatio = 1;   //increases for smaller screen resolution
 var mapScale = 32;  //ratio of px on game to px on map
+var map_y = 20;
+var map_x = 20;
 
 function showMap(obstacles){
   var test = document.getElementById("mapCanvas");
@@ -64,7 +66,7 @@ function drawObstaclesMap(ctx,obstacles) {
   //mapCvs = document.getElementById("map");
   obstacles.forEach(function (item)
   {
-    if(item.visible){
+    if(item.visible && !item.onMapList){
       objName = item.constructor.name;
       ctx.beginPath();
 
@@ -72,11 +74,11 @@ function drawObstaclesMap(ctx,obstacles) {
       {
         case("Asteroid") : 
           ctx.fillStyle = "red";
+
           break;
         case("Celeron") : case("Xeon") : case ("Ryzen") : 
           //Write names on map too, to make sure we fulfill user story
           ctx.fillStyle = "blue";
-          ctx.fillText(objName, (item.x/mapScale)/mapRatio + 5, (item.y/mapScale)/mapRatio);
           break;
         case("Planet") : 
           ctx.fillStyle = "blue";
@@ -89,7 +91,16 @@ function drawObstaclesMap(ctx,obstacles) {
           break;
       }
 
-      ctx.fillRect((item.x/mapScale)/mapRatio, (item.y/mapScale)/mapRatio, 5, 5);
+      ctx.fillText(objName + ": " + item.cpx + ", " + item.cpy, map_x, map_y);
+      map_y += 20;
+
+      item.onMapList = true;
+
+      if(map_y > 381)
+      {
+        map_y = 20;
+        map_x += 90;
+      }
 
       ctx.closePath();
     }

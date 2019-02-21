@@ -13,6 +13,7 @@ class EnergyPotion
 		this.hp = hp;		
 
 		this.sprite = new Image();
+		this.onMapList = false;
 		this.sprite.src = "img/energypotion.png";
 	}		
 }
