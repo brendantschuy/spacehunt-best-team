@@ -8,7 +8,7 @@ html {
 #widescreen-header {
 	color: white;
 	height: 0px;
-	display: block;
+	display: none;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
