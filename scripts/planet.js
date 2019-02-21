@@ -88,3 +88,27 @@ class Ryzen {
 		this.sprite.src = "img/ryzen.png";
 	}
 }
+
+
+
+//secret
+class DeathStar { 
+	constructor(x, y, cpx, cpy)
+	{
+		this.x = x;
+		this.y = y;
+		this.cpx = cpx;
+		this.cpy = cpy;
+		
+		//Can be changed in the future. For now, all planets have a radius of 2.
+		this.radius = 2;
+		this.minLength = cpx - 1;
+		this.maxLength = cpx + 1;
+		this.minHeight = cpy - 1;
+		this.maxHeight = cpy + 1;	
+
+		this.sprite = new Image();
+		this.visible = false;	
+		this.sprite.src = "img/ryzen.png";
+	}
+}

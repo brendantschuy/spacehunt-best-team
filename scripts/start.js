@@ -8,7 +8,7 @@ function start()
 {
 	this.gameOver = false;
 	this.gameWon = false;
-	this.displayHud = document.getElementById("hud").checked;
+	this.displayHud = false; //document.getElementById("hud").checked;
 	this.speedRun = document.getElementById("speedrun").checked;
 	//var explosionSound = new sound("explosion.mp3");
 
@@ -83,7 +83,12 @@ function start()
 			ship.decreaseDistance();
 		}
 
-		else if(e.keyCode == '81' || e.keyCode == '17')
+		else if(e.keyCode == '72')				//H
+		{
+			toggleHud();
+		}
+
+		else if(e.keyCode == '81' || e.keyCode == '17')		//Q or CTRL
 		{
 			scan();
 		}
@@ -228,6 +233,7 @@ function start()
 		obstacles.push(new Celeron(500, 500, 4, 4));
 		obstacles.push(new Xeon(1600, 1600, 12, 12));
 		obstacles.push(new Ryzen(2400, 2400, 18, 18));
+		obstacles.push(new DeathStar(12000, 12000, 93, 93));
 
 		ship.updatecp();
 	}
