@@ -167,7 +167,7 @@ function start()
 					drawCommBox("asteroid");
 					hitObstacle();
 				}
-				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen")
+				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen" || objName == "DeathStar")
 				{
 					drawCommBox(objName);
 				}
@@ -235,7 +235,7 @@ function start()
 		obstacles.push(new Celeron(4, 4));
 		obstacles.push(new Xeon(12, 12));
 		obstacles.push(new Ryzen(18, 18));
-		obstacles.push(new DeathStar(2, 13));
+		obstacles.push(new DeathStar(15, 10));
 
 		ship.updatecp();
 	}
@@ -344,7 +344,15 @@ function start()
 	    {
 	    	if(obj.visible)
 	    	{
-	    		ctx.drawImage(obj.sprite, obj.x - ship.x - GRID_SIZE/4, obj.y - ship.y - GRID_SIZE/4);
+	    		objName = obj.constructor.name;
+	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar")
+	    		{
+	    			ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
+	    		}
+	    		else
+	    		{
+	    			ctx.drawImage(obj.sprite, obj.x - ship.x - GRID_SIZE/4, obj.y - ship.y - GRID_SIZE/4);
+	    		}
 	    	}
 	    }, this);
   	}
@@ -463,9 +471,18 @@ function sound(src) {
 function drawCommBox(obstacleName)
 {
 	var ctx = document.getElementById("gameScreen").getContext('2d');
-	ctx.fillStyle = "white";
-	ctx.fillRect(0, 512, 640, 128);
-	ctx.fillStyle = "black";
+	if(obstacleName == "DeathStar")
+	{
+		ctx.fillStyle = "black";
+		ctx.fillRect(0, 512, 640, 128);
+		ctx.fillStyle = "red";
+	}
+	else
+	{
+		ctx.fillStyle = "white";
+		ctx.fillRect(0, 512, 640, 128);
+		ctx.fillStyle = "black";
+	}
 	ctx.font = "20px Arial";
 	switch(obstacleName)
 	{
@@ -480,7 +497,7 @@ function drawCommBox(obstacleName)
 			ctx.fillText("You win the game :)", 20, 560);
 			break;
 		case("DeathStar") : 
-			ctx.fillText("Resistance is futile. Wait, wrong universe.");
+			ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
 			break;
 	}
 }
