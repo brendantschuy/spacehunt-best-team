@@ -27,8 +27,9 @@ function supportsLocalStorage() {
     } catch (e) {
       return false;
     }
-  }
+}
 
+// initialize list of saved games 
 function initList() {
   var savedList = [];
 }
