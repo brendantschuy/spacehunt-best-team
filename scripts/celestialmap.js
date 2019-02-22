@@ -87,8 +87,11 @@ function drawObstaclesMap(ctx,obstacles) {
         case("Recipe") :
           ctx.fillStyle = "white";
           break;
+        case("DeathStar") : 
+          ctx.fillStyle = "black";
+          break;
       }
-
+      
       ctx.font = "bold";
       ctx.fillText(objName + ": " + item.cpx + ", " + item.cpy, map_x, map_y);
       map_y += 20;

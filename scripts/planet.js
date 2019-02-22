@@ -114,6 +114,6 @@ class DeathStar {
 		this.sprite = new Image();
 		this.visible = false;	
 		this.onMapList = false;
-		this.sprite.src = "img/ryzen.png";
+		this.sprite.src = "img/death_star.png";
 	}
 }
