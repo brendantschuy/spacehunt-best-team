@@ -171,8 +171,37 @@ function start()
 				{
 					drawCommBox(objName);
 				}
+				else if(objName == "SpaceStation"){
+					//also needs refining.
+					chanceGame();
+				}
 			}
 		}
+	}
+
+	//needs refining
+	function chanceGame(){		
+		wager = prompt("Enter a number of digital credits to bet", 0);
+		while(wager > ship.currency){
+			wager = prompt("You cannot bet that much! Enter another amount", 0); 
+		}
+		guess = prompt("Enter a number between 1 and 10", 0);
+		while(guess > 10 || guess < 0){
+			guess = prompt("Between 1 and 10, no more and no less", 0); 
+		}
+		var result = Math.floor((Math.random() * 10) + 1);
+		if(guess == result){
+			alert("Congratulations! You guessed the right number! You get 5x your wager!");
+			ship.currency += (5 * wager);
+		}
+		if(guess == (result-1) || guess == (result+1)){
+			alert("You were very close! Only within one. You get 3x your wager!");
+			ship.currency += (3 * wager);
+		}
+		else { 
+			alert("Close, but not close enough. Sorry!");
+			ship.currency -= wager;
+		}	
 	}
 
 	function hitObstacle()
@@ -239,6 +268,7 @@ function start()
 		obstacles.push(new Xeon(12, 12));
 		obstacles.push(new Ryzen(18, 18));
 		obstacles.push(new DeathStar(15, 10));
+		obstacles.push(new SpaceStation(13, 15));
 
 	// 	save(gameState, savedList);
 
@@ -321,12 +351,14 @@ function start()
 	    ctx.fillText("angle = " + ship.angle, 10, 10);
 	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 30);
 	    ctx.fillStyle = "#00FF00";
-	    ctx.fillText("energy = " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 50);
+	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 50);
 	    ctx.fillStyle = "#FF0000";
-	    ctx.fillText("supplies = " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 70);
+	    ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 70);
+	    ctx.fillStyle = "#FFFF00";
+	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 90);
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 90);
-	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 110);
+	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 110);
+	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 150);
 	}
 
 	//draws obstacles, ship, other items on the canvas
@@ -350,7 +382,7 @@ function start()
 	    	if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
-	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar")
+	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar" || objName == "SpaceStation")
 	    		{
 	    			ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
 	    		}
@@ -503,6 +535,9 @@ function drawCommBox(obstacleName)
 			break;
 		case("DeathStar") : 
 			ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
+			break;
+		case("SpaceStation") :
+			ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
 			break;
 	}
 	

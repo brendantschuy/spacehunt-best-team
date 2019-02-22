@@ -17,6 +17,8 @@ class Ship 	//class names capitalized per js convention
 		this.originalSupplies = 1000
 		this.supplies = 1000;
 
+		this.currency = 1000;
+
 		//ship movement
 		this.isMoving = false;
 		this.angle = 0;						//in degrees
