@@ -505,6 +505,9 @@ function drawCommBox(obstacleName)
 		case("DeathStar") : 
 			ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
 			break;
+		case("SpaceStation") :
+			ctx.fillText("You found a space station! Would you like to land to play a game of chance?", 10, 560);
+			break;
 	}
 }
 
