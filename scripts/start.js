@@ -175,6 +175,10 @@ function start()
 					//also needs refining.
 					chanceGame();
 				}
+				else if(objName == "AbandonedFreighter"){
+					drawCommBox(objName);
+					i = getFreighter(i);
+				}
 			}
 		}
 	}
@@ -235,6 +239,14 @@ function start()
 		return index + 1;
 	}
 
+	function getFreighter(index){
+		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].energy);
+		this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);
+		this.ship.currency += this.obstacles[index].currency;
+		this.obstacles.splice(index, 1);
+		return index + 1;
+	}
+
 	function initializeObjects()
 	{
 
@@ -269,6 +281,7 @@ function start()
 		obstacles.push(new Ryzen(18, 18));
 		obstacles.push(new DeathStar(15, 10));
 		obstacles.push(new SpaceStation(13, 15));
+		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
 
 	// 	save(gameState, savedList);
 
@@ -538,6 +551,9 @@ function drawCommBox(obstacleName)
 			break;
 		case("SpaceStation") :
 			ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
+			break;
+		case("AbandonedFreighter") :
+			ctx.fillText("You found an abandoned freighter! You get some additional resources!", 5, 560);
 			break;
 	}
 	
