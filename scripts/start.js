@@ -239,6 +239,7 @@ function start()
 		obstacles.push(new Xeon(12, 12));
 		obstacles.push(new Ryzen(18, 18));
 		obstacles.push(new DeathStar(15, 10));
+		obstacles.push(new SpaceStation(13, 15));
 
 	// 	save(gameState, savedList);
 
@@ -350,7 +351,7 @@ function start()
 	    	if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
-	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar")
+	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar" || objName == "SpaceStation")
 	    		{
 	    			ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
 	    		}
