@@ -6,6 +6,7 @@ var gameState = {
   shipY: 0,
   shipSupplies: 0,
   shipEnergy: 0,
+  currency: 0,
   AsteroidX: 0,
   AsteroidY: 0,
   CeleronX: 0,
@@ -17,7 +18,6 @@ var gameState = {
   RecipeX: 0,
   RecipeY: 0,
   activeGame: false
-  //money: 0
 };
 
 // checks whether browser supports localStorage
@@ -34,9 +34,9 @@ function initList() {
   var savedList = [];
 }
 
-// shows user a list of saved states, named by user
+// shows user a list of saved games, named by user
 function displaySaved(savedList) {
-    for(i = 0; i < savedList.length; i++)
+    for(var i = 0; i < savedList.length; i++)
       console.log(savedList[i])
 }
 
@@ -61,7 +61,7 @@ function load(gameState, savedList) {
   }  
   displaySaved(); // display list of saved games
   response = prompt("Which game would you like to load? Enter a number, starting at 1.");
-  for(i = 0; i < savedList.length; i++) {
+  for(var i = 0; i < savedList.length; i++) {
     if(response == (i+1)) 
       gameState = localStorage.getItem(savedList[i+1]); // must parse
   }
