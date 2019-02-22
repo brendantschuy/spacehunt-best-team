@@ -505,6 +505,5 @@ function drawCommBox(obstacleName)
 			ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
 			break;
 	}
-}
-
 	
+}
