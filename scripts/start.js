@@ -167,7 +167,7 @@ function start()
 					drawCommBox("asteroid");
 					hitObstacle();
 				}
-				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen" || objName == "DeathStar")
+				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen" || objName == "DeathStar" || objName == "SpaceStation")
 				{
 					drawCommBox(objName);
 				}
@@ -506,7 +506,7 @@ function drawCommBox(obstacleName)
 			ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
 			break;
 		case("SpaceStation") :
-			ctx.fillText("You found a space station! Would you like to land to play a game of chance?", 10, 560);
+			ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
 			break;
 	}
 }
