@@ -208,7 +208,6 @@ function start()
 
 	function initializeObjects()
 	{
-		// check for saved state. if it exists, load state. else, continue with new game
 
 		//create canvas, get context
 		var cvs = createCanvas();
@@ -219,6 +218,10 @@ function start()
 		this.target = new Target();
 
 		this.obstacles = new Array();
+
+		/* still working on this */
+		// prompt user or wait for onload
+		// if load, load(gameState, savedList);
 
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
 		obstacles.push(new Asteroid(9, 9));
@@ -236,6 +239,8 @@ function start()
 		obstacles.push(new Xeon(12, 12));
 		obstacles.push(new Ryzen(18, 18));
 		obstacles.push(new DeathStar(2, 13));
+
+	// 	save(gameState, savedList);
 
 		ship.updatecp();
 	}
