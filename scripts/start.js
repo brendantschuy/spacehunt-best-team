@@ -213,6 +213,8 @@ function start()
 		if(!this.gameOver)
 		{
 			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
+			var audio_explosion = new Audio('audio/explosion.mp3');
+			audio_explosion.play();
 		}
 		this.gameOver = true;
 
