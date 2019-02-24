@@ -214,6 +214,7 @@ function start()
 		{
 			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
 			var audio_explosion = new Audio('audio/explosion.mp3');
+			audio_explosion.volume = 0.5; 	//less loud
 			audio_explosion.play();
 		}
 		this.gameOver = true;
