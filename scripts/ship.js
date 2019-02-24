@@ -152,7 +152,10 @@ class Ship 	//class names capitalized per js convention
 
 	beginMoving()
 	{
-		this.supplies -= 0.003 * this.originalSupplies + 0.02 * this.supplies;
+		if(this.distanceToTravel > 0)	//don't use supplies if not moving
+		{
+			this.supplies -= 0.003 * this.originalSupplies + 0.02 * this.supplies;
+		}
 		this.isMoving = true;
 		this.distanceGoal = this.distanceToTravel;
 	}
