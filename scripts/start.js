@@ -237,6 +237,9 @@ function start()
 	//experimental
 	function getPotion(index)
 	{	
+		var audio_potion = new Audio('audio/potion.wav');
+		audio_potion.volume = 1;
+		audio_potion.play();
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
 		return index + 1;
