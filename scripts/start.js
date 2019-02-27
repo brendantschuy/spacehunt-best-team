@@ -179,6 +179,10 @@ function start()
 					drawCommBox(objName);
 					i = getFreighter(i);
 				}
+				else if (objName == "MeteorStorm"){
+					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
+					drawCommBox("MeteorStorm");
+				}
 			}
 		}
 	}
@@ -282,6 +286,7 @@ function start()
 		obstacles.push(new Asteroid(1, 1));
 		obstacles.push(new EnergyPotion(9, 11, 200));
 		obstacles.push(new Recipe(11, 9));
+		obstacles.push(new MeteorStorm(8,8));
 		obstacles.push(new Celeron(4, 4));
 		obstacles.push(new Xeon(12, 12));
 		obstacles.push(new Ryzen(18, 18));
@@ -560,6 +565,9 @@ function drawCommBox(obstacleName)
 			break;
 		case("AbandonedFreighter") :
 			ctx.fillText("You found an abandoned freighter! You get some additional resources!", 5, 560);
+			break;
+		case("MeteorStorm") :
+			ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 10 seconds. RUN!", 5, 560);
 			break;
 	}
 	

@@ -45,7 +45,8 @@ class Ship 	//class names capitalized per js convention
 		this.offset_x = 0;					//distance from center of square
 		this.offset_y = 0;					//distance from center of square
 		this.cpx = 10;						//celestial position
-		this.cpy = 10;						//celestial position
+		this.cpy = 10;
+		this.damage = 0;						//celestial position
 
 		//ship graphics
 		this.sprite = new Image();
@@ -232,6 +233,10 @@ class Ship 	//class names capitalized per js convention
 		this.distanceToTravel = 0;
 		this.offset_y = 0;
 		this.offset_x = 0;
+	}
+
+	getDamaged(dmg){
+		this.damage += dmg;
 	}
 }
 
