@@ -12,7 +12,7 @@ class MeteorStorm{
 
 		this.sprite = new Image();
 		this.onMapList = false;
-		//this.sprite.src = "img/meteor.png";
+		//this.sprite.src = "img/map.png";	
 	}
 
 	tryMeteor(x,y, ship){
@@ -32,7 +32,7 @@ class MeteorStorm{
 function makeitRain(){
 	//alert("Check running");
 	var meteor = document.createElement("img");
-	meteor.src = "img/meteors.gif";
+	//meteor.src = "img/meteors.gif";
 	meteor.id = "meteor";
 	meteor.height = screen.height;
 	meteor.width = screen.width;
