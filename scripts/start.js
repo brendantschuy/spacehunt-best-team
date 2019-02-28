@@ -362,11 +362,10 @@ function start()
 	function writeHud(ctx)
 	{
 		this.fps = (numFrames + 1)/(((new Date()).getTime() - this.startTime)/1000);
-		
-
-
+	
 		var ctx = document.getElementById("gameScreen").getContext('2d');
-	    //helps reduce lag
+
+		ctx.font = "10px Arial";
 	    ctx.beginPath();
 
 

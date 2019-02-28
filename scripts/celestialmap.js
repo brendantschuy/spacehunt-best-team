@@ -101,6 +101,7 @@ function drawObstaclesMap(ctx,obstacles) {
 
       item.onMapList = true;
 
+      //This prevents us from writing things on the map off the end of the doc
       if(map_y > 381)
       {
         map_y = 20;
@@ -114,7 +115,7 @@ function drawObstaclesMap(ctx,obstacles) {
 }
 
 // Removes an element from the document
-//Example usage is to remove potion from gazetteer
+//Example usage is to remove potion from map after consumption
 function removeElement(elementId) {
     var element = document.getElementById(elementId);
     element.parentNode.removeChild(element);
