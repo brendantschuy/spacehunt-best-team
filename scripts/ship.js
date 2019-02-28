@@ -87,18 +87,26 @@ class Ship 	//class names capitalized per js convention
 	 		if(this.cpy >= MAP_MAX_Y){
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.y = (MAP_MIN_Y * GRID_SIZE) + GRID_SIZE;
+				this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+				this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 			}
 			else if(this.cpy <= MAP_MIN_Y){
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.y = (MAP_MAX_Y * GRID_SIZE) - GRID_SIZE;
+				this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+				this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 			}
 			if(this.cpx >= MAP_MAX_X){
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.x = (MAP_MIN_X * GRID_SIZE) + GRID_SIZE;
+				this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+				this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 			}
 			else if(this.cpx <= MAP_MIN_X){
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.x = (MAP_MAX_X * GRID_SIZE) - GRID_SIZE;
+				this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+				this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 			}
 			else
 				return;
@@ -184,6 +192,20 @@ class Ship 	//class names capitalized per js convention
 	decreaseDistance()
 	{
 		this.distanceToTravel -= GRID_SIZE;
+		if(this.distanceToTravel < GRID_SIZE)
+		{
+			if(Math.abs(this.offset_y) > 0)
+			{
+				this.distanceToTravel = GRID_SIZE - Math.abs(this.offset_y);
+			}
+			if(Math.abs(this.offset_x) > 0)
+			{
+				this.distanceToTravel = GRID_SIZE - Math.abs(this.offset_x);
+			}
+
+			
+		}
+		//this.distanceToTravel -= Math.sin(this.angle) * (GRID_SIZE - ship.offset_y % GRID_SIZE) + Math.cos(this.angle) * (GRID_SIZE - ship.offset_x % GRID_SIZE);
 		if(this.distanceToTravel < 0)
 		{
 			this.distanceToTravel = 0;
