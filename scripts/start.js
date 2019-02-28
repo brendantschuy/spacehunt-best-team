@@ -19,6 +19,7 @@ function start()
 	this.numFrames = 0;
 	this.fps = 0;
 	this.startTime = (new Date()).getTime();
+	this.commBox = new CommBox();
 
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
@@ -155,7 +156,7 @@ function start()
 	//work in progress.
 	function interact()
 	{
-		var toggleBox = drawCommBox("", false);
+		var toggleBox = false;
 		//not optimized at all (will search every obstacle regardless of how far away it is)
 		for(var i = 0; i < this.obstacles.length; i++)
 		{
@@ -173,38 +174,38 @@ function start()
 				}
 				else if(objName == "Recipe" && !this.gameWon)
 				{
-					drawCommBox(this.obstacles[i], true);
+					commBox.drawNewBox(this.obstacles[i], true);
 					win();
 				}
 				else if((objName == "Asteroid") && !this.ship.dev)
 				{
-					drawCommBox(this.obstacles[i], true);
+					commBox.drawNewBox(this.obstacles[i], true);
 					hitObstacle();
 				}
 				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen" || objName == "DeathStar")
 				{
-					drawCommBox(this.obstacles[i], true);
+					commBox.drawNewBox(this.obstacles[i], true);
 				}
 				else if(objName == "SpaceStation"){
 					//also needs refining.
 					chanceGame();
 				}
 				else if(objName == "AbandonedFreighter"){
-					drawCommBox(this.obstacles[i], true);
+					commBox.drawNewBox(this.obstacles[i], true);
 					i = getFreighter(i);
 				}
 				else if (objName == "MeteorStorm"){
 					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
-					drawCommBox(this.obstacles[i], true);
+					commBox.drawNewBox(this.obstacles[i], true);
 				}
 				else if (objName == "Planet")
 				{
-					drawCommBox(this.obstacles[i], true);
+					commBox.drawNewBox(this.obstacles[i], true);
 				}
 				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy))
 				{
 					hitObstacle();
-					drawCommBox(this.BadMax, true)
+					commBox.drawNewBox(this.BadMax, true)
 				}
 				toggleBox = true;
 			}
@@ -218,6 +219,7 @@ function start()
 				{
 					drawHeight = GAME_SCREEN_HEIGHT;
 					resetHeight = true;
+					commBox.toggle = false;
 				}, 10000);
 			}
 			resetHeight = false;
@@ -450,6 +452,10 @@ function start()
 
 	    drawObstacles(ctx);
 	    drawShip(ctx);
+	    if(commBox.toggle)
+	    {
+	    	commBox.drawBox();
+	    }
 	}
 
 	//draws all obstacles (for now, just asteroids)
@@ -463,7 +469,10 @@ function start()
 
 	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar" || objName == "SpaceStation")
 	    		{
-	    			ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
+	    			if(obj.y - ship.y <= drawHeight)
+	    			{
+	    				ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
+	    			}
 	    		}
 				else if(objName == "BadMax")
 				{
@@ -531,6 +540,7 @@ function start()
 	function fireLaser()
 	{
 		obstacles.push(new LaserBeam(ship.x	, ship.y, ship.angle));
+		ship.energy -= 2;
 	}
 
 	function scan(){
@@ -620,7 +630,7 @@ function sound(src) {
 	this.play = function(){
 		this.sound.play();
   	}
-  	this.stop = function(){
+  	thi.sstop = function(){
     	this.sound.pause();
   	}
 }
