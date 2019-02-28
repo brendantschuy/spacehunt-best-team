@@ -17,6 +17,8 @@ class Ship 	//class names capitalized per js convention
 		this.originalSupplies = 1000
 		this.supplies = 1000;
 
+		this.currency = 1000;
+
 		//ship movement
 		this.isMoving = false;
 		this.angle = 0;						//in degrees
@@ -43,7 +45,8 @@ class Ship 	//class names capitalized per js convention
 		this.offset_x = 0;					//distance from center of square
 		this.offset_y = 0;					//distance from center of square
 		this.cpx = 10;						//celestial position
-		this.cpy = 10;						//celestial position
+		this.cpy = 10;
+		this.damage = 0;						//celestial position
 
 		//ship graphics
 		this.sprite = new Image();
@@ -66,15 +69,18 @@ class Ship 	//class names capitalized per js convention
 	}
 
 	//is out of bounds? teleports somewhere random if so
+	//if NOT out of bounds, function returns
 	checkBoundary()
 	{
 		if(this.randWormholes == true){
 			if(this.cpy >= MAP_MAX_Y || this.cpy <= MAP_MIN_Y ||
-			   this.cpx >= MAP_MAX_X || this.cpx <= MAP_MIN_X){
+			   this.cpx >= MAP_MAX_X || this.cpx <= MAP_MIN_X)
+			{
 				alert("You entered a wormhole! You will now be transported to somewhere random in space!");
 				this.x = (Math.floor(Math.random() * (MAP_MAX_X-3)) + 2) * GRID_SIZE;
 				this.y = (Math.floor(Math.random() * (MAP_MAX_Y-3)) + 2) * GRID_SIZE;
 				this.restoreDefaults();
+				return;
 			}
 		}
 		else {
@@ -94,14 +100,17 @@ class Ship 	//class names capitalized per js convention
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.x = (MAP_MAX_X * GRID_SIZE) - GRID_SIZE;
 			}
+			else
+				return;
 		}
 
-		/* This was implemented before wormholes were added
-		if(this.cpy >= MAP_MAX_Y || this.cpy <= MAP_MIN_Y || this.cpx >= MAP_MAX_X || this.cp <= MAP_MIN_X)
-		{
-			this.x = Math.floor(Math.random() * 2200) + GRID_SIZE;
-			this.y = Math.floor(Math.random() * 2200) + GRID_SIZE;
-		}*/
+		var audio_wormhole = new Audio('audio/wormhole.wav');
+		audio_wormhole.volume = 1;
+		audio_wormhole.play();
+
+		//Prevents ship from exploding/dying if you enter a wormhole.
+		this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+		this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 	}
 
 	//actually moves ship
@@ -129,11 +138,16 @@ class Ship 	//class names capitalized per js convention
 		
 		this.checkBoundary();
 		this.updatecp();
+		
+		// save location, supplies, energy here 
 	}
 
 	beginMoving()
 	{
-		this.supplies -= 0.003 * this.originalSupplies + 0.02 * this.supplies;
+		if(this.distanceToTravel > 0)	//don't use supplies if not moving
+		{
+			this.supplies -= 0.003 * this.originalSupplies + 0.02 * this.supplies;
+		}
 		this.isMoving = true;
 		this.distanceGoal = this.distanceToTravel;
 	}
@@ -210,6 +224,10 @@ class Ship 	//class names capitalized per js convention
 		this.distanceToTravel = 0;
 		this.offset_y = 0;
 		this.offset_x = 0;
+	}
+
+	getDamaged(dmg){
+		this.damage += dmg;
 	}
 }
 

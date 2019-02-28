@@ -172,6 +172,18 @@ function start()
 				{
 					drawCommBox(objName);
 				}
+				else if(objName == "SpaceStation"){
+					//also needs refining.
+					chanceGame();
+				}
+				else if(objName == "AbandonedFreighter"){
+					drawCommBox(objName);
+					i = getFreighter(i);
+				}
+				else if (objName == "MeteorStorm"){
+					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
+					drawCommBox("MeteorStorm");
+				}
 			}
 		}
 		if((this.ship.cpx == this.badmax.cpx) && (this.ship.cpy == this.badmax.cpy))
@@ -181,11 +193,39 @@ function start()
 		}
 	}
 
+	//needs refining
+	function chanceGame(){		
+		wager = prompt("Enter a number of digital credits to bet", 0);
+		while(wager > ship.currency){
+			wager = prompt("You cannot bet that much! Enter another amount", 0); 
+		}
+		guess = prompt("Enter a number between 1 and 10", 0);
+		while(guess > 10 || guess < 0){
+			guess = prompt("Between 1 and 10, no more and no less", 0); 
+		}
+		var result = Math.floor((Math.random() * 10) + 1);
+		if(guess == result){
+			alert("Congratulations! You guessed the right number! You get 5x your wager!");
+			ship.currency += (5 * wager);
+		}
+		if(guess == (result-1) || guess == (result+1)){
+			alert("You were very close! Only within one. You get 3x your wager!");
+			ship.currency += (3 * wager);
+		}
+		else { 
+			alert("Close, but not close enough. Sorry!");
+			ship.currency -= wager;
+		}	
+	}
+
 	function hitObstacle()
 	{
 		if(!this.gameOver)
 		{
 			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
+			var audio_explosion = new Audio('audio/explosion.mp3');
+			audio_explosion.volume = 0.5; 	//less loud
+			audio_explosion.play();
 		}
 		this.gameOver = true;
 
@@ -207,14 +247,24 @@ function start()
 	//experimental
 	function getPotion(index)
 	{	
+		var audio_potion = new Audio('audio/potion.wav');
+		audio_potion.volume = 1;
+		audio_potion.play();
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
 		return index + 1;
 	}
 
+	function getFreighter(index){
+		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].energy);
+		this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);
+		this.ship.currency += this.obstacles[index].currency;
+		this.obstacles.splice(index, 1);
+		return index + 1;
+	}
+
 	function initializeObjects()
 	{
-		// check for saved state. if it exists, load state. else, continue with new game
 
 		//create canvas, get context
 		var cvs = createCanvas();
@@ -226,7 +276,11 @@ function start()
 
 		this.obstacles = new Array();
 
-		
+		/* still working on this */
+		// prompt user or wait for onload
+		// if load, load(gameState, savedList);
+
+
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
 		obstacles.push(new badmax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
 		//obstacles.push(new badmax(10*GRID_SIZE, 15*GRID_SIZE));
@@ -241,10 +295,15 @@ function start()
 		obstacles.push(new Asteroid(1, 1));
 		obstacles.push(new EnergyPotion(9, 11, 200));
 		obstacles.push(new Recipe(11, 9));
+		obstacles.push(new MeteorStorm(8,8));
 		obstacles.push(new Celeron(4, 4));
 		obstacles.push(new Xeon(12, 12));
 		obstacles.push(new Ryzen(18, 18));
 		obstacles.push(new DeathStar(15, 10));
+		obstacles.push(new SpaceStation(13, 15));
+		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
+
+	// 	save(gameState, savedList);
 
 		this.badmax = obstacles[0];
 
@@ -315,11 +374,10 @@ function start()
 	function writeHud(ctx)
 	{
 		this.fps = (numFrames + 1)/(((new Date()).getTime() - this.startTime)/1000);
-		
-
-
+	
 		var ctx = document.getElementById("gameScreen").getContext('2d');
-	    //helps reduce lag
+
+		ctx.font = "10px Arial";
 	    ctx.beginPath();
 
 
@@ -328,12 +386,14 @@ function start()
 	    ctx.fillText("angle = " + ship.angle, 10, 10);
 	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 30);
 	    ctx.fillStyle = "#00FF00";
-	    ctx.fillText("energy = " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 50);
+	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 50);
 	    ctx.fillStyle = "#FF0000";
-	    ctx.fillText("supplies = " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 70);
+	    ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 70);
+	    ctx.fillStyle = "#FFFF00";
+	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 90);
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 90);
-	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 110);
+	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 110);
+	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 150);
 	}
 
 	//draws obstacles, ship, other items on the canvas
@@ -357,7 +417,7 @@ function start()
 	    	if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
-	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar")
+	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar" || objName == "SpaceStation")
 	    		{
 	    			ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
 	    		}
@@ -533,10 +593,18 @@ function drawCommBox(obstacleName)
 		case("DeathStar") : 
 			ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
 			break;
+
 		case("badmax") :
 			ctx.fillText("Badmax has found you. Game over.", 20, 560);
+		case("SpaceStation") :
+			ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
+			break;
+		case("AbandonedFreighter") :
+			ctx.fillText("You found an abandoned freighter! You get some additional resources!", 5, 560);
+			break;
+		case("MeteorStorm") :
+			ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 10 seconds. RUN!", 5, 560);
 			break;
 	}
-}
-
 	
+}

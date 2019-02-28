@@ -52,6 +52,9 @@ function showMap(obstacles){
   }
 }
 
+//Draws things on a given DOM object, given that object's ID and 
+//the array of things to be drawn
+//Main use is to write object names on "map" canvas
 function drawThingsMap(elementID,obstacles) {
   var ctx = document.getElementById(elementID).getContext('2d');
   ctx.beginPath();
@@ -98,6 +101,7 @@ function drawObstaclesMap(ctx,obstacles) {
 
       item.onMapList = true;
 
+      //This prevents us from writing things on the map off the end of the doc
       if(map_y > 381)
       {
         map_y = 20;
@@ -110,27 +114,14 @@ function drawObstaclesMap(ctx,obstacles) {
 
 }
 
-  //draws potions and recipe, etc
-function drawItemsMap(ctx)
-{
-    //draw 1 potion
-    
-    //draw potion if array of items?
-    //potion.forEach(function (p)
-    //{
-    //  if(confirmDraw(p.x, p.y))
-    //  {
-    //    ctx.drawImage(potion.sprite, p.x - ship.x, p.y - ship.y);
-    //  }
-    //});
-}
-
+// Removes an element from the document
+//Example usage is to remove potion from map after consumption
 function removeElement(elementId) {
-    // Removes an element from the document
     var element = document.getElementById(elementId);
     element.parentNode.removeChild(element);
 }
 
+//Toggles visibility of an object
 function switchVisibility(elementId) {
   var element = document.getElementById(elementId);
   if(element.style.visibility == "hidden"){
