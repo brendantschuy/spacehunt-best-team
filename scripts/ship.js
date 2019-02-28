@@ -21,7 +21,7 @@ class Ship 	//class names capitalized per js convention
 
 		//ship movement
 		this.isMoving = false;
-		this.angle = 0;						//in degrees
+		this.angle = 90;						//in degrees
 		this.distanceToTravel = 0;			//in pixels
 		this.energyEfficiency = 10;			//energy used per CP travelled
 
@@ -202,8 +202,6 @@ class Ship 	//class names capitalized per js convention
 			{
 				this.distanceToTravel = GRID_SIZE - Math.abs(this.offset_x);
 			}
-
-			
 		}
 		//this.distanceToTravel -= Math.sin(this.angle) * (GRID_SIZE - ship.offset_y % GRID_SIZE) + Math.cos(this.angle) * (GRID_SIZE - ship.offset_x % GRID_SIZE);
 		if(this.distanceToTravel < 0)
@@ -211,6 +209,7 @@ class Ship 	//class names capitalized per js convention
 			this.distanceToTravel = 0;
 		}
 	}
+
 	checkEnergy()
 	{
 		if(this.dev == false){
@@ -230,7 +229,7 @@ class Ship 	//class names capitalized per js convention
 			}
 		}
 	}
-	
+
 	toggleDevMode(){
 		this.dev = !(this.dev);
 	}

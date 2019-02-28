@@ -2,7 +2,7 @@
 
 //contains obstacle definition etc
 
-class badmax
+class BadMax
 {
 	constructor(x, y)
 	{

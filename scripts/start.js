@@ -7,6 +7,8 @@ var drawHeight = GAME_SCREEN_HEIGHT;
 
 function start()
 {
+	var resetHeight = true;
+
 	this.gameOver = false;
 	this.gameWon = false;
 	this.displayHud = false; //document.getElementById("hud").checked;
@@ -90,6 +92,10 @@ function start()
 		else if(e.keyCode == '81' || e.keyCode == '17')		//Q or CTRL
 		{
 			scan();
+		}
+		else if(e.keyCode == '90')							//Z
+		{
+			fireLaser();
 		}
 	}
 
@@ -189,16 +195,16 @@ function start()
 				}
 				else if (objName == "MeteorStorm"){
 					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
-					drawCommBox("MeteorStorm", true);
+					drawCommBox(this.obstacles[i], true);
 				}
 				else if (objName == "Planet")
 				{
 					drawCommBox(this.obstacles[i], true);
 				}
-				if((this.ship.cpx == this.badmax.cpx) && (this.ship.cpy == this.badmax.cpy))
+				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy))
 				{
 					hitObstacle();
-					drawCommBox("badmax", true)
+					drawCommBox(this.BadMax, true)
 				}
 				toggleBox = true;
 			}
@@ -206,7 +212,19 @@ function start()
 
 		if(!toggleBox)
 		{
-			drawHeight = GAME_SCREEN_HEIGHT;
+			if(resetHeight)
+			{
+				setTimeout(function()
+				{
+					drawHeight = GAME_SCREEN_HEIGHT;
+					resetHeight = true;
+				}, 10000);
+			}
+			resetHeight = false;
+		}
+		else
+		{
+			drawHeight = GAME_SCREEN_HEIGHT	- GRID_SIZE;
 		}
 	}
 
@@ -299,8 +317,8 @@ function start()
 
 
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
-		obstacles.push(new badmax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-		//obstacles.push(new badmax(10*GRID_SIZE, 15*GRID_SIZE));
+		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
+		//obstacles.push(new BadMax(10*GRID_SIZE, 15*GRID_SIZE));
 		obstacles.push(new Asteroid(9, 9));
 		obstacles.push(new Asteroid(11, 11));
 		obstacles.push(new Asteroid(6, 6));
@@ -319,11 +337,19 @@ function start()
 		obstacles.push(new DeathStar(15, 10));
 		obstacles.push(new SpaceStation(13, 15));
 		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
-		obstacles.push(new Planet(13, 13, 5));
+		obstacles.push(new Planet(8, 8, 1));
+		obstacles.push(new Planet(10, 8, 2));
+		obstacles.push(new Planet(5, 10, 3));
+		obstacles.push(new Planet(3, 18, 4));
+		obstacles.push(new Planet(14, 14, 5));
+		obstacles.push(new Planet(14, 10, 6));
+		obstacles.push(new Planet(12, 10, 7));
+		
+
 
 	// 	save(gameState, savedList);
 
-		this.badmax = obstacles[0];
+		this.BadMax = obstacles[0];
 
 		ship.updatecp();
 	}
@@ -434,12 +460,23 @@ function start()
 	    	if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
+
 	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar" || objName == "SpaceStation")
 	    		{
 	    			ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
 	    		}
-				else if(objName == "badmax"){
+				else if(objName == "BadMax")
+				{
 					ctx.drawImage(obj.sprite, (obj.x - ship.x - GRID_SIZE/2)-1, (obj.y - ship.y - GRID_SIZE/2)-1);
+				}
+				else if(objName == "LaserBeam")
+				{
+					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
+					obj.x += obj.xv;
+					obj.y += obj.yv;
+					//ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
+					//obj.x += obj.xv;
+					//obj.y += obj.yv;
 				}
 	    		else
 	    		{
@@ -449,8 +486,6 @@ function start()
 	    }, this);
   	}
 	
-
-
 	//draws the user's ship
 	function drawShip(ctx)
 	{
@@ -493,6 +528,10 @@ function start()
 	    }
 	}
 
+	function fireLaser()
+	{
+		obstacles.push(new LaserBeam(ship.x	, ship.y, ship.angle));
+	}
 
 	function scan(){
 		//checks to see if obstacles are within half the screen distance from the ship
@@ -507,22 +546,23 @@ function start()
 		ship.supplies -= (ship.originalSupplies * .02);
 		showMap(obstacles);
 	}
+
 	function pursuit()
 	{
-		if(this.ship.cpx < this.badmax.cpx){
-			this.badmax.x -= GRID_SIZE;
+		if(this.ship.cpx < this.BadMax.cpx){
+			this.BadMax.x -= GRID_SIZE;
 		}
-		else if(this.ship.cpx > this.badmax.cpx){
-			this.badmax.x += GRID_SIZE;
+		else if(this.ship.cpx > this.BadMax.cpx){
+			this.BadMax.x += GRID_SIZE;
 		}
-		if(this.ship.cpy < this.badmax.cpy){
-			this.badmax.y -= GRID_SIZE;		
+		if(this.ship.cpy < this.BadMax.cpy){
+			this.BadMax.y -= GRID_SIZE;		
 		}
-		else if(this.ship.cpy > this.badmax.cpy){
-			this.badmax.y += GRID_SIZE;
+		else if(this.ship.cpy > this.BadMax.cpy){
+			this.BadMax.y += GRID_SIZE;
 		}
-		this.badmax.cpx = Math.floor(this.badmax.x/GRID_SIZE);
-		this.badmax.cpy = Math.floor(this.badmax.y/GRID_SIZE);
+		this.BadMax.cpx = Math.floor(this.BadMax.x/GRID_SIZE);
+		this.BadMax.cpy = Math.floor(this.BadMax.y/GRID_SIZE);
 	}
 
 	//displays HUD on game screen
@@ -583,52 +623,4 @@ function sound(src) {
   	this.stop = function(){
     	this.sound.pause();
   	}
-}
-
-//Displays messages to player
-function drawCommBox(obstacleName)
-{
-	var ctx = document.getElementById("gameScreen").getContext('2d');
-	if(obstacleName == "DeathStar")
-	{
-		ctx.fillStyle = "black";
-		ctx.fillRect(0, 512, 640, 128);
-		ctx.fillStyle = "red";
-	}
-	else
-	{
-		ctx.fillStyle = "white";
-		ctx.fillRect(0, 512, 640, 128);
-		ctx.fillStyle = "black";
-	}
-	ctx.font = "20px Arial";
-	switch(obstacleName)
-	{
-		case("asteroid") : 
-			ctx.fillText("You hit an asteroid. Game over.", 20, 560);
-			break;
-		case("Xeon") : case ("Celeron") : case("Ryzen") : 
-			ctx.fillText("Welcome to the planet of " + obstacleName + "!", 20, 560);
-			//ctx.fillText("Press L to land or O to orbit (not implemented).", 20, 590);
-			break;
-		case("recipe") : 
-			ctx.fillText("You win the game :)", 20, 560);
-			break;
-		case("DeathStar") : 
-			ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
-			break;
-
-		case("badmax") :
-			ctx.fillText("Badmax has found you. Game over.", 20, 560);
-		case("SpaceStation") :
-			ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
-			break;
-		case("AbandonedFreighter") :
-			ctx.fillText("You found an abandoned freighter! You get some additional resources!", 5, 560);
-			break;
-		case("MeteorStorm") :
-			ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 10 seconds. RUN!", 5, 560);
-			break;
-	}
-	
 }

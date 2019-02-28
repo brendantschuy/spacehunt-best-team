@@ -41,5 +41,5 @@ function makeitRain(){
 	meteor.style.top = 0;
 
 	document.body.appendChild(meteor);
-	setTimeout(function(){removeElement("meteor");tookDamage = false;},10000);
+	setTimeout(function(){removeElement("meteor");tookDamage = false;},500);
 }

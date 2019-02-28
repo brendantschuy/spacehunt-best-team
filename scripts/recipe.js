@@ -12,7 +12,6 @@ class Recipe
 		this.cpy = cpy;	
 		this.onMapList = false;
 		this.sprite = new Image();
-		this.sprite.src = "img/recipe.png"; //commented out because scan function sets the source now
-		
+		this.sprite.src = "img/recipe.png"; //commented out because scan function sets the source now	
 	}
 }

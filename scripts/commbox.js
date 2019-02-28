@@ -53,7 +53,10 @@ function drawCommBox(obstacle, toggle)
 			ctx.fillText("You found an abandoned freighter! You get some additional resources!", 5, 560);
 			break;
 		case("MeteorStorm") :
-			ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 10 seconds. RUN!", 5, 560);
+			ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 0.5 seconds. RUN!", 5, 560);
+			break;
+		case("BadMax") :
+			ctx.fillText("Bad Max found you and shot you down :(", 5, 560);
 			break;
 	}
 

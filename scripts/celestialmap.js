@@ -92,6 +92,9 @@ function drawObstaclesMap(ctx,obstacles) {
         case("DeathStar") : 
           ctx.fillStyle = "black";
           break;
+        case("BadMax") : 
+          ctx.fillStyle = "red";
+          break;
       }
       
       ctx.font = "bold";
