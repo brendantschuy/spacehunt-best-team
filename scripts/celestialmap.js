@@ -61,7 +61,6 @@ function drawThingsMap(elementID,obstacles) {
   ctx.save();
 
   drawObstaclesMap(ctx,obstacles);
-  drawItemsMap(ctx);
 }
 
 //draws all obstacles

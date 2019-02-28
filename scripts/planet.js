@@ -4,7 +4,7 @@
 
 class Planet
 {
-	constructor(cpx, cpy)
+	constructor(cpx, cpy, id)
 	{
 		this.idNumber = id;
 		this.x = cpx*GRID_SIZE;
@@ -22,6 +22,7 @@ class Planet
 		this.sprite = new Image();
 		this.visible = true;
 		this.onmapList = false;
+		this.planetName = randomPlanetName();
 		//x is the number of each planet (1 - 7)
 		this.sprite.src = "img/planet" + this.idNumber + ".png";
 	}		

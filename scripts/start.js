@@ -3,6 +3,7 @@
 //this is the first javascript function to be called
 
 var explosionSound;
+var drawHeight = GAME_SCREEN_HEIGHT;
 
 function start()
 {
@@ -33,7 +34,7 @@ function start()
 			writeHud();
 		}
 		//if(this.speedRun){ //if this is called every tinme a frame is drawn the user will just be spammed with prompts
-		//	SpeedRunMode();
+		//	speedRunMode();
 		//}
 
 	    drawBackground("gameScreen");	//creates background and white grid
@@ -97,21 +98,21 @@ function start()
 		var ctx = document.getElementById(elementID).getContext('2d');
 
 		//creates backdrop (opacity = 0.4 so it is see-through)
-	    ctx.fillStyle = "RGBA(0, 0, 0, 0.4)";
-	    ctx.fillRect(0, 0, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+	    ctx.fillStyle = "RGBA(0, 0, 25, 0.4)";
+	    ctx.fillRect(0, 0, GAME_SCREEN_WIDTH, drawHeight);
 
 	    ctx.beginPath();    //reduces lag       
 	    ctx.strokeStyle = "white";
 	    for(w = ship.offset_x; w < GAME_SCREEN_WIDTH; w += GRID_SIZE)
 	    {
-	        for(h = ship.offset_y; h < GAME_SCREEN_HEIGHT; h += GRID_SIZE)
+	        for(h = ship.offset_y; h < drawHeight; h += GRID_SIZE)
 	        {
 	            //draws line every 128 px in either direction
 	            ctx.moveTo(w, 0.5);
-	            ctx.lineTo(w, GAME_SCREEN_WIDTH);
+	            ctx.lineTo(w, drawHeight);
 	            ctx.stroke();
 	            ctx.moveTo(0.5, h);
-	            ctx.lineTo(GAME_SCREEN_HEIGHT, h);
+	            ctx.lineTo(GAME_SCREEN_WIDTH, h);
 	            ctx.stroke();
 	        }
 	    }
@@ -147,11 +148,17 @@ function start()
 	//work in progress.
 	function interact()
 	{
+		var toggleBox = drawCommBox("", false);
 		//not optimized at all (will search every obstacle regardless of how far away it is)
 		for(var i = 0; i < this.obstacles.length; i++)
 		{
 			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy))	
 			{
+				drawHeight -= Math.abs(ship.offset_y);
+				if(drawHeight <= GAME_SCREEN_HEIGHT	- GRID_SIZE)
+				{
+					drawHeight = GAME_SCREEN_HEIGHT - GRID_SIZE;
+				}
 				objName = this.obstacles[i].constructor.name;
 				if(objName == "EnergyPotion")
 				{
@@ -159,31 +166,40 @@ function start()
 				}
 				else if(objName == "Recipe" && !this.gameWon)
 				{
-					drawCommBox("recipe");
+					drawCommBox(this.obstacles[i], true);
 					win();
 				}
-				else if((objName == "Asteroid" || objName == "Planet") && !this.ship.dev)
+				else if((objName == "Asteroid") && !this.ship.dev)
 				{
-					drawCommBox("asteroid");
+					drawCommBox(this.obstacles[i], true);
 					hitObstacle();
 				}
 				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen" || objName == "DeathStar")
 				{
-					drawCommBox(objName);
+					drawCommBox(this.obstacles[i], true);
 				}
 				else if(objName == "SpaceStation"){
 					//also needs refining.
 					chanceGame();
 				}
 				else if(objName == "AbandonedFreighter"){
-					drawCommBox(objName);
+					drawCommBox(this.obstacles[i], true);
 					i = getFreighter(i);
 				}
 				else if (objName == "MeteorStorm"){
 					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
-					drawCommBox("MeteorStorm");
+					drawCommBox("MeteorStorm", true);
 				}
+				else if (objName == "Planet")
+				{
+					drawCommBox(this.obstacles[i], true);
+				}
+				toggleBox = true;
 			}
+		}
+		if(!toggleBox)
+		{
+			drawHeight = GAME_SCREEN_HEIGHT;
 		}
 	}
 
@@ -293,6 +309,7 @@ function start()
 		obstacles.push(new DeathStar(15, 10));
 		obstacles.push(new SpaceStation(13, 15));
 		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
+		obstacles.push(new Planet(13, 13, 5));
 
 	// 	save(gameState, savedList);
 
@@ -393,7 +410,6 @@ function start()
 	    ctx.translate(SHIP_ABS_X, SHIP_ABS_Y);				//place center of rotation at current center of ship
 
 	    drawObstacles(ctx);
-	    //drawItems(ctx);
 	    drawShip(ctx);
 	}
 
@@ -468,20 +484,26 @@ function start()
 				this.obstacles[i].visible = true;
 			}
 		}
+
+		//uses up supplies for scanning
 		ship.supplies -= (ship.originalSupplies * .02);
 		showMap(obstacles);
 	}
 
+	//displays HUD on game screen
 	function toggleHud()
 	{
 		this.displayHud = !(this.displayHud);
 	}
 	
+	//speed run has a hard time limit to complete the game
 	function toggleSpeedRun(){ 
 		this.speedRun = !(this.speedRun);
-		if(this.speedRun) SpeedRunMode();
+		if(this.speedRun) speedRunMode();
 	}
-	function SpeedRunMode(){
+
+	//describes and implements speed run mode
+	function speedRunMode(){
 		var confirmStart = confirm("You will enter speed run mode. Is this okay?");
 		if(confirmStart == true){
 			document.getElementById("bgmusic").innerHTML = '<iframe src="audio/speedrun.mp3" allow="autoplay" id="audio" style="display:none"></iframe>';
@@ -508,8 +530,9 @@ function start()
 	drawBackground("gameScreen");
 	drawFrame();
 	showMap(obstacles);
-	//For testing purposes
-	//SpeedRunMode();
+
+	//For testing purposes:
+	//speedRunMode();
 }
 
 function sound(src) {
@@ -527,47 +550,3 @@ function sound(src) {
   	}
 }
 
-//Displays messages to player
-function drawCommBox(obstacleName)
-{
-	var ctx = document.getElementById("gameScreen").getContext('2d');
-	if(obstacleName == "DeathStar")
-	{
-		ctx.fillStyle = "black";
-		ctx.fillRect(0, 512, 640, 128);
-		ctx.fillStyle = "red";
-	}
-	else
-	{
-		ctx.fillStyle = "white";
-		ctx.fillRect(0, 512, 640, 128);
-		ctx.fillStyle = "black";
-	}
-	ctx.font = "20px Arial";
-	switch(obstacleName)
-	{
-		case("asteroid") : 
-			ctx.fillText("You hit an asteroid. Game over.", 20, 560);
-			break;
-		case("Xeon") : case ("Celeron") : case("Ryzen") : 
-			ctx.fillText("Welcome to the planet of " + obstacleName + "!", 20, 560);
-			//ctx.fillText("Press L to land or O to orbit (not implemented).", 20, 590);
-			break;
-		case("recipe") : 
-			ctx.fillText("You win the game :)", 20, 560);
-			break;
-		case("DeathStar") : 
-			ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
-			break;
-		case("SpaceStation") :
-			ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
-			break;
-		case("AbandonedFreighter") :
-			ctx.fillText("You found an abandoned freighter! You get some additional resources!", 5, 560);
-			break;
-		case("MeteorStorm") :
-			ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 10 seconds. RUN!", 5, 560);
-			break;
-	}
-	
-}
