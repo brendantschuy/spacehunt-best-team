@@ -21,27 +21,6 @@ header {
 	 width: 500px;
 }
 
-/*#widescreen-header {
-	color: white;
-	height: 115px;
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0px;
-}
-
-#smallscreen-header
-{
-	color: white;
-	height: 0px;
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0px;
-}*/
-
 body {
 	font-family: Impact, Charcoal, sans-serif;
 	overflow-y: scroll;
@@ -65,7 +44,7 @@ h2 {
 
 .controls-div{
 	float: left;
-	width: 325px;
+	width: 380px;
 }
 
 #controls-banner {
@@ -106,14 +85,14 @@ h2 {
 
 .map-class {
 	float: right;
-	width: 370px;
+	width: 30%;
 }
 
 .map-class, .controls-div {
 	padding-left: 5px;
 	padding-right: 5px;
-	margin-left: 20px;
-	margin-right: 20px;
+	margin-left: 25px;
+	margin-right: 25px;
 }
 
 .map-class, .controls-div, .game {
@@ -130,12 +109,12 @@ h2 {
 }
 
 .dev-options-div {
-	color: white;
+    color: white;
 	height: 260px;
 	width: auto;
 	padding: 10px;
-	margin: 20px;
-	margin-top: 130px;
+    margin: 20px;
+    margin-top: 130px;
 	border-radius: 30px;
 }
 
@@ -166,7 +145,7 @@ h2 {
 
 #dev-modes{
 	/*background-color: blue;*/
-	width: 325px;
+	width: 400px;
 	height: 100%;
 	padding: 10px;
 	margin-left: 10px;
@@ -241,14 +220,14 @@ h2 {
 #controls-left {
 	background: url("../img/left_button.png") no-repeat center;
 	display: inline-block;
-	margin-left: 25px;
+	margin-left: 45px;
 	/*padding-bottom: 5px;*/
 }
 
 #controls-right {
 	background: url("../img/right_button.png") no-repeat right;
 	display: block;
-	margin-right: 32px;
+	margin-right: 58px;
 	float: right;
 	/*padding-bottom: 6px;*/
 }
