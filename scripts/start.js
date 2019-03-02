@@ -98,6 +98,10 @@ function start()
 		{
 			fireLaser();
 		}
+		else if(e.keyCode == '88') //X
+		{
+			genesisSaber();
+		}
 	}
 
 	//draws grid corresponding with CPs
@@ -487,6 +491,11 @@ function start()
 					//obj.x += obj.xv;
 					//obj.y += obj.yv;
 				}
+				else if(objName =="GenesisSaber"){
+					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
+					obj.x += obj.xv;
+					obj.y += obj.yv;
+				}	
 	    		else
 	    		{
 	    			ctx.drawImage(obj.sprite, obj.x - ship.x - GRID_SIZE/4, obj.y - ship.y - GRID_SIZE/4);
@@ -544,6 +553,24 @@ function start()
 		OverloadThunderBeam.play();
 		obstacles.push(new LaserBeam(ship.x	, ship.y -35, ship.angle));
 		ship.energy -= 2;
+	}
+
+	function genesisSaber()
+	{
+		var GS = new Audio('audio/genesis_saber.wav');
+		GS.volume = 1;
+		GS.play();
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 0));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 45));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 90));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 135));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 180));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 225));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 270));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 315));
+		
+		ship.energy -= 100;
+		ship.supplies -= 50;
 	}
 
 	function scan(){
