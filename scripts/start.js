@@ -98,7 +98,7 @@ function start()
 		{
 			fireLaser();
 		}
-		else if (e.keyCode == '67')
+		else if (e.keyCode == '67') //C
 		{
 			ghost();
 		}
