@@ -185,7 +185,7 @@ function start()
 					commBox.drawNewBox(this.obstacles[i], true);
 					win();
 				}
-				else if((objName == "Asteroid") && !this.ship.dev && (this.ship.isGhost == false))
+				else if((objName == "Asteroid") && !this.ship.dev)
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
 					hitObstacle();
@@ -202,7 +202,7 @@ function start()
 					commBox.drawNewBox(this.obstacles[i], true);
 					i = getFreighter(i);
 				}
-				else if ((objName == "MeteorStorm") && !this.ship.isGhost){
+				else if ((objName == "MeteorStorm") && !this.ship.dev){
 					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
 					commBox.drawNewBox(this.obstacles[i], true);
 				}
@@ -210,7 +210,7 @@ function start()
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
 				}
-				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && this.ship.isGhost == false)
+				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev)
 				{
 					hitObstacle();
 					commBox.drawNewBox(this.BadMax, true)
