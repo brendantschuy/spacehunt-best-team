@@ -73,17 +73,31 @@ class Ship 	//class names capitalized per js convention
 	checkBoundary()
 	{
 		if(this.randWormholes == true){
-			if(this.cpy >= MAP_MAX_Y || this.cpy <= MAP_MIN_Y ||
-			   this.cpx >= MAP_MAX_X || this.cpx <= MAP_MIN_X)
+			if(this.cpy > MAP_MAX_Y || this.cpy < MAP_MIN_Y ||
+			   this.cpx > MAP_MAX_X || this.cpx < MAP_MIN_X)
 			{
 				alert("You entered a wormhole! You will now be transported to somewhere random in space!");
-				this.x = (Math.floor(Math.random() * (MAP_MAX_X-3)) + 2) * GRID_SIZE;
-				this.y = (Math.floor(Math.random() * (MAP_MAX_Y-3)) + 2) * GRID_SIZE;
+				/*this.x = (Math.floor(Math.random() * (MAP_MAX_X + 1))) * GRID_SIZE;
+				this.y = (Math.floor(Math.random() * (MAP_MAX_Y + 1))) * GRID_SIZE;*/
+				this.y = (Math.floor(Math.random() * (MAP_MAX_X + 1)))
+				this.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1)))
 				this.restoreDefaults();
 				return;
 			}
 		}
 		else {
+			/*if(this.cpy > MAP_MAX_Y || this.cpy < MAP_MIN_Y || 
+			   this.cpx > MAP_MAX_X || this.cpx < MAP_MIN_X)
+			{
+				alert("You entered a wormhole! You will now be transported back to start!");
+				this.y = MAP_MIN_Y;
+				this.x = MAP_MIN_X;
+				this.restoreDefaults();
+			}
+			else
+				return;*/
+
+			// This code allows the space ship to exit one side and enter the other side of the board
 	 		if(this.cpy >= MAP_MAX_Y){
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.y = (MAP_MIN_Y * GRID_SIZE) + GRID_SIZE;
@@ -147,7 +161,7 @@ class Ship 	//class names capitalized per js convention
 		this.checkBoundary();
 		this.updatecp();
 		
-		// save location, supplies, energy here 
+		//save location, supplies, energy here 
 	}
 
 	beginMoving()
