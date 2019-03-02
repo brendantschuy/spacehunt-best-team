@@ -245,7 +245,7 @@ function start()
 			wager = prompt("You cannot bet that much! Enter another amount", 0); 
 		}
 		guess = prompt("Enter a number between 1 and 10", 0);
-		while(guess > 10 || guess < 0){
+		while(guess >= 10 || guess < 0){
 			guess = prompt("Between 1 and 10, no more and no less", 0); 
 		}
 		var result = Math.floor((Math.random() * 10) + 1);
@@ -257,6 +257,9 @@ function start()
 			alert("You were very close! Only within one. You get 3x your wager!");
 			ship.currency += (3 * wager);
 		}
+		if(guess == (result -2) || guess == result(result + 2)){
+			alert("Eh. Within two. Not bad. You get 1.5x your wager!");
+			ship.currency += (1.5 * wager);
 		else { 
 			alert("Close, but not close enough. Sorry!");
 			ship.currency -= wager;
