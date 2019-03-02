@@ -35,13 +35,15 @@ function showMap(obstacles){
 
     //Determines where to put map canvas. Depends on screen resolution.
     var largeMap = document.getElementById("widescreenOnly");
+
     if(window.getComputedStyle(largeMap).display === "none")
     {
       document.getElementById("dev-buttons").appendChild(mapCvs);
     }
     else
     {
-      document.getElementById("dev").appendChild(mapCvs);
+      /*document.getElementById("dev").appendChild(mapCvs);*/
+      document.getElementById("map-div").appendChild(mapCvs);
     }
 
     drawThingsMap("mapCanvas",obstacles);   
