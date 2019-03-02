@@ -20,7 +20,7 @@ class Planet
 		this.maxHeight = cpy + 1;	
 
 		this.sprite = new Image();
-		this.visible = true;
+		this.visible = false;
 		this.onmapList = false;
 		this.planetName = randomPlanetName();
 		//x is the number of each planet (1 - 7)

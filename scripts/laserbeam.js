@@ -4,6 +4,7 @@ class LaserBeam
 {
 	constructor(x, y, angle)
 	{
+		this.angle = angle;
 		this.x = x;
 		this.y = y;
 		this.cpx = this.x/GRID_SIZE;

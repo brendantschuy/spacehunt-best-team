@@ -82,7 +82,8 @@ function drawObstaclesMap(ctx,obstacles) {
         case("Celeron") : case("Xeon") : case ("Ryzen") : 
           ctx.fillStyle = "aquamarine";
           break;
-        case("Planet") : 
+        case("Planet") :
+          objName = item.planetName; 
           ctx.fillStyle = "aquamarine";
           break;
         case("EnergyPotion") : 

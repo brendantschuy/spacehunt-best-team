@@ -441,24 +441,24 @@ function start()
 	
 		var ctx = document.getElementById("gameScreen").getContext('2d');
 
-		ctx.font = "10px Arial";
+		ctx.font = "20px Arial";
 	    ctx.beginPath();
 
 
 	    //writes numbers/info to GUI
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("angle = " + ship.angle, 10, 10);
-	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 30);
+	    ctx.fillText("angle = " + ship.angle, 10, 20);
+	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 40);
 	    ctx.fillStyle = "#00FF00";
-	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 50);
+	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 60);
 	    ctx.fillStyle = "#FF0000";
-	    ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 70);
+	    ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 80);
 	    ctx.fillStyle = "#FFFF00";
-	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 90);
+	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 100);
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("distance to travel: " + ship.distanceToTravel.toFixed(0), 10, 110);
-	    ctx.fillText("damage: " + ship.damage.toFixed(0) + "%", 10, 150);
-	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 170);
+	    ctx.fillText("distance to travel: " + ship.distanceToTravel.toFixed(0), 10, 120);
+	    ctx.fillText("damage: " + ship.damage.toFixed(0) + "%", 10, 160);
+	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 180);
 	}
 
 	//draws obstacles, ship, other items on the canvas
@@ -536,6 +536,38 @@ function start()
    
 	    //go back to original ctx
 	    ctx.restore();
+	    ctx.save();
+
+		ctx.translate(SHIP_ABS_X, SHIP_ABS_Y);	
+	    ship.projectiles.forEach(function(laser)
+	    {
+	    	ctx.save();
+	    	ctx.rotate(laser.angle * Math.PI/90);
+
+	    	//Why yes, this is extremely hacky
+	    	if(laser.angle % 180 == 0)
+	    	{
+	    		ctx.rotate(Math.PI/2);
+	    		laser.x += laser.yv;
+	    	}
+	    	else
+	    	{
+	    		laser.x -= laser.xv;
+    			laser.y += laser.yv;
+	    	}
+
+	    	if(laser.angle < 100)
+	    	{
+	    		ctx.drawImage(laser.sprite, laser.x - ship.x - GAME_SCREEN_HEIGHT * 1.5, laser.y - ship.y);
+	    	}
+	    	else
+	    	{
+    			ctx.drawImage(laser.sprite, laser.x - ship.x, laser.y - ship.y);
+    		}
+    		ctx.restore();
+    	}, this);
+
+    	ctx.restore();
 
 	    ship.updatecp();
 
@@ -566,7 +598,7 @@ function start()
 		var OverloadThunderBeam = new Audio('audio/overload_thunder_beam.wav');
 		OverloadThunderBeam.volume = 1;
 		OverloadThunderBeam.play();
-		obstacles.push(new LaserBeam(ship.x	, ship.y -35, ship.angle));
+		ship.projectiles.push(new LaserBeam(ship.x	, ship.y -35, ship.angle));
 		ship.energy -= 2;
 	}
 
