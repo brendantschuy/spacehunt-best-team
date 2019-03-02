@@ -260,6 +260,7 @@ function start()
 		if(guess == (result -2) || guess == result(result + 2)){
 			alert("Eh. Within two. Not bad. You get 1.5x your wager!");
 			ship.currency += (1.5 * wager);
+		}
 		else { 
 			alert("Close, but not close enough. Sorry!");
 			ship.currency -= wager;
@@ -455,8 +456,9 @@ function start()
 	    ctx.fillStyle = "#FFFF00";
 	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 90);
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 110);
-	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 150);
+	    ctx.fillText("distance to travel: " + ship.distanceToTravel.toFixed(0), 10, 110);
+	    ctx.fillText("damage: " + ship.damage.toFixed(0) + "%", 10, 150);
+	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 170);
 	}
 
 	//draws obstacles, ship, other items on the canvas
