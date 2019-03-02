@@ -98,6 +98,10 @@ function start()
 		{
 			fireLaser();
 		}
+		else if (e.keyCode == '67')
+		{
+			ghost();
+		}
 		else if(e.keyCode == '88') //X
 		{
 			genesisSaber();
@@ -670,7 +674,7 @@ function start()
 
 	//For testing purposes:
 	//speedRunMode();
-	ghost();
+	//ghost();
 }
 
 function sound(src) {
