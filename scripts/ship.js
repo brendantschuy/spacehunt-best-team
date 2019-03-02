@@ -234,6 +234,9 @@ class Ship 	//class names capitalized per js convention
 	toggleDevMode(){
 		this.dev = !(this.dev);
 	}
+	ghostMode(){
+		this.isGhost = !(this.isGhost);
+	}
 
 	toggleRandWormholesMode(){
 		this.randWormholes = !(this.randWormholes);

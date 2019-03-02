@@ -177,7 +177,7 @@ function start()
 					commBox.drawNewBox(this.obstacles[i], true);
 					win();
 				}
-				else if((objName == "Asteroid") && !this.ship.dev)
+				else if((objName == "Asteroid") && !this.ship.dev && (this.ship.isGhost == false))
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
 					hitObstacle();
@@ -194,7 +194,7 @@ function start()
 					commBox.drawNewBox(this.obstacles[i], true);
 					i = getFreighter(i);
 				}
-				else if (objName == "MeteorStorm"){
+				else if ((objName == "MeteorStorm") && !this.ship.isGhost){
 					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
 					commBox.drawNewBox(this.obstacles[i], true);
 				}
@@ -202,7 +202,7 @@ function start()
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
 				}
-				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy))
+				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && this.ship.isGhost == false)
 				{
 					hitObstacle();
 					commBox.drawNewBox(this.BadMax, true)
@@ -257,7 +257,7 @@ function start()
 
 	function hitObstacle()
 	{
-		if(!this.gameOver)
+		if(!this.gameOver && this.ship.isGhost == false)
 		{
 			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
 			var audio_explosion = new Audio('audio/explosion.mp3');
@@ -616,7 +616,7 @@ function start()
 	function ghost(){
 		var timelimit = 15;
 		var downloadTimer = setInterval(function(){
-			this.ship.isGhost = true;
+			this.ship.ghostMode();
 			this.ship.energyEfficiency = 1;
 			this.ship.sprite.src = "img/ship2.png";	
 			timelimit--;
@@ -626,6 +626,7 @@ function start()
 				clearInterval(downloadTimer);
 			}
 			}, 1000);
+		this.ship.ghostMode();
 		this.ship.supplies -= 100;
 	}
 
