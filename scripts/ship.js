@@ -17,7 +17,6 @@ class Ship 	//class names capitalized per js convention
 		this.originalSupplies = 1000
 		this.supplies = 1000;
 		this.currency = 1000;
-		this.isGhost = false;
 		this.projectiles = [];
 
 		//ship movement

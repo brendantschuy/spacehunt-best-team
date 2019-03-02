@@ -688,20 +688,20 @@ function start()
 		} 
 	}
 	function ghost(){
+		this.ship.supplies -= 100;
 		var timelimit = 15;
 		var downloadTimer = setInterval(function(){
-			this.ship.ghostMode();
+			this.ship.dev = true;
 			this.ship.energyEfficiency = 1;
 			this.ship.sprite.src = "img/ship2.png";	
 			timelimit--;
 			if(timelimit < 0){
 				this.ship.sprite.src = "img/ship1.png";
-				this.ship.isGhost = false;
+				this.ship.dev = false;
 				clearInterval(downloadTimer);
 			}
 			}, 1000);
-		this.ship.ghostMode();
-		this.ship.supplies -= 100;
+		this.ship.dev = false;
 	}
 
 	//kicks it all off
