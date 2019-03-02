@@ -271,6 +271,15 @@ h2 {
 	margin-right: auto;
 }
 
+#controls-OTB {
+	background: url("../img/overload_thunder_beam_button.png") no-repeat center;
+	background-size: 65px 65px;
+	width: 70px;
+	/*margin-top: 10px;*/
+	margin-left: auto;
+	margin-right: auto;
+}
+
 #controls-scan {
 	background: url("../img/scan.gif") no-repeat center;
 	background-size: 100px 100px;
