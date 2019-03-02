@@ -18,6 +18,7 @@ class Ship 	//class names capitalized per js convention
 		this.supplies = 1000;
 
 		this.currency = 1000;
+		this.isGhost = false;
 
 		//ship movement
 		this.isMoving = false;
@@ -247,6 +248,9 @@ class Ship 	//class names capitalized per js convention
 	toggleDevMode(){
 		this.dev = !(this.dev);
 	}
+	ghostMode(){
+		this.isGhost = !(this.isGhost);
+	}
 
 	toggleRandWormholesMode(){
 		this.randWormholes = !(this.randWormholes);
@@ -263,7 +267,8 @@ class Ship 	//class names capitalized per js convention
 
 	getDamaged(dmg){
 		this.damage += dmg;
-	}
+	}		
+		
 }
 
 
