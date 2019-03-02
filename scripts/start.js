@@ -401,6 +401,9 @@ function start()
 			//recipe.hidden = 0;
 			//recipe.sprite.src = "img/recipe.png";
 		});
+		document.getElementById("OTBBtn").addEventListener("click", function() {
+			fireLaser();
+		});
 		document.getElementById("hud").addEventListener("click", function()
 		{
 			toggleHud();
