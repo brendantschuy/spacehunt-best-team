@@ -28,9 +28,7 @@
 	<link rel="stylesheet" media="screen and (max-width: 1366px)" href="css/smallscreen.css" />
 	-->
 	<link rel="stylesheet" media="screen and (max-width: 1369px)" href="css/format.css"/>
-	<link rel="stylesheet" media="screen and (min-width: 1370px)" href="css/widescreen.css" />
-
-
+	<link rel="stylesheet" media="screen and (min-width: 1370px)" href="css/widescreen.css"/>
 
 	<header>
 		<img src="img/spacehunt_logo.png" id="main-logo" alt="SpaceHunt">
@@ -74,6 +72,10 @@
 		</div>
 	</div>
 
+	<div class="game">
+		<canvas id="gameScreen"></canvas>
+	</div>
+
 	<div class="map-class" id="widescreenOnly">
 
 		<!-- Repeat all functions in the "smallscreenOnly" div down below the game console -->
@@ -88,44 +90,9 @@
 		<!--<div class="map" id="map"></div>-->
 	</div>
 
-	<div class="game">
+	<!--<div class="game">
 			<canvas id="gameScreen"></canvas>
-	</div>
-
-	<div class="right-side" id="smallscreenOnly">
-		<!--<div id="smallscreen-header">
-		<div><img src="img/spacehunt_logo.png" id="main-logo" alt="SpaceHunt"></div>
-		</div>-->
-
-		<div id="dev-buttons">
-			<div class="dev-options-button-text" id="dev-mode">
-				<input type="checkbox" id="devMode" name="devMode">
-				<label for="devMode">Developer Mode</label>
-			</div>
-			<div class="dev-options-button-text" id="wormhole-mode">
-				<input type="checkbox" id="randWormholes" name="randWormholes">
-				<label for="wormhole-mode">Random Wormholes Mode</label>
-			</div>
-			<div class="dev-options-button-text" id="bgmusic">
-				<!--This checkbox does not work yet. Attempted to add some functionality but haven't gotten far. -->
-				<input type="checkbox" id="bgm" onchange="togglePlay();">
-				<label for="bgmusic">Background Music</label>
-			</div>
-			<div class="dev-options-button-text" id="dev-options-hud">
-				<input type="checkbox" id="hud" name="hud">
-				<label for="dev-options-hud">Toggle HUD</label>
-			</div>
-			<div class="dev-options-button-text" id="speedRunMode">
-				<input type="checkbox" id="speedrun" name="speedrun">
-				<label for="speedRunMode">Speed Run Mode</label>
-			</div>
-		</div>
-
-		<div id="dev-options-banner-container"><img src="img/development_options.png" alt="Development Options" id="dev-options-banner"></div>
-
-		<!--h2><div><img src="img/celestial_map_banner.png" id="celestial-map-banner" alt="Celestial Map"></div></h2>-->
-		<!--<div class="map" id="map"></div>-->
-	</div>
+	</div>-->
 
 	<div class="dev-options-div">
 		<div id="dev-header">
@@ -144,20 +111,20 @@
 			</div>
 			<div class="dev-options-button-text" id="wormhole-mode">
 				<input type="checkbox" id="randWormholes" name="randWormholes">
-				<label for="wormhole-mode">Random Wormholes Mode</label>
+				<label for="randWormholes">Random Wormholes Mode</label>
 			</div>
 			<div class="dev-options-button-text" id="bgmusic">
 				<!--This checkbox does not work yet. Attempted to add some functionality but haven't gotten far. -->
 				<input type="checkbox" id="bgm" onchange="togglePlay();">
-				<label for="bgmusic">Background Music</label>
+				<label for="bgm">Background Music</label>
 			</div>
-			<div class="dev-options-button-text" id="dev-options-hud">
+			<div class="dev-options-button-text">
 				<input type="checkbox" id="hud" name="hud">
-				<label for="dev-options-hud">Toggle HUD</label>
+				<label for="hud">Toggle HUD</label>
 			</div>
 			<div class="dev-options-button-text" id="speedRunMode">
 				<input type="checkbox" id="speedrun" name="speedrun">
-				<label for="speedRunMode">Speed Run Mode</label>
+				<label for="speedrun">Speed Run Mode</label>
 			</div>
 		</div>
 	</div>

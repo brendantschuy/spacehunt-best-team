@@ -17,7 +17,7 @@ const SCAN_RANGE = 2;		//how far can we see when we hit scan?
 
 //map dimensions:
 const MAP_MIN_X = 0;
-const MAP_MAX_X = 128;
+const MAP_MAX_X = 15;
 const MAP_MIN_Y = 0;	
-const MAP_MAX_Y = 128;
+const MAP_MAX_Y = 15;
 //============================================================
