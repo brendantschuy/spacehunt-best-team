@@ -404,6 +404,9 @@ function start()
 		document.getElementById("OTBBtn").addEventListener("click", function() {
 			fireLaser();
 		});
+		document.getElementById("GSBtn").addEventListener("click", function() {
+			genesisSaber();
+		});
 		document.getElementById("hud").addEventListener("click", function()
 		{
 			toggleHud();
