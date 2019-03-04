@@ -345,6 +345,8 @@ function start()
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
 		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
 		//obstacles.push(new BadMax(10*GRID_SIZE, 15*GRID_SIZE));
+		//test badmax music line
+		//obstacles.push(new BadMax(12, 10));
 		obstacles.push(new Asteroid(9, 9));
 		obstacles.push(new Asteroid(11, 11));
 		obstacles.push(new Asteroid(6, 6));
@@ -681,6 +683,18 @@ function start()
 		}
 		this.BadMax.cpx = Math.floor(this.BadMax.x/GRID_SIZE);
 		this.BadMax.cpy = Math.floor(this.BadMax.y/GRID_SIZE);
+		
+		//boolean check statement isn't working for some reason.
+		//not sure why. I tried using an int and an == and no luck.
+		var check = false;
+		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2 && check === false){
+			var BM = new Audio('audio/badmax.wav');
+			BM.volume = 1;
+			BM.play();
+			check = true;
+					
+		}
+
 	}
 
 	//displays HUD on game screen
