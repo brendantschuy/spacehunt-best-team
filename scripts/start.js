@@ -93,22 +93,30 @@ function start()
 		else if(e.keyCode == '81' || e.keyCode == '17')		//Q or CTRL
 		{
 			scan();
+			ship.checkSupplies();
 		}
 		else if(e.keyCode == '90')							//Z
 		{
 			fireLaser();
+			ship.checkEnergy();
 		}
 		else if (e.keyCode == '67') //C
 		{
 			ghost();
+			ship.checkEnergy();
+			ship.checkSupplies();
 		}
 		else if(e.keyCode == '88') //X
 		{
 			genesisSaber();
+			ship.checkEnergy();
+			ship.checkSupplies();
 		}
 		else if(e.keyCode == '86') //V
 		{
 			fugaDaemonum();
+			ship.checkEnergy();
+			ship.checkSupplies();
 		}
 	}
 
