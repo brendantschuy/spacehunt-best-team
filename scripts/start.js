@@ -106,6 +106,10 @@ function start()
 		{
 			genesisSaber();
 		}
+		else if(e.keyCode == '86') //V
+		{
+			fugaDaemonum();
+		}
 	}
 
 	//draws grid corresponding with CPs
@@ -511,6 +515,14 @@ function start()
 					obj.x += obj.xv;
 					obj.y += obj.yv;
 				}	
+				else if(objName =="FugaDaemonum"){
+					//something else here to make sure the images are drawn correctly.
+					//Not complete yet.
+					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
+					ctx.rotate(obj.rotationAngle * Math.PI / 180);
+					obj.x += obj.xv;
+					obj.y += obj.yv;
+				}	
 	    		else
 	    		{
 	    			ctx.drawImage(obj.sprite, obj.x - ship.x - GRID_SIZE/4, obj.y - ship.y - GRID_SIZE/4);
@@ -618,6 +630,17 @@ function start()
 		
 		ship.energy -= 100;
 		ship.supplies -= 50;
+	}
+
+	function fugaDaemonum(){
+		var FD = new Audio('audio/fugadaemonum.wav');
+		FD.volume = 1;
+		FD.play();
+		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 0));
+		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 120));
+		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 240));
+		ship.energy -= 40;
+		ship.supplies -= 20;
 	}
 
 	function scan(){
