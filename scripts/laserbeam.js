@@ -17,6 +17,6 @@ class LaserBeam
 		this.sprite = new Image();
 		this.sprite.src = "img/overload_thunder_beam.png";
 		this.visible = true;
-		this.onMapList = true;
+		this.addToMap = false;
 	}
 }

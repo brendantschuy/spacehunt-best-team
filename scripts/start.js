@@ -211,7 +211,7 @@ function start()
 				else if(objName == "DeathStar")
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
-					musicPlayer.play("march.mp3");
+					musicPlayer.playMusic("march.mp3");
 				}
 				else if(objName == "SpaceStation"){
 					//also needs refining.
@@ -288,7 +288,7 @@ function start()
 
 	function hitObstacle()
 	{
-		if(!this.gameOver && !this.ship.isGhost)
+		if(!this.gameOver)
 		{
 			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
 			var audio_explosion = new Audio('audio/explosion.mp3');
@@ -710,7 +710,7 @@ function start()
 		//not sure why. I tried using an int and an == and no luck.
 		var check = false;
 		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
-			musicPlayer.play("badmax.wav");
+			musicPlayer.playMusic("badmax.wav");
 					
 		}
 

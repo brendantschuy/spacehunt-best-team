@@ -19,6 +19,6 @@ class FugaDaemonum
 		this.sprite.src = "img/fuga_daemonum.png";
 		
 		this.visible = true;
-		this.onMapList = true;
+		this.addToMap = false;
 	}
 }
