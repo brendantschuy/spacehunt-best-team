@@ -15,7 +15,7 @@ class AbandonedFreighter
 		this.currency = currency;
 		
 		this.sprite = new Image();
-		this.onMapList = false;
+		this.addToMap = true;
 		this.sprite.src = "img/abandoned_ship.png";
 	}		
 }

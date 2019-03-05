@@ -13,7 +13,7 @@ class EnergyPotion
 		this.hp = hp;		//potion restores this much HP/energy	
 
 		this.sprite = new Image();
-		this.onMapList = false;
+		this.addToMap = true;
 		this.sprite.src = "img/energypotion.png";
 	}		
 }
