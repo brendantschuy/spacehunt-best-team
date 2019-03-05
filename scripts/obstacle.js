@@ -12,7 +12,7 @@ class Asteroid
 		this.cpy = cpy;
 
 		this.visible = false;
-		this.onMapList = false;
+		this.addToMap = true;
 		this.sprite = new Image();
 		this.sprite.src = "img/rock.png";
 	}

@@ -211,7 +211,7 @@ function start()
 				else if(objName == "DeathStar")
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
-					musicPlayer.play("march.mp3");
+					musicPlayer.playMusic("march.mp3");
 				}
 				else if(objName == "SpaceStation"){
 					//chanceGame(ship.offset_x,ship.offset_y, ship);
@@ -322,7 +322,7 @@ function start()
 
 	function hitObstacle()
 	{
-		if(!this.gameOver && !this.ship.isGhost)
+		if(!this.gameOver)
 		{
 			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
 			var audio_explosion = new Audio('audio/explosion.mp3');
@@ -383,8 +383,8 @@ function start()
 
 
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
-		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-		//obstacles.push(new BadMax(10*GRID_SIZE, 15*GRID_SIZE));
+		//obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
+		obstacles.push(new BadMax(10*GRID_SIZE, 15*GRID_SIZE));
 		//test badmax music line
 		//obstacles.push(new BadMax(12, 10));
 		obstacles.push(new Asteroid(9, 9));
@@ -412,6 +412,18 @@ function start()
 		obstacles.push(new Planet(14, 14, 5));
 		obstacles.push(new Planet(14, 10, 6));
 		obstacles.push(new Planet(12, 10, 7));
+
+		// Initialize Wormholes
+		for(var x = MAP_MIN_X - 1; x < MAP_MAX_X; x++){
+			// Creates wormholes for the top and bottom rim of the boundary
+			obstacles.push(new Wormhole(x, MAP_MIN_Y - 1));
+			obstacles.push(new Wormhole(x, MAP_MAX_Y));
+		}
+		for(var y = MAP_MIN_Y; y < MAP_MAX_Y; y++){
+			// Creates wormholes for left and right rim of the boundary
+			obstacles.push(new Wormhole(MAP_MIN_X - 1, y));
+			obstacles.push(new Wormhole(MAP_MAX_X, y));
+		}
 		
 
 
@@ -713,17 +725,38 @@ function start()
 
 	function pursuit()
 	{
-		if(this.ship.cpx < this.BadMax.cpx){
-			this.BadMax.x -= GRID_SIZE;
+		distx = this.ship.cpx - this.BadMax.cpx;
+		disty = this.ship.cpy - this.BadMax.cpy;
+		
+		absDist = Math.sqrt((distx * distx) + (disty * disty));
+		
+		if(absDist < 30){
+			if(Math.abs(distx) > Math.abs(disty)){
+				if(disty < 0)
+					this.BadMax.x -= GRID_SIZE;
+				else
+					this.BadMax.x += GRID_SIZE;
+			}
+			else{
+				if(disty < 0)
+					this.BadMax.y -= GRID_SIZE;
+				else
+					this.BadMax.y += GRID_SIZE;
+			}
 		}
-		else if(this.ship.cpx > this.BadMax.cpx){
-			this.BadMax.x += GRID_SIZE;
-		}
-		if(this.ship.cpy < this.BadMax.cpy){
-			this.BadMax.y -= GRID_SIZE;		
-		}
-		else if(this.ship.cpy > this.BadMax.cpy){
-			this.BadMax.y += GRID_SIZE;
+		else if (absDist >= 30){
+			if(this.ship.cpx < this.BadMax.cpx){
+				this.BadMax.x -= GRID_SIZE;
+			}
+			else if(this.ship.cpx > this.BadMax.cpx){
+				this.BadMax.x += GRID_SIZE;
+			}
+			if(this.ship.cpy < this.BadMax.cpy){
+				this.BadMax.y -= GRID_SIZE;		
+			}
+			else if(this.ship.cpy > this.BadMax.cpy){
+				this.BadMax.y += GRID_SIZE;
+			}
 		}
 		this.BadMax.cpx = Math.floor(this.BadMax.x/GRID_SIZE);
 		this.BadMax.cpy = Math.floor(this.BadMax.y/GRID_SIZE);
@@ -732,7 +765,7 @@ function start()
 		//not sure why. I tried using an int and an == and no luck.
 		var check = false;
 		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
-			musicPlayer.play("badmax.wav");
+			musicPlayer.playMusic("badmax.wav");
 					
 		}
 

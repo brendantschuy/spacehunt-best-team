@@ -45,7 +45,7 @@ class Celeron {
 
 		this.sprite = new Image();
 		this.visible = true;
-		this.onMapList = false;
+		this.addToMap = true;
 		this.sprite.src = "img/celeron.png";
 	}
 }
@@ -67,7 +67,7 @@ class Xeon{
 
 		this.sprite = new Image();
 		this.visible = true;
-		this.onMapList = false;
+		this.addToMap = true;
 		this.sprite.src = "img/xeon.png";
 	}
 }
@@ -89,7 +89,7 @@ class Ryzen {
 
 		this.sprite = new Image();
 		this.visible = true;
-		this.onMapList = false;	
+		this.addToMap = true;	
 		this.sprite.src = "img/ryzen.png";
 	}
 }
@@ -114,7 +114,7 @@ class DeathStar {
 
 		this.sprite = new Image();
 		this.visible = false;	
-		this.onMapList = false;
+		this.addToMap = true;
 		this.sprite.src = "img/death_star.png";
 	}
 }
