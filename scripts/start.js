@@ -378,6 +378,18 @@ function start()
 		obstacles.push(new Planet(14, 14, 5));
 		obstacles.push(new Planet(14, 10, 6));
 		obstacles.push(new Planet(12, 10, 7));
+
+		// Initialize Wormholes
+		for(var x = MAP_MIN_X - 1; x <= MAP_MAX_X + 1; x++){
+			// Creates wormholes for the top and bottom rim of the boundary
+			obstacles.push(new Wormhole(x, MAP_MIN_Y - 1));
+			obstacles.push(new Wormhole(x, MAP_MAX_Y + 1));
+		}
+		for(var y = MAP_MIN_Y; y <= MAP_MAX_Y; y++){
+			// Creates wormholes for left and right rim of the boundary
+			obstacles.push(new Wormhole(MAP_MIN_X - 1, y));
+			obstacles.push(new Wormhole(MAP_MAX_X + 1, y));
+		}
 		
 
 
