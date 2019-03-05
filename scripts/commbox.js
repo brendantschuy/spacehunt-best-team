@@ -29,6 +29,9 @@ class CommBox
 		ctx.font = "20px Arial";
 		switch(obstacleName)
 		{
+			case("EnergyPotion") :
+				ctx.fillText("You obtained an energy potion! Your energy is restored by " + this.currentObstacle.hp + ".", 20, 560);
+				break;
 			case("Asteroid") : 
 				ctx.fillText("You hit an asteroid. Game over.", 20, 560);
 				break;

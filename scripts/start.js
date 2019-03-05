@@ -190,6 +190,7 @@ function start()
 				objName = this.obstacles[i].constructor.name;
 				if(objName == "EnergyPotion")
 				{
+					commBox.drawNewBox(this.obstacles[i], true);
 					i = getPotion(i);		
 				}
 				else if(objName == "Recipe" && !this.gameWon)
