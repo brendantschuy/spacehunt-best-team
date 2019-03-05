@@ -429,6 +429,9 @@ function start()
 		document.getElementById("GSBtn").addEventListener("click", function() {
 			genesisSaber();
 		});
+		document.getElementById("FDBtn").addEventListener("click", function() {
+			fugaDaemonum();
+		});
 		document.getElementById("hud").addEventListener("click", function()
 		{
 			toggleHud();
