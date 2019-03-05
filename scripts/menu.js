@@ -21,6 +21,10 @@ function getInput(e)
 	{
 		editMap();
 	}
+	else if(e.keyCode == 76)
+	{
+		//load stuff
+	}
 	else
 	{
 		start();
@@ -33,12 +37,23 @@ function editMap()
 	ctx.fillStyle = "#DDDDDD";
 	ctx.fillRect(0, 0, 640, 640);
 	ctx.fillStyle = "black";
-	ctx.fillText("editing map", 50, 50);
-	ctx.fillText("press Q to return to main menu", 50, 90);
+	ctx.font = "20px Arial";
+	ctx.beginPath();
+	//ctx.fillText("EDITING GAME MAP", 20, 20);
+	//ctx.fillText("Press Q to return to the main menu.", 20, 50);
 
 	document.onkeydown = getInputEdit;
 
 	createEditOptions();
+
+	//Things we need to be able to add to the game screen:
+
+	//Game parameters
+	//Celestial objects
+		//Asteroid
+		//Planet
+		//Space station
+		//Recipe
 }
 
 function getInputEdit(e)
@@ -46,19 +61,43 @@ function getInputEdit(e)
 	if(e.keyCode == 81)
 	{
 		menu();
-		addItemButton = document.getElementById("addItem");
-		document.body.removeChild(addItemButton);
+		for(i = 0; i < 7; i++)
+		{
+			addItemButton = document.getElementById("addItem" + i + 1);
+			document.body.removeChild(addItemButton);
+		}
 	}
 }
 
 function createEditOptions()
 {
-	addItem = document.createElement("input");
+	addables = [];
+	addables.push("Asteroid");
+	addables.push("Celeron");
+	addables.push("Ryzen");
+	addables.push("Xeon");
+	addables.push("Space Station");
+	addables.push("Abandoned Freighter");
+	addables.push("Meteor Storm");
+	numAddables = addables.length;
+
+
+
+	for(i = 0; i < numAddables; i++)
+	{
+		addItem = document.createElement("input");
+		addItem.id = "addItem" + i + 1;
+		addItem.type = "button";
+		addItem.value = addables[i];
+		addItem.style.position = "absolute";
+		addItem.style.top = 180 + i * 60;
+		addItem.style.left = 400;
+		addItem.style.className = "addButtons";
+		document.body.appendChild(addItem);
+	}
+	/*addItem = document.createElement("input");
 	addItem.id = "addItem";
 	addItem.type = "button";
 	addItem.value = "Add Item";
-	addItem.style.position = "absolute";
-	addItem.style.left = "400px";
-	addItem.style.top = "350px";
-	document.body.appendChild(addItem);	 
+	document.body.appendChild(addItem);	*/ 
 }

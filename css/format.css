@@ -341,13 +341,3 @@ button span {
 }
 
 
-/*MENU ITEMS*/
-#addItemButtons
-{
-	background-color: red;
-	position: absolute;
-	height: 100px;
-	width: 100px;
-	left: 100px;
-	top: 100px;
-}

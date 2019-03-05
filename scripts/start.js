@@ -5,7 +5,7 @@
 var explosionSound;
 var drawHeight = GAME_SCREEN_HEIGHT;
 
-function start()
+function start(presets)
 {
 	var resetHeight = true;
 

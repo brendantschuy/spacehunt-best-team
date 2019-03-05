@@ -8,5 +8,17 @@
 	height: 100px;
 	width: 100px;
 	left: 400px;
-	top: 350px;
+	top: 180px;
+}
+
+.addButtons
+{
+	background-color: red;
+	height: 50px;
+	width: 150px;
+}
+
+.addButtons:hover
+{
+	background-color: pink;
 }
