@@ -360,7 +360,6 @@ function start(presets)
 		obstacles.push(new Asteroid(64, 64));
 		obstacles.push(new Asteroid(128, 0));
 		obstacles.push(new Asteroid(0, 128));
-		obstacles.push(new Asteroid(0, 0));
 		obstacles.push(new Asteroid(1, 1));
 		obstacles.push(new EnergyPotion(9, 11, 200));
 		obstacles.push(new Recipe(11, 9));

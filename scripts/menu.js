@@ -90,14 +90,11 @@ function createEditOptions()
 		addItem.type = "button";
 		addItem.value = addables[i];
 		addItem.style.position = "absolute";
-		addItem.style.top = 180 + i * 60;
+		addItem.style.top = 160 + i * 60;
 		addItem.style.left = 400;
-		addItem.style.className = "addButtons";
+		addItem.className = "addButtons";
 		document.body.appendChild(addItem);
 	}
-	/*addItem = document.createElement("input");
-	addItem.id = "addItem";
-	addItem.type = "button";
-	addItem.value = "Add Item";
-	document.body.appendChild(addItem);	*/ 
+
+	
 }
