@@ -1,0 +1,12 @@
+/*menu.css*/
+
+/*MENU BUTTONS*/
+#addItem
+{
+	background-color: red;
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	left: 400px;
+	top: 350px;
+}
