@@ -78,8 +78,8 @@ class Ship 	//class names capitalized per js convention
 		var cpxTraveled = this.cpx - oldcpx;*/
 
 		if(this.randWormholes == true){
-			if(this.cpy > MAP_MAX_Y || this.cpy < MAP_MIN_Y ||
-			   this.cpx > MAP_MAX_X || this.cpx < MAP_MIN_X)
+			if(this.cpy >= MAP_MAX_Y || this.cpy < MAP_MIN_Y ||
+			   this.cpx >= MAP_MAX_X || this.cpx < MAP_MIN_X)
 			{
 				alert("You entered a wormhole! You will now be transported to somewhere random in space!");
 				
@@ -129,8 +129,8 @@ class Ship 	//class names capitalized per js convention
 			}
 		}
 		else {
-			if(this.cpy > MAP_MAX_Y || this.cpy < MAP_MIN_Y || 
-			   this.cpx > MAP_MAX_X || this.cpx < MAP_MIN_X)
+			if(this.cpy >= MAP_MAX_Y || this.cpy < MAP_MIN_Y || 
+			   this.cpx >= MAP_MAX_X || this.cpx < MAP_MIN_X)
 			{
 				alert("You entered a wormhole! You will now be transported back to start! (0,0)");
 				this.y = MAP_MIN_Y;
