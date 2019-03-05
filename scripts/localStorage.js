@@ -71,3 +71,10 @@ function load(gameState, savedList) {
 function clearAll() {
   return localStorage.clear();
 }
+
+/*
+goes in HTML file
+<button type="button" id="saveButton" onclick="save()">Save</button>
+<button type="button" id="loadButton" onclick="load()">Load</button>
+<button type="button" id="newGame" onclick="start()">New Game</button>
+*/
