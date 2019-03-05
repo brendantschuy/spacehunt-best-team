@@ -20,6 +20,7 @@ function start()
 	this.fps = 0;
 	this.startTime = (new Date()).getTime();
 	this.commBox = new CommBox();
+	this.musicPlayer = new MusicPlayer();
 
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
@@ -203,9 +204,14 @@ function start()
 					commBox.drawNewBox(this.obstacles[i], true);
 					hitObstacle();
 				}
-				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen" || objName == "DeathStar")
+				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen")
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
+				}
+				else if(objName == "DeathStar")
+				{
+					commBox.drawNewBox(this.obstacles[i], true);
+					musicPlayer.play("march.mp3");
 				}
 				else if(objName == "SpaceStation"){
 					//also needs refining.
@@ -691,11 +697,8 @@ function start()
 		//boolean check statement isn't working for some reason.
 		//not sure why. I tried using an int and an == and no luck.
 		var check = false;
-		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2 && check === false){
-			var BM = new Audio('audio/badmax.wav');
-			BM.volume = 1;
-			BM.play();
-			check = true;
+		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
+			musicPlayer.play("badmax.wav");
 					
 		}
 
