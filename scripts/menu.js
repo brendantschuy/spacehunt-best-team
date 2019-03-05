@@ -1,5 +1,6 @@
 //Create a menu for the game, from which we can load files ,create custom map, etc. 
 
+//currently disabled. to enable, change "onload" in index.html to call menu()
 function menu()
 {
 	var ctx = document.getElementById("gameScreen").getContext('2d');

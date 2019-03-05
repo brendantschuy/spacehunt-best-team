@@ -12,9 +12,9 @@ function createCanvas()
 	cvs.height = MAP_HEIGHT * GRID_SIZE;
 	cvs.width = MAP_WIDTH * GRID_SIZE;
 
+	//draws black rectangle on which everything else is drawn
 	ctx.fillStyle = "black";	
 	ctx.fillRect(0, 0, 640, 480);
 
-	//createGrid();
 	return cvs;
 }

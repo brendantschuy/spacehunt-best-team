@@ -16,12 +16,12 @@ class Ship 	//class names capitalized per js convention
 		//also can be improved probably
 		this.originalSupplies = 1000
 		this.supplies = 1000;
-
 		this.currency = 1000;
+		this.projectiles = [];
 
 		//ship movement
 		this.isMoving = false;
-		this.angle = 0;						//in degrees
+		this.angle = 90;						//in degrees
 		this.distanceToTravel = 0;			//in pixels
 		this.energyEfficiency = 10;			//energy used per CP travelled
 
@@ -45,7 +45,8 @@ class Ship 	//class names capitalized per js convention
 		this.offset_x = 0;					//distance from center of square
 		this.offset_y = 0;					//distance from center of square
 		this.cpx = 10;						//celestial position
-		this.cpy = 10;						//celestial position
+		this.cpy = 10;
+		this.damage = 0;						//celestial position
 
 		//ship graphics
 		this.sprite = new Image();
@@ -68,57 +69,70 @@ class Ship 	//class names capitalized per js convention
 	}
 
 	//is out of bounds? teleports somewhere random if so
+	//if NOT out of bounds, function returns
 	checkBoundary()
 	{
-		var playSound = false;
-
 		if(this.randWormholes == true){
-			if(this.cpy >= MAP_MAX_Y || this.cpy <= MAP_MIN_Y ||
-			   this.cpx >= MAP_MAX_X || this.cpx <= MAP_MIN_X)
+			if(this.cpy > MAP_MAX_Y || this.cpy < MAP_MIN_Y ||
+			   this.cpx > MAP_MAX_X || this.cpx < MAP_MIN_X)
 			{
 				alert("You entered a wormhole! You will now be transported to somewhere random in space!");
-				playSound = true;
-				this.x = (Math.floor(Math.random() * (MAP_MAX_X-3)) + 2) * GRID_SIZE;
-				this.y = (Math.floor(Math.random() * (MAP_MAX_Y-3)) + 2) * GRID_SIZE;
+				/*this.x = (Math.floor(Math.random() * (MAP_MAX_X + 1))) * GRID_SIZE;
+				this.y = (Math.floor(Math.random() * (MAP_MAX_Y + 1))) * GRID_SIZE;*/
+				this.y = (Math.floor(Math.random() * (MAP_MAX_X + 1)))
+				this.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1)))
 				this.restoreDefaults();
+				return;
 			}
 		}
 		else {
+			/*if(this.cpy > MAP_MAX_Y || this.cpy < MAP_MIN_Y || 
+			   this.cpx > MAP_MAX_X || this.cpx < MAP_MIN_X)
+			{
+				alert("You entered a wormhole! You will now be transported back to start!");
+				this.y = MAP_MIN_Y;
+				this.x = MAP_MIN_X;
+				this.restoreDefaults();
+			}
+			else
+				return;*/
+
+			// This code allows the space ship to exit one side and enter the other side of the board
 	 		if(this.cpy >= MAP_MAX_Y){
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.y = (MAP_MIN_Y * GRID_SIZE) + GRID_SIZE;
-				playSound = true;
+				this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+				this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 			}
 			else if(this.cpy <= MAP_MIN_Y){
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.y = (MAP_MAX_Y * GRID_SIZE) - GRID_SIZE;
-				playSound = true;
+				this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+				this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 			}
 			if(this.cpx >= MAP_MAX_X){
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.x = (MAP_MIN_X * GRID_SIZE) + GRID_SIZE;
-				playSound = true;
+				this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+				this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 			}
 			else if(this.cpx <= MAP_MIN_X){
 				alert("You entered a wormhole! You will now be transported to the other side of space!");
 				this.x = (MAP_MAX_X * GRID_SIZE) - GRID_SIZE;
-				playSound = true;
+				this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+				this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 			}
+			else
+				return;
 		}
 
-		if(playSound)
-		{
-			var audio_wormhole = new Audio('audio/wormhole.wav');
-			audio_wormhole.volume = 1;
-			audio_wormhole.play();
-		}
+		var audio_wormhole = new Audio('audio/wormhole.wav');
+		audio_wormhole.volume = 1;
+		audio_wormhole.play();
 
-		/* This was implemented before wormholes were added
-		if(this.cpy >= MAP_MAX_Y || this.cpy <= MAP_MIN_Y || this.cpx >= MAP_MAX_X || this.cp <= MAP_MIN_X)
-		{
-			this.x = Math.floor(Math.random() * 2200) + GRID_SIZE;
-			this.y = Math.floor(Math.random() * 2200) + GRID_SIZE;
-		}*/
+		//Prevents ship from exploding/dying if you enter a wormhole.
+		this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+		this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 	}
 
 	//actually moves ship
@@ -146,9 +160,7 @@ class Ship 	//class names capitalized per js convention
 		
 		this.checkBoundary();
 		this.updatecp();
-		
-		// save location, supplies, energy here 
-		// localStorage.save(state, list)
+
 	}
 
 	beginMoving()
@@ -193,11 +205,24 @@ class Ship 	//class names capitalized per js convention
 	decreaseDistance()
 	{
 		this.distanceToTravel -= GRID_SIZE;
+		if(this.distanceToTravel < GRID_SIZE)
+		{
+			if(Math.abs(this.offset_y) > 0)
+			{
+				this.distanceToTravel = GRID_SIZE - Math.abs(this.offset_y);
+			}
+			if(Math.abs(this.offset_x) > 0)
+			{
+				this.distanceToTravel = GRID_SIZE - Math.abs(this.offset_x);
+			}
+		}
+		//this.distanceToTravel -= Math.sin(this.angle) * (GRID_SIZE - ship.offset_y % GRID_SIZE) + Math.cos(this.angle) * (GRID_SIZE - ship.offset_x % GRID_SIZE);
 		if(this.distanceToTravel < 0)
 		{
 			this.distanceToTravel = 0;
 		}
 	}
+
 	checkEnergy()
 	{
 		if(this.dev == false){
@@ -217,9 +242,12 @@ class Ship 	//class names capitalized per js convention
 			}
 		}
 	}
-	
+
 	toggleDevMode(){
 		this.dev = !(this.dev);
+	}
+	ghostMode(){
+		this.isGhost = !(this.isGhost);
 	}
 
 	toggleRandWormholesMode(){
@@ -234,6 +262,11 @@ class Ship 	//class names capitalized per js convention
 		this.offset_y = 0;
 		this.offset_x = 0;
 	}
+
+	getDamaged(dmg){
+		this.damage += dmg;
+	}		
+		
 }
 
 

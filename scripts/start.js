@@ -3,9 +3,12 @@
 //this is the first javascript function to be called
 
 var explosionSound;
+var drawHeight = GAME_SCREEN_HEIGHT;
 
 function start()
 {
+	var resetHeight = true;
+
 	this.gameOver = false;
 	this.gameWon = false;
 	this.displayHud = false; //document.getElementById("hud").checked;
@@ -16,6 +19,8 @@ function start()
 	this.numFrames = 0;
 	this.fps = 0;
 	this.startTime = (new Date()).getTime();
+	this.commBox = new CommBox();
+	this.musicPlayer = new MusicPlayer();
 
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
@@ -33,7 +38,7 @@ function start()
 			writeHud();
 		}
 		//if(this.speedRun){ //if this is called every tinme a frame is drawn the user will just be spammed with prompts
-		//	SpeedRunMode();
+		//	speedRunMode();
 		//}
 
 	    drawBackground("gameScreen");	//creates background and white grid
@@ -54,6 +59,7 @@ function start()
 			e.preventDefault();		//prevents this from moving the window/canvas around
 			ship.beginMoving();
 			ship.commitMovement();
+			pursuit();
 		}
 
 		if(e.keyCode == '37' || e.keyCode == '65')		//left arrow key
@@ -88,6 +94,30 @@ function start()
 		else if(e.keyCode == '81' || e.keyCode == '17')		//Q or CTRL
 		{
 			scan();
+			ship.checkSupplies();
+		}
+		else if(e.keyCode == '90')							//Z
+		{
+			fireLaser();
+			ship.checkEnergy();
+		}
+		else if (e.keyCode == '67') //C
+		{
+			ghost();
+			ship.checkEnergy();
+			ship.checkSupplies();
+		}
+		else if(e.keyCode == '88') //X
+		{
+			genesisSaber();
+			ship.checkEnergy();
+			ship.checkSupplies();
+		}
+		else if(e.keyCode == '86') //V
+		{
+			fugaDaemonum();
+			ship.checkEnergy();
+			ship.checkSupplies();
 		}
 	}
 
@@ -97,21 +127,21 @@ function start()
 		var ctx = document.getElementById(elementID).getContext('2d');
 
 		//creates backdrop (opacity = 0.4 so it is see-through)
-	    ctx.fillStyle = "RGBA(0, 0, 0, 0.4)";
-	    ctx.fillRect(0, 0, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+	    ctx.fillStyle = "RGBA(0, 0, 25, 0.4)";
+	    ctx.fillRect(0, 0, GAME_SCREEN_WIDTH, drawHeight);
 
 	    ctx.beginPath();    //reduces lag       
 	    ctx.strokeStyle = "white";
 	    for(w = ship.offset_x; w < GAME_SCREEN_WIDTH; w += GRID_SIZE)
 	    {
-	        for(h = ship.offset_y; h < GAME_SCREEN_HEIGHT; h += GRID_SIZE)
+	        for(h = ship.offset_y; h < drawHeight; h += GRID_SIZE)
 	        {
 	            //draws line every 128 px in either direction
 	            ctx.moveTo(w, 0.5);
-	            ctx.lineTo(w, GAME_SCREEN_WIDTH);
+	            ctx.lineTo(w, drawHeight);
 	            ctx.stroke();
 	            ctx.moveTo(0.5, h);
-	            ctx.lineTo(GAME_SCREEN_HEIGHT, h);
+	            ctx.lineTo(GAME_SCREEN_WIDTH, h);
 	            ctx.stroke();
 	        }
 	    }
@@ -147,39 +177,83 @@ function start()
 	//work in progress.
 	function interact()
 	{
+		var toggleBox = false;
 		//not optimized at all (will search every obstacle regardless of how far away it is)
 		for(var i = 0; i < this.obstacles.length; i++)
 		{
 			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy))	
 			{
+				drawHeight -= Math.abs(ship.offset_y);
+				if(drawHeight <= GAME_SCREEN_HEIGHT	- GRID_SIZE)
+				{
+					drawHeight = GAME_SCREEN_HEIGHT - GRID_SIZE;
+				}
 				objName = this.obstacles[i].constructor.name;
 				if(objName == "EnergyPotion")
 				{
+					commBox.drawNewBox(this.obstacles[i], true);
 					i = getPotion(i);		
 				}
 				else if(objName == "Recipe" && !this.gameWon)
 				{
-					drawCommBox("recipe");
+					commBox.drawNewBox(this.obstacles[i], true);
 					win();
 				}
-				else if((objName == "Asteroid" || objName == "Planet") && !this.ship.dev)
+				else if((objName == "Asteroid") && !this.ship.dev)
 				{
-					drawCommBox("asteroid");
+					commBox.drawNewBox(this.obstacles[i], true);
 					hitObstacle();
 				}
-				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen" || objName == "DeathStar")
+				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen")
 				{
-					drawCommBox(objName);
+					commBox.drawNewBox(this.obstacles[i], true);
+				}
+				else if(objName == "DeathStar")
+				{
+					commBox.drawNewBox(this.obstacles[i], true);
+					musicPlayer.play("march.mp3");
 				}
 				else if(objName == "SpaceStation"){
 					//also needs refining.
 					chanceGame();
 				}
 				else if(objName == "AbandonedFreighter"){
-					drawCommBox(objName);
+					commBox.drawNewBox(this.obstacles[i], true);
 					i = getFreighter(i);
 				}
+				else if ((objName == "MeteorStorm") && !this.ship.dev){
+					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
+					commBox.drawNewBox(this.obstacles[i], true);
+				}
+				else if (objName == "Planet")
+				{
+					commBox.drawNewBox(this.obstacles[i], true);
+				}
+				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev)
+				{
+					hitObstacle();
+					commBox.drawNewBox(this.BadMax, true)
+				}
+				toggleBox = true;
 			}
+		}
+
+		if(!toggleBox)
+		{
+			if(resetHeight)
+			{
+				setTimeout(function()
+				{
+					drawHeight = GAME_SCREEN_HEIGHT;
+					resetHeight = true;
+					commBox.toggle = false;
+				}, 10000);
+			}
+			resetHeight = false;
+		}
+		else
+		{
+			drawHeight = GAME_SCREEN_HEIGHT	- GRID_SIZE;
 		}
 	}
 
@@ -190,7 +264,7 @@ function start()
 			wager = prompt("You cannot bet that much! Enter another amount", 0); 
 		}
 		guess = prompt("Enter a number between 1 and 10", 0);
-		while(guess > 10 || guess < 0){
+		while(guess >= 10 || guess < 0){
 			guess = prompt("Between 1 and 10, no more and no less", 0); 
 		}
 		var result = Math.floor((Math.random() * 10) + 1);
@@ -202,6 +276,10 @@ function start()
 			alert("You were very close! Only within one. You get 3x your wager!");
 			ship.currency += (3 * wager);
 		}
+		if(guess == (result -2) || guess == result(result + 2)){
+			alert("Eh. Within two. Not bad. You get 1.5x your wager!");
+			ship.currency += (1.5 * wager);
+		}
 		else { 
 			alert("Close, but not close enough. Sorry!");
 			ship.currency -= wager;
@@ -210,7 +288,7 @@ function start()
 
 	function hitObstacle()
 	{
-		if(!this.gameOver)
+		if(!this.gameOver && !this.ship.isGhost)
 		{
 			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
 			var audio_explosion = new Audio('audio/explosion.mp3');
@@ -264,12 +342,17 @@ function start()
 		this.ship = new Ship();
 		this.target = new Target();
 
-		this.obstacles = new Array();
+		this.obstacles = [];
 
 		/* still working on this */
 		// if user hits load button, localStorage.load(gameState, savedList);
 
+
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
+		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
+		//obstacles.push(new BadMax(10*GRID_SIZE, 15*GRID_SIZE));
+		//test badmax music line
+		//obstacles.push(new BadMax(12, 10));
 		obstacles.push(new Asteroid(9, 9));
 		obstacles.push(new Asteroid(11, 11));
 		obstacles.push(new Asteroid(6, 6));
@@ -281,14 +364,28 @@ function start()
 		obstacles.push(new Asteroid(1, 1));
 		obstacles.push(new EnergyPotion(9, 11, 200));
 		obstacles.push(new Recipe(11, 9));
+		obstacles.push(new MeteorStorm(8,8));
 		obstacles.push(new Celeron(4, 4));
 		obstacles.push(new Xeon(12, 12));
 		obstacles.push(new Ryzen(18, 18));
 		obstacles.push(new DeathStar(15, 10));
 		obstacles.push(new SpaceStation(13, 15));
 		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
-
+		obstacles.push(new Planet(8, 8, 1));
+		obstacles.push(new Planet(10, 8, 2));
+		obstacles.push(new Planet(5, 10, 3));
+		obstacles.push(new Planet(3, 18, 4));
+		obstacles.push(new Planet(14, 14, 5));
+		obstacles.push(new Planet(14, 10, 6));
+		obstacles.push(new Planet(12, 10, 7));
 		
+
+
+
+	// 	save(gameState, savedList);
+
+		this.BadMax = obstacles[0];
+
 		ship.updatecp();
 	}
 
@@ -317,6 +414,7 @@ function start()
 		{
 			ship.beginMoving();
 			ship.commitMovement();
+			pursuit();
 		});
 		document.getElementById("devMode").addEventListener("click", function()
 		{
@@ -331,6 +429,15 @@ function start()
 			scan();
 			//recipe.hidden = 0;
 			//recipe.sprite.src = "img/recipe.png";
+		});
+		document.getElementById("OTBBtn").addEventListener("click", function() {
+			fireLaser();
+		});
+		document.getElementById("GSBtn").addEventListener("click", function() {
+			genesisSaber();
+		});
+		document.getElementById("FDBtn").addEventListener("click", function() {
+			fugaDaemonum();
 		});
 		document.getElementById("hud").addEventListener("click", function()
 		{
@@ -355,27 +462,27 @@ function start()
 	function writeHud(ctx)
 	{
 		this.fps = (numFrames + 1)/(((new Date()).getTime() - this.startTime)/1000);
-		
-
-
+	
 		var ctx = document.getElementById("gameScreen").getContext('2d');
-	    //helps reduce lag
+
+		ctx.font = "20px Arial";
 	    ctx.beginPath();
 
 
 	    //writes numbers/info to GUI
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("angle = " + ship.angle, 10, 10);
-	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 30);
+	    ctx.fillText("angle = " + ship.angle, 10, 20);
+	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 40);
 	    ctx.fillStyle = "#00FF00";
-	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 50);
+	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 60);
 	    ctx.fillStyle = "#FF0000";
-	    ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 70);
+	    ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 80);
 	    ctx.fillStyle = "#FFFF00";
-	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 90);
+	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 100);
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("distance to travel = " + ship.distanceToTravel.toFixed(0), 10, 110);
-	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 150);
+	    ctx.fillText("distance to travel: " + ship.distanceToTravel.toFixed(0), 10, 120);
+	    ctx.fillText("damage: " + ship.damage.toFixed(0) + "%", 10, 160);
+	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 180);
 	}
 
 	//draws obstacles, ship, other items on the canvas
@@ -387,8 +494,11 @@ function start()
 	    ctx.translate(SHIP_ABS_X, SHIP_ABS_Y);				//place center of rotation at current center of ship
 
 	    drawObstacles(ctx);
-	    //drawItems(ctx);
 	    drawShip(ctx);
+	    if(commBox.toggle)
+	    {
+	    	commBox.drawBox();
+	    }
 	}
 
 	//draws all obstacles (for now, just asteroids)
@@ -399,10 +509,40 @@ function start()
 	    	if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
+
 	    		if(objName == "Planet" || objName == "Xeon" || objName == "Ryzen" || objName == "Celeron" || objName == "DeathStar" || objName == "SpaceStation")
 	    		{
-	    			ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
+	    			if(obj.y - ship.y <= drawHeight)
+	    			{
+	    				ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
+	    			}
 	    		}
+				else if(objName == "BadMax")
+				{
+					ctx.drawImage(obj.sprite, (obj.x - ship.x - GRID_SIZE/2)-1, (obj.y - ship.y - GRID_SIZE/2)-1);
+				}
+				else if(objName == "LaserBeam")
+				{
+					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
+					obj.x += obj.xv;
+					obj.y += obj.yv;
+					//ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
+					//obj.x += obj.xv;
+					//obj.y += obj.yv;
+				}
+				else if(objName =="GenesisSaber"){
+					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
+					obj.x += obj.xv;
+					obj.y += obj.yv;
+				}	
+				else if(objName =="FugaDaemonum"){
+					//something else here to make sure the images are drawn correctly.
+					//Not complete yet.
+					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
+					ctx.rotate(obj.rotationAngle * Math.PI / 180);
+					obj.x += obj.xv;
+					obj.y += obj.yv;
+				}	
 	    		else
 	    		{
 	    			ctx.drawImage(obj.sprite, obj.x - ship.x - GRID_SIZE/4, obj.y - ship.y - GRID_SIZE/4);
@@ -410,7 +550,7 @@ function start()
 	    	}
 	    }, this);
   	}
-
+	
 	//draws the user's ship
 	function drawShip(ctx)
 	{
@@ -428,6 +568,38 @@ function start()
    
 	    //go back to original ctx
 	    ctx.restore();
+	    ctx.save();
+
+		ctx.translate(SHIP_ABS_X, SHIP_ABS_Y);	
+	    ship.projectiles.forEach(function(laser)
+	    {
+	    	ctx.save();
+	    	ctx.rotate(laser.angle * Math.PI/90);
+
+	    	//Why yes, this is extremely hacky
+	    	if(laser.angle % 180 == 0)
+	    	{
+	    		ctx.rotate(Math.PI/2);
+	    		laser.x += laser.yv;
+	    	}
+	    	else
+	    	{
+	    		laser.x -= laser.xv;
+    			laser.y += laser.yv;
+	    	}
+
+	    	if(laser.angle < 100)
+	    	{
+	    		ctx.drawImage(laser.sprite, laser.x - ship.x - GAME_SCREEN_HEIGHT * 1.5, laser.y - ship.y);
+	    	}
+	    	else
+	    	{
+    			ctx.drawImage(laser.sprite, laser.x - ship.x, laser.y - ship.y);
+    		}
+    		ctx.restore();
+    	}, this);
+
+    	ctx.restore();
 
 	    ship.updatecp();
 
@@ -453,6 +625,43 @@ function start()
 	    }
 	}
 
+	function fireLaser()
+	{
+		var OverloadThunderBeam = new Audio('audio/overload_thunder_beam.wav');
+		OverloadThunderBeam.volume = 1;
+		OverloadThunderBeam.play();
+		ship.projectiles.push(new LaserBeam(ship.x	, ship.y -35, ship.angle));
+		ship.energy -= 2;
+	}
+
+	function genesisSaber()
+	{
+		var GS = new Audio('audio/genesis_saber.wav');
+		GS.volume = 1;
+		GS.play();
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 0));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 45));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 90));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 135));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 180));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 225));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 270));
+		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 315));
+		
+		ship.energy -= 100;
+		ship.supplies -= 50;
+	}
+
+	function fugaDaemonum(){
+		var FD = new Audio('audio/fugadaemonum.wav');
+		FD.volume = 1;
+		FD.play();
+		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 0));
+		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 120));
+		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 240));
+		ship.energy -= 40;
+		ship.supplies -= 20;
+	}
 
 	function scan(){
 		//checks to see if obstacles are within half the screen distance from the ship
@@ -462,20 +671,53 @@ function start()
 				this.obstacles[i].visible = true;
 			}
 		}
+
+		//uses up supplies for scanning
 		ship.supplies -= (ship.originalSupplies * .02);
 		showMap(obstacles);
 	}
 
+	function pursuit()
+	{
+		if(this.ship.cpx < this.BadMax.cpx){
+			this.BadMax.x -= GRID_SIZE;
+		}
+		else if(this.ship.cpx > this.BadMax.cpx){
+			this.BadMax.x += GRID_SIZE;
+		}
+		if(this.ship.cpy < this.BadMax.cpy){
+			this.BadMax.y -= GRID_SIZE;		
+		}
+		else if(this.ship.cpy > this.BadMax.cpy){
+			this.BadMax.y += GRID_SIZE;
+		}
+		this.BadMax.cpx = Math.floor(this.BadMax.x/GRID_SIZE);
+		this.BadMax.cpy = Math.floor(this.BadMax.y/GRID_SIZE);
+		
+		//boolean check statement isn't working for some reason.
+		//not sure why. I tried using an int and an == and no luck.
+		var check = false;
+		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
+			musicPlayer.play("badmax.wav");
+					
+		}
+
+	}
+
+	//displays HUD on game screen
 	function toggleHud()
 	{
 		this.displayHud = !(this.displayHud);
 	}
 	
+	//speed run has a hard time limit to complete the game
 	function toggleSpeedRun(){ 
 		this.speedRun = !(this.speedRun);
-		if(this.speedRun) SpeedRunMode();
+		if(this.speedRun) speedRunMode();
 	}
-	function SpeedRunMode(){
+
+	//describes and implements speed run mode
+	function speedRunMode(){
 		var confirmStart = confirm("You will enter speed run mode. Is this okay?");
 		if(confirmStart == true){
 			document.getElementById("bgmusic").innerHTML = '<iframe src="audio/speedrun.mp3" allow="autoplay" id="audio" style="display:none"></iframe>';
@@ -497,13 +739,31 @@ function start()
     			}, 1000);
 		} 
 	}
+	function ghost(){
+		this.ship.supplies -= 100;
+		var timelimit = 15;
+		var downloadTimer = setInterval(function(){
+			this.ship.dev = true;
+			this.ship.energyEfficiency = 1;
+			this.ship.sprite.src = "img/ship2.png";	
+			timelimit--;
+			if(timelimit < 0){
+				this.ship.sprite.src = "img/ship1.png";
+				this.ship.dev = false;
+				clearInterval(downloadTimer);
+			}
+			}, 1000);
+		this.ship.dev = false;
+	}
 
 	//kicks it all off
 	drawBackground("gameScreen");
 	drawFrame();
 	showMap(obstacles);
-	//For testing purposes
-	//SpeedRunMode();
+
+	//For testing purposes:
+	//speedRunMode();
+	//ghost();
 }
 
 function sound(src) {
@@ -517,48 +777,6 @@ function sound(src) {
 		this.sound.play();
   	}
   	this.stop = function(){
-    	this.sound.pause();
+    		this.sound.pause();
   	}
-}
-
-//Displays messages to player
-function drawCommBox(obstacleName)
-{
-	var ctx = document.getElementById("gameScreen").getContext('2d');
-	if(obstacleName == "DeathStar")
-	{
-		ctx.fillStyle = "black";
-		ctx.fillRect(0, 512, 640, 128);
-		ctx.fillStyle = "red";
-	}
-	else
-	{
-		ctx.fillStyle = "white";
-		ctx.fillRect(0, 512, 640, 128);
-		ctx.fillStyle = "black";
-	}
-	ctx.font = "20px Arial";
-	switch(obstacleName)
-	{
-		case("asteroid") : 
-			ctx.fillText("You hit an asteroid. Game over.", 20, 560);
-			break;
-		case("Xeon") : case ("Celeron") : case("Ryzen") : 
-			ctx.fillText("Welcome to the planet of " + obstacleName + "!", 20, 560);
-			//ctx.fillText("Press L to land or O to orbit (not implemented).", 20, 590);
-			break;
-		case("recipe") : 
-			ctx.fillText("You win the game :)", 20, 560);
-			break;
-		case("DeathStar") : 
-			ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
-			break;
-		case("SpaceStation") :
-			ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
-			break;
-		case("AbandonedFreighter") :
-			ctx.fillText("You found an abandoned freighter! You get some additional resources!", 5, 560);
-			break;
-	}
-	
 }

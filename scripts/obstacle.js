@@ -1,6 +1,6 @@
-//obstacle.js
+//asteroid.js
 
-//contains obstacle definition etc
+//contains asteroid definition etc
 
 class Asteroid
 {

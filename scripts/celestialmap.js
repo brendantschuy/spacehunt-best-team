@@ -35,13 +35,15 @@ function showMap(obstacles){
 
     //Determines where to put map canvas. Depends on screen resolution.
     var largeMap = document.getElementById("widescreenOnly");
+
     if(window.getComputedStyle(largeMap).display === "none")
     {
       document.getElementById("dev-buttons").appendChild(mapCvs);
     }
     else
     {
-      document.getElementById("dev").appendChild(mapCvs);
+      /*document.getElementById("dev").appendChild(mapCvs);*/
+      document.getElementById("map-div").appendChild(mapCvs);
     }
 
     drawThingsMap("mapCanvas",obstacles);   
@@ -52,13 +54,15 @@ function showMap(obstacles){
   }
 }
 
+//Draws things on a given DOM object, given that object's ID and 
+//the array of things to be drawn
+//Main use is to write object names on "map" canvas
 function drawThingsMap(elementID,obstacles) {
   var ctx = document.getElementById(elementID).getContext('2d');
   ctx.beginPath();
   ctx.save();
 
   drawObstaclesMap(ctx,obstacles);
-  drawItemsMap(ctx);
 }
 
 //draws all obstacles
@@ -78,7 +82,8 @@ function drawObstaclesMap(ctx,obstacles) {
         case("Celeron") : case("Xeon") : case ("Ryzen") : 
           ctx.fillStyle = "aquamarine";
           break;
-        case("Planet") : 
+        case("Planet") :
+          objName = item.planetName; 
           ctx.fillStyle = "aquamarine";
           break;
         case("EnergyPotion") : 
@@ -90,6 +95,9 @@ function drawObstaclesMap(ctx,obstacles) {
         case("DeathStar") : 
           ctx.fillStyle = "black";
           break;
+        case("BadMax") : 
+          ctx.fillStyle = "red";
+          break;
       }
       
       ctx.font = "bold";
@@ -98,6 +106,7 @@ function drawObstaclesMap(ctx,obstacles) {
 
       item.onMapList = true;
 
+      //This prevents us from writing things on the map off the end of the doc
       if(map_y > 381)
       {
         map_y = 20;
@@ -110,27 +119,14 @@ function drawObstaclesMap(ctx,obstacles) {
 
 }
 
-  //draws potions and recipe, etc
-function drawItemsMap(ctx)
-{
-    //draw 1 potion
-    
-    //draw potion if array of items?
-    //potion.forEach(function (p)
-    //{
-    //  if(confirmDraw(p.x, p.y))
-    //  {
-    //    ctx.drawImage(potion.sprite, p.x - ship.x, p.y - ship.y);
-    //  }
-    //});
-}
-
+// Removes an element from the document
+//Example usage is to remove potion from map after consumption
 function removeElement(elementId) {
-    // Removes an element from the document
     var element = document.getElementById(elementId);
     element.parentNode.removeChild(element);
 }
 
+//Toggles visibility of an object
 function switchVisibility(elementId) {
   var element = document.getElementById(elementId);
   if(element.style.visibility == "hidden"){

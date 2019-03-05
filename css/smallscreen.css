@@ -5,7 +5,22 @@ html {
 	background-size: cover;
 }
 
-#widescreen-header {
+header {
+	color: white;
+	height: 115px;
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 10px;
+}
+
+#main-logo {
+	 height: 75px;
+	 width: 420px;
+}
+
+/*#widescreen-header {
 	color: white;
 	height: 0px;
 	display: none;
@@ -25,12 +40,12 @@ html {
 	margin-right: auto;
 	float: left;
 	padding: 0px;
-}
+}*/
 
-#map
+/*#map
 {
 	margin-top: 20px;
-}
+}*/
 
 
 body {
@@ -64,6 +79,23 @@ h2 {
 	float: left;
 }
 
+#dev-options-banner-container
+{
+	height: 100px;
+	width: 300px;
+	float: left;
+	padding-top: 15px;
+	padding-bottom: 0px;
+}
+
+#dev-options-banner
+{
+	vertical-align: center;
+	float: left;
+	height: 76px;
+	width: 280px;
+}
+
 .game {
 	height: 655px;
 	width: 700px;
@@ -72,6 +104,18 @@ h2 {
 	border-radius: 10px;
     text-align: center;
     float: left;
+}
+
+#gameScreen {
+	border: 3px;
+	border-style: ridge;
+	border-color: #A9A9A9;
+}
+
+#controls-banner
+{
+	height: 27px;
+	width: 160px;
 }
 
 .right-side {
@@ -83,6 +127,12 @@ h2 {
     float: left;
 }
 
+#celestial-map-banner
+{
+	height: 1px;
+	width: 1px;
+}
+
 .dev-options-button-text
 {
 	font-size: 12px;
@@ -92,6 +142,16 @@ h2 {
 {
 	width: 100px;
 	float: left;
+}
+
+.scan {
+	color: transparent;
+	font-size: 12px;
+	text-align: center;
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	padding: 6px;
 }
 
 /*For testing purposes: to see dimensions of divs*/
@@ -139,6 +199,24 @@ h2 {
 	padding-left: 50px;
 }
 
+#controls-OTB {
+	background: url("../img/overload_thunder_beam_button1.png") no-repeat center;
+	background-size: 65px 65px;
+	width: 70px;
+	/*margin-top: 10px;*/
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#controls-GS {
+	background: url("../img/genesis_saber_button.png") no-repeat center;
+	background-size: 50px 50px;
+	width: 70px;
+	/*margin-top: 10px;*/
+	margin-left: auto;
+	margin-right: auto;
+}
+
 #controls-scan {
 	background: url("../img/scan.gif") no-repeat right;
 	display: inline-block;
@@ -156,80 +234,25 @@ h2 {
 	padding: 6px;
 }
 
-#main-logo
-{
-	 height: 70px;
-	 width: 420px;
-}
-
-#controls-banner
-{
-	height: 27px;
-	width: 160px;
-}
-
-#dev-options-banner-container
-{
-	height: 100px;
-	width: 300px;
-	float: left;
-	padding-top: 15px;
-	padding-bottom: 0px;
-}
-#dev-options-banner
-{
-	vertical-align: center;
-	float: left;
-	height: 76px;
-	width: 280px;
-}
-
-#celestial-map-banner
-{
-	height: 1px;
-	width: 1px;
-}
-
-
-.scan {
-	color: transparent;
-	font-size: 12px;
-	text-align: center;
-	display: inline-block;
-	width: 150px;
-	height: 150px;
-	padding: 6px;
-}
-
 .ctrls:hover {
   	color: white;
   	text-indent: -9999px; /*hacky way to make text disappear on hover without delving into javascript*/
 }
 
-#gameScreen {
-	border: 3px;
-	border-style: ridge;
-	border-color: #A9A9A9;
-}
-
 #mapicon{
-  	background: url("../img/map.png") no-repeat 0px 0px;
-	position: relative;
-  	display: inline-block;
-  	border: 0;
-  	width: 100px;
-  	height: 100px;
-  	background-size: 100px 100px;
+	background: url("../img/map.png") no-repeat 0px 0px;
+  position: relative;
+	display: inline-block;
+	border: 0;
+	width: 100px;
+	height: 100px;
+	background-size: 100px 100px;
 }
 
 #center, .center {
 	margin-left: auto;
 	margin-right: auto;
 }
-
-
-
-
 
 button {
 	background-color: transparent;

@@ -1,9 +1,28 @@
 html { 
-	background:  url("../video/background.gif") no-repeat center center fixed;
-	background-size: cover;
+	/*background:  url("../video/background.gif") no-repeat center center fixed;
+	background-size: cover;*/
+	background-color: black;
 }
 
-#widescreen-header {
+header {
+	color: white;
+	height: 95px;
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 10px;
+}
+
+#main-logo
+{
+	 /*height: 120px;
+	 width: 715px;*/
+	 height: 90px;
+	 width: 500px;
+}
+
+/*#widescreen-header {
 	color: white;
 	height: 115px;
 	display: block;
@@ -22,7 +41,7 @@ html {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 0px;
-}
+}*/
 
 body {
 	font-family: Impact, Charcoal, sans-serif;
@@ -42,99 +61,154 @@ h1 {
 h2 {
 	color: white;
 	font-size: 1.7em;
+	text-align: center;
 }
 
 .controls-div{
-	background-color: rgba(0, 0, 0, 0.45);
-	color: white;
-	width: 300px;
-	height: 655px;
-	padding: 20px;
-	margin: 20px 20px 20px 60px;
-	border-radius: 30px;
 	float: left;
+	width: 300px;
 }
 
-/*#map
-{
-	margin-top: 20px;
-	height: 400px;
-	width: 400px;
-	background-color: rgba(255, 165, 0, 0.3);
-}*/
-
-.game {
-	height: 655px;
-	width: 700px;
-	padding: 10px;
-	margin: 20px auto 20px auto;
-	border-radius: 30px;
-	text-align: center;
+#controls-banner {
+	height: 40px;
+	width: 220px;
+	margin-left: auto;
+	margin-right: auto;
 	float: center;
 }
 
-.dev-options {
-	background-color: rgba(0, 0, 0, 0.45);
-	color: white;
-	width: 300px;
-	width: 20%;
-	height: 655px;
-	padding: 20px;
-	margin: 20px 60px 20px 20px;
+.scan {
+	color: transparent;
+	font-size: 12px;
+	text-align: center;
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	padding: 6px;
+}
+
+.game {
+	width: 500px;
+	padding-top: 20px;
+    /*margin-top: 65px;*/
+	margin-left: auto;
+	margin-right: auto;
 	border-radius: 30px;
+	text-align: center;
+	display: inline-block;
+}
+
+#gameScreen {
+	border: 3px;
+	border-style: ridge;
+	border-color: #A9A9A9;
+	height: 450px;
+	width: 450px;
+}
+
+.map-class {
+	width: 375px;
 	float: right;
 }
 
-.dev-options-button-text
-{
-	font-size: 18px;
+.map-class, .controls-div {
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.map-class, .controls-div, .game {
+	background-color: rgba(0, 0, 0, 0.45);
+	color: white;
+	height: 500px;
+	border-radius: 30px;
 }
 
 /*For testing purposes: to see dimensions of divs*/
-/*.dev-options, .controls, .game {
-	background-color: purple;
-}*/
+.map-class, .controls-div, .game, .dev-options-div {
+	background-color: rgba(0, 0, 0, 0.45);
+	/*background-color: purple;*/
+}
+
+.dev-options-div {
+	color: white;
+	height: 260px;
+	width: auto;
+	padding: 10px;
+	margin: 20px;
+	margin-top: 130px;
+	border-radius: 30px;
+}
+
+#dev-options-banner {
+	height: 75px;
+	width: 275px;
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+#dev-header {
+	height: 100%;
+	width: 280px;
+	clear: left;
+	float: left;
+	top: 50%;
+	bottom: 50%;
+}
+
+#user-controls{
+	/*background-color: green;*/
+	display: inline-block;
+	width: 550px;
+	height: 100%;
+}
+
+#dev-modes{
+	/*background-color: blue;*/
+	width: 325px;
+	height: 100%;
+	padding: 10px;
+	margin-left: 10px;
+	display: block;
+	float: right;
+}
+
+#map {
+	margin-top: 20px;
+	height: 290px;
+	width: 200px;
+	background-color: rgba(255, 165, 0, 0.3);
+}
+
+#celestial-map-banner {
+	height: 45px;
+	width: 250px;
+}
+
+#mapicon{
+	background: url("../img/map.png") no-repeat 0px 0px;
+	position: relative;
+	display: inline-block;
+	border: 0;
+	width: 100px;
+	height: 100px;
+	background-size: 100px 100px;
+	color: transparent;
+	font-size: 12px;
+	text-align: center;
+	padding: 6px;
+}
+
+.dev-options-button-text {
+	color: white;
+	font-size: 20px;
+}
 
 #smallscreenOnly {
     display: none;
-}
-
-#controls-up {
-	background: url("../img/up_button.png") no-repeat center;
-	padding-left: 100px;
-}
-
-#controls-down {
-	background: url("../img/down_button.png") no-repeat center;
-	padding-left: 100px;
-	padding-bottom: 30px;
-}
-
-#controls-left {
-	background: url("../img/left_button.png") no-repeat center;
-	display: inline-block;
-	padding-left: 10px;
-	padding-bottom: 6px;
-}
-
-#controls-right {
-	background: url("../img/right_button.png") no-repeat right;
-	display: inline-block;
-	padding-left: 95px;
-	padding-bottom: 6px;
-}
-
-#controls-move {
-	background: url("../img/move_button.png") no-repeat center;
-	margin-top: 10px;
-	padding-left: 100px;
-}
-
-#controls-scan {
-	background: url("../img/scan.gif") no-repeat right;
-	display: inline-block;
-	margin-top: 10px;
-	padding-left: 75px;
 }
 
 .controls-button {
@@ -147,69 +221,91 @@ h2 {
 	padding: 6px;
 }
 
-#main-logo
-{
-	 height: 120px;
-	 width: 715px;
-}
-
-#controls-banner
-{
-	height: 55px;
-	width: 320px;
-}
-
-#dev-options-banner
-{
-	height: 110px;
-	width: 400px;
-}
-
-#celestial-map-banner
-{
-	height: 65px;
-	width: 400px;
-}
-
-
-
-.scan {
-	color: transparent;
-	font-size: 12px;
-	text-align: center;
-	display: inline-block;
-	width: 150px;
-	height: 150px;
-	padding: 6px;
-}
-
 .ctrls:hover {
   	color: white;
   	text-indent: -9999px; /*hacky way to make text disappear on hover without delving into javascript*/
 }
 
-#gameScreen {
-	border: 3px;
-	border-style: ridge;
-	border-color: #A9A9A9;
+#controls-up {
+	background: url("../img/up_button.png") no-repeat center;
+	background-size: 65px 65px;
+	width: 70px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-#mapicon{
-  	background: url("../img/map.png") no-repeat 0px 0px;
-	position: relative;
-  	display: inline-block;
-  	border: 0;
-  	width: 100px;
-  	height: 100px;
-  	background-size: 100px 100px;
-  	color: transparent;
-	font-size: 12px;
-	text-align: center;
-	padding: 6px;
+#controls-down {
+	background: url("../img/down_button.png") no-repeat center;
+	background-size: 65px 65px;
+	width: 70px;
+	margin-left: auto;
+	margin-right: auto;
+	/*margin-bottom: 5px;*/
+	/*padding-left: 100px;*/
 }
 
+#controls-left {
+	background: url("../img/left_button.png") no-repeat center;
+	background-size: 65px 65px;
+	width: 70px;
+	display: inline-block;
+	margin-left: 25px;
+	/*padding-bottom: 5px;*/
+}
 
-#center, .center {
+#controls-right {
+	background: url("../img/right_button.png") no-repeat right;
+	background-size: 65px 65px;
+	width: 70px;
+	display: block;
+	margin-right: 32px;
+	float: right;
+	/*padding-bottom: 6px;*/
+}
+
+#controls-move {
+	background: url("../img/move_button.png") no-repeat center;
+	background-size: 65px 65px;
+	width: 70px;
+	/*margin-top: 10px;*/
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#controls-OTB {
+	background: url("../img/overload_thunder_beam_button1.png") no-repeat center;
+	background-size: 80px 80px;
+	width: 70px;
+	/*margin-top: 10px;*/
+	margin-left: 115px;
+	margin-right: auto;
+}
+
+#controls-GS {
+	background: url("../img/genesis_saber_button.png") no-repeat center;
+	background-size: 70px 70px;
+	width: 70px;
+	display: inline-block;
+	margin-left: 25px;
+	/*padding-bottom: 5px;*/
+}
+
+#controls-FD {
+	background: url("../img/fuga_daemonum_button.png") no-repeat right;
+	background-size: 70px 70px;
+	width: 70px;
+	display: inline-block;
+	margin-right: 32px;
+	float: right;
+	/*padding-bottom: 6px;*/
+}
+
+#controls-scan {
+	background: url("../img/scan.gif") no-repeat center;
+	background-size: 100px 100px;
+	width: 100px;
+	/*display: inline-block;
+	margin-top: 10px;*/
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -219,6 +315,7 @@ button {
 	border: none;
 	display: none;
 	height: 50px;
+	width: 100px;
 	padding: 0;
 	margin: 0;
 	vertical-align: top;
@@ -227,6 +324,11 @@ button {
 
 button span {
 	display: none;
+}
+
+#center, .center {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .time {
