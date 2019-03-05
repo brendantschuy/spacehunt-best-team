@@ -339,3 +339,15 @@ button span {
 	padding-top: 12px;
 	padding-bottom: 1px;
 }
+
+
+/*MENU ITEMS*/
+#addItemButtons
+{
+	background-color: red;
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	left: 100px;
+	top: 100px;
+}
