@@ -281,9 +281,9 @@ function start()
 
 	function hitObstacle()
 	{
-		if(!this.gameOver && !this.ship.isGhost)
+		if(!this.gameOver && this.ship.isGhost == false)
 		{
-			//this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
+			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
 			var audio_explosion = new Audio('audio/explosion.mp3');
 			audio_explosion.volume = 0.5; 	//less loud
 			audio_explosion.play();
@@ -599,7 +599,7 @@ function start()
 	    if(this.gameOver)
 	    {
 	    	this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
-
+			//explosionSound.play();
 	    	if(this.ship.animationFrame == 16)
 	    	{
 	    		this.ship.sprite.src = "";
