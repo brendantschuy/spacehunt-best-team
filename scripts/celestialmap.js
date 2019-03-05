@@ -69,7 +69,7 @@ function drawThingsMap(elementID,obstacles) {
 function drawObstaclesMap(ctx,obstacles) {
   obstacles.forEach(function (item)
   {
-    if(item.visible && !item.onMapList){
+    if(item.visible && item.addToMap){
       objName = item.constructor.name;  //gets exact name of user-defined type
       ctx.beginPath();
 
@@ -104,7 +104,7 @@ function drawObstaclesMap(ctx,obstacles) {
       ctx.fillText(objName + ": " + item.cpx + ", " + item.cpy, map_x, map_y);
       map_y += 20;
 
-      item.onMapList = true;
+      item.addToMap = false;
 
       //This prevents us from writing things on the map off the end of the doc
       if(map_y > 381)

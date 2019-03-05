@@ -18,6 +18,6 @@ class GenesisSaber
 		//this.sprite.src = "img/laserbeam.png";
 		this.sprite.src = "img/animations/genesissaber/genesis_saber7.png";
 		this.visible = true;
-		this.onMapList = true;
+		this.addToMap = false;
 	}
 }

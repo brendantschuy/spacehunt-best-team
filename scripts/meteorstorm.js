@@ -11,7 +11,7 @@ class MeteorStorm{
 		//this.dmg = dmg;
 
 		this.sprite = new Image();
-		this.onMapList = false;
+		this.addToMap = true;
 		//this.sprite.src = "img/meteor.png";
 	}
 
