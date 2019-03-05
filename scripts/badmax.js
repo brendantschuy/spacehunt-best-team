@@ -12,7 +12,7 @@ class BadMax
 		this.cpy = this.y/GRID_SIZE;
 
 		this.visible = true;
-		//this.addToMap = true;
+		this.addToMap = true;
 		this.sprite = new Image();
 		this.sprite.src = "img/badmax_ship.png";
 	}
