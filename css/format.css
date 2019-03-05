@@ -277,7 +277,7 @@ h2 {
 	background-size: 80px 80px;
 	width: 70px;
 	/*margin-top: 10px;*/
-	margin-left: 115px;
+	margin-left: auto;
 	margin-right: auto;
 }
 
@@ -285,19 +285,9 @@ h2 {
 	background: url("../img/genesis_saber_button.png") no-repeat center;
 	background-size: 70px 70px;
 	width: 70px;
-	display: inline-block;
-	margin-left: 25px;
-	/*padding-bottom: 5px;*/
-}
-
-#controls-FD {
-	background: url("../img/fuga_daemonum_button.png") no-repeat right;
-	background-size: 70px 70px;
-	width: 70px;
-	display: inline-block;
-	margin-right: 32px;
-	float: right;
-	/*padding-bottom: 6px;*/
+	/*margin-top: 10px;*/
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #controls-scan {
