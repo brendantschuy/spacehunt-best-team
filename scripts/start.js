@@ -281,7 +281,7 @@ function start()
 
 	function hitObstacle()
 	{
-		if(!this.gameOver && this.ship.isGhost == false)
+		if(!this.gameOver && !this.ship.isGhost)
 		{
 			this.ship.sprite.src = "img/animations/explosion/" + this.ship.animationFrame + ".gif";
 			var audio_explosion = new Audio('audio/explosion.mp3');
