@@ -9,6 +9,7 @@ function start(presets)
 {
 	var resetHeight = true;
 
+	//this.presets = presets;
 	this.gameOver = false;
 	this.gameWon = false;
 	this.displayHud = false; //document.getElementById("hud").checked;
@@ -344,6 +345,10 @@ function start(presets)
 
 		this.obstacles = [];
 
+		presets.forEach(function(presetItem)
+		{
+			obstacles.push(presetItem);
+		});
 		/* still working on this */
 		// if user hits load button, localStorage.load(gameState, savedList);
 
