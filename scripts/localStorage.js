@@ -2,21 +2,21 @@
 
 // game state object, work in progress 
 var gameState = {
-  shipX: 0,
-  shipY: 0,
-  shipSupplies: 0,
-  shipEnergy: 0,
-  currency: 0,
-  AsteroidX: 0,
-  AsteroidY: 0,
-  CeleronX: 0,
-  CeleronY: 0,
-  XeonX: 0,
-  XeonY: 0,
-  RyzenX: 0,
-  RyzenY: 0,
-  RecipeX: 0,
-  RecipeY: 0,
+  shipX: 0, // ship.cpx
+  shipY: 0, //ship.cpy,
+  shipSupplies: 0, //ship.supplies,  
+  shipEnergy: 0, //ship.energy,  
+  currency: 0, //ship.currency,  
+  AsteroidX: 0, //Asteroid.cpx, 
+  AsteroidY: 0, //Asteroid.cpy, 
+  CeleronX: 0, //Planet.Celeron.cpx,  
+  CeleronY: 0, //Planet.Celeron.cpy,  
+  XeonX: 0, //Planet.Xeon.cpx,     
+  XeonY: 0, //Planet.Xeon.cpy,    
+  RyzenX: 0, //Planet.Ryzen.cpx,   
+  RyzenY: 0, //Planet.Ryzen.cpy,    
+  RecipeX: 0, //Recipe.cpx,   
+  RecipeY: 0, // Recipe.cpy,  
   activeGame: false
 };
 
@@ -48,7 +48,7 @@ function save(gameState, savedList) {
   }
   localStorage.setItem("state", JSON.stringify(gameState)); // change to allow user input for state name
   activeGame = true;
-  savedList.push(gameState);  // add saved game to list, change this also to allow user input 
+  savedList.push(gameState);  
 }
 
 // loads game from browser 
@@ -63,7 +63,7 @@ function load(gameState, savedList) {
   response = prompt("Which game would you like to load? Enter a number, starting at 1.");
   for(var i = 0; i < savedList.length; i++) {
     if(response == (i+1)) 
-      gameState = localStorage.getItem(savedList[i+1]); // must parse
+      gameState = JSON.parse(localStorage.getItem(savedList[i+1]));
   }
 }
 
@@ -71,3 +71,10 @@ function load(gameState, savedList) {
 function clearAll() {
   return localStorage.clear();
 }
+
+/*
+goes in HTML file
+<button type="button" id="saveButton" onclick="save()">Save</button>
+<button type="button" id="loadButton" onclick="load()">Load</button>
+<button type="button" id="newGame" onclick="start()">New Game</button>
+*/

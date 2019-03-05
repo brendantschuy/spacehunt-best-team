@@ -160,8 +160,7 @@ class Ship 	//class names capitalized per js convention
 		
 		this.checkBoundary();
 		this.updatecp();
-		
-		//save location, supplies, energy here 
+
 	}
 
 	beginMoving()

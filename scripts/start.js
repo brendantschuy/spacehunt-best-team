@@ -345,8 +345,7 @@ function start()
 		this.obstacles = [];
 
 		/* still working on this */
-		// prompt user or wait for onload
-		// if load, load(gameState, savedList);
+		// if user hits load button, localStorage.load(gameState, savedList);
 
 
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
@@ -380,6 +379,7 @@ function start()
 		obstacles.push(new Planet(14, 10, 6));
 		obstacles.push(new Planet(12, 10, 7));
 		
+
 
 
 	// 	save(gameState, savedList);
