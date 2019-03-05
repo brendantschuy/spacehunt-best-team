@@ -349,8 +349,8 @@ function start()
 
 
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
-		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-		//obstacles.push(new BadMax(10*GRID_SIZE, 15*GRID_SIZE));
+		//obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
+		obstacles.push(new BadMax(10*GRID_SIZE, 15*GRID_SIZE));
 		//test badmax music line
 		//obstacles.push(new BadMax(12, 10));
 		obstacles.push(new Asteroid(9, 9));
@@ -691,17 +691,38 @@ function start()
 
 	function pursuit()
 	{
-		if(this.ship.cpx < this.BadMax.cpx){
-			this.BadMax.x -= GRID_SIZE;
+		distx = this.ship.cpx - this.BadMax.cpx;
+		disty = this.ship.cpy - this.BadMax.cpy;
+		
+		absDist = Math.sqrt((distx * distx) + (disty * disty));
+		
+		if(absDist < 30){
+			if(Math.abs(distx) > Math.abs(disty)){
+				if(disty < 0)
+					this.BadMax.x -= GRID_SIZE;
+				else
+					this.BadMax.x += GRID_SIZE;
+			}
+			else{
+				if(disty < 0)
+					this.BadMax.y -= GRID_SIZE;
+				else
+					this.BadMax.y += GRID_SIZE;
+			}
 		}
-		else if(this.ship.cpx > this.BadMax.cpx){
-			this.BadMax.x += GRID_SIZE;
-		}
-		if(this.ship.cpy < this.BadMax.cpy){
-			this.BadMax.y -= GRID_SIZE;		
-		}
-		else if(this.ship.cpy > this.BadMax.cpy){
-			this.BadMax.y += GRID_SIZE;
+		else if (absDist >= 30){
+			if(this.ship.cpx < this.BadMax.cpx){
+				this.BadMax.x -= GRID_SIZE;
+			}
+			else if(this.ship.cpx > this.BadMax.cpx){
+				this.BadMax.x += GRID_SIZE;
+			}
+			if(this.ship.cpy < this.BadMax.cpy){
+				this.BadMax.y -= GRID_SIZE;		
+			}
+			else if(this.ship.cpy > this.BadMax.cpy){
+				this.BadMax.y += GRID_SIZE;
+			}
 		}
 		this.BadMax.cpx = Math.floor(this.BadMax.x/GRID_SIZE);
 		this.BadMax.cpy = Math.floor(this.BadMax.y/GRID_SIZE);
