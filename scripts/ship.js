@@ -148,6 +148,7 @@ class Ship 	//class names capitalized per js convention
 		this.updatecp();
 		
 		// save location, supplies, energy here 
+		// localStorage.save(state, list)
 	}
 
 	beginMoving()

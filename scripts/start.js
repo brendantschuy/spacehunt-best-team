@@ -267,8 +267,7 @@ function start()
 		this.obstacles = new Array();
 
 		/* still working on this */
-		// prompt user or wait for onload
-		// if load, load(gameState, savedList);
+		// if user hits load button, localStorage.load(gameState, savedList);
 
 		//Later, this will be turned into a loop for either a) random gen or b) load from file.
 		obstacles.push(new Asteroid(9, 9));
@@ -289,8 +288,7 @@ function start()
 		obstacles.push(new SpaceStation(13, 15));
 		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
 
-	// 	save(gameState, savedList);
-
+		
 		ship.updatecp();
 	}
 
