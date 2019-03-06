@@ -2,7 +2,9 @@
 
 function menu()
 {
-	var ctx = document.getElementById("gameScreen").getContext('2d');
+	var cvs = document.getElementById("gameScreen");
+	var cvsCoords = getAbsPosition(cvs);
+	var ctx = cvs.getContext('2d');
 	ctx.fillStyle = "white";
 	ctx.fillRect(0, 0, 450, 450);
 	ctx.fillStyle = "black";
@@ -10,6 +12,8 @@ function menu()
 	ctx.fillText("Press L to load map from file", 10, 40);
 	ctx.fillText("Press E to edit map" , 10, 70);
 	ctx.fillText("Press any key to continue.", 10, 100);
+
+	
 
 	//If statement is important to not overwrite the array
 	if(!this.presets)
@@ -19,13 +23,15 @@ function menu()
 
 	function getInput(e)
 	{
-		if(e.keyCode == 69)
+		if(e.keyCode == 69)			//E
 		{
-			this.presets = editMap();
+			//doesn't actually overwrite presets, just adds to it
+			this.presets = editMapMenu();
 		}
-		else if(e.keyCode == 76)
+		else if(e.keyCode == 76)	//L
 		{
-			//load stuff
+			//DOES overwrite presets
+			this.presets = loadFileMenu();
 		}
 		else
 		{
@@ -33,7 +39,7 @@ function menu()
 		}
 	}
 
-	function editMap()
+	function editMapMenu()
 	{
 		var ctx = document.getElementById("gameScreen").getContext('2d');
 		ctx.fillStyle = "#DDDDDD";
@@ -42,8 +48,9 @@ function menu()
 		ctx.font = "20px Arial";
 		ctx.beginPath();
 
-		document.onkeydown = getInputEdit;
+		document.onkeydown = getInputEditMenu;
 
+		//deleteMainMenuOptions();
 		createEditOptions();
 
 		document.getElementById("clickToAddButton").onclick = function()
@@ -78,7 +85,14 @@ function menu()
 		switch(newItemName)
 		{
 			case("Asteroid") : 
-				this.presets.push(new Asteroid(x, y));
+				if(x == SHIP_START_X && y == SHIP_START_Y)
+				{
+					alert("Haha very funny.");
+				}
+				else
+				{
+					this.presets.push(new Asteroid(x, y));
+				}
 				break;
 			case("Xeon") :
 				this.presets.push(new Xeon(x, y));
@@ -100,13 +114,40 @@ function menu()
 				break;	
 		}
 	}
+	function loadFileMenu()
+	{
+		var ctx = document.getElementById("gameScreen").getContext('2d');
+		ctx.fillStyle = "#DDDDDD";
+		ctx.fillRect(0, 0, 450, 450);
+		ctx.fillStyle = "black";
+		ctx.font = "20px Arial";
+		ctx.beginPath();
+		
+		//deleteMainMenuOptions();
+		//createLoadFileMenuOptions();
+
+		fileInput = document.createElement("input");
+		fileInput.type = "file";
+		fileInput.style.position = "absolute";
+		fileInput.style.top = cvsCoords.y + 200;
+		fileInput.style.left = cvsCoords.x + 200;
+		document.body.appendChild(fileInput);
+
+		/******************************************************
+		*******************************************************
+		*************READ INPUT FILE***************************
+		*******************************************************
+		******************************************************/
+
+		document.onkeydown = getInputFileMenu;
+	}
 
 	document.onkeydown = getInput;
 
 }
 
 
-function getInputEdit(e)
+function getInputEditMenu(e)
 {
 	if(e.keyCode == 81)	//q
 	{
@@ -122,6 +163,7 @@ function getInputEdit(e)
 		document.body.removeChild(xCaption);
 		document.body.removeChild(yCaption);
 		document.body.removeChild(randomValues);
+		document.body.removeChild(returnToMainMenu);
 		if(document.getElementById("addItemNameTag"))
 		{
 			document.body.removeChild(addItemNameTag);
@@ -133,14 +175,24 @@ function getInputEdit(e)
 			alert(thing.constructor.name);
 		});*/
 	}
-	else if(e.keyCode == 69)	//e
+}
+
+function getInputFileMenu(e)
+{
+	if(e.keyCode == 81)	//q
 	{
-		e.preventDefault();
+		menu();
+		//deleteFileMenuOptions();
+		document.body.removeChild(fileInput);
 	}
 }
 
 function createEditOptions()
 {
+	var cvsCoords = getAbsPosition(document.getElementById("gameScreen"));
+
+	//browser_x = getPosition(document.getElementById("gameScreen")).x;
+	//alert(browser_x);
 	addables = [];
 	addables.push("Asteroid");
 	addables.push("Celeron");
@@ -158,8 +210,8 @@ function createEditOptions()
 		addItem.type = "button";
 		addItem.value = addables[i];
 		addItem.style.position = "absolute";
-		addItem.style.top = 160 + 60 * i;
-		addItem.style.left = 380;
+		addItem.style.top = cvsCoords.y + 20 + 60 * i;
+		addItem.style.left = cvsCoords.x + 20;
 		addItem.className = "addButtons";
 		addItem.onclick = function()
 		{
@@ -174,8 +226,8 @@ function createEditOptions()
 	xCoord.className = "coordInput";
 	xCoord.id = "coordInput_x";
 	xCoord.style.position = "absolute";
-	xCoord.style.top = 450;
-	xCoord.style.left = 600;
+	xCoord.style.top = 304 + cvsCoords.y;
+	xCoord.style.left = 228 + cvsCoords.x;
 	xCoord.style.width = 50;
 	xCoord.style.font = "30px Arial";
 	document.body.appendChild(xCoord);
@@ -185,8 +237,8 @@ function createEditOptions()
 	yCoord.className = "coordInput";
 	yCoord.id = "coordInput_y";
 	yCoord.style.position = "absolute";
-	yCoord.style.top = 450;
-	yCoord.style.left = 675;
+	yCoord.style.top = 304 + cvsCoords.y;
+	yCoord.style.left = 303 + cvsCoords.x;
 	yCoord.style.width = 50;
 	yCoord.style.font = "30px Arial";
 	document.body.appendChild(yCoord);	
@@ -196,8 +248,8 @@ function createEditOptions()
 	editHeaderX.id = "xCaption";
 	//editHeader.text = "Edit Game";
 	editHeaderX.style.position = "absolute";
-	editHeaderX.style.top = 410;
-	editHeaderX.style.left = 620;
+	editHeaderX.style.top = 264 + cvsCoords.y;
+	editHeaderX.style.left = 248 + cvsCoords.x;
 	//editHeader.appendChild(t);
 	document.body.appendChild(editHeaderX);
 
@@ -206,8 +258,8 @@ function createEditOptions()
 	editHeaderY.id = "yCaption";
 	//editHeader.text = "Edit Game";
 	editHeaderY.style.position = "absolute";
-	editHeaderY.style.top = 410;
-	editHeaderY.style.left = 695;
+	editHeaderY.style.top = 264 + cvsCoords.y;
+	editHeaderY.style.left = 323 + cvsCoords.x;
 	//editHeader.appendChild(t);
 	document.body.appendChild(editHeaderY);
 
@@ -216,8 +268,8 @@ function createEditOptions()
 	addButton.type = "button";
 	addButton.value = "Add Item";
 	addButton.style.position = "absolute";
-	addButton.style.top = 540;
-	addButton.style.left = 630;
+	addButton.style.top = 394 + cvsCoords.y;
+	addButton.style.left = 248 + cvsCoords.x;
 	//addButton.className = "addButtons";
 	document.body.appendChild(addButton);
 
@@ -226,13 +278,23 @@ function createEditOptions()
 	randomValues.type = "button";
 	randomValues.value = "Randomize";
 	randomValues.style.position = "absolute";
-	randomValues.style.top = 490;
-	randomValues.style.left = 630;
+	randomValues.style.top = 344 + cvsCoords.y;
+	randomValues.style.left = 258 + cvsCoords.x;
 	document.body.appendChild(randomValues);
+
+	returnToMainMenu = document.createElement("P");
+	returnToMainMenu.appendChild(document.createTextNode("Press \"Q\" to return to main menu."));
+	returnToMainMenu.id = "returnToMainMenuText";
+	returnToMainMenu.style.position = "absolute";
+	returnToMainMenu.style.top = 410 + cvsCoords.y;
+	returnToMainMenu.style.left = 200 + cvsCoords.x;
+	document.body.appendChild(returnToMainMenu);
 }
 
 function writeAddItemName(val)
 {
+	var cvsCoords = getAbsPosition(document.getElementById("gameScreen"));
+
 	if(document.getElementById("addItemNameTag"))
 	{
 		document.body.removeChild(addItemNameTag);
@@ -241,8 +303,8 @@ function writeAddItemName(val)
 	addItemNameTag.appendChild(document.createTextNode(val));
 	addItemNameTag.id = "addItemNameTag";
 	addItemNameTag.style.position = "absolute";
-	addItemNameTag.style.top = 200;
-	addItemNameTag.style.left = 620;
+	addItemNameTag.style.top = 54 + cvsCoords.y;
+	addItemNameTag.style.left = 248 + cvsCoords.x;
 	document.body.appendChild(addItemNameTag);
 
 	if(document.getElementById("addItemImage"))
@@ -252,8 +314,8 @@ function writeAddItemName(val)
 	addItemImage = document.createElement("img");
 	addItemImage.id = "addItemImage";
 	addItemImage.style.position = "absolute";
-	addItemImage.style.top = 250;
-	addItemImage.style.left = 620;
+	addItemImage.style.top = 104 + cvsCoords.y;
+	addItemImage.style.left = 248 + cvsCoords.x;
 	addItemImage.src = "img/" + val + ".png";
 	if(val == "Space Station")
 	{
@@ -265,4 +327,11 @@ function writeAddItemName(val)
 		addItemImage.src = "img/meteor_still.png";
 	}
 	document.body.appendChild(addItemImage);
+}
+
+//Returns absolute position of top left corner of canvas
+function getAbsPosition(element)
+{
+   var rect = element.getBoundingClientRect();
+   return {x:rect.left,y:rect.top}
 }

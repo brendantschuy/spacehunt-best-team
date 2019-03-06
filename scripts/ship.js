@@ -44,8 +44,8 @@ class Ship 	//class names capitalized per js convention
 		this.y = 1279;						//position on map, in pixels
 		this.offset_x = 0;					//distance from center of square
 		this.offset_y = 0;					//distance from center of square
-		this.cpx = 10;						//celestial position
-		this.cpy = 10;
+		this.cpx = SHIP_START_X;						//celestial position
+		this.cpy = SHIP_START_Y;
 		this.damage = 0;						//celestial position
 
 		//ship graphics
