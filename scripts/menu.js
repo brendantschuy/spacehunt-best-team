@@ -114,6 +114,7 @@ function menu()
 				break;	
 		}
 	}
+
 	function loadFileMenu()
 	{
 		var ctx = document.getElementById("gameScreen").getContext('2d');
@@ -133,6 +134,9 @@ function menu()
 		fileInput.style.left = cvsCoords.x + 200;
 		document.body.appendChild(fileInput);
 
+
+		new_presets = [];	//we want to overwrite whatever was previously in the obstacles array
+
 		/******************************************************
 		*******************************************************
 		*************READ INPUT FILE***************************
@@ -140,6 +144,17 @@ function menu()
 		******************************************************/
 
 		document.onkeydown = getInputFileMenu;
+
+		//only return new array if there are things in it; if there was some sort of error and 
+		//this array is empty, just default to the normal game state
+		if(new_presets)
+		{
+			return new_presets;
+		}
+		else
+		{
+			return this.presets;
+		}
 	}
 
 	document.onkeydown = getInput;
