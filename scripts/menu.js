@@ -17,10 +17,11 @@ function menu()
 	ctx.fillStyle = "white";
 	ctx.fillRect(0, 0, 450, 450);
 	ctx.fillStyle = "black";
-	ctx.fillText("Welcome to Spacehunt", 10, 10);
-	ctx.fillText("Press L to load map from file", 10, 40);
-	ctx.fillText("Press E to edit map" , 10, 70);
-	ctx.fillText("Press any key to continue.", 10, 100);
+	//ctx.font = "20px Arial";
+	ctx.fillText("Welcome to Spacehunt", 100, 30);
+	ctx.fillText("New (N)", 130, 60);
+	ctx.fillText("Edit (E)" , 130, 90);
+	ctx.fillText("Load (L)", 130, 120);
 
 	
 
@@ -224,7 +225,7 @@ function getInputFileMenu(e)
 		menu();
 		//deleteFileMenuOptions();
 		document.body.removeChild(fileInput);
-		document.body.removeChild(returnToMainMenu);
+		document.body.removeChild(returnToMainMenu);S
 	}
 }
 
