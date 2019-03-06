@@ -1,5 +1,14 @@
-//Create a menu for the game, from which we can load files ,create custom map, etc. 
+/***************************
+*********MENU.JS************
+****************************
 
+This is the first thing that runs when the webpage is loaded.
+Menu produces a basic menu with three options:
+	- New (default functionality)
+	- Edit (add things to map, change basic settings)
+	- Load (load from file)
+
+***************************/
 function menu()
 {
 	var cvs = document.getElementById("gameScreen");
@@ -39,6 +48,8 @@ function menu()
 		}
 	}
 
+	//Creates edit menu options
+	//This will be split up into a few different functions soonTM
 	function editMapMenu()
 	{
 		var ctx = document.getElementById("gameScreen").getContext('2d');
@@ -78,6 +89,8 @@ function menu()
 		return this.presets;
 	}
 
+	//Adds a single item to the preset array
+	//This could be altered to be more generalized & work with file input too
 	function addItemToPresets(x ,y)
 	{
 		newItemName = document.getElementById("addItemNameTag").textContent;
@@ -115,6 +128,7 @@ function menu()
 		}
 	}
 
+	//Opens up a basic menu with "choose file" dialog
 	function loadFileMenu()
 	{
 		var ctx = document.getElementById("gameScreen").getContext('2d');
@@ -134,6 +148,14 @@ function menu()
 		fileInput.style.left = cvsCoords.x + 200;
 		document.body.appendChild(fileInput);
 
+		returnToMainMenu = document.createElement("P");
+		returnToMainMenu.appendChild(document.createTextNode("Press \"Q\" to return to main menu."));
+		returnToMainMenu.id = "returnToMainMenuText";
+		returnToMainMenu.style.position = "absolute";
+		returnToMainMenu.style.top = 410 + cvsCoords.y;
+		returnToMainMenu.style.left = 200 + cvsCoords.x;
+		document.body.appendChild(returnToMainMenu);
+
 
 		new_presets = [];	//we want to overwrite whatever was previously in the obstacles array
 
@@ -142,6 +164,8 @@ function menu()
 		*************READ INPUT FILE***************************
 		*******************************************************
 		******************************************************/
+
+		//add what's in input file to new_presets
 
 		document.onkeydown = getInputFileMenu;
 
@@ -161,7 +185,7 @@ function menu()
 
 }
 
-
+//handles input on the edit menu page
 function getInputEditMenu(e)
 {
 	if(e.keyCode == 81)	//q
@@ -192,6 +216,7 @@ function getInputEditMenu(e)
 	}
 }
 
+//handles input on the file menu page
 function getInputFileMenu(e)
 {
 	if(e.keyCode == 81)	//q
@@ -199,9 +224,11 @@ function getInputFileMenu(e)
 		menu();
 		//deleteFileMenuOptions();
 		document.body.removeChild(fileInput);
+		document.body.removeChild(returnToMainMenu);
 	}
 }
 
+//generates the interface on the edit menu page
 function createEditOptions()
 {
 	var cvsCoords = getAbsPosition(document.getElementById("gameScreen"));
@@ -306,6 +333,7 @@ function createEditOptions()
 	document.body.appendChild(returnToMainMenu);
 }
 
+//dynamically changes what is on screen when adding objects
 function writeAddItemName(val)
 {
 	var cvsCoords = getAbsPosition(document.getElementById("gameScreen"));
