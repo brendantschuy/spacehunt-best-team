@@ -13,6 +13,6 @@ class SpaceStation
 
 		this.sprite = new Image();
 		this.addToMap = true;
-		this.sprite.src = "img/spacestation.png";
+		this.sprite.src = "img/space station.png";
 	}		
 }

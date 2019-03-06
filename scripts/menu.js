@@ -1,10 +1,7 @@
 //Create a menu for the game, from which we can load files ,create custom map, etc. 
 
-//currently disabled. to enable, change "onload" in index.html to call menu()
 function menu()
 {
-	var presets = [];
-	//this.presets = new Array();
 	var ctx = document.getElementById("gameScreen").getContext('2d');
 	ctx.fillStyle = "white";
 	ctx.fillRect(0, 0, 450, 450);
@@ -14,23 +11,17 @@ function menu()
 	ctx.fillText("Press E to edit map" , 10, 70);
 	ctx.fillText("Press any key to continue.", 10, 100);
 
-	presets.push(new Asteroid(12, 10));
-	//this.presets.push(new Asteroid(10, 12));
-
-	presets.forEach(function(thing)
+	//If statement is important to not overwrite the array
+	if(!this.presets)
 	{
-		alert("In Menu, before doing anything: " + thing.constructor.name);
-	});
+		this.presets = [];
+	}
 
 	function getInput(e)
 	{
 		if(e.keyCode == 69)
 		{
-			presets = editMap(presets);
-			presets.forEach(function(thing)
-			{
-				alert("After calling edit map: " + thing.constructor.name);
-			});
+			this.presets = editMap();
 		}
 		else if(e.keyCode == 76)
 		{
@@ -38,28 +29,18 @@ function menu()
 		}
 		else
 		{
-			presets.forEach(function(thing)
-			{
-				alert("Before calling start: " + thing.constructor.name);
-			});
 			start(presets);
 		}
 	}
 
-	function editMap(presetObjs)
+	function editMap()
 	{
-		presetObjs.push(new Asteroid(10, 12));
-		presetObjs.push(new Asteroid(9, 10));
-		presetObjs.push(new Asteroid(9, 8));
-		//presets = [];
 		var ctx = document.getElementById("gameScreen").getContext('2d');
 		ctx.fillStyle = "#DDDDDD";
 		ctx.fillRect(0, 0, 450, 450);
 		ctx.fillStyle = "black";
 		ctx.font = "20px Arial";
 		ctx.beginPath();
-		//ctx.fillText("EDITING GAME MAP", 150, 80);
-		//ctx.fillText("Press Q to return to the main menu.", 20, 50);
 
 		document.onkeydown = getInputEdit;
 
@@ -67,22 +48,57 @@ function menu()
 
 		document.getElementById("clickToAddButton").onclick = function()
 		{
-			//alert("Hello there from our button");
-			presetObjs.push(new Asteroid(9, 10));
-			//presets.push(new Asteroid(10, 13));
+			var xc = document.getElementById("coordInput_x").value;
+			var yc = document.getElementById("coordInput_y").value;
+			if(!xc||!yc)
+			{
+				alert("Error: Please enter a value in each coordinate box.");
+			}
+			else
+			{
+				xc = parseInt(xc);
+				yc = parseInt(yc);
+				addItemToPresets(xc, yc);
+			}
 		}
 
-		presetObjs.forEach(function(thing)
+		document.getElementById("randomizeXYButton").onclick = function()
 		{
-			alert("Within edit map: " + thing.constructor.name);
-		});
-		return presetObjs;
+			document.getElementById("coordInput_x").value = Math.floor(Math.random() * MAP_MAX_X);
+			document.getElementById("coordInput_y").value = Math.floor(Math.random() * MAP_MAX_Y);
+		}
+
+		return this.presets;
 	}
 
-	function addAsteroid()
+	function addItemToPresets(x ,y)
 	{
-		//presets.push(new Asteroid(9, 10));
-		//return presets;
+		newItemName = document.getElementById("addItemNameTag").textContent;
+		//newItemName = window[newItemName];
+		switch(newItemName)
+		{
+			case("Asteroid") : 
+				this.presets.push(new Asteroid(x, y));
+				break;
+			case("Xeon") :
+				this.presets.push(new Xeon(x, y));
+				break;
+			case("Ryzen") :
+				this.presets.push(new Ryzen(x, y));
+				break;
+			case("Celeron") :
+				this.presets.push(new Celeron(x, y));
+				break;
+			case("Space Station") :
+				this.presets.push(new SpaceStation(x, y));
+				break;
+			case("Abandoned Freighter") :
+				this.presets.push(new AbandonedFreighter(x, y));
+				break;
+			case("Meteor Storm") :
+				this.presets.push(new MeteorStorm(x, y));
+				break;	
+		}
 	}
 
 	document.onkeydown = getInput;
@@ -92,7 +108,7 @@ function menu()
 
 function getInputEdit(e)
 {
-	if(e.keyCode == 81)
+	if(e.keyCode == 81)	//q
 	{
 		menu();
 		for(i = 0; i < 7; i++)
@@ -105,11 +121,21 @@ function getInputEdit(e)
 		document.body.removeChild(clickToAddButton);
 		document.body.removeChild(xCaption);
 		document.body.removeChild(yCaption);
+		document.body.removeChild(randomValues);
+		if(document.getElementById("addItemNameTag"))
+		{
+			document.body.removeChild(addItemNameTag);
+			document.body.removeChild(addItemImage);
+		}
 
 		/*presets.forEach(function(thing)
 		{
 			alert(thing.constructor.name);
 		});*/
+	}
+	else if(e.keyCode == 69)	//e
+	{
+		e.preventDefault();
 	}
 }
 
@@ -135,25 +161,34 @@ function createEditOptions()
 		addItem.style.top = 160 + 60 * i;
 		addItem.style.left = 380;
 		addItem.className = "addButtons";
+		addItem.onclick = function()
+		{
+
+			writeAddItemName(String(this.value));
+		}
 		document.body.appendChild(addItem);
 	}
 
 	xCoord = document.createElement("input");
 	xCoord.type = "text";
 	xCoord.className = "coordInput";
+	xCoord.id = "coordInput_x";
 	xCoord.style.position = "absolute";
 	xCoord.style.top = 450;
 	xCoord.style.left = 600;
 	xCoord.style.width = 50;
+	xCoord.style.font = "30px Arial";
 	document.body.appendChild(xCoord);
 
 	yCoord = document.createElement("input");
 	yCoord.type = "text";
 	yCoord.className = "coordInput";
+	yCoord.id = "coordInput_y";
 	yCoord.style.position = "absolute";
 	yCoord.style.top = 450;
 	yCoord.style.left = 675;
 	yCoord.style.width = 50;
+	yCoord.style.font = "30px Arial";
 	document.body.appendChild(yCoord);	
 
 	editHeaderX = document.createElement("p");
@@ -185,4 +220,49 @@ function createEditOptions()
 	addButton.style.left = 630;
 	//addButton.className = "addButtons";
 	document.body.appendChild(addButton);
+
+	randomValues = document.createElement("input");
+	randomValues.id = "randomizeXYButton";
+	randomValues.type = "button";
+	randomValues.value = "Randomize";
+	randomValues.style.position = "absolute";
+	randomValues.style.top = 490;
+	randomValues.style.left = 630;
+	document.body.appendChild(randomValues);
+}
+
+function writeAddItemName(val)
+{
+	if(document.getElementById("addItemNameTag"))
+	{
+		document.body.removeChild(addItemNameTag);
+	}
+	addItemNameTag = document.createElement("p");
+	addItemNameTag.appendChild(document.createTextNode(val));
+	addItemNameTag.id = "addItemNameTag";
+	addItemNameTag.style.position = "absolute";
+	addItemNameTag.style.top = 200;
+	addItemNameTag.style.left = 620;
+	document.body.appendChild(addItemNameTag);
+
+	if(document.getElementById("addItemImage"))
+	{
+		document.body.removeChild(addItemImage);
+	}
+	addItemImage = document.createElement("img");
+	addItemImage.id = "addItemImage";
+	addItemImage.style.position = "absolute";
+	addItemImage.style.top = 250;
+	addItemImage.style.left = 620;
+	addItemImage.src = "img/" + val + ".png";
+	if(val == "Space Station")
+	{
+		addItemImage.height = 100;
+		addItemImage.width = 100;
+	}
+	if(val == "Meteor Storm")
+	{
+		addItemImage.src = "img/meteor_still.png";
+	}
+	document.body.appendChild(addItemImage);
 }
