@@ -5,10 +5,11 @@
 var explosionSound;
 var drawHeight = GAME_SCREEN_HEIGHT;
 
-function start()
+function start(presets)
 {
 	var resetHeight = true;
 
+	//this.presets = presets;
 	this.gameOver = false;
 	this.gameWon = false;
 	this.displayHud = false; //document.getElementById("hud").checked;
@@ -378,15 +379,40 @@ function start()
 
 		this.obstacles = [];
 
+		//BadMax NEEDS to be obstacles[0]
+		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
+
+		//There may only be one!
+		let isXeon = false, isCeleron = false, isRyzen = false;
+
+		if(presets)
+		{
+			presets.forEach(function(presetItem)
+			{
+				if(presetItem.constructor.name == "Xeon")
+				{
+					if(isXeon) return;
+					isXeon = true;
+				}
+				if(presetItem.constructor.name == "Celeron")
+				{
+					if(isCeleron) return;
+					isCeleron = true;
+				}
+				if(presetItem.constructor.name == "Ryzen")
+				{
+					if(isRyzen) return;
+					isRyzen = true;
+				}
+				//alert("Preset item: " + presetItem.constructor.name);
+				obstacles.push(presetItem);
+				//alert(presetItem.x + ", " + presetItem.y);
+				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
+			});
+		}
 		/* still working on this */
 		// if user hits load button, localStorage.load(gameState, savedList);
 
-
-		//Later, this will be turned into a loop for either a) random gen or b) load from file.
-		//obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-		obstacles.push(new BadMax(10*GRID_SIZE, 15*GRID_SIZE));
-		//test badmax music line
-		//obstacles.push(new BadMax(12, 10));
 		obstacles.push(new Asteroid(9, 9));
 		obstacles.push(new Asteroid(11, 11));
 		obstacles.push(new Asteroid(6, 6));
@@ -394,14 +420,10 @@ function start()
 		obstacles.push(new Asteroid(64, 64));
 		obstacles.push(new Asteroid(128, 0));
 		obstacles.push(new Asteroid(0, 128));
-		obstacles.push(new Asteroid(0, 0));
 		obstacles.push(new Asteroid(1, 1));
 		obstacles.push(new EnergyPotion(9, 11, 200));
 		obstacles.push(new Recipe(11, 9));
-		obstacles.push(new MeteorStorm(8,10));
-		obstacles.push(new Celeron(4, 4));
-		obstacles.push(new Xeon(12, 12));
-		obstacles.push(new Ryzen(18, 18));
+		obstacles.push(new MeteorStorm(8,8));
 		obstacles.push(new DeathStar(15, 10));
 		obstacles.push(new SpaceStation(13, 15));
 		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
@@ -412,6 +434,14 @@ function start()
 		obstacles.push(new Planet(14, 14, 5));
 		obstacles.push(new Planet(14, 10, 6));
 		obstacles.push(new Planet(12, 10, 7));
+
+		//There may only be one of each of the following:
+		if(!isCeleron)
+			obstacles.push(new Celeron(4, 4));
+		if(!isXeon)
+			obstacles.push(new Xeon(12, 12));
+		if(!isRyzen)
+			obstacles.push(new Ryzen(18, 18));
 
 		// Initialize Wormholes
 		for(var x = MAP_MIN_X - 1; x < MAP_MAX_X; x++){

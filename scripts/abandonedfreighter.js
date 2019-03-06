@@ -16,6 +16,6 @@ class AbandonedFreighter
 		
 		this.sprite = new Image();
 		this.addToMap = true;
-		this.sprite.src = "img/abandoned_ship.png";
+		this.sprite.src = "img/abandoned freighter.png";
 	}		
 }
