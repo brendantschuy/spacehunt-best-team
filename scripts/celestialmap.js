@@ -122,8 +122,10 @@ function drawObstaclesMap(ctx,obstacles) {
 // Removes an element from the document
 //Example usage is to remove potion from map after consumption
 function removeElement(elementId) {
-    var element = document.getElementById(elementId);
-    element.parentNode.removeChild(element);
+    if(document.getElementById(elementId)) {
+      var element = document.getElementById(elementId);
+      element.parentNode.removeChild(element);
+    }
 }
 
 //Toggles visibility of an object
@@ -134,4 +136,11 @@ function switchVisibility(elementId) {
   }else{
     element.style.visibility = "hidden";
   }
+}
+
+function elementExists(elementId) {
+    if(document.getElementById(elementId)) {
+      return true;
+    }
+    return false;
 }
