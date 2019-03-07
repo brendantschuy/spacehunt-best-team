@@ -765,7 +765,7 @@ function start(presets)
 		{
 			delete this.scanner;
 		}
-		this.scanner = new Scanner(300, 300);;
+		this.scanner = new Scanner(320, 320);;
 		//checks to see if obstacles are within half the screen distance from the ship
 		setTimeout(function()
 		{
@@ -779,6 +779,7 @@ function start(presets)
 					this.obstacles[i].visible = true;
 				}
 			}
+			updateMap(obstacles);
 		}, 200);
 		
 
@@ -786,7 +787,6 @@ function start(presets)
 		if(foundSomething) {
 			ship.supplies -= (ship.originalSupplies * .02);
 		}
-		updateMap(obstacles);
 	}
 
 	function pursuit()
