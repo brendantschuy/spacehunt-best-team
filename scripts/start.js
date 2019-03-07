@@ -309,19 +309,19 @@ function start(presets)
 
 	function playChanceGame(guess,wager,result){
 		if(guess == result){
-			//commBox.drawNewBox("Congratulations! You guessed the right number! You get 5x your wager!",true,5,560);
-			alert("Congratulations! You guessed the right number! You get 5x your wager!");
-			ship.currency += (5 * wager);
-		}else if(guess == (result-1) || guess == (result+1)){
-			//commBox.drawNewBox("You were very close! Only within one. You get 3x your wager!",true,5,560);
-			alert("You were very close! Only within one. You get 3x your wager!");
+			commBox.drawNewBox("Congratulations! You guessed the right number! You get 3x your wager!",true,5,560);
+			alert("Congratulations! You guessed the right number! You get 3x your wager!");
 			ship.currency += (3 * wager);
-		}else if(guess == (result -2) || guess == (result + 2)){
-			//commBox.drawNewBox("Not that close! Only within two. You get 1.5x your wager!",true,5,560);
-			alert("Not that close! Only within two. You get 1.5x your wager!");
+		}else if(guess == (result-1) || guess == (result+1)){
+			commBox.drawNewBox("You were very close! Only within one. You get 1.5x your wager!",true,5,560);
+			alert("You were very close! Only within one. You get 1.5x your wager!");
 			ship.currency += (1.5 * wager);
+		}else if(guess == (result -2) || guess == (result + 2)){
+			commBox.drawNewBox("Not that close! Only within two. You made your wager back!",true,5,560);
+			alert("Not that close! Only within two. You made your wager back!");
+			ship.currency += (1 * wager);
 		}else { 
-			//commBox.drawNewBox("Not close at all. You lose.",true,5,560);
+			commBox.drawNewBox("Not close at all. You lose.",true,5,560);
 			alert("Not close at all. You lose.");
 			ship.currency -= wager;
 		}
@@ -743,15 +743,21 @@ function start(presets)
 
 	function scan(){
 		//checks to see if obstacles are within half the screen distance from the ship
+		var foundSomething = false;
 		for(i = 0; i< this.obstacles.length; ++i)
 		{
 			if(Math.abs(this.obstacles[i].cpx - this.ship.cpx) <= SCAN_RANGE &&(Math.abs(this.obstacles[i].cpy - this.ship.cpy)) <= SCAN_RANGE){
+				if(this.obstacles[i].visible == false){
+					foundSomething = true;
+				}
 				this.obstacles[i].visible = true;
 			}
 		}
 
 		//uses up supplies for scanning
-		ship.supplies -= (ship.originalSupplies * .02);
+		if(foundSomething) {
+			ship.supplies -= (ship.originalSupplies * .02);
+		}
 		showMap(obstacles);
 	}
 
