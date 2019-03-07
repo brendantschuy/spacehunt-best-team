@@ -609,6 +609,11 @@ function start(presets)
 	{
 		obstacles.forEach(function (obj)
 	    {
+	    	if(Math.abs(obj.y - ship.y) > GAME_SCREEN_HEIGHT || Math.abs(obj.x - ship.x) > GAME_SCREEN_WIDTH)
+	    	{
+	    		return;
+	    	}
+	    	
 	    	if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
