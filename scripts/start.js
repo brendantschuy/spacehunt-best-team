@@ -478,19 +478,19 @@ function start(presets)
 		//be able to use buttons too
 		document.getElementById("leftBtn").addEventListener("click", function()
 		{
-			ship.angle = 270;
+			ship.rotateLeft();
 		});
 		document.getElementById("rightBtn").addEventListener("click", function()
 		{
-			ship.angle = 90;
+			ship.rotateRight();
 		});
 		document.getElementById("upBtn").addEventListener("click", function()
 		{
-			ship.angle = 0;
+			ship.increaseDistance();
 		});
 		document.getElementById("downBtn").addEventListener("click", function()
 		{
-			ship.angle = 180;
+			ship.decreaseDistance();
 		});
 		document.getElementById("moveBtn").addEventListener("click", function()
 		{
