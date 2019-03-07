@@ -14,16 +14,13 @@ function menu()
 	var cvs = document.getElementById("gameScreen");
 	var cvsCoords = getAbsPosition(cvs);
 	var ctx = cvs.getContext('2d');
-	ctx.fillStyle = "white";
-	ctx.fillRect(0, 0, 450, 450);
-	ctx.fillStyle = "black";
-	//ctx.font = "20px Arial";
-	ctx.fillText("Welcome to Spacehunt", 100, 30);
-	ctx.fillText("New (N)", 130, 60);
-	ctx.fillText("Edit (E)" , 130, 90);
-	ctx.fillText("Load (L)", 130, 120);
 
-	
+	bkgd = document.createElement("img");
+	bkgd.className = "menu_bkgd";
+	bkgd.src = "img/menu_screen.png";
+	bkgd.style.left = cvsCoords.x;
+	bkgd.style.top = cvsCoords.y;
+	document.body.appendChild(bkgd);
 
 	//If statement is important to not overwrite the array
 	if(!this.presets)
@@ -36,15 +33,18 @@ function menu()
 		if(e.keyCode == 69)			//E
 		{
 			//doesn't actually overwrite presets, just adds to it
+			document.body.removeChild(bkgd);
 			this.presets = editMapMenu();
 		}
 		else if(e.keyCode == 76)	//L
 		{
 			//DOES overwrite presets
+			document.body.removeChild(bkgd);
 			this.presets = loadFileMenu();
 		}
-		else
+		else if(e.keyCode == 78)	//N
 		{
+			document.body.removeChild(bkgd);
 			start(presets);
 		}
 	}
@@ -53,12 +53,12 @@ function menu()
 	//This will be split up into a few different functions soonTM
 	function editMapMenu()
 	{
-		var ctx = document.getElementById("gameScreen").getContext('2d');
-		ctx.fillStyle = "#DDDDDD";
-		ctx.fillRect(0, 0, 450, 450);
-		ctx.fillStyle = "black";
-		ctx.font = "20px Arial";
-		ctx.beginPath();
+		bkgd = document.createElement("img");
+		bkgd.className = "menu_bkgd";
+		bkgd.src = "img/menu_screen_3.png";
+		bkgd.style.left = cvsCoords.x;
+		bkgd.style.top = cvsCoords.y;
+		document.body.appendChild(bkgd);
 
 		document.onkeydown = getInputEditMenu;
 
@@ -132,12 +132,12 @@ function menu()
 	//Opens up a basic menu with "choose file" dialog
 	function loadFileMenu()
 	{
-		var ctx = document.getElementById("gameScreen").getContext('2d');
-		ctx.fillStyle = "#DDDDDD";
-		ctx.fillRect(0, 0, 450, 450);
-		ctx.fillStyle = "black";
-		ctx.font = "20px Arial";
-		ctx.beginPath();
+		bkgd = document.createElement("img");
+		bkgd.className = "menu_bkgd";
+		bkgd.src = "img/menu_screen_2.png";
+		bkgd.style.left = cvsCoords.x;
+		bkgd.style.top = cvsCoords.y;
+		document.body.appendChild(bkgd);
 		
 		//deleteMainMenuOptions();
 		//createLoadFileMenuOptions();
@@ -189,8 +189,9 @@ function menu()
 //handles input on the edit menu page
 function getInputEditMenu(e)
 {
-	if(e.keyCode == 81)	//q
+	if(e.keyCode == 81 || e.keyCode == 27)	//q or <esc>
 	{
+		document.body.removeChild(bkgd);
 		menu();
 		for(i = 0; i < 7; i++)
 		{
@@ -220,10 +221,12 @@ function getInputEditMenu(e)
 //handles input on the file menu page
 function getInputFileMenu(e)
 {
-	if(e.keyCode == 81)	//q
+	if(e.keyCode == 81 || e.keyCode == 27)	//q or <esc>
 	{
+		document.body.removeChild(bkgd);
 		menu();
 		//deleteFileMenuOptions();
+
 		document.body.removeChild(fileInput);
 		document.body.removeChild(returnToMainMenu);S
 	}
