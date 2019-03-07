@@ -362,6 +362,10 @@ function start(presets)
 		audio_potion.play();
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
+
+		// testing save 
+		initializeSavedGame();
+		save();
 		return index + 1;
 	}
 
@@ -464,9 +468,6 @@ function start(presets)
 		this.BadMax = obstacles[0];
 
 		ship.updatecp();
-
-		// just testing save, will not want to call this here 
-		//save();
 		
 	}
 	
