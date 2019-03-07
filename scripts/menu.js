@@ -230,7 +230,7 @@ function getInputFileMenu(e)
 		//deleteFileMenuOptions();
 
 		document.body.removeChild(fileInput);
-		document.body.removeChild(returnToMainMenu);S
+		document.body.removeChild(returnToMainMenu);
 	}
 }
 
