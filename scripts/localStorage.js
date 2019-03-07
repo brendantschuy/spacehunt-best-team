@@ -4,13 +4,63 @@
 var gameState = {
   "shipX": 10, // ship.cpx
   "shipY": 10, //ship.cpy,
-  "shipSupplies": 1000, //ship.supplies,  
-  "shipEnergy": 1000, //ship.energy,  
+  "supplies": 1000, //ship.supplies,  
+  "energy": 1000, //ship.energy,  
   "currency": 1000, //ship.currency,  
   "obstacles": ["Asteroid", "Celeron", "Xeon", "Ryzen", "DeathStar", "Recipe", "BadMax", 
                 "AbandonedFreighter", "SpaceStation"],
   "activeGame": false
 };
+
+function initializeSavedGame()
+{
+  var a, b;
+  shipX = ship.cpx;
+  shipY = ship.cpy;
+  supplies = ship.supplies;
+  energy = ship.energy;
+  currency = ship.currency;
+  switch(obstacles) {
+    // assign correct coordinates 
+    case("Asteroid") : 
+      a = Asteroid.cpx;
+      b = Asteroid.cpy;
+      break;
+    case("Celeron") : 
+      a = Celeron.cpx;
+      b = Celeron.cpy;
+      break;
+    case("Xeon") : 
+      a = Xeon.cpx;
+      b = Xeon.cpy;
+      break;
+    case("Ryzen") : 
+      a = Ryzen.cpx;
+      b = Ryzen.cpy;
+      break;
+    case("DeathStar") : 
+      a = DeathStar.cpx;
+      b = DeathStar.cpy;
+      break;
+    case("Recipe") : 
+      a = Recipe.cpx;
+      b = Recipe.cpy;
+      break;
+    case("BadMax") : 
+      a = BadMax.cpx;
+      b = BadMax.cpy;
+      break;
+    case("AbandonedFreighter") : 
+      a = AbandonedFreighter.cpx;
+      b = AbandonedFreighter.cpy;
+      break;
+    case("SpaceStation") : 
+      a = SpaceStation.cpx;
+      b = SpaceStation.cpy;
+      break;
+  }
+}
+
 
 // checks whether browser supports localStorage
 function supportsLocalStorage() {
@@ -34,7 +84,11 @@ function save() {
     return false; 
   }
   var savedState = prompt("Enter a name for this game.")
-  localStorage.setItem("savedState", JSON.stringify(gameState)); 
+  var savedList = [];
+  localStorage.setItem(savedState, JSON.stringify(gameState)); 
+  //savedList.push(savedState);
+  //console.log(savedList);
+
   activeGame = true;
 }
 
