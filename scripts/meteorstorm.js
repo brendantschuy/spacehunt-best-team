@@ -48,12 +48,8 @@ function makeitRain(){
 function randomDisaster(ship){
 	var event = (Math.floor(Math.random() * 100) % 5) + 1; //20% each case
 	switch(event){
-		case 4:
-			ship.supplies -= (ship.supplies / 20);
-			break;
 		case 5:
-			//ship.energy = 0;//hitObstacle();
-			break;
+			ship.supplies -= (ship.supplies / 20);
 		default:
 			ship.getDamaged(20);
 	}

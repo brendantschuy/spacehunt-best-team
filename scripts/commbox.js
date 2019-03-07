@@ -73,6 +73,9 @@ class CommBox
 				}
 				ctx.fillText("BAD MAX SHOT YOU DOWN!", 5, 560);
 				break;
+			case("Wormhole") :
+				ctx.fillText("You have been teleported!", 5, 560);
+				break;
 			default:
 				ctx.fillText((this.currentObstacle),x,y);
 		}
