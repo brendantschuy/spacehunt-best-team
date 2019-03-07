@@ -5,10 +5,11 @@
 var explosionSound;
 var drawHeight = GAME_SCREEN_HEIGHT;
 
-function start()
+function start(presets)
 {
 	var resetHeight = true;
 
+	//this.presets = presets;
 	this.gameOver = false;
 	this.gameWon = false;
 	this.displayHud = false; //document.getElementById("hud").checked;
@@ -25,7 +26,7 @@ function start()
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
 							//on-screen buttons with in-game functionality
-
+	
 	//this section handles user input
 	document.onkeydown = getInput;
 
@@ -214,8 +215,7 @@ function start()
 					musicPlayer.playMusic("march.mp3");
 				}
 				else if(objName == "SpaceStation"){
-					//also needs refining.
-					chanceGame();
+					chanceGame(ship.offset_x,ship.offset_y, ship);
 				}
 				else if(objName == "AbandonedFreighter"){
 					commBox.drawNewBox(this.obstacles[i], true);
@@ -258,32 +258,67 @@ function start()
 	}
 
 	//needs refining
-	function chanceGame(){		
-		wager = prompt("Enter a number of digital credits to bet", 0);
-		while(wager > ship.currency){
-			wager = prompt("You cannot bet that much! Enter another amount", 0); 
-		}
-		guess = prompt("Enter a number between 1 and 10", 0);
-		while(guess >= 10 || guess < 0){
-			guess = prompt("Between 1 and 10, no more and no less", 0); 
-		}
-		var result = Math.floor((Math.random() * 10) + 1);
-		if(guess == result){
-			alert("Congratulations! You guessed the right number! You get 5x your wager!");
-			ship.currency += (5 * wager);
-		}
-		if(guess == (result-1) || guess == (result+1)){
-			alert("You were very close! Only within one. You get 3x your wager!");
-			ship.currency += (3 * wager);
-		}
-		if(guess == (result -2) || guess == result(result + 2)){
-			alert("Eh. Within two. Not bad. You get 1.5x your wager!");
-			ship.currency += (1.5 * wager);
-		}
-		else { 
-			alert("Close, but not close enough. Sorry!");
-			ship.currency -= wager;
+	function chanceGame(x,y){
+		if(x + y == 0){
+			var test = document.getElementById("wager");
+			var test2 = document.getElementById("chanceGo");
+			var canBet = true;
+	  		if(!test){
+				var box1 = document.createElement("input");
+				box1.type = "text";
+				box1.value = "wager";
+	    		box1.id = "wager";
+		      	document.getElementById("game").appendChild(box1);
+		      	var box2 = document.createElement("input");
+				box2.type = "text";
+				box2.value = 0;
+	    		box2.id = "guess";
+		      	document.getElementById("game").appendChild(box2);
+		    }
+		    if(!test2){
+		      	var box3 = document.createElement("input");
+		      	box3.type = "button";
+				box3.value = "GO";
+				box3.onclick =function(){playChanceGame(document.getElementById('guess').value,document.getElementById('wager').value,Math.floor((Math.random() * 10) + 1));};
+	    		box3.id = "chanceGo";
+		      	document.getElementById("game").appendChild(box3);
+		    }		
+			wager = document.getElementById("wager").value;
+			guess = document.getElementById("guess").value;
+			if(wager > ship.currency){
+				commBox.drawNewBox("You cannot bet that much! Enter another amount",true,5,560);
+				canBet = false;
+			}else if(guess >= 10 || guess < 0){
+				commBox.drawNewBox("Between 1 and 10, no more and no less",true,5,560); 
+				canBet = false;
+			}else {
+				commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
+			}
+			var result = Math.floor((Math.random() * 10) + 1);
+			if(!canBet){
+				removeElement("chanceGo");
+			}
+		}else {
+			removeElement("wager");
+			removeElement("guess");
+			removeElement("chanceGo");
 		}	
+	}
+
+	function playChanceGame(guess,wager,result){
+		if(guess == result){
+			commBox.drawNewBox("Congratulations! You guessed the right number! You get 5x your wager!",true,5,560);
+			ship.currency += (5 * wager);
+		}else if(guess == (result-1) || guess == (result+1)){
+			commBox.drawNewBox("You were very close! Only within one. You get 3x your wager!",true,5,560);
+			ship.currency += (3 * wager);
+		}else if(guess == (result -2) || guess == (result + 2)){
+			commBox.drawNewBox("Eh. Within two. Not bad. You get 1.5x your wager!",true,5,560);
+			ship.currency += (1.5 * wager);
+		}else { 
+			commBox.drawNewBox("Close, but not close enough. Sorry!",true,5,560);
+			ship.currency -= wager;
+		}
 	}
 
 	function hitObstacle()
@@ -344,15 +379,40 @@ function start()
 
 		this.obstacles = [];
 
+		//BadMax NEEDS to be obstacles[0]
+		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
+
+		//There may only be one!
+		let isXeon = false, isCeleron = false, isRyzen = false;
+
+		if(presets)
+		{
+			presets.forEach(function(presetItem)
+			{
+				if(presetItem.constructor.name == "Xeon")
+				{
+					if(isXeon) return;
+					isXeon = true;
+				}
+				if(presetItem.constructor.name == "Celeron")
+				{
+					if(isCeleron) return;
+					isCeleron = true;
+				}
+				if(presetItem.constructor.name == "Ryzen")
+				{
+					if(isRyzen) return;
+					isRyzen = true;
+				}
+				//alert("Preset item: " + presetItem.constructor.name);
+				obstacles.push(presetItem);
+				//alert(presetItem.x + ", " + presetItem.y);
+				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
+			});
+		}
 		/* still working on this */
 		// if user hits load button, localStorage.load(gameState, savedList);
 
-
-		//Later, this will be turned into a loop for either a) random gen or b) load from file.
-		//obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-		obstacles.push(new BadMax(10*GRID_SIZE, 15*GRID_SIZE));
-		//test badmax music line
-		//obstacles.push(new BadMax(12, 10));
 		obstacles.push(new Asteroid(9, 9));
 		obstacles.push(new Asteroid(11, 11));
 		obstacles.push(new Asteroid(6, 6));
@@ -360,14 +420,10 @@ function start()
 		obstacles.push(new Asteroid(64, 64));
 		obstacles.push(new Asteroid(128, 0));
 		obstacles.push(new Asteroid(0, 128));
-		obstacles.push(new Asteroid(0, 0));
 		obstacles.push(new Asteroid(1, 1));
 		obstacles.push(new EnergyPotion(9, 11, 200));
 		obstacles.push(new Recipe(11, 9));
 		obstacles.push(new MeteorStorm(8,8));
-		obstacles.push(new Celeron(4, 4));
-		obstacles.push(new Xeon(12, 12));
-		obstacles.push(new Ryzen(18, 18));
 		obstacles.push(new DeathStar(15, 10));
 		obstacles.push(new SpaceStation(13, 15));
 		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
@@ -378,6 +434,14 @@ function start()
 		obstacles.push(new Planet(14, 14, 5));
 		obstacles.push(new Planet(14, 10, 6));
 		obstacles.push(new Planet(12, 10, 7));
+
+		//There may only be one of each of the following:
+		if(!isCeleron)
+			obstacles.push(new Celeron(4, 4));
+		if(!isXeon)
+			obstacles.push(new Xeon(12, 12));
+		if(!isRyzen)
+			obstacles.push(new Ryzen(18, 18));
 
 		// Initialize Wormholes
 		for(var x = MAP_MIN_X - 1; x < MAP_MAX_X; x++){

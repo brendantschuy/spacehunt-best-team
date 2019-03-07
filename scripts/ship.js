@@ -44,8 +44,8 @@ class Ship 	//class names capitalized per js convention
 		this.y = 1279;						//position on map, in pixels
 		this.offset_x = 0;					//distance from center of square
 		this.offset_y = 0;					//distance from center of square
-		this.cpx = 10;						//celestial position
-		this.cpy = 10;
+		this.cpx = SHIP_START_X;						//celestial position
+		this.cpy = SHIP_START_Y;
 		this.damage = 0;						//celestial position
 
 		//ship graphics
@@ -86,6 +86,9 @@ class Ship 	//class names capitalized per js convention
 				this.y = (Math.floor(Math.random() * (MAP_MAX_X + 1)));
 				this.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1)));
 
+				this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+				this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
+
 				//Prevents ship from exploding/dying if you enter a wormhole.
 				// FIX THIS HERE... 
 				/*if(this.cpx > MAP_MAX_X)
@@ -124,7 +127,7 @@ class Ship 	//class names capitalized per js convention
 				audio_wormhole.volume = 1;
 				audio_wormhole.play();
 				
-				this.restoreDefaults();
+				//this.restoreDefaults();
 				return;
 			}
 		}

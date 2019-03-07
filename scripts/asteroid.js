@@ -14,6 +14,6 @@ class Asteroid
 		this.visible = false;
 		this.addToMap = true;
 		this.sprite = new Image();
-		this.sprite.src = "img/rock.png";
+		this.sprite.src = "img/asteroid.png";
 	}
 }

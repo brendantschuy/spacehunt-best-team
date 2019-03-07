@@ -1,5 +1,6 @@
 //commbox.js
 
+// fillText -- (text, x, y) absolute x and y of the canvas 
 //Displays messages to player
 class CommBox
 {
@@ -10,10 +11,11 @@ class CommBox
 	}
 
 
-	drawBox()
+	drawBox(x,y)
 	{
 		var ctx = document.getElementById("gameScreen").getContext('2d');
 		let obstacleName = this.currentObstacle.constructor.name;
+
 		if(obstacleName == "DeathStar")
 		{
 			ctx.fillStyle = "black";
@@ -60,16 +62,18 @@ class CommBox
 			case("BadMax") :
 				ctx.fillText("Bad Max found you and shot you down :(", 5, 560);
 				break;
+			default:
+				ctx.fillText((this.currentObstacle),x,y);
 		}
 
 		return true;	
 	}
 
-	drawNewBox(obstacle, toggle)
+	drawNewBox(obstacle, toggle,x,y)
 	{
 		this.toggle = toggle;
 		this.currentObstacle = obstacle;
-		this.drawBox();
+		this.drawBox(x,y);
 	}
 
 }
