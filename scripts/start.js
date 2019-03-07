@@ -34,7 +34,7 @@ function start(presets)
 	function drawFrame()
 	{
 		//allows toggling of HUD
-		if(this.displayHud)
+		if(document.getElementById("hud").checked == true)
 		{
 			writeHud();
 		}
@@ -423,7 +423,7 @@ function start(presets)
 		obstacles.push(new Asteroid(1, 1));
 		obstacles.push(new EnergyPotion(9, 11, 200));
 		obstacles.push(new Recipe(11, 9));
-		obstacles.push(new MeteorStorm(8,8));
+		obstacles.push(new MeteorStorm(8,10));
 		obstacles.push(new DeathStar(15, 10));
 		obstacles.push(new SpaceStation(13, 15));
 		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));

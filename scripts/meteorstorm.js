@@ -21,7 +21,7 @@ class MeteorStorm{
 			//alert(this.tookDamage);
 			if(!tookDamage) {
 				//alert(tookDamage);
-				ship.getDamaged(20);
+				randomDisaster(ship);
 				makeitRain(ship);
 				tookDamage = true;
 			}
@@ -34,12 +34,27 @@ function makeitRain(){
 	var meteor = document.createElement("img");
 	meteor.src = "img/meteor_storm.gif";
 	meteor.id = "meteor";
-	meteor.height = screen.height;
+	meteor.height = screen.height; //fits to screen (not if zoomed out)
 	meteor.width = screen.width;
 	meteor.style.position = "absolute";
 	meteor.style.left = 0;
 	meteor.style.top = 0;
+	meteor.style.pointerEvents = "none"; //makes it unclickable so you can click buttons still lol
 
 	document.body.appendChild(meteor);
-	setTimeout(function(){removeElement("meteor");tookDamage = false;},500);
+	setTimeout(function(){removeElement("meteor");tookDamage = false;},500); //remove element from celestialmap.js
+}
+
+function randomDisaster(ship){
+	var event = (Math.floor(Math.random() * 100) % 5) + 1; //20% each case
+	switch(event){
+		case 4:
+			ship.supplies -= (ship.supplies / 20);
+			break;
+		case 5:
+			//ship.energy = 0;//hitObstacle();
+			break;
+			ship.getDamaged(20);
+	}
+	//alert(event);
 }
