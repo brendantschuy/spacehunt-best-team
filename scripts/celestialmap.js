@@ -33,7 +33,7 @@ function createMap()
 //Updates map
 function updateMap(obstacles)
 {
-  ctx = document.getElementById("mapCanvas").getContext('2d');
+  let ctx = document.getElementById("mapCanvas").getContext('2d');
   ctx.beginPath();
   ctx.save();
   obstacles.forEach(function (item)
