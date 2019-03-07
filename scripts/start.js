@@ -246,7 +246,15 @@ function start(presets)
 				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev)
 				{
 					let chance = Math.floor(Math.random() * 3);
-					hitObstacle();
+					switch(chance)
+					{
+						case 0 :
+								break;
+						case 1 : 
+								break;
+						case 2 : 
+								break;
+					}
 					commBox.drawBadMaxBox(this.BadMax, true, chance);
 				}
 				toggleBox = true;
