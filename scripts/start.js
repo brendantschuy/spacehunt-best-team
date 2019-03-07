@@ -416,8 +416,6 @@ function start(presets)
 				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
 			});
 		}
-		/* still working on this */
-		// if user hits load button, localStorage.load(gameState, savedList);
 
 		obstacles.push(new Asteroid(9, 9));
 		obstacles.push(new Asteroid(11, 11));
@@ -460,19 +458,17 @@ function start(presets)
 			obstacles.push(new Wormhole(MAP_MIN_X - 1, y));
 			obstacles.push(new Wormhole(MAP_MAX_X, y));
 		}
-		
 
-
-
-	// 	save(gameState, savedList);
 
 		this.BadMax = obstacles[0];
 
 		ship.updatecp();
+
+		// just testing save, will not want to call this here 
+		//save();
+		
 	}
-
 	
-
 	function setUpEventListeners()
 	{	
 		//be able to use buttons too
@@ -882,4 +878,14 @@ function sound(src) {
   	this.stop = function(){
     		this.sound.pause();
   	}
+}
+
+// saves game state to browser 
+function save() {
+	if (!supportsLocalStorage()) {
+		  console.log("Browser does not support localStorage!");
+		  return false; 
+	}
+	var savedState = prompt("Enter a name for this game.")
+	localStorage.setItem(savedState, JSON.stringify(obstacles)); 
 }
