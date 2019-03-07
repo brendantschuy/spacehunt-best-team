@@ -2,14 +2,14 @@
 
 // JSON game state object, work in progress 
 var gameState = {
-  "shipX": "0", // ship.cpx
-  "shipY": "0", //ship.cpy,
-  "shipSupplies": "0", //ship.supplies,  
-  "shipEnergy": "0", //ship.energy,  
-  "currency": "0", //ship.currency,  
+  "shipX": 10, // ship.cpx
+  "shipY": 10, //ship.cpy,
+  "shipSupplies": 1000, //ship.supplies,  
+  "shipEnergy": 1000, //ship.energy,  
+  "currency": 1000, //ship.currency,  
   "obstacles": ["Asteroid", "Celeron", "Xeon", "Ryzen", "DeathStar", "Recipe", "BadMax", 
                 "AbandonedFreighter", "SpaceStation"],
-  //"activeGame": "false"
+  "activeGame": false
 };
 
 // checks whether browser supports localStorage
@@ -35,6 +35,7 @@ function save() {
   }
   var savedState = prompt("Enter a name for this game.")
   localStorage.setItem("savedState", JSON.stringify(gameState)); 
+  activeGame = true;
 }
 
 // loads game from browser 
