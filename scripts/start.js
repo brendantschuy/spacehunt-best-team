@@ -243,22 +243,6 @@ function start(presets)
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
 				}
-				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev)
-				{
-					hitBadmax();
-					let chance = Math.floor(Math.random() * 3);
-					switch(chance)
-					{
-						case 0 :
-								break;
-						case 1 : 
-								break;
-						case 2 : 
-								break;
-					}
-					commBox.drawBadMaxBox(this.BadMax, true, chance);
-
-				}
 				toggleBox = true;
 			}
 		}
@@ -371,21 +355,21 @@ function start(presets)
 	
 	function hitBadmax()
 	{
-		chance = (Math.random() * 100);
-		if(chance <= 33){
+		
+		killBadMax();
+		var chance = (Math.floor(Math.random() * 3));
+		if(chance == 0){
+			commBox.drawNewBox("BAD MAX SHOT YOU DOWN!",true,5,560);
 			hitObstacle();
-			commBox.drawNewBox(this.BadMax, true);
 		}
-		if( (chance < 66) && (chance > 33)){
+		if(chance == 1){
 			this.ship.supplies /= 2;
 			this.ship.energy /= 2;
-			commBox.drawNewBox("BadMax stole half of your energy and supplies.", true,5, 560);
-			killBadMax();
-			
+			commBox.drawNewBox("BadMax stole half of your energy and supplies.",true,5,560);
 		}
-		if(chance >=66)
-			commBox.drawNewBox("You successfully fended off BadMax for the time being.",true, 5, 560);
-			killBadMax();
+		if(chance == 2){
+			commBox.drawNewBox("You successfully fended off BadMax for now.",true,5,560);
+		}
 	}
 	
 	function win()
@@ -870,6 +854,10 @@ function start(presets)
 		}
 		this.BadMax.cpx = Math.floor(this.BadMax.x/GRID_SIZE);
 		this.BadMax.cpy = Math.floor(this.BadMax.y/GRID_SIZE);
+		
+		if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev){
+			hitBadmax();
+		}
 		
 		//boolean check statement isn't working for some reason.
 		//not sure why. I tried using an int and an == and no luck.
