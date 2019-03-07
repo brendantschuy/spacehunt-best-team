@@ -807,7 +807,7 @@ function start(presets)
 		
 		if(absDist < 30){
 			if(Math.abs(distx) > Math.abs(disty)){
-				if(disty < 0)
+				if(distx < 0)
 					this.BadMax.x -= GRID_SIZE;
 				else
 					this.BadMax.x += GRID_SIZE;
@@ -841,7 +841,6 @@ function start(presets)
 		var check = false;
 		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
 			musicPlayer.playMusic("badmax.wav");
-					
 		}
 
 	}
