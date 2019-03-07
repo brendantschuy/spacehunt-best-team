@@ -468,17 +468,6 @@ function start(presets)
 		save();
 		
 	}
-
-	// saves game state to browser 
-	function save() {
-		if (!supportsLocalStorage()) {
-			  console.log("Browser does not support localStorage!");
-			  return false; 
-		}
-		var savedState = prompt("Enter a name for this game.")
-		localStorage.setItem("savedState", JSON.stringify(obstacles)); 
-	}
-
 	
 	function setUpEventListeners()
 	{	
@@ -889,4 +878,14 @@ function sound(src) {
   	this.stop = function(){
     		this.sound.pause();
   	}
+}
+
+// saves game state to browser 
+function save() {
+	if (!supportsLocalStorage()) {
+		  console.log("Browser does not support localStorage!");
+		  return false; 
+	}
+	var savedState = prompt("Enter a name for this game.")
+	localStorage.setItem(savedState, JSON.stringify(obstacles)); 
 }
