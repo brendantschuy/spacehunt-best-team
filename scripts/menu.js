@@ -165,8 +165,10 @@ function menu()
 		*************READ INPUT FILE***************************
 		*******************************************************
 		******************************************************/
-
+		let existingGame = load();
+		
 		//add what's in input file to new_presets
+		new_presets.push(existingGame);
 
 		document.onkeydown = getInputFileMenu;
 
@@ -379,3 +381,14 @@ function getAbsPosition(element)
    var rect = element.getBoundingClientRect();
    return {x:rect.left,y:rect.top}
 }
+
+// loads game from browser 
+function load() {
+	if (!supportsLocalStorage() || localStorage["activeGame"] == "false") {
+	  console.log("Browser does not support localStorage!");
+	  return false; 
+	}
+	let gameToLoad = prompt("Which game do you want to load?");  
+	let gameState = JSON.parse(localStorage.getItem(gameToLoad));
+	return gameState;
+  }

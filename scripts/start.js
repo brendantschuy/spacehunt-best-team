@@ -410,8 +410,6 @@ function start(presets)
 				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
 			});
 		}
-		/* still working on this */
-		// if user hits load button, localStorage.load(gameState, savedList);
 
 		obstacles.push(new Asteroid(9, 9));
 		obstacles.push(new Asteroid(11, 11));
@@ -454,11 +452,7 @@ function start(presets)
 			obstacles.push(new Wormhole(MAP_MIN_X - 1, y));
 			obstacles.push(new Wormhole(MAP_MAX_X, y));
 		}
-		
 
-
-
-	// 	save(gameState, savedList);
 
 		this.BadMax = obstacles[0];
 
