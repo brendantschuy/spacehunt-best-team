@@ -40,8 +40,8 @@ class Ship 	//class names capitalized per js convention
 				These indicate the distance of the ship from the center of the square
 				in which it currently is located, in pixels. The ONLY use for these is
 				to draw the gridlines in the correct location as the ship moves.*/
-		this.x = 1279;						//position on map, in pixels
-		this.y = 1279;						//position on map, in pixels
+		this.x = 0;						//position on map, in pixels
+		this.y = 0;						//position on map, in pixels
 		this.offset_x = 0;					//distance from center of square
 		this.offset_y = 0;					//distance from center of square
 		this.cpx = SHIP_START_X;						//celestial position
