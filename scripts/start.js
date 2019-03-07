@@ -464,7 +464,7 @@ function start(presets)
 
 		ship.updatecp();
 
-		// testing save 
+		// just testing save, will not want to call this here 
 		save();
 		
 	}
