@@ -66,7 +66,11 @@ class Ship 	//class names capitalized per js convention
 		this.offset_y %= GRID_SIZE;
 
 		if(!worm){
-			this.energy -= Math.abs((this.cpx - oldcpx) + (this.cpy - oldcpy)) * this.energyEfficiency;
+			var lostEnergy = Math.abs((this.cpx - oldcpx) + (this.cpy - oldcpy)) * this.energyEfficiency;
+			if(this.damage > 0){
+				lostEnergy *= (1+(this.damage/100));
+			}
+			this.energy -= lostEnergy;
 		}
 	}
 
@@ -227,11 +231,7 @@ class Ship 	//class names capitalized per js convention
 	{
 		if(this.distanceToTravel > 0)	//don't use supplies if not moving
 		{
-			var lostSupplies = (0.003 * this.originalSupplies + 0.02 * this.supplies);
-			if(this.damage > 0){
-				lostSupplies *= (1+(this.damage/10));
-			}
-			this.supplies -= lostSupplies;
+			this.supplies -= (0.003 * this.originalSupplies + 0.02 * this.supplies);
 		}
 
 

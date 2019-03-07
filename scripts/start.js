@@ -357,6 +357,7 @@ function start(presets)
 		audio_potion.play();
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
+		this.ship.damage = 0;
 		return index + 1;
 	}
 
@@ -364,6 +365,7 @@ function start(presets)
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].energy);
 		this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);
 		this.ship.currency += this.obstacles[index].currency;
+		this.ship.damage = 0;
 		this.obstacles.splice(index, 1);
 		return index + 1;
 	}
