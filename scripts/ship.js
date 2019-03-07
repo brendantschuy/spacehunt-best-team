@@ -227,8 +227,14 @@ class Ship 	//class names capitalized per js convention
 	{
 		if(this.distanceToTravel > 0)	//don't use supplies if not moving
 		{
-			this.supplies -= 0.003 * this.originalSupplies + 0.02 * this.supplies;
+			var lostSupplies = (0.003 * this.originalSupplies + 0.02 * this.supplies);
+			if(this.damage > 0){
+				lostSupplies *= (1+(this.damage/10));
+			}
+			this.supplies -= lostSupplies;
 		}
+
+
 		this.isMoving = true;
 		this.distanceGoal = this.distanceToTravel;
 	}
