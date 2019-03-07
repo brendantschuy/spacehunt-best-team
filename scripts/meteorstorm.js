@@ -54,6 +54,7 @@ function randomDisaster(ship){
 		case 5:
 			//ship.energy = 0;//hitObstacle();
 			break;
+		default:
 			ship.getDamaged(20);
 	}
 	//alert(event);
