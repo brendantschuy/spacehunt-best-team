@@ -287,10 +287,10 @@ function start(presets)
 		    }		
 			wager = document.getElementById("wager").value;
 			guess = document.getElementById("guess").value;
-			if(wager > ship.currency){
+			if(wager > ship.currency || wager <= 0){
 				commBox.drawNewBox("You don't have that much money! Enter another amount",true,5,560);
 				canBet = false;
-			}else if(guess >= 10 || guess < 0){
+			}else if(guess > 10 || guess < 1){
 				commBox.drawNewBox("A number between 1 and 10, no more and no less",true,5,560); 
 				canBet = false;
 			}else {
@@ -316,10 +316,6 @@ function start(presets)
 			commBox.drawNewBox("You were very close! Only within one. You get 1.5x your wager!",true,5,560);
 			alert("You were very close! Only within one. You get 1.5x your wager!");
 			ship.currency += (1.5 * wager);
-		}else if(guess == (result -2) || guess == (result + 2)){
-			commBox.drawNewBox("Not that close! Only within two. You made your wager back!",true,5,560);
-			alert("Not that close! Only within two. You made your wager back!");
-			ship.currency += (1 * wager);
 		}else { 
 			commBox.drawNewBox("Not close at all. You lose.",true,5,560);
 			alert("Not close at all. You lose.");
