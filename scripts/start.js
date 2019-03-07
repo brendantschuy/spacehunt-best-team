@@ -296,10 +296,10 @@ function start(presets)
 		    }		
 			wager = document.getElementById("wager").value;
 			guess = document.getElementById("guess").value;
-			if(wager > ship.currency){
+			if(wager > ship.currency || wager <= 0){
 				commBox.drawNewBox("You don't have that much money! Enter another amount",true,5,560);
 				canBet = false;
-			}else if(guess >= 10 || guess < 0){
+			}else if(guess > 10 || guess < 1){
 				commBox.drawNewBox("A number between 1 and 10, no more and no less",true,5,560); 
 				canBet = false;
 			}else {
@@ -325,10 +325,6 @@ function start(presets)
 			commBox.drawNewBox("You were very close! Only within one. You get 1.5x your wager!",true,5,560);
 			alert("You were very close! Only within one. You get 1.5x your wager!");
 			ship.currency += (1.5 * wager);
-		}else if(guess == (result -2) || guess == (result + 2)){
-			commBox.drawNewBox("Not that close! Only within two. You made your wager back!",true,5,560);
-			alert("Not that close! Only within two. You made your wager back!");
-			ship.currency += (1 * wager);
 		}else { 
 			commBox.drawNewBox("Not close at all. You lose.",true,5,560);
 			alert("Not close at all. You lose.");
@@ -389,7 +385,7 @@ function start(presets)
 		audio_potion.play();
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
-
+		this.ship.damage = 0;
 		// testing save 
 		initializeSavedGame();
 		save();
@@ -400,6 +396,7 @@ function start(presets)
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].energy);
 		this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);
 		this.ship.currency += this.obstacles[index].currency;
+		this.ship.damage = 0;
 		this.obstacles.splice(index, 1);
 		return index + 1;
 	}
@@ -617,7 +614,12 @@ function start(presets)
 	{
 		obstacles.forEach(function (obj)
 	    {
-	    	if(obj.visible)
+	    	if(Math.abs(obj.y - ship.y) > GAME_SCREEN_HEIGHT || Math.abs(obj.x - ship.x) > GAME_SCREEN_WIDTH)
+	    	{
+	    		return;
+	    	}
+
+	    	else if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
 
@@ -828,7 +830,7 @@ function start(presets)
 			if(Math.abs(distx) > Math.abs(disty)){
 				if(distx < 0)
 					this.BadMax.x += GRID_SIZE;
-				else(distx > 0)
+				else if(distx>0)
 					this.BadMax.x -= GRID_SIZE;
 			}
 			else{
@@ -864,7 +866,6 @@ function start(presets)
 		var check = false;
 		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
 			musicPlayer.playMusic("badmax.wav");
-					
 		}
 
 	}

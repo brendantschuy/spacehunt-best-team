@@ -76,7 +76,11 @@ class CommBox
 							ctx.fillText("You successfully fended off BadMax for now.", 5, 560);
 							break;
 				}
-				break; */
+*/
+			case("Wormhole") :
+				ctx.fillText("You have been teleported!", 5, 560);
+				break;
+
 			default:
 				ctx.fillText((this.currentObstacle),this.x,this.y);
 				break;
