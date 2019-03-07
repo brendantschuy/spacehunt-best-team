@@ -463,10 +463,23 @@ function start(presets)
 		this.BadMax = obstacles[0];
 
 		ship.updatecp();
+
+		// testing save 
+		save();
+		
+	}
+
+	// saves game state to browser 
+	function save() {
+		if (!supportsLocalStorage()) {
+			  console.log("Browser does not support localStorage!");
+			  return false; 
+		}
+		var savedState = prompt("Enter a name for this game.")
+		localStorage.setItem("savedState", JSON.stringify(obstacles)); 
 	}
 
 	
-
 	function setUpEventListeners()
 	{	
 		//be able to use buttons too
