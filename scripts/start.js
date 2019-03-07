@@ -219,6 +219,7 @@ function start(presets)
 					chanceGame(ship.offset_x,ship.offset_y, ship);
 				}
 				else if(objName == "AbandonedFreighter"){
+					this.ship.damage = 0;
 					commBox.drawNewBox(this.obstacles[i], true);
 					i = getFreighter(i);
 				}
