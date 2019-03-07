@@ -613,8 +613,8 @@ function start(presets)
 	    	{
 	    		return;
 	    	}
-	    	
-	    	if(obj.visible)
+
+	    	else if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
 

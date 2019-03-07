@@ -44,7 +44,7 @@ function makeitRain(){
 	document.body.appendChild(meteor);
 	setTimeout(function()
 	{
-		removeElement("meteor");
+		document.body.removeChild(meteor);
 		tookDamage = false;
 	},1000); //remove element from celestialmap.js
 }
