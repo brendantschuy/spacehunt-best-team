@@ -17,3 +17,20 @@ class Target
 	}
 
 }
+
+class Scanner
+{
+	constructor(x, y)
+	{
+		this.x = x + 22;
+		this.y = y + 22;
+		this.radius = 0;
+	}
+
+	increaseSize()
+	{
+		this.radius += 7;
+		//this.x -= 1;
+		//this.y -= 1;
+	}
+}

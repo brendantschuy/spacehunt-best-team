@@ -174,6 +174,18 @@ function start(presets)
 		ctx.arc(target.x, target.y, 10, 0, 2 * Math.PI);
 		ctx.closePath();
 		ctx.stroke();
+
+		if(this.scanner)
+		{
+			ctx.moveTo(0, 0);
+			ctx.beginPath();
+			ctx.fillStyle = "white";
+			ctx.strokeStyle = "white";
+			//alert(scanner.x, scanner.y);
+			ctx.arc(scanner.x, scanner.y, scanner.radius, 0, 2 * Math.PI);
+			ctx.closePath();
+			ctx.stroke();
+		}
 	}
 	
 	//work in progress.
@@ -575,6 +587,10 @@ function start(presets)
 
 	    drawObstacles(ctx);
 	    drawShip(ctx);
+	    if(this.scanner)
+	    {
+	    	scanner.increaseSize();
+	    }
 	    if(commBox.toggle)
 	    {
 	    	commBox.drawBox();
@@ -744,17 +760,26 @@ function start(presets)
 	}
 
 	function scan(){
-		//checks to see if obstacles are within half the screen distance from the ship
-		var foundSomething = false;
-		for(i = 0; i< this.obstacles.length; ++i)
+		if(this.scanner)
 		{
-			if(Math.abs(this.obstacles[i].cpx - this.ship.cpx) <= SCAN_RANGE &&(Math.abs(this.obstacles[i].cpy - this.ship.cpy)) <= SCAN_RANGE){
-				if(this.obstacles[i].visible == false){
-					foundSomething = true;
-				}
-				this.obstacles[i].visible = true;
-			}
+			delete this.scanner;
 		}
+		this.scanner = new Scanner(300, 300);;
+		//checks to see if obstacles are within half the screen distance from the ship
+		setTimeout(function()
+		{
+			var foundSomething = false;
+			for(i = 0; i< this.obstacles.length; ++i)
+			{
+				if(Math.abs(this.obstacles[i].cpx - this.ship.cpx) <= SCAN_RANGE &&(Math.abs(this.obstacles[i].cpy - this.ship.cpy)) <= SCAN_RANGE){
+					if(this.obstacles[i].visible == false){
+						foundSomething = true;
+					}
+					this.obstacles[i].visible = true;
+				}
+			}
+		}, 200);
+		
 
 		//uses up supplies for scanning
 		if(foundSomething) {
