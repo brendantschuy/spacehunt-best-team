@@ -231,8 +231,7 @@ function start(presets)
 				}
 				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev)
 				{
-					hitObstacle();
-					commBox.drawNewBox(this.BadMax, true)
+					hitBadmax();
 				}
 				toggleBox = true;
 			}
@@ -344,6 +343,25 @@ function start(presets)
 		}, 1000);
 	}
 	
+	function hitBadmax()
+	{
+		chance = (Math.random() * 100);
+		if(chance <= 33){
+			hitObstacle();
+			commBox.drawNewBox(this.BadMax, true);
+		}
+		if( (chance < 66) && (chance > 33)){
+			this.ship.supplies /= 2;
+			this.ship.energy /= 2;
+			commBox.drawNewBox("BadMax stole half of your energy and supplies.", true,5, 560);
+			killBadMax();
+			
+		}
+		if(chance >=66)
+			commBox.drawNewBox("You successfully fended off BadMax for the time being.",true, 5, 560);
+			killBadMax();
+	}
+	
 	function win()
 	{
 		//play win sound
@@ -386,8 +404,8 @@ function start(presets)
 		this.obstacles = [];
 
 		//BadMax NEEDS to be obstacles[0]
-		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-
+		//obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
+		obstacles.push(new BadMax(10*GRID_SIZE,15*GRID_SIZE));
 		//There may only be one!
 		let isXeon = false, isCeleron = false, isRyzen = false;
 
@@ -694,7 +712,10 @@ function start(presets)
 	    		this.ship.animationFrame = (this.ship.animationFrame + 1);
 	    	}
 	    }
-
+		
+		if(this.ship.dev && (this.ship.cpy == this.BadMax.cpy) && (this.ship.cpx == this.BadMax.cpx)){
+			killBadMax();
+		}
 
 	    if(ship.isMoving == true)
 	    {
@@ -754,26 +775,37 @@ function start(presets)
 		ship.supplies -= (ship.originalSupplies * .02);
 		showMap(obstacles);
 	}
+	function killBadMax()
+	{
+		delete obstacles[0];
+		delete this.BadMax;
+		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1);
+		//obstacles[0] = new BadMax(10*GRID_SIZE, 15*GRID_SIZE);
+		this.BadMax = obstacles[0];
+		// just testing save, will not want to call this here 
+		//save();
+		
+	}
 
 	function pursuit()
 	{
-		distx = this.ship.cpx - this.BadMax.cpx;
-		disty = this.ship.cpy - this.BadMax.cpy;
+		distx = this.BadMax.cpx - this.ship.cpx;
+		disty = this.BadMax.cpy - this.ship.cpy;
 		
 		absDist = Math.sqrt((distx * distx) + (disty * disty));
 		
 		if(absDist < 30){
 			if(Math.abs(distx) > Math.abs(disty)){
-				if(disty < 0)
-					this.BadMax.x -= GRID_SIZE;
-				else
+				if(distx < 0)
 					this.BadMax.x += GRID_SIZE;
+				else(distx > 0)
+					this.BadMax.x -= GRID_SIZE;
 			}
 			else{
 				if(disty < 0)
-					this.BadMax.y -= GRID_SIZE;
-				else
 					this.BadMax.y += GRID_SIZE;
+				else if(disty > 0)
+					this.BadMax.y -= GRID_SIZE;
 			}
 		}
 		else if (absDist >= 30){
