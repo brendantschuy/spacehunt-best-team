@@ -8,10 +8,12 @@ class CommBox
 	{
 		this.toggle = false;
 		this.currentObstacle;
+		this.x;
+		this.y;
 	}
 
 
-	drawBox(x,y)
+	drawBox()
 	{
 		var ctx = document.getElementById("gameScreen").getContext('2d');
 		let obstacleName = this.currentObstacle.constructor.name;
@@ -60,24 +62,28 @@ class CommBox
 			case("MeteorStorm") :
 				ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 0.5 seconds. RUN!", 5, 560);
 				break;
-			case("BadMax") :
+			/* case("BadMax") :
 				switch(this.chance)
 				{
 					//enter chances here:
 					case 0 : 
+							ctx.fillText("BAD MAX SHOT YOU DOWN!", 5, 560);
 							break;
 					case 1 : 
+							ctx.fillText("BadMax stole half of your energy and supplies.", 5, 560);
 							break;
 					case 2 : 
+							ctx.fillText("You successfully fended off BadMax for now.", 5, 560);
 							break;
 				}
-				ctx.fillText("BAD MAX SHOT YOU DOWN!", 5, 560);
-				break;
+*/
 			case("Wormhole") :
 				ctx.fillText("You have been teleported!", 5, 560);
 				break;
+
 			default:
-				ctx.fillText((this.currentObstacle),x,y);
+				ctx.fillText((this.currentObstacle),this.x,this.y);
+				break;
 		}
 
 		return true;	
@@ -85,15 +91,18 @@ class CommBox
 
 	drawNewBox(obstacle, toggle,x,y)
 	{
+		this.x = x;
+		this.y = y;
 		this.toggle = toggle;
 		this.currentObstacle = obstacle;
-		this.drawBox(x,y);
+		
+		this.drawBox();
 	}
 
-	drawBadMaxBox(obstacle, toggle, x, y, chance)
+	drawBadMaxBox(obstacle, toggle, chance)
 	{
 		this.chance = chance;
-		this.drawNewBox(obstacle, toggle, x, y);
+		this.drawNewBox(obstacle, toggle, 5, 560);
 	}
 
 }

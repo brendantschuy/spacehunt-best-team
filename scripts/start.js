@@ -243,20 +243,6 @@ function start(presets)
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
 				}
-				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev)
-				{
-					let chance = Math.floor(Math.random() * 3);
-					switch(chance)
-					{
-						case 0 :
-								break;
-						case 1 : 
-								break;
-						case 2 : 
-								break;
-					}
-					commBox.drawBadMaxBox(this.BadMax, true, chance);
-				}
 				toggleBox = true;
 			}
 		}
@@ -363,6 +349,25 @@ function start(presets)
 		}, 1000);
 	}
 	
+	function hitBadmax()
+	{
+		
+		killBadMax();
+		var chance = (Math.floor(Math.random() * 3));
+		if(chance == 0){
+			commBox.drawNewBox("BAD MAX SHOT YOU DOWN!",true,5,560);
+			hitObstacle();
+		}
+		if(chance == 1){
+			this.ship.supplies /= 2;
+			this.ship.energy /= 2;
+			commBox.drawNewBox("BadMax stole half of your energy and supplies.",true,5,560);
+		}
+		if(chance == 2){
+			commBox.drawNewBox("You successfully fended off BadMax for now.",true,5,560);
+		}
+	}
+	
 	function win()
 	{
 		//play win sound
@@ -410,8 +415,8 @@ function start(presets)
 		this.obstacles = [];
 
 		//BadMax NEEDS to be obstacles[0]
-		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-
+		//obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
+		obstacles.push(new BadMax(10*GRID_SIZE,15*GRID_SIZE));
 		//There may only be one!
 		let isXeon = false, isCeleron = false, isRyzen = false;
 
@@ -609,7 +614,12 @@ function start(presets)
 	{
 		obstacles.forEach(function (obj)
 	    {
-	    	if(obj.visible)
+	    	if(Math.abs(obj.y - ship.y) > GAME_SCREEN_HEIGHT || Math.abs(obj.x - ship.x) > GAME_SCREEN_WIDTH)
+	    	{
+	    		return;
+	    	}
+
+	    	else if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
 
@@ -719,7 +729,10 @@ function start(presets)
 	    		this.ship.animationFrame = (this.ship.animationFrame + 1);
 	    	}
 	    }
-
+		
+		if(this.ship.dev && (this.ship.cpy == this.BadMax.cpy) && (this.ship.cpx == this.BadMax.cpx)){
+			killBadMax();
+		}
 
 	    if(ship.isMoving == true)
 	    {
@@ -794,26 +807,37 @@ function start(presets)
 			ship.supplies -= (ship.originalSupplies * .02);
 		}
 	}
+	function killBadMax()
+	{
+		delete obstacles[0];
+		delete this.BadMax;
+		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1);
+		//obstacles[0] = new BadMax(10*GRID_SIZE, 15*GRID_SIZE);
+		this.BadMax = obstacles[0];
+		// just testing save, will not want to call this here 
+		//save();
+		
+	}
 
 	function pursuit()
 	{
-		distx = this.ship.cpx - this.BadMax.cpx;
-		disty = this.ship.cpy - this.BadMax.cpy;
+		distx = this.BadMax.cpx - this.ship.cpx;
+		disty = this.BadMax.cpy - this.ship.cpy;
 		
 		absDist = Math.sqrt((distx * distx) + (disty * disty));
 		
 		if(absDist < 30){
 			if(Math.abs(distx) > Math.abs(disty)){
-				if(disty < 0)
-					this.BadMax.x -= GRID_SIZE;
-				else
+				if(distx < 0)
 					this.BadMax.x += GRID_SIZE;
+				else if(distx>0)
+					this.BadMax.x -= GRID_SIZE;
 			}
 			else{
 				if(disty < 0)
-					this.BadMax.y -= GRID_SIZE;
-				else
 					this.BadMax.y += GRID_SIZE;
+				else if(disty > 0)
+					this.BadMax.y -= GRID_SIZE;
 			}
 		}
 		else if (absDist >= 30){
@@ -833,12 +857,15 @@ function start(presets)
 		this.BadMax.cpx = Math.floor(this.BadMax.x/GRID_SIZE);
 		this.BadMax.cpy = Math.floor(this.BadMax.y/GRID_SIZE);
 		
+		if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev){
+			hitBadmax();
+		}
+		
 		//boolean check statement isn't working for some reason.
 		//not sure why. I tried using an int and an == and no luck.
 		var check = false;
 		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
 			musicPlayer.playMusic("badmax.wav");
-					
 		}
 
 	}

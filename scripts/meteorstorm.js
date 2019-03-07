@@ -42,7 +42,11 @@ function makeitRain(){
 	meteor.style.pointerEvents = "none"; //makes it unclickable so you can click buttons still lol
 
 	document.body.appendChild(meteor);
-	setTimeout(function(){removeElement("meteor");tookDamage = false;},500); //remove element from celestialmap.js
+	setTimeout(function()
+	{
+		document.body.removeChild(meteor);
+		tookDamage = false;
+	},1000); //remove element from celestialmap.js
 }
 
 function randomDisaster(ship){
