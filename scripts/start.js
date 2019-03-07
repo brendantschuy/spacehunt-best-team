@@ -23,6 +23,7 @@ function start(presets)
 	this.commBox = new CommBox();
 	this.musicPlayer = new MusicPlayer();
 
+	createMap();
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
 							//on-screen buttons with in-game functionality
@@ -752,7 +753,7 @@ function start(presets)
 
 		//uses up supplies for scanning
 		ship.supplies -= (ship.originalSupplies * .02);
-		showMap(obstacles);
+		updateMap(obstacles);
 	}
 
 	function pursuit()
@@ -858,7 +859,7 @@ function start(presets)
 	//kicks it all off
 	drawBackground("gameScreen");
 	drawFrame();
-	showMap(obstacles);
+	updateMap(obstacles);
 
 	//For testing purposes:
 	//speedRunMode();
