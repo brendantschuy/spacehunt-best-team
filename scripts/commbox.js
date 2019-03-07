@@ -54,7 +54,8 @@ class CommBox
 				ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
 				break;
 			case("AbandonedFreighter") :
-				ctx.fillText("You found an abandoned freighter! You get some additional resources!", 5, 560);
+				ctx.fillText("You found an abandoned freighter! You get some additional resources", 5, 560);
+				ctx.fillText("and your ship is healed to full!", 5, 590);
 				break;
 			case("MeteorStorm") :
 				ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 0.5 seconds. RUN!", 5, 560);
