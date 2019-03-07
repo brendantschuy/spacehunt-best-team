@@ -245,8 +245,9 @@ function start(presets)
 				}
 				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev)
 				{
+					let chance = Math.floor(Math.random() * 3);
 					hitObstacle();
-					commBox.drawNewBox(this.BadMax, true)
+					commBox.drawBadMaxBox(this.BadMax, true, chance);
 				}
 				toggleBox = true;
 			}
