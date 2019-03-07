@@ -23,6 +23,7 @@ function start(presets)
 	this.commBox = new CommBox();
 	this.musicPlayer = new MusicPlayer();
 
+	createMap();
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
 							//on-screen buttons with in-game functionality
@@ -173,6 +174,18 @@ function start(presets)
 		ctx.arc(target.x, target.y, 10, 0, 2 * Math.PI);
 		ctx.closePath();
 		ctx.stroke();
+
+		if(this.scanner)
+		{
+			ctx.moveTo(0, 0);
+			ctx.beginPath();
+			ctx.fillStyle = "white";
+			ctx.strokeStyle = "white";
+			//alert(scanner.x, scanner.y);
+			ctx.arc(scanner.x, scanner.y, scanner.radius, 0, 2 * Math.PI);
+			ctx.closePath();
+			ctx.stroke();
+		}
 	}
 	
 	//work in progress.
@@ -218,6 +231,7 @@ function start(presets)
 					chanceGame(ship.offset_x,ship.offset_y, ship);
 				}
 				else if(objName == "AbandonedFreighter"){
+					this.ship.damage = 0;
 					commBox.drawNewBox(this.obstacles[i], true);
 					i = getFreighter(i);
 				}
@@ -232,6 +246,18 @@ function start(presets)
 				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev)
 				{
 					hitBadmax();
+					let chance = Math.floor(Math.random() * 3);
+					switch(chance)
+					{
+						case 0 :
+								break;
+						case 1 : 
+								break;
+						case 2 : 
+								break;
+					}
+					commBox.drawBadMaxBox(this.BadMax, true, chance);
+
 				}
 				toggleBox = true;
 			}
@@ -308,19 +334,19 @@ function start(presets)
 
 	function playChanceGame(guess,wager,result){
 		if(guess == result){
-			//commBox.drawNewBox("Congratulations! You guessed the right number! You get 5x your wager!",true,5,560);
-			alert("Congratulations! You guessed the right number! You get 5x your wager!");
-			ship.currency += (5 * wager);
-		}else if(guess == (result-1) || guess == (result+1)){
-			//commBox.drawNewBox("You were very close! Only within one. You get 3x your wager!",true,5,560);
-			alert("You were very close! Only within one. You get 3x your wager!");
+			commBox.drawNewBox("Congratulations! You guessed the right number! You get 3x your wager!",true,5,560);
+			alert("Congratulations! You guessed the right number! You get 3x your wager!");
 			ship.currency += (3 * wager);
-		}else if(guess == (result -2) || guess == (result + 2)){
-			//commBox.drawNewBox("Not that close! Only within two. You get 1.5x your wager!",true,5,560);
-			alert("Not that close! Only within two. You get 1.5x your wager!");
+		}else if(guess == (result-1) || guess == (result+1)){
+			commBox.drawNewBox("You were very close! Only within one. You get 1.5x your wager!",true,5,560);
+			alert("You were very close! Only within one. You get 1.5x your wager!");
 			ship.currency += (1.5 * wager);
+		}else if(guess == (result -2) || guess == (result + 2)){
+			commBox.drawNewBox("Not that close! Only within two. You made your wager back!",true,5,560);
+			alert("Not that close! Only within two. You made your wager back!");
+			ship.currency += (1 * wager);
 		}else { 
-			//commBox.drawNewBox("Not close at all. You lose.",true,5,560);
+			commBox.drawNewBox("Not close at all. You lose.",true,5,560);
 			alert("Not close at all. You lose.");
 			ship.currency -= wager;
 		}
@@ -379,6 +405,10 @@ function start(presets)
 		audio_potion.play();
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
+
+		// testing save 
+		initializeSavedGame();
+		save();
 		return index + 1;
 	}
 
@@ -481,9 +511,6 @@ function start(presets)
 		this.BadMax = obstacles[0];
 
 		ship.updatecp();
-
-		// just testing save, will not want to call this here 
-		//save();
 		
 	}
 	
@@ -591,6 +618,10 @@ function start(presets)
 
 	    drawObstacles(ctx);
 	    drawShip(ctx);
+	    if(this.scanner)
+	    {
+	    	scanner.increaseSize();
+	    }
 	    if(commBox.toggle)
 	    {
 	    	commBox.drawBox();
@@ -763,17 +794,32 @@ function start(presets)
 	}
 
 	function scan(){
-		//checks to see if obstacles are within half the screen distance from the ship
-		for(i = 0; i< this.obstacles.length; ++i)
+		if(this.scanner)
 		{
-			if(Math.abs(this.obstacles[i].cpx - this.ship.cpx) <= SCAN_RANGE &&(Math.abs(this.obstacles[i].cpy - this.ship.cpy)) <= SCAN_RANGE){
-				this.obstacles[i].visible = true;
-			}
+			delete this.scanner;
 		}
+		this.scanner = new Scanner(320, 320);;
+		//checks to see if obstacles are within half the screen distance from the ship
+		setTimeout(function()
+		{
+			var foundSomething = false;
+			for(i = 0; i< this.obstacles.length; ++i)
+			{
+				if(Math.abs(this.obstacles[i].cpx - this.ship.cpx) <= SCAN_RANGE &&(Math.abs(this.obstacles[i].cpy - this.ship.cpy)) <= SCAN_RANGE){
+					if(this.obstacles[i].visible == false){
+						foundSomething = true;
+					}
+					this.obstacles[i].visible = true;
+				}
+			}
+			updateMap(obstacles);
+		}, 200);
+		
 
 		//uses up supplies for scanning
-		ship.supplies -= (ship.originalSupplies * .02);
-		showMap(obstacles);
+		if(foundSomething) {
+			ship.supplies -= (ship.originalSupplies * .02);
+		}
 	}
 	function killBadMax()
 	{
@@ -890,7 +936,7 @@ function start(presets)
 	//kicks it all off
 	drawBackground("gameScreen");
 	drawFrame();
-	showMap(obstacles);
+	updateMap(obstacles);
 
 	//For testing purposes:
 	//speedRunMode();

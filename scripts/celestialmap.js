@@ -3,70 +3,39 @@ var mapScale = 32;  //ratio of px on game to px on map
 var map_y = 20;
 var map_x = 20;
 
-function showMap(obstacles){
-  var test = document.getElementById("mapCanvas");
+//Creates map
+function createMap()
+{
+  var mapCvs = document.createElement("canvas");
+  mapCvs.id = "mapCanvas";
+  var mapCtx = mapCvs.getContext('2d');
 
-  //Use "test" if mapCanvas is NOT dynamically created
-  if(!test){
-    var mapCvs = document.createElement("canvas");
-    mapCvs.id = "mapCanvas";
-    var mapCtx = mapCvs.getContext('2d');
+  mapCvs.height = 446;
+  mapCvs.width = 300;
 
-    //Makes map smaller below a certain screen resolution threshold
-    if(window.screen.availWidth < 1367)
-    {
-      mapRatio = 1.5;
-    }
+  mapCtx.fillStyle = "RGBA(100, 100, 100, 0.3)";
+  mapCtx.fillRect(0, 0, mapCvs.width, mapCvs.height);
 
-    mapCvs.height = (MAP_HEIGHT * GRID_SIZE)/mapRatio/1.1; //581 px or 387 px, depending on screen res
-    mapCvs.width = (MAP_WIDTH * GRID_SIZE)/mapRatio/1.1;   //581 px or 387 px, depending on screen res
+  //Determines where to put map canvas. Depends on screen resolution.
+  var largeMap = document.getElementById("widescreenOnly");
 
-    //Creates background for testing purposes, will be replaced w/ scroll
-    mapCtx.fillStyle = "RGBA(100, 100, 100, 0.3)";
-    mapCtx.fillRect(0, 0, mapCvs.height, mapCvs.width);
-
-    //Commented out text is for scroll background pic:
-    //mapCvs.style.left = 29.5;
-    //mapCvs.style.top = -3.5;
-    //document.getElementById("map").style.backgroundSize = mapCvs.height + "px " +  mapCvs.width + "px";
-    //var backgroundImage = new Image();
-    //backgroundImage.src = "img/parchment.jpg";
-    //map.drawImage(backgroundImage, 0, 0);
-
-    //Determines where to put map canvas. Depends on screen resolution.
-    var largeMap = document.getElementById("widescreenOnly");
-
-    if(window.getComputedStyle(largeMap).display === "none")
-    {
-      document.getElementById("dev-buttons").appendChild(mapCvs);
-    }
-    else
-    {
-      /*document.getElementById("dev").appendChild(mapCvs);*/
-      document.getElementById("map-div").appendChild(mapCvs);
-    }
-
-    drawThingsMap("mapCanvas",obstacles);   
-
-  }else {
-    //switchVisibility("mapCvs");
-    drawThingsMap("mapCanvas",obstacles);
+  if(window.getComputedStyle(largeMap).display === "none")
+  {
+    document.getElementById("dev-buttons").appendChild(mapCvs);
+  }
+  else
+  {
+    //document.getElementById("dev").appendChild(mapCvs);
+    document.getElementById("map-div").appendChild(mapCvs);
   }
 }
 
-//Draws things on a given DOM object, given that object's ID and 
-//the array of things to be drawn
-//Main use is to write object names on "map" canvas
-function drawThingsMap(elementID,obstacles) {
-  var ctx = document.getElementById(elementID).getContext('2d');
+//Updates map
+function updateMap(obstacles)
+{
+  let ctx = document.getElementById("mapCanvas").getContext('2d');
   ctx.beginPath();
   ctx.save();
-
-  drawObstaclesMap(ctx,obstacles);
-}
-
-//draws all obstacles
-function drawObstaclesMap(ctx,obstacles) {
   obstacles.forEach(function (item)
   {
     if(item.visible && item.addToMap){
@@ -117,30 +86,4 @@ function drawObstaclesMap(ctx,obstacles) {
     }
   });
 
-}
-
-// Removes an element from the document
-//Example usage is to remove potion from map after consumption
-function removeElement(elementId) {
-    if(document.getElementById(elementId)) {
-      var element = document.getElementById(elementId);
-      element.parentNode.removeChild(element);
-    }
-}
-
-//Toggles visibility of an object
-function switchVisibility(elementId) {
-  var element = document.getElementById(elementId);
-  if(element.style.visibility == "hidden"){
-    element.style.visibility = "visible";
-  }else{
-    element.style.visibility = "hidden";
-  }
-}
-
-function elementExists(elementId) {
-    if(document.getElementById(elementId)) {
-      return true;
-    }
-    return false;
 }

@@ -12,6 +12,14 @@ var gameState = {
   "activeGame": false
 };
 
+function initializeSavedGame()
+{
+  shipX = ship.cpx;
+  shipY = ship.cpy;
+  shipSupplies = ship.supplies;
+}
+
+
 // checks whether browser supports localStorage
 function supportsLocalStorage() {
     try {
@@ -34,7 +42,7 @@ function save() {
     return false; 
   }
   var savedState = prompt("Enter a name for this game.")
-  localStorage.setItem("savedState", JSON.stringify(gameState)); 
+  localStorage.setItem(savedState, JSON.stringify(gameState)); 
   activeGame = true;
 }
 
