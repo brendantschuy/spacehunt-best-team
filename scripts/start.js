@@ -216,6 +216,7 @@ function start(presets)
 					musicPlayer.playMusic("march.mp3");
 				}
 				else if(objName == "SpaceStation"){
+					ship.damage = 0;
 					chanceGame(ship.offset_x,ship.offset_y, ship);
 				}
 				else if(objName == "AbandonedFreighter"){
