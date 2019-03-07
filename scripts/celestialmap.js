@@ -13,17 +13,22 @@ function showMap(obstacles){
     var mapCtx = mapCvs.getContext('2d');
 
     //Makes map smaller below a certain screen resolution threshold
-    if(window.screen.availWidth < 1367)
+    /*if(window.screen.availWidth < 1367)
     {
       mapRatio = 1.5;
-    }
+    }*/
 
-    mapCvs.height = (MAP_HEIGHT * GRID_SIZE)/mapRatio/1.1; //581 px or 387 px, depending on screen res
-    mapCvs.width = (MAP_WIDTH * GRID_SIZE)/mapRatio/1.1;   //581 px or 387 px, depending on screen res
+    mapRatio = 1.5;
+
+    mapCvs.height = 446;
+    mapCvs.width = 300;
+
+    //(MAP_HEIGHT * GRID_SIZE)/mapRatio/1.1; //581 px or 387 px, depending on screen res
+    //mapCvs.width = (MAP_WIDTH * GRID_SIZE)/mapRatio/1.1;   //581 px or 387 px, depending on screen res
 
     //Creates background for testing purposes, will be replaced w/ scroll
     mapCtx.fillStyle = "RGBA(100, 100, 100, 0.3)";
-    mapCtx.fillRect(0, 0, mapCvs.height, mapCvs.width);
+    mapCtx.fillRect(0, 0, mapCvs.width, mapCvs.height);
 
     //Commented out text is for scroll background pic:
     //mapCvs.style.left = 29.5;
