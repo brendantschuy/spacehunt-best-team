@@ -23,3 +23,10 @@
 {
 	background-color: pink;
 }
+
+.menu_bkgd
+{
+	position: absolute;
+	width: 460;
+	height: 460;
+}

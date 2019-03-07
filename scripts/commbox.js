@@ -35,7 +35,7 @@ class CommBox
 				ctx.fillText("You obtained an energy potion! Your energy is restored by " + this.currentObstacle.hp + ".", 20, 560);
 				break;
 			case("Asteroid") : 
-				ctx.fillText("You hit an asteroid. Game over.", 20, 560);
+				ctx.fillText("YOU HIT AN ASTEROID. Game over.", 20, 560);
 				break;
 			case("Xeon") : case ("Celeron") : case("Ryzen") : 
 				ctx.fillText("Welcome to the planet of " + obstacleName + "!", 20, 560);
@@ -60,7 +60,7 @@ class CommBox
 				ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 0.5 seconds. RUN!", 5, 560);
 				break;
 			case("BadMax") :
-				ctx.fillText("Bad Max found you and shot you down :(", 5, 560);
+				ctx.fillText("BAD MAX SHOT YOU DOWN!", 5, 560);
 				break;
 			default:
 				ctx.fillText((this.currentObstacle),x,y);
