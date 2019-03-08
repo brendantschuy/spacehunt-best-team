@@ -6,11 +6,14 @@ class hashTable
 {
 	table = [];
 
+	//generates key using x & y values
 	findKey(x, y)
 	{
 		return x * 129 + y;
 	}
 
+	//if the hash already exists in the table, don't add anything else here
+	//if it doesn't exist, then return true, but mark that value with something.
 	addHash(x, y)
 	{
 		let key = this.findKey(x, y);
