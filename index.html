@@ -30,7 +30,7 @@
 	<!--	Don't need two style sheets currently, maybe later.
 	<link rel="stylesheet" media="screen and (max-width: 1369px)" href="css/format.css"/>
 	<link rel="stylesheet" media="screen and (min-width: 1370px)" href="css/widescreen.css"/>-->
-	-<link rel="stylesheet" href="css/format.css"/>
+	<link rel="stylesheet" href="css/format.css"/>
 	<link rel="stylesheet" href="css/menu.css"/>
 
 	<header>
@@ -39,9 +39,6 @@
 </head>
 
 <body onload="menu()"> <!--Change this to menu() to use menu before map loading-->
-	<!--<div id="widescreen-header">
-	<div><img src="img/spacehunt_logo.png" id="main-logo" alt="SpaceHunt"></div>
-	</div>-->
 
 	<div class="time" id="timer"></div>
 
@@ -78,33 +75,20 @@
 			<div id="controls-scan">
 				<button class="scan" id="scan" type="button">SCAN</button><br />
 			</div>
-			<!--<div id="controls-map">
-				<button class="map" id="mapicon" onClick=showMap() name="map" type="button">MAP</button><br />
-			</div>-->
+		</div>
+	</div>
+
+	<div class="map-class">
+		<div id="map-div">
+			<h2>
+				<img src="img/celestial_map_banner.png"  id="celestial-map-banner" alt="Celestial Map">
+			</h2>
 		</div>
 	</div>
 
 	<div class="game" id="game">
 		<canvas id="gameScreen"></canvas>
 	</div>
-
-	<div class="map-class" id="widescreenOnly">
-
-		<!-- Repeat all functions in the "smallscreenOnly" div down below the game console -->
-		<div id="map-div">
-			<h2>
-				<img src="img/celestial_map_banner.png"  id="celestial-map-banner" alt="Celestial Map">
-			</h2>
-
-			<!--<div class="map" id="map"></div>-->
-		</div>
-
-		<!--<div class="map" id="map"></div>-->
-	</div>
-
-	<!--<div class="game">
-			<canvas id="gameScreen"></canvas>
-	</div>-->
 
 	<div class="dev-options-div">
 		<div id="dev-header">

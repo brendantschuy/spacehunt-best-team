@@ -17,7 +17,8 @@ function createMap()
   mapCtx.fillRect(0, 0, mapCvs.width, mapCvs.height);
 
   //Determines where to put map canvas. Depends on screen resolution.
-  var largeMap = document.getElementById("widescreenOnly");
+  // Currently only have 1 style sheet
+  /*var largeMap = document.getElementById("widescreenOnly");
 
   if(window.getComputedStyle(largeMap).display === "none")
   {
@@ -27,7 +28,9 @@ function createMap()
   {
     //document.getElementById("dev").appendChild(mapCvs);
     document.getElementById("map-div").appendChild(mapCvs);
-  }
+  }*/
+
+  document.getElementById("map-div").appendChild(mapCvs);
 }
 
 //Updates map

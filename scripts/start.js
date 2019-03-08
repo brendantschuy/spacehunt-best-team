@@ -479,7 +479,7 @@ function start(presets)
 		if(!isRyzen)
 			obstacles.push(new Ryzen(18, 18));
 
-		// Initialize Wormholes
+		// Initialize Boarder Wormholes
 		for(var x = MAP_MIN_X - 1; x < MAP_MAX_X; x++){
 			// Creates wormholes for the top and bottom rim of the boundary
 			obstacles.push(new Wormhole(x, MAP_MIN_Y - 1));
@@ -578,7 +578,7 @@ function start(presets)
 
 	    //writes numbers/info to GUI
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("angle = " + ship.angle, 10, 20);
+	    //ctx.fillText("angle = " + ship.angle, 10, 20);
 	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 40);
 	    ctx.fillStyle = "#00FF00";
 	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 60);
@@ -589,7 +589,7 @@ function start(presets)
 	    ctx.fillStyle = "#FFFFFF";
 	    ctx.fillText("distance to travel: " + ship.distanceToTravel.toFixed(0), 10, 120);
 	    ctx.fillText("damage: " + ship.damage.toFixed(0) + "%", 10, 160);
-	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 180);
+	    //ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 180);
 	}
 
 	//draws obstacles, ship, other items on the canvas
