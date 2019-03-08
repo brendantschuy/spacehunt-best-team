@@ -1,47 +1,23 @@
 html { 
-	/*background:  url("../video/background.gif") no-repeat center center fixed;
-	background-size: cover;*/
 	background-color: black;
+	/*background:  url("../video/background.gif") no-repeat center center fixed;*/
+	background-size: cover;
 }
 
 header {
 	color: white;
-	height: 95px;
+	height: 50px;
 	display: block;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-	padding-top: 10px;
 }
 
 #main-logo
 {
-	 /*height: 120px;
-	 width: 715px;*/
-	 height: 90px;
-	 width: 500px;
+	 height: 60px;
+	 width: 365px;
 }
-
-/*#widescreen-header {
-	color: white;
-	height: 115px;
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0px;
-}
-
-#smallscreen-header
-{
-	color: white;
-	height: 0px;
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0px;
-}*/
 
 body {
 	font-family: Impact, Charcoal, sans-serif;
@@ -66,36 +42,19 @@ h2 {
 
 .controls-div{
 	float: left;
-	width: 300px;
-}
-
-#controls-banner {
-	height: 40px;
-	width: 220px;
-	margin-left: auto;
-	margin-right: auto;
-	float: center;
-}
-
-.scan {
-	color: transparent;
-	font-size: 12px;
-	text-align: center;
-	display: inline-block;
-	width: 150px;
-	height: 150px;
-	padding: 6px;
 }
 
 .game {
 	width: 500px;
+	height: 500px;
 	padding-top: 20px;
     margin-top: 30px;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 30px;
 	text-align: center;
-	display: inline-block;
+	display: block;
+	float: center;
 }
 
 #gameScreen {
@@ -107,21 +66,22 @@ h2 {
 }
 
 .map-class {
-	width: 375px;
 	float: right;
 }
 
 .map-class, .controls-div {
+	width: 300px;
+	height: 550px;
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-left: 20px;
 	margin-right: 20px;
+	margin-top: -5px;
 }
 
 .map-class, .controls-div, .game {
 	background-color: rgba(0, 0, 0, 0.45);
 	color: white;
-	height: 500px;
 	border-radius: 30px;
 }
 
@@ -139,6 +99,14 @@ h2 {
 	margin: 20px;
 	margin-top: 130px;
 	border-radius: 30px;
+}
+
+#controls-banner {
+	height: 40px;
+	width: 220px;
+	margin-left: auto;
+	margin-right: auto;
+	float: center;
 }
 
 #dev-options-banner {
@@ -176,6 +144,16 @@ h2 {
 	float: right;
 }
 
+.scan {
+	color: transparent;
+	font-size: 12px;
+	text-align: center;
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	padding: 6px;
+}
+
 #map {
 	margin-top: 20px;
 	height: 290px;
@@ -207,9 +185,9 @@ h2 {
 	font-size: 20px;
 }
 
-#smallscreenOnly {
+/*#smallscreenOnly {
     display: none;
-}
+}*/
 
 .controls-button {
 	color: transparent;
@@ -336,6 +314,24 @@ button span {
 	color: red;
 	padding-top: 12px;
 	padding-bottom: 1px;
+}
+
+#map-container-div
+{
+	height: 446;
+	width: 300;
+	background-color: #222222;
+	float: left;
+	overflow-y: auto;
+	padding: 10px;
+	text-align:center;
+	font-family: "Lucida Console";
+}
+
+.mapItems
+{
+	padding: 0px;
+	margin: 0px;
 }
 
 

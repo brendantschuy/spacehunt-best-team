@@ -6,6 +6,7 @@
 	<script src="scripts/globals.js" type="text/javascript"></script>
 	<script src="scripts/musicplayer.js"></script>
 	<script src="scripts/asteroid.js" type="text/javascript"></script>
+	<script src="scripts/hashtable.js"></script>	
 	<script src="scripts/menu.js"></script>
 	<script src="scripts/planetnames.js"></script>
 	<script src="scripts/laserbeam.js"></script>
@@ -17,6 +18,7 @@
 	<script src="scripts/ship.js" type="text/javascript"></script>	
 	<script src="scripts/target.js" type="text/javascript"></script>
 	<script src="scripts/commbox.js" type="text/javascript"></script>
+	<script src="scripts/randomGeneration.js"></script>
 	<script src="scripts/start.js" type="text/javascript"></script>
 	<script src="scripts/recipe.js" type="text/javascript"></script>
 	<script src="scripts/wormhole.js" type="text/javascript"></script>
@@ -27,11 +29,10 @@
 	<script src="scripts/spacestation.js" type="text/javascript"></script>
 	<script src="scripts/meteorstorm.js" type="text/javascript"></script>
 
-	<!--<link rel="stylesheet" media="screen and (min-width: 1367px)" href="css/format.css" />
-	<link rel="stylesheet" media="screen and (max-width: 1366px)" href="css/smallscreen.css" />
-	-->
+	<!--	Don't need two style sheets currently, maybe later.
 	<link rel="stylesheet" media="screen and (max-width: 1369px)" href="css/format.css"/>
-	<link rel="stylesheet" media="screen and (min-width: 1370px)" href="css/widescreen.css"/>
+	<link rel="stylesheet" media="screen and (min-width: 1370px)" href="css/widescreen.css"/>-->
+	<link rel="stylesheet" href="css/format.css"/>
 	<link rel="stylesheet" href="css/menu.css"/>
 
 	<header>
@@ -40,9 +41,6 @@
 </head>
 
 <body onload="menu()"> <!--Change this to menu() to use menu before map loading-->
-	<!--<div id="widescreen-header">
-	<div><img src="img/spacehunt_logo.png" id="main-logo" alt="SpaceHunt"></div>
-	</div>-->
 
 	<div class="time" id="timer"></div>
 
@@ -79,33 +77,22 @@
 			<div id="controls-scan">
 				<button class="scan" id="scan" type="button">SCAN</button><br />
 			</div>
-			<!--<div id="controls-map">
-				<button class="map" id="mapicon" onClick=showMap() name="map" type="button">MAP</button><br />
-			</div>-->
+		</div>
+	</div>
+
+	<div class="map-class">
+		<div id="map-banner-div">
+			<h2>
+				<img src="img/celestial_map_banner.png"  id="celestial-map-banner" alt="Celestial Map">
+			</h2>
+		</div>
+		<div id="map-container-div">
 		</div>
 	</div>
 
 	<div class="game" id="game">
 		<canvas id="gameScreen"></canvas>
 	</div>
-
-	<div class="map-class" id="widescreenOnly">
-
-		<!-- Repeat all functions in the "smallscreenOnly" div down below the game console -->
-		<div id="map-div">
-			<h2>
-				<img src="img/celestial_map_banner.png"  id="celestial-map-banner" alt="Celestial Map">
-			</h2>
-
-			<!--<div class="map" id="map"></div>-->
-		</div>
-
-		<!--<div class="map" id="map"></div>-->
-	</div>
-
-	<!--<div class="game">
-			<canvas id="gameScreen"></canvas>
-	</div>-->
 
 	<div class="dev-options-div">
 		<div id="dev-header">
@@ -132,7 +119,7 @@
 				<label for="bgm">Background Music</label>
 			</div>
 			<div class="dev-options-button-text">
-				<input type="checkbox" id="hud" name="hud" checked>
+				<input type="checkbox" id="hud" name="hud">
 				<label for="hud">Toggle HUD</label>
 			</div>
 			<div class="dev-options-button-text" id="speedRunMode">

@@ -23,7 +23,6 @@ function start(presets)
 	this.commBox = new CommBox();
 	this.musicPlayer = new MusicPlayer();
 
-	createMap();
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
 							//on-screen buttons with in-game functionality
@@ -256,7 +255,7 @@ function start(presets)
 					drawHeight = GAME_SCREEN_HEIGHT;
 					resetHeight = true;
 					commBox.toggle = false;
-				}, 10000);
+				}, 3500);
 			}
 			resetHeight = false;
 		}
@@ -356,6 +355,7 @@ function start(presets)
 		var chance = (Math.floor(Math.random() * 3));
 		if(chance == 0){
 			commBox.drawNewBox("BAD MAX SHOT YOU DOWN!",true,5,560);
+			musicPlayer.playMusic("badmax_kill_player.wav");
 			hitObstacle();
 		}
 		if(chance == 1){
@@ -371,6 +371,7 @@ function start(presets)
 	function win()
 	{
 		//play win sound
+		musicPlayer.playMusic("find_recipe.wav");
 		setTimeout(function()
 		{
 			window.location.reload();
@@ -415,12 +416,13 @@ function start(presets)
 		this.obstacles = [];
 
 		//BadMax NEEDS to be obstacles[0]
-		//obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-		obstacles.push(new BadMax(10*GRID_SIZE,15*GRID_SIZE));
+		//obstacles.push(new BadMax((Math.floor(Math.random() * MAP_MAX_X)+1),Math.floor(Math.random() * MAP_MAX_Y)+1));
+		obstacles.push(new BadMax(0, 5));
+
 		//There may only be one!
 		let isXeon = false, isCeleron = false, isRyzen = false;
 
-		if(presets)
+		if(presets.length >= 1)
 		{
 			presets.forEach(function(presetItem)
 			{
@@ -445,28 +447,37 @@ function start(presets)
 				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
 			});
 		}
+		else
+		{
+			let randoms = generateRandomObstacles();
+			randoms.forEach(function(randomItem)
+			{
+				if(randomItem.constructor.name == "Xeon")
+				{
+					if(isXeon) return;
+					isXeon = true;
+				}
+				if(randomItem.constructor.name == "Celeron")
+				{
+					if(isCeleron) return;
+					isCeleron = true;
+				}
+				if(randomItem.constructor.name == "Ryzen")
+				{
+					if(isRyzen) return;
+					isRyzen = true;
+				}
+				//alert("Preset item: " + presetItem.constructor.name);
+				obstacles.push(randomItem);
+				//alert(presetItem.x + ", " + presetItem.y);
+				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
+			});
+		}
 
-		obstacles.push(new Asteroid(9, 9));
-		obstacles.push(new Asteroid(11, 11));
-		obstacles.push(new Asteroid(6, 6));
-		obstacles.push(new Asteroid(128, 128));
-		obstacles.push(new Asteroid(64, 64));
-		obstacles.push(new Asteroid(128, 0));
-		obstacles.push(new Asteroid(0, 128));
-		obstacles.push(new Asteroid(1, 1));
-		obstacles.push(new EnergyPotion(9, 11, 200));
-		obstacles.push(new Recipe(11, 9));
-		obstacles.push(new MeteorStorm(8,10));
-		obstacles.push(new DeathStar(15, 10));
-		obstacles.push(new SpaceStation(13, 15));
-		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
-		obstacles.push(new Planet(8, 8, 1));
-		obstacles.push(new Planet(10, 8, 2));
-		obstacles.push(new Planet(5, 10, 3));
-		obstacles.push(new Planet(3, 18, 4));
-		obstacles.push(new Planet(14, 14, 5));
-		obstacles.push(new Planet(14, 10, 6));
-		obstacles.push(new Planet(12, 10, 7));
+		obstacles.push(new DeathStar(Math.floor(Math.random() * 110) + 18, Math.floor(Math.random() * 110) + 18));
+		obstacles.push(new Recipe(Math.floor(Math.random() * 110) + 18, Math.floor(Math.random() * 110) + 18));
+		obstacles.push(new DeathStar(Math.floor(Math.random() * 10), Math.floor(Math.random() *10)));
+		obstacles.push(new Recipe(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)));
 
 		//There may only be one of each of the following:
 		if(!isCeleron)
@@ -476,7 +487,7 @@ function start(presets)
 		if(!isRyzen)
 			obstacles.push(new Ryzen(18, 18));
 
-		// Initialize Wormholes
+		// Initialize Boarder Wormholes
 		for(var x = MAP_MIN_X - 1; x < MAP_MAX_X; x++){
 			// Creates wormholes for the top and bottom rim of the boundary
 			obstacles.push(new Wormhole(x, MAP_MIN_Y - 1));
@@ -575,7 +586,7 @@ function start(presets)
 
 	    //writes numbers/info to GUI
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("angle = " + ship.angle, 10, 20);
+	    //ctx.fillText("angle = " + ship.angle, 10, 20);
 	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 40);
 	    ctx.fillStyle = "#00FF00";
 	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 60);
@@ -586,7 +597,7 @@ function start(presets)
 	    ctx.fillStyle = "#FFFFFF";
 	    ctx.fillText("distance to travel: " + ship.distanceToTravel.toFixed(0), 10, 120);
 	    ctx.fillText("damage: " + ship.damage.toFixed(0) + "%", 10, 160);
-	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 180);
+	    //ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 180);
 	}
 
 	//draws obstacles, ship, other items on the canvas
@@ -811,7 +822,7 @@ function start(presets)
 	{
 		delete obstacles[0];
 		delete this.BadMax;
-		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1);
+		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE)+1);
 		//obstacles[0] = new BadMax(10*GRID_SIZE, 15*GRID_SIZE);
 		this.BadMax = obstacles[0];
 		// just testing save, will not want to call this here 
@@ -863,7 +874,7 @@ function start(presets)
 		
 		//boolean check statement isn't working for some reason.
 		//not sure why. I tried using an int and an == and no luck.
-		var check = false;
+		//var check = false;
 		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
 			musicPlayer.playMusic("badmax.wav");
 		}

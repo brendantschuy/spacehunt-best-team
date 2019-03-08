@@ -21,7 +21,7 @@ class Planet
 
 		this.sprite = new Image();
 		this.visible = false;
-		this.onmapList = false;
+		this.addToMap = true;
 		this.planetName = randomPlanetName();
 		//x is the number of each planet (1 - 7)
 		this.sprite.src = "img/planet" + this.idNumber + ".png";
