@@ -41,7 +41,6 @@ class CommBox
 				break;
 			case("Xeon") : case ("Celeron") : case("Ryzen") : 
 				ctx.fillText("Welcome to the planet of " + obstacleName + "!", 20, 560);
-				//ctx.fillText("Press L to land or O to orbit (not implemented).", 20, 590);
 				break;
 			case("Planet") : 
 				ctx.fillText("Welcome to the planet of " + this.currentObstacle.planetName + "!", 20, 560);
@@ -62,25 +61,9 @@ class CommBox
 			case("MeteorStorm") :
 				ctx.fillText("You have entered a Meteor Storm!\nYou will continue to take damage every 0.5 seconds. RUN!", 5, 560);
 				break;
-			/* case("BadMax") :
-				switch(this.chance)
-				{
-					//enter chances here:
-					case 0 : 
-							ctx.fillText("BAD MAX SHOT YOU DOWN!", 5, 560);
-							break;
-					case 1 : 
-							ctx.fillText("BadMax stole half of your energy and supplies.", 5, 560);
-							break;
-					case 2 : 
-							ctx.fillText("You successfully fended off BadMax for now.", 5, 560);
-							break;
-				}
-*/
 			case("Wormhole") :
 				ctx.fillText("You have been teleported!", 5, 560);
 				break;
-
 			default:
 				ctx.fillText((this.currentObstacle),this.x,this.y);
 				break;
@@ -89,10 +72,8 @@ class CommBox
 		return true;	
 	}
 
-	drawNewBox(obstacle, toggle,x,y)
+	drawNewBox(obstacle, toggle)
 	{
-		this.x = x;
-		this.y = y;
 		this.toggle = toggle;
 		this.currentObstacle = obstacle;
 		
