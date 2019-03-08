@@ -6,42 +6,19 @@ html {
 
 header {
 	color: white;
-	height: 95px;
+	height: 50px;
 	display: block;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
-	padding-top: 10px;
+	margin-top: -5px;
 }
 
 #main-logo
 {
-	 /*height: 120px;
-	 width: 715px;*/
-	 height: 90px;
-	 width: 500px;
+	 height: 60px;
+	 width: 365px;
 }
-
-/*#widescreen-header {
-	color: white;
-	height: 115px;
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0px;
-}
-
-#smallscreen-header
-{
-	color: white;
-	height: 0px;
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0px;
-}*/
 
 body {
 	font-family: Impact, Charcoal, sans-serif;
@@ -116,6 +93,7 @@ h2 {
 	padding-right: 5px;
 	margin-left: 20px;
 	margin-right: 20px;
+	margin-top: -5px;
 }
 
 .map-class, .controls-div, .game {
