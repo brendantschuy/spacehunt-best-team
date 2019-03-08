@@ -473,6 +473,10 @@ function start(presets)
 			});
 		}
 
+		obstacles.push(new DeathStar(Math.floor(Math.random() * 110) + 18, Math.floor(Math.random() * 110) + 18));
+		obstacles.push(new Recipe(Math.floor(Math.random() * 110) + 18, Math.floor(Math.random() * 110) + 18));
+
+
 		/*obstacles.push(new Asteroid(9, 9));
 		obstacles.push(new Asteroid(11, 11));
 		obstacles.push(new Asteroid(6, 6));

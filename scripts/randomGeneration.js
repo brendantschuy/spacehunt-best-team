@@ -19,7 +19,7 @@ function generateRandomObstacles()
 			randoms.push(new Asteroid(Math.floor(Math.random() * 16) * i + 1, Math.floor(Math.random() * 16) * j + 1));
 			randoms.push(new Asteroid(Math.floor(Math.random() * 16) * i + 1, Math.floor(Math.random() * 16) * j + 1));
 			randoms.push(new Asteroid(Math.floor(Math.random() * 16) * i + 1, Math.floor(Math.random() * 16) * j + 1));
-			//randoms.push(new Planet(Math.floor(Math.random() * 16) * i, Math.floor(Math.random() * 16) * j), 2);
+			randoms.push(new Planet(Math.floor(Math.random() * 16) * i, Math.floor(Math.random() * 16) * j, Math.floor(Math.random() * 7) + 1));
 			randoms.push(new MeteorStorm(Math.floor(Math.random() * 16) * i, Math.floor(Math.random() * 16) * j));
 			randoms.push(new AbandonedFreighter(Math.floor(Math.random() * 16) * i, Math.floor(Math.random() * 16) * j));
 			randoms.push(new EnergyPotion(Math.floor(Math.random() * 16) * i + 1, Math.floor(Math.random() * 16) * j ) + 1, 200);
