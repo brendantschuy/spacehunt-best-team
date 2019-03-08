@@ -415,15 +415,13 @@ function start(presets)
 		this.obstacles = [];
 
 		//BadMax NEEDS to be obstacles[0]
-		//obstacles.push(new BadMax((Math.floor(Math.random() * MAP_LENGTH_X - MAP_MAX_X)+1),Math.floor(Math.random() * MAP_LENGTH_Y - MAP_MAX_Y)+1));
-
-		//obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-		obstacles.push(new BadMax(10, 15));
+		obstacles.push(new BadMax((Math.floor(Math.random() * MAP_MAX_X)+1),Math.floor(Math.random() * MAP_MAX_Y)+1));
+		//obstacles.push(new BadMax(10, 15));
 
 		//There may only be one!
 		let isXeon = false, isCeleron = false, isRyzen = false;
 
-		if(presets)
+		if(presets.length >= 1)
 		{
 			presets.forEach(function(presetItem)
 			{
@@ -448,8 +446,34 @@ function start(presets)
 				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
 			});
 		}
+		else
+		{
+			let randoms = generateRandomObstacles();
+			randoms.forEach(function(randomItem)
+			{
+				if(randomItem.constructor.name == "Xeon")
+				{
+					if(isXeon) return;
+					isXeon = true;
+				}
+				if(randomItem.constructor.name == "Celeron")
+				{
+					if(isCeleron) return;
+					isCeleron = true;
+				}
+				if(randomItem.constructor.name == "Ryzen")
+				{
+					if(isRyzen) return;
+					isRyzen = true;
+				}
+				//alert("Preset item: " + presetItem.constructor.name);
+				obstacles.push(randomItem);
+				//alert(presetItem.x + ", " + presetItem.y);
+				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
+			});
+		}
 
-		obstacles.push(new Asteroid(9, 9));
+		/*obstacles.push(new Asteroid(9, 9));
 		obstacles.push(new Asteroid(11, 11));
 		obstacles.push(new Asteroid(6, 6));
 		obstacles.push(new Asteroid(128, 128));
@@ -469,7 +493,7 @@ function start(presets)
 		obstacles.push(new Planet(3, 18, 4));
 		obstacles.push(new Planet(14, 14, 5));
 		obstacles.push(new Planet(14, 10, 6));
-		obstacles.push(new Planet(12, 10, 7));
+		obstacles.push(new Planet(12, 10, 7));*/
 
 		//There may only be one of each of the following:
 		if(!isCeleron)
@@ -814,7 +838,7 @@ function start(presets)
 	{
 		delete obstacles[0];
 		delete this.BadMax;
-		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1);
+		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE)+1);
 		//obstacles[0] = new BadMax(10*GRID_SIZE, 15*GRID_SIZE);
 		this.BadMax = obstacles[0];
 		// just testing save, will not want to call this here 
