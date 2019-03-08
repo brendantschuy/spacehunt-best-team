@@ -256,7 +256,7 @@ function start(presets)
 					drawHeight = GAME_SCREEN_HEIGHT;
 					resetHeight = true;
 					commBox.toggle = false;
-				}, 10000);
+				}, 3500);
 			}
 			resetHeight = false;
 		}

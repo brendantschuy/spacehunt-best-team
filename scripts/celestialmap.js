@@ -6,7 +6,7 @@ var map_x = 20;
 //Creates map
 function createMap()
 {
-  var mapCvs = document.createElement("canvas");
+  /*var mapCvs = document.createElement("canvas");
   mapCvs.id = "mapCanvas";
   var mapCtx = mapCvs.getContext('2d');
 
@@ -16,37 +16,28 @@ function createMap()
   mapCtx.fillStyle = "RGBA(100, 100, 100, 0.3)";
   mapCtx.fillRect(0, 0, mapCvs.width, mapCvs.height);
 
-  //Determines where to put map canvas. Depends on screen resolution.
-  // Currently only have 1 style sheet
-  /*var largeMap = document.getElementById("widescreenOnly");
-
-  if(window.getComputedStyle(largeMap).display === "none")
-  {
-    document.getElementById("dev-buttons").appendChild(mapCvs);
-  }
-  else
-  {
-    //document.getElementById("dev").appendChild(mapCvs);
-    document.getElementById("map-div").appendChild(mapCvs);
-  }*/
-
-  document.getElementById("map-div").appendChild(mapCvs);
+  document.getElementById("map-banner-div").appendChild(mapCvs);*/
 }
 
 //Updates map
 function updateMap(obstacles)
 {
-  let ctx = document.getElementById("mapCanvas").getContext('2d');
+  /*let ctx = document.getElementById("mapCanvas").getContext('2d');
   ctx.beginPath();
-  ctx.save();
+  ctx.save();*/
   obstacles.forEach(function (item)
   {
     if(item.visible && item.addToMap){
-      objName = item.constructor.name;  //gets exact name of user-defined type
-      ctx.beginPath();
+      //objName = item.constructor.name;  //gets exact name of user-defined type
+      //ctx.beginPath();
+      let newMapItem = document.createElement("p");
+      newMapItem.appendChild(document.createTextNode(item.constructor.name + ": (" + item.cpx + ", " + item.cpy + ")"));
+      newMapItem.className = "mapItems";
+      document.getElementById("map-container-div").appendChild(newMapItem);
+      item.addToMap = false;
 
       //Color codes objects based on names
-      switch(objName)
+      /*switch(objName)
       {
         case("Asteroid") : 
           ctx.fillStyle = "coral";
@@ -85,7 +76,7 @@ function updateMap(obstacles)
         map_x += 90;
       }
 
-      ctx.closePath();
+      ctx.closePath();*/
     }
   });
 

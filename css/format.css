@@ -316,4 +316,20 @@ button span {
 	padding-bottom: 1px;
 }
 
+#map-container-div
+{
+	height: 446;
+	width: 300;
+	background-color: #222222;
+	float: left;
+	overflow-y: auto;
+	padding: 10px;
+}
+
+.mapItems
+{
+	padding: 0px;
+	margin: 0px;
+}
+
 
