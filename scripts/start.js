@@ -12,7 +12,7 @@ function start(presets)
 	//this.presets = presets;
 	this.gameOver = false;
 	this.gameWon = false;
-	this.displayHud = false; //document.getElementById("hud").checked;
+	this.displayHud = true; //document.getElementById("hud").checked;
 	this.speedRun = document.getElementById("speedrun").checked;
 	//var explosionSound = new sound("explosion.mp3");
 
@@ -359,18 +359,18 @@ function start(presets)
 
 	function hitWormhole()
 	{
-		if(this.randWormholes){
-			this.y = (Math.floor(Math.random() * (MAP_MAX_X + 1)));
-			this.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1)));
+		if(this.ship.randWormholes == true){
+			this.ship.y = (Math.floor(Math.random() * (MAP_MAX_X + 1))) * GRID_SIZE;
+			this.ship.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1))) * GRID_SIZE;
 		}
 		else{
-			this.y = Math.floor(MAP_MAX_Y/2);
-			this.x = Math.floor(MAP_MAX_X/2);
+			this.ship.y = Math.floor(MAP_MAX_Y/2) * GRID_SIZE;
+			this.ship.x = Math.floor(MAP_MAX_X/2) * GRID_SIZE;
 		}
-		this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
-		this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
 
-		this.restoreDefaults();
+		this.ship.cpx = Math.floor((this.ship.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+		this.ship.cpy = Math.floor((this.ship.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
+		this.ship.restoreDefaults();
 
 		var audio_wormhole = new Audio('audio/wormhole.wav');
 		audio_wormhole.volume = 1;
@@ -563,8 +563,6 @@ function start(presets)
 			//ship.decreaseDistance();
 			ship.faceDown();
 		});
-		// If user presses the move button on the url, ship will move the number of spaces in
-		// the drop down menu
 		document.getElementById("moveBtn").addEventListener("click", function()
 		{
 			ship.beginMoving();

@@ -79,11 +79,12 @@ class Ship 	//class names capitalized per js convention
 	{
 		if(this.cpy >= MAP_MAX_Y || this.cpy < MAP_MIN_Y || this.cpx >= MAP_MAX_X || this.cpx < MAP_MIN_X) {
 			if(this.randWormholes == true){	
-				this.y = (Math.floor(Math.random() * (MAP_MAX_X + 1)));
-				this.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1)));
-			}else{
-				this.y = Math.floor(MAP_MAX_Y/2);
-				this.x = Math.floor(MAP_MAX_X/2);
+				this.y = (Math.floor(Math.random() * (MAP_MAX_X + 1))) * GRID_SIZE;
+				this.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1))) * GRID_SIZE;
+			}
+			else{
+				this.y = Math.floor(MAP_MAX_Y/2) * GRID_SIZE;
+				this.x = Math.floor(MAP_MAX_X/2) * GRID_SIZE;
 			}
 
 			this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
@@ -340,6 +341,7 @@ class Ship 	//class names capitalized per js convention
 			} 
 		}
 	}
+
 	//work in progress
 	checkSupplies(){
 		if(this.dev == false){
@@ -353,17 +355,23 @@ class Ship 	//class names capitalized per js convention
 	toggleDevMode(){
 		this.dev = !(this.dev);
 	}
+
 	ghostMode(){
 		this.isGhost = !(this.isGhost);
 	}
 
 	toggleRandWormholesMode(){
 		this.randWormholes = !(this.randWormholes);
+		//this.randWormholes ? false : true;
+
+		/*if(this.randWormholes == true)
+			this.randWormholes = false;
+		else
+			this.randWormholes = true;*/
 	}
 
 	//restores default info about ship 
-	restoreDefaults()
-	{
+	restoreDefaults(){
 		this.isMoving = false;
 		this.distanceToTravel = 0;
 		this.offset_y = 0;
