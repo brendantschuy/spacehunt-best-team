@@ -23,7 +23,7 @@ class MusicPlayer
 				this.playing = false;
 				sound.pause();
 				sound.currentTime = 0;
-			}, 12000);
+			}, 1200000);
 		}
 
 		return;
