@@ -30,3 +30,9 @@
 	width: 460;
 	height: 460;
 }
+
+.menu_main_options
+{
+	position: absolute;
+	height: 50;
+}

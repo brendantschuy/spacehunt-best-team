@@ -15,12 +15,7 @@ function menu()
 	var cvsCoords = getAbsPosition(cvs);
 	var ctx = cvs.getContext('2d');
 
-	bkgd = document.createElement("img");
-	bkgd.className = "menu_bkgd";
-	bkgd.src = "img/menu_screen.png";
-	bkgd.style.left = cvsCoords.x;
-	bkgd.style.top = cvsCoords.y;
-	document.body.appendChild(bkgd);
+	setUpMenu();
 
 	//If statement is important to not overwrite the array
 	if(!this.presets)
@@ -385,6 +380,58 @@ function getAbsPosition(element)
    return {x:rect.left,y:rect.top}
 }
 
+function setUpMenu()
+{
+	let cvs = document.getElementById("gameScreen");
+	let cvsCoords = getAbsPosition(cvs);
+	let ctx = cvs.getContext('2d');
+	bkgd = document.createElement("img");
+	bkgd.className = "menu_bkgd";
+	bkgd.src = "img/menu_screen_4.png";
+	bkgd.style.left = cvsCoords.x;
+	bkgd.style.top = cvsCoords.y;
+	document.body.appendChild(bkgd);
+
+	newGameButton = document.createElement("img");
+	newGameButton.className = "menu_main_options";
+	newGameButton.src = "img/new_game.png";
+	newGameButton.style.left = cvsCoords.x + 150;
+	newGameButton.style.top = cvsCoords.y + 175;
+	newGameButton.onmouseover = function(){
+		this.src = "img/new_game_clicked.png";
+	};
+	newGameButton.onmouseout = function(){
+		this.src = "img/new_game.png";
+	};
+	document.body.appendChild(newGameButton);
+
+	editGameButton = document.createElement("img");
+	editGameButton.className = "menu_main_options";
+	editGameButton.src = "img/edit_game.png";
+	editGameButton.style.left = cvsCoords.x + 135;
+	editGameButton.style.top = cvsCoords.y + 275;
+	editGameButton.onmouseover = function(){
+		this.src = "img/edit_game_clicked.png";
+	};
+	editGameButton.onmouseout = function(){
+		this.src = "img/edit_game.png";
+	};
+	document.body.appendChild(editGameButton);
+
+	loadGameButton = document.createElement("img");
+	loadGameButton.className = "menu_main_options";
+	loadGameButton.src = "img/load_game.png";
+	loadGameButton.style.left = cvsCoords.x + 135;
+	loadGameButton.style.top = cvsCoords.y + 375;
+	loadGameButton.onmouseover = function(){
+		this.src = "img/load_game_clicked.png";
+	};
+	loadGameButton.onmouseout = function(){
+		this.src = "img/load_game.png";
+	};
+	document.body.appendChild(loadGameButton);
+}
+
 // loads game from browser 
 function load() {
 	if (!supportsLocalStorage() || localStorage["activeGame"] == "false") {
@@ -394,4 +441,5 @@ function load() {
 	let gameToLoad = prompt("Which game do you want to load?");  
 	let gameState = JSON.parse(localStorage.getItem(gameToLoad));
 	return gameState;
-  }
+}
+
