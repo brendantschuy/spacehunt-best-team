@@ -44,41 +44,62 @@
 
 	<div class="time" id="timer"></div>
 
-	<div class="controls-div">
-		<h2>
-			<img src="img/controls.png" alt="Controls" id="controls-banner">
-		</h2>
-		
-		<div id="control-buttons-div">
-			<div id="controls-up">
-				<button class="controls-button" id="upBtn" type="button">UP</button><br />
-			</div>
-			<div id="controls-left">
-				<button class="controls-button" id="leftBtn" type="button">LEFT</button>
-			</div>
-			<div id="controls-right">
-				<button class="controls-button" id="rightBtn" type="button">RIGHT</button><br />
-			</div>
-			<div id="controls-down">
-				<button class="controls-button" id="downBtn" type="button">DOWN</button><br />
-			</div>
-			<div id="controls-move">
-				<button class="controls-button" id="moveBtn" type="button">MOVE</button>
-			</div>
-			<div id="controls-GS">
-				<button class="controls-button" id="GSBtn" type="button">ATTACK</button>
-			</div>	
-			<div id="controls-OTB">
-				<button class="controls-button" id="OTBBtn" type="button">ATTACK</button>
-			</div>	
-			<div id="controls-FD">
-				<button class="controls-button" id="FDBtn" type="button">ATTACK</button>
-			</div>			
-			<div id="controls-scan">
-				<button class="scan" id="scan" type="button">SCAN</button><br />
+	<!--<div id="left-side">-->
+		<div class="controls-div">
+			<h2>
+				<img src="img/controls.png" alt="Controls" id="controls-banner">
+			</h2>
+			
+			<div id="control-buttons-div">
+				<div id="controls-up">
+					<button class="controls-button" id="upBtn" type="button">UP</button><br />
+				</div>
+				<div id="controls-left">
+					<button class="controls-button" id="leftBtn" type="button">LEFT</button>
+				</div>
+				<div id="controls-right">
+					<button class="controls-button" id="rightBtn" type="button">RIGHT</button><br />
+				</div>
+				<div id="controls-down">
+					<button class="controls-button" id="downBtn" type="button">DOWN</button><br />
+				</div>
+				<div id="move-options">
+					<form>
+						<select id="spaces" name="spaces" onChange="moveTarget()">
+							<option value="0" id="0" selected>0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<input type="button" id="moveBtn" value="Submit" onclick="resetMoves()">
+						</select>
+					</form>
+				</div>
+				<!--<p id="demo" style="color:white;">Test</p>-->
+				<!--<div id="controls-move">
+					<button class="controls-button" id="moveBtn" type="button">MOVE</button>
+				</div>-->
+				<div id="controls-GS">
+					<button class="controls-button" id="GSBtn" type="button">ATTACK</button>
+				</div>	
+				<div id="controls-OTB">
+					<button class="controls-button" id="OTBBtn" type="button">ATTACK</button>
+				</div>	
+				<div id="controls-FD">
+					<button class="controls-button" id="FDBtn" type="button">ATTACK</button>
+				</div>			
+				<div id="controls-scan">
+					<button class="scan" id="scan" type="button">SCAN</button><br />
+				</div>
 			</div>
 		</div>
-	</div>
+	<!--</div>-->
 
 	<div class="map-class">
 		<div id="map-banner-div">

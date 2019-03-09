@@ -65,6 +65,7 @@ class CommBox
 				ctx.fillText("You have been teleported!", 5, 560);
 				break;
 			default:
+				//alert(this.x,this.y);
 				ctx.fillText((this.currentObstacle),this.x,this.y);
 				break;
 		}
@@ -72,8 +73,10 @@ class CommBox
 		return true;	
 	}
 
-	drawNewBox(obstacle, toggle)
+	drawNewBox(obstacle, toggle,x,y)
 	{
+		this.x = x;
+		this.y = y;
 		this.toggle = toggle;
 		this.currentObstacle = obstacle;
 		
