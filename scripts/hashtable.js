@@ -4,7 +4,10 @@
 
 class hashTable
 {
-	table = [];
+	constructor()
+	{
+		this.table = [];
+	}
 
 	//generates key using x & y values
 	findKey(x, y)
