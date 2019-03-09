@@ -28,20 +28,92 @@ function menu()
 		if(e.keyCode == 69)			//E
 		{
 			//doesn't actually overwrite presets, just adds to it
-			document.body.removeChild(bkgd);
+			clearMenu();
 			this.presets = editMapMenu();
 		}
 		else if(e.keyCode == 76)	//L
 		{
 			//DOES overwrite presets
-			document.body.removeChild(bkgd);
+			clearMenu();
 			this.presets = loadFileMenu();
 		}
 		else if(e.keyCode == 78)	//N
 		{
-			document.body.removeChild(bkgd);
+			clearMenu();
 			start(presets);
 		}
+		else
+		{
+			return;
+		}
+		clearMenu();
+	}
+
+	function setUpMenu()
+	{
+		let cvs = document.getElementById("gameScreen");
+		let cvsCoords = getAbsPosition(cvs);
+		let ctx = cvs.getContext('2d');
+		main_bkgd = document.createElement("img");
+		main_bkgd.className = "menu_main_bkgd";
+		main_bkgd.src = "img/menu_screen_4.png";
+		main_bkgd.style.left = cvsCoords.x;
+		main_bkgd.style.top = cvsCoords.y;
+		document.body.appendChild(main_bkgd);
+
+		newGameButton = document.createElement("img");
+		newGameButton.className = "menu_main_options";
+		newGameButton.src = "img/new_game.png";
+		newGameButton.style.left = cvsCoords.x + 150;
+		newGameButton.style.top = cvsCoords.y + 175;
+		newGameButton.onmouseover = function(){
+			this.src = "img/new_game_clicked.png";
+		};
+		newGameButton.onmouseout = function(){
+			this.src = "img/new_game.png";
+		};
+		newGameButton.onclick = function()
+		{
+			clearMenu();
+			start(presets);
+		}
+		document.body.appendChild(newGameButton);
+
+		editGameButton = document.createElement("img");
+		editGameButton.className = "menu_main_options";
+		editGameButton.src = "img/edit_game.png";
+		editGameButton.style.left = cvsCoords.x + 135;
+		editGameButton.style.top = cvsCoords.y + 275;
+		editGameButton.onmouseover = function(){
+			this.src = "img/edit_game_clicked.png";
+		};
+		editGameButton.onmouseout = function(){
+			this.src = "img/edit_game.png";
+		};
+		editGameButton.onclick = function()
+		{
+			clearMenu();
+			presets = editMapMenu();
+		}
+		document.body.appendChild(editGameButton);
+
+		loadGameButton = document.createElement("img");
+		loadGameButton.className = "menu_main_options";
+		loadGameButton.src = "img/load_game.png";
+		loadGameButton.style.left = cvsCoords.x + 135;
+		loadGameButton.style.top = cvsCoords.y + 375;
+		loadGameButton.onmouseover = function(){
+			this.src = "img/load_game_clicked.png";
+		};
+		loadGameButton.onmouseout = function(){
+			this.src = "img/load_game.png";
+		};
+		loadGameButton.onclick = function()
+		{
+			clearMenu();
+			presets = loadFileMenu();
+		}
+		document.body.appendChild(loadGameButton);
 	}
 
 	//Creates edit menu options
@@ -85,6 +157,13 @@ function menu()
 		return this.presets;
 	}
 
+	function clearMenu()
+	{
+		document.body.removeChild(main_bkgd);
+		document.body.removeChild(newGameButton);
+		document.body.removeChild(editGameButton);
+		document.body.removeChild(loadGameButton);
+	}
 	//Adds a single item to the preset array
 	//This could be altered to be more generalized & work with file input too
 	function addItemToPresets(x ,y)
@@ -378,58 +457,6 @@ function getAbsPosition(element)
 {
    var rect = element.getBoundingClientRect();
    return {x:rect.left,y:rect.top}
-}
-
-function setUpMenu()
-{
-	let cvs = document.getElementById("gameScreen");
-	let cvsCoords = getAbsPosition(cvs);
-	let ctx = cvs.getContext('2d');
-	bkgd = document.createElement("img");
-	bkgd.className = "menu_bkgd";
-	bkgd.src = "img/menu_screen_4.png";
-	bkgd.style.left = cvsCoords.x;
-	bkgd.style.top = cvsCoords.y;
-	document.body.appendChild(bkgd);
-
-	newGameButton = document.createElement("img");
-	newGameButton.className = "menu_main_options";
-	newGameButton.src = "img/new_game.png";
-	newGameButton.style.left = cvsCoords.x + 150;
-	newGameButton.style.top = cvsCoords.y + 175;
-	newGameButton.onmouseover = function(){
-		this.src = "img/new_game_clicked.png";
-	};
-	newGameButton.onmouseout = function(){
-		this.src = "img/new_game.png";
-	};
-	document.body.appendChild(newGameButton);
-
-	editGameButton = document.createElement("img");
-	editGameButton.className = "menu_main_options";
-	editGameButton.src = "img/edit_game.png";
-	editGameButton.style.left = cvsCoords.x + 135;
-	editGameButton.style.top = cvsCoords.y + 275;
-	editGameButton.onmouseover = function(){
-		this.src = "img/edit_game_clicked.png";
-	};
-	editGameButton.onmouseout = function(){
-		this.src = "img/edit_game.png";
-	};
-	document.body.appendChild(editGameButton);
-
-	loadGameButton = document.createElement("img");
-	loadGameButton.className = "menu_main_options";
-	loadGameButton.src = "img/load_game.png";
-	loadGameButton.style.left = cvsCoords.x + 135;
-	loadGameButton.style.top = cvsCoords.y + 375;
-	loadGameButton.onmouseover = function(){
-		this.src = "img/load_game_clicked.png";
-	};
-	loadGameButton.onmouseout = function(){
-		this.src = "img/load_game.png";
-	};
-	document.body.appendChild(loadGameButton);
 }
 
 // loads game from browser 
