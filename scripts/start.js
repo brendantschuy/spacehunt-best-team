@@ -54,71 +54,58 @@ function start(presets)
 	//handles user input
 	function getInput(e)
 	{
-
-		if(e.keyCode == '32')		//spacebar
+		switch(e.keyCode)
 		{
-			e.preventDefault();		//prevents this from moving the window/canvas around
-			ship.beginMoving();
-			ship.commitMovement();
-			pursuit();
-		}
-
-		if(e.keyCode == '37' || e.keyCode == '65')		//left arrow key
-		{
-			e.preventDefault();
-			ship.rotateLeft();
-		}
-
-		else if(e.keyCode == '38' || e.keyCode == '87')		//up
-		{
-			e.preventDefault();
-			ship.increaseDistance();
-		}
-
-		else if(e.keyCode == '39' || e.keyCode == '68')		//right
-		{
-			e.preventDefault();
-			ship.rotateRight();
-		}
-
-		else if(e.keyCode == '40' || e.keyCode == '83')		//down
-		{
-			e.preventDefault();
-			ship.decreaseDistance();
-		}
-
-		else if(e.keyCode == '72')				//H
-		{
-			toggleHud();
-		}
-
-		else if(e.keyCode == '81' || e.keyCode == '17')		//Q or CTRL
-		{
-			scan();
-			ship.checkSupplies();
-		}
-		else if(e.keyCode == '90')							//Z
-		{
-			fireLaser();
-			ship.checkEnergy();
-		}
-		else if (e.keyCode == '67') //C
-		{
-			ghost();
-			ship.checkEnergy();
-			ship.checkSupplies();
-		}
-		else if(e.keyCode == '88') //X
-		{
-			genesisSaber();
-			ship.checkEnergy();
-			ship.checkSupplies();
-		}
-		else if(e.keyCode == '86') //V
-		{
-			fugaDaemonum();
-			ship.checkEnergy();
-			ship.checkSupplies();
+			case 32 : //spacebar
+				e.preventDefault();		//prevents this from moving the window/canvas around
+				ship.beginMoving();
+				ship.commitMovement();
+				pursuit();
+				break;
+			case 37 : case 65 : //<left> or <a>
+				e.preventDefault();
+				ship.rotateLeft();
+				break;
+			case 38 : case 87 : //<up> or <w>
+				e.preventDefault();
+				ship.increaseDistance();
+				break;
+			case 39 : case 68 : //<right> or <d>
+				e.preventDefault();
+				ship.rotateRight();
+				break;
+			case 40 : case 83 : //<down> or <s>
+				e.preventDefault();
+				ship.decreaseDistance();
+				break;
+			case 72 : //<h>
+				toggleHud();
+				break;
+			case 81 : case 17 : //<q> or <ctrl>
+				scan();
+				ship.checkSupplies();
+				break;
+			case 90 : //<z>
+				fireLaser();
+				ship.checkEnergy();
+				break;
+			case 67 : //<c>
+				ghost();
+				ship.checkEnergy();
+				ship.checkSupplies();
+				break;
+			case 88 : //<x>
+				genesisSaber();
+				ship.checkEnergy();
+				ship.checkSupplies();
+				break;
+			case 86 : //<z>
+				fugaDaemonum();
+				ship.checkEnergy();
+				ship.checkSupplies();
+				break;
+			default: 
+				break;
 		}
 	}
 
@@ -191,7 +178,6 @@ function start(presets)
 	function interact()
 	{
 		var toggleBox = false;
-		//not optimized at all (will search every obstacle regardless of how far away it is)
 		for(var i = 0; i < this.obstacles.length; i++)
 		{
 			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy))	
@@ -202,50 +188,44 @@ function start(presets)
 					drawHeight = GAME_SCREEN_HEIGHT - GRID_SIZE;
 				}
 				objName = this.obstacles[i].constructor.name;
-				if(objName == "EnergyPotion")
+				switch(objName)
 				{
-					commBox.drawNewBox(this.obstacles[i], true);
-					i = getPotion(i);		
-				}
-				else if(objName == "Recipe" && !this.gameWon)
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-					win();
-				}
-				else if((objName == "Asteroid") && !this.ship.dev)
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-					hitObstacle();
-				}
-				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen")
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-				}
-				else if(objName == "DeathStar")
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-					musicPlayer.playMusic("march.mp3");
-				}
-				else if(objName == "SpaceStation"){
-					chanceGame(ship.offset_x,ship.offset_y, ship);
-				}
-				else if(objName == "AbandonedFreighter"){
-					this.ship.damage = 0;
-					commBox.drawNewBox(this.obstacles[i], true);
-					i = getFreighter(i);
-				}
-				else if ((objName == "MeteorStorm") && !this.ship.dev){
-					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
-					commBox.drawNewBox(this.obstacles[i], true);
-				}
-				else if (objName == "Planet")
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-				}
-				else if (objName == "Wormhole")
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-					hitWormhole();
+					case "EnergyPotion" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						i = getPotion(i);	
+						break;
+					case "Recipe" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						win();
+						break;
+					case "Asteroid" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						hitObstacle();
+						break;
+					case "Xeon" : case "Celeron" : case "Ryzen" : case "Planet" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						break;
+					case "DeathStar" : 
+						commBox.drawNewBox(this.obstacles[i], true);
+						musicPlayer.playMusic("march.mp3");
+						break;
+					case "SpaceStation" :
+						chanceGame(ship.offset_x,ship.offset_y, ship);
+						break;
+					case "AbandonedFreighter" :
+						this.ship.damage = 0;
+						commBox.drawNewBox(this.obstacles[i], true);
+						i = getFreighter(i);
+						break;
+					case "MeteorStorm" :
+						this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
+						commBox.drawNewBox(this.obstacles[i], true);
+						break;
+					case "Wormhole" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						hitWormhole();
+						break;
+					default : break;
 				}
 				toggleBox = true;
 			}
@@ -698,9 +678,6 @@ function start(presets)
 					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
 					obj.x += obj.xv;
 					obj.y += obj.yv;
-					//ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
-					//obj.x += obj.xv;
-					//obj.y += obj.yv;
 				}
 				else if(objName =="GenesisSaber"){
 					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
