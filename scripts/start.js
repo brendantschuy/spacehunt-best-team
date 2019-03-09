@@ -243,6 +243,11 @@ function start(presets)
 				{
 					commBox.drawNewBox(this.obstacles[i], true);
 				}
+				else if (objName == "Wormhole")
+				{
+					commBox.drawNewBox(this.obstacles[i], true);
+					hitWormhole();
+				}
 				toggleBox = true;
 			}
 		}
@@ -347,6 +352,26 @@ function start(presets)
 		{
 			window.location.reload();	//changed to be a bit more clear than location = location
 		}, 1000);
+	}
+
+	function hitWormhole()
+	{
+		if(this.randWormholes){
+			this.y = (Math.floor(Math.random() * (MAP_MAX_X + 1)));
+			this.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1)));
+		}
+		else{
+			this.y = Math.floor(MAP_MAX_Y/2);
+			this.x = Math.floor(MAP_MAX_X/2);
+		}
+		this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+		this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
+
+		this.restoreDefaults();
+
+		var audio_wormhole = new Audio('audio/wormhole.wav');
+		audio_wormhole.volume = 1;
+		audio_wormhole.play();
 	}
 	
 	function hitBadmax()
@@ -491,6 +516,11 @@ function start(presets)
 			obstacles.push(new Wormhole(MAP_MAX_X, y));
 		}
 
+		// Initialize other wormholes
+		obstacles.push(new Wormhole(1, 5));
+		obstacles.push(new Wormhole(10, 7));
+		obstacles.push(new Wormhole(7, 2));
+
 
 		this.BadMax = obstacles[0];
 
@@ -503,26 +533,42 @@ function start(presets)
 		//be able to use buttons too
 		document.getElementById("leftBtn").addEventListener("click", function()
 		{
-			ship.rotateLeft();
+			//ship.rotateLeft();
+			ship.faceLeft();
 		});
 		document.getElementById("rightBtn").addEventListener("click", function()
 		{
-			ship.rotateRight();
+			//ship.rotateRight();
+			ship.faceRight();
 		});
 		document.getElementById("upBtn").addEventListener("click", function()
 		{
-			ship.increaseDistance();
+			//ship.increaseDistance();
+			ship.faceUp();
 		});
 		document.getElementById("downBtn").addEventListener("click", function()
 		{
-			ship.decreaseDistance();
+			//ship.decreaseDistance();
+			ship.faceDown();
 		});
+		// If user presses the move button on the url, ship will move the number of spaces in
+		// the drop down menu
 		document.getElementById("moveBtn").addEventListener("click", function()
 		{
 			ship.beginMoving();
 			ship.commitMovement();
 			pursuit();
 		});
+		// This should change the value in the drop down move menu to the value of spaces from 
+		// the key board
+		/*document.getElementById("spaces").addEventListener("change", function() 
+		{
+			if(Math.floor(ship.distanceToTravel/GRID_SIZE) > 10) {
+				ship.distanceToTravel = 10 * GRID_SIZE;
+			}
+			var spaces = document.getElementById("spaces");
+			spaces.value = Math.floor(ship.distanceToTravel/GRID_SIZE);
+		});*/
 		document.getElementById("devMode").addEventListener("click", function()
 		{
 			ship.toggleDevMode();
@@ -958,4 +1004,14 @@ function save() {
 	}
 	var savedState = prompt("Enter a name for this game.")
 	localStorage.setItem(savedState, JSON.stringify(obstacles)); 
+}
+
+function moveTarget(sel) {
+	var spaces = document.getElementById("spaces");
+	ship.distanceToTravel = spaces.value * GRID_SIZE;
+	this.drawTarget();
+}
+
+function resetMoves() {
+	document.getElementById("spaces").value = "0";
 }

@@ -78,14 +78,12 @@ class Ship 	//class names capitalized per js convention
 	checkBoundary()
 	{
 		if(this.cpy >= MAP_MAX_Y || this.cpy < MAP_MIN_Y || this.cpx >= MAP_MAX_X || this.cpx < MAP_MIN_X) {
-			if(this.randWormholes == true){
-				//alert("You entered a wormhole! You will now be transported to somewhere random in space!");
-				
+			if(this.randWormholes == true){	
 				this.y = (Math.floor(Math.random() * (MAP_MAX_X + 1)));
 				this.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1)));
 			}else{
-				this.y = MAP_MIN_Y;
-				this.x = MAP_MIN_X;
+				this.y = Math.floor(MAP_MAX_Y/2);
+				this.x = Math.floor(MAP_MAX_X/2);
 			}
 
 			this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
@@ -162,11 +160,11 @@ class Ship 	//class names capitalized per js convention
 			this.supplies -= (0.003 * this.originalSupplies + 0.02 * this.supplies);
 		}
 
-
 		this.isMoving = true;
 		this.distanceGoal = this.distanceToTravel;
 	}
 
+	// Rotate for keyboard instructions
 	rotateLeft()
 	{
 		//disabling turning while moving for now, or else it gets into some pretty 
@@ -191,9 +189,83 @@ class Ship 	//class names capitalized per js convention
 		}
 	}
 
+	// Rotate for url button instructions
+	faceUp()
+	{
+		if(!this.isMoving)
+		{
+			this.angle = 0;
+		}
+	}
+
+	faceDown()
+	{
+		if(!this.isMoving)
+		{
+			this.angle = 180;
+		}
+	}
+
+	faceLeft()
+	{
+		if(!this.isMoving)
+		{
+			this.angle = 270;
+		}
+	}
+
+	faceRight()
+	{
+		if(!this.isMoving)
+		{
+			this.angle = 90;
+		}
+	}
+	
+	// Cannot move more than 10 spaces at a time
 	increaseDistance()
 	{
 		this.distanceToTravel += GRID_SIZE;
+		var spaces = Math.floor(this.distanceToTravel/GRID_SIZE);
+
+		switch(spaces){
+			case 0:
+				document.getElementById("spaces").value = "0";
+				break;
+			case 1:
+				document.getElementById("spaces").value = "1";
+				break;
+			case 2:
+				document.getElementById("spaces").value = "2";
+				break;
+			case 3:
+				document.getElementById("spaces").value = "3";
+				break;
+			case 4:
+				document.getElementById("spaces").value = "4";
+				break;
+			case 5:
+				document.getElementById("spaces").value = "5";
+				break;
+			case 6:
+				document.getElementById("spaces").value = "6";
+				break;
+			case 7:
+				document.getElementById("spaces").value = "7";
+				break;
+			case 8:
+				document.getElementById("spaces").value = "8";
+				break;
+			case 9:
+				document.getElementById("spaces").value = "9";
+				break;
+			case 10:
+				document.getElementById("spaces").value = "10";
+				break;
+			default:
+				document.getElementById("spaces").value = "10";
+				this.distanceToTravel = (GRID_SIZE*10);
+		}
 	}
 
 	decreaseDistance()
@@ -215,6 +287,47 @@ class Ship 	//class names capitalized per js convention
 		{
 			this.distanceToTravel = 0;
 		}
+
+		var spaces = Math.floor(this.distanceToTravel/GRID_SIZE);
+		switch(spaces){
+			case 0:
+				document.getElementById("spaces").value = "0";
+				break;
+			case 1:
+				document.getElementById("spaces").value = "1";
+				break;
+			case 2:
+				document.getElementById("spaces").value = "2";
+				break;
+			case 3:
+				document.getElementById("spaces").value = "3";
+				break;
+			case 4:
+				document.getElementById("spaces").value = "4";
+				break;
+			case 5:
+				document.getElementById("spaces").value = "5";
+				break;
+			case 6:
+				document.getElementById("spaces").value = "6";
+				break;
+			case 7:
+				document.getElementById("spaces").value = "7";
+				break;
+			case 8:
+				document.getElementById("spaces").value = "8";
+				break;
+			case 9:
+				document.getElementById("spaces").value = "9";
+				break;
+			case 10:
+				document.getElementById("spaces").value = "10";
+				break;
+			default:
+				document.getElementById("spaces").value = "0";
+				this.distanceToTravel = 0;
+		}
+
 	}
 
 	checkEnergy()

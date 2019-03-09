@@ -40,7 +40,17 @@ h2 {
 	text-align: center;
 }
 
-.controls-div{
+/*#left-side {
+	float: left;
+	width: 20%;
+}
+
+#right-side {
+	float: right;
+	width: 20%;
+} */
+
+.controls-div{ 
 	float: left;
 }
 
@@ -77,6 +87,10 @@ h2 {
 	margin-left: 20px;
 	margin-right: 20px;
 	margin-top: -5px;
+	/*margin-right: auto;
+	margin-left: auto;
+	float: center;
+	display: block;*/
 }
 
 .map-class, .controls-div, .game {
@@ -93,11 +107,11 @@ h2 {
 
 .dev-options-div {
 	color: white;
-	height: 260px;
+	height: 200px;
 	width: auto;
 	padding: 10px;
 	margin: 20px;
-	margin-top: 130px;
+	/*margin-top: 130px;*/
 	border-radius: 30px;
 }
 
@@ -241,14 +255,46 @@ h2 {
 	/*padding-bottom: 6px;*/
 }
 
-#controls-move {
+#move-options {
+	background: black;
+	color: white;
+	width: 150px;
+	margin-left: 64px;
+	float: center;
+}
+
+select {
+	color: white;
+	background: rgb(0,0,255);
+	font-family: Impact, Charcoal, sans-serif;
+	width: 50px;
+	text-align: center;
+	appearance: none;
+	-moz-appearance: none;
+	border: none;
+	border-radius: 10px;
+}
+
+
+
+form input[type=button] {
+	background: url("../img/move_button.png") no-repeat center center;
+	background-size: 50px 50px;
+	width: 75px;
+	height: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	border: none;
+	color: transparent;
+}
+
+/*#controls-move {
 	background: url("../img/move_button.png") no-repeat center;
 	background-size: 50px 50px;
 	width: 50px;
-	/*margin-top: 10px;*/
 	margin-left: auto;
 	margin-right: auto;
-}
+}*/
 
 #controls-GS {
 	background: url("../img/genesis_saber_button.png") no-repeat center;
