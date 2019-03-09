@@ -18,10 +18,10 @@ const SHIP_START_X = 0;	//starting position in cpx
 const SHIP_START_Y = 0;	//starting position in cpy
 
 //map dimensions:
-const MAP_MIN_X = -64;
-const MAP_MAX_X = 64;
-const MAP_MIN_Y = -64;	
-const MAP_MAX_Y = 64;
+const MAP_MIN_X = 0;
+const MAP_MAX_X = 128;
+const MAP_MIN_Y = 0;	
+const MAP_MAX_Y = 128;
 const MAP_LENGTH_X = MAP_MAX_X - MAP_MIN_X;
 const MAP_LENGTH_Y = MAP_MAX_Y - MAP_MIN_Y;
 //============================================================

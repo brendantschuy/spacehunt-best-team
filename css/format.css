@@ -1,6 +1,6 @@
 html { 
 	background-color: black;
-	background:  url("../video/background.gif") no-repeat center center fixed;
+	/*background:  url("../video/background.gif") no-repeat center center fixed;*/
 	background-size: cover;
 }
 
@@ -360,6 +360,24 @@ button span {
 	color: red;
 	padding-top: 12px;
 	padding-bottom: 1px;
+}
+
+#map-container-div
+{
+	height: 446;
+	width: 300;
+	background-color: #222222;
+	float: left;
+	overflow-y: auto;
+	padding: 10px;
+	text-align:center;
+	font-family: "Lucida Console";
+}
+
+.mapItems
+{
+	padding: 0px;
+	margin: 0px;
 }
 
 

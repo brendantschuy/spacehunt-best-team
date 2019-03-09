@@ -23,7 +23,6 @@ function start(presets)
 	this.commBox = new CommBox();
 	this.musicPlayer = new MusicPlayer();
 
-	createMap();
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
 							//on-screen buttons with in-game functionality
@@ -261,7 +260,7 @@ function start(presets)
 					drawHeight = GAME_SCREEN_HEIGHT;
 					resetHeight = true;
 					commBox.toggle = false;
-				}, 10000);
+				}, 3500);
 			}
 			resetHeight = false;
 		}
@@ -301,16 +300,20 @@ function start(presets)
 		    }		
 			wager = document.getElementById("wager").value;
 			guess = document.getElementById("guess").value;
-			if(wager > ship.currency || wager <= 0){
-				commBox.drawNewBox("You don't have that much money! Enter another amount",true,5,560);
-				canBet = false;
-			}else if(guess > 10 || guess < 1){
-				commBox.drawNewBox("A number between 1 and 10, no more and no less",true,5,560); 
-				canBet = false;
-			}else {
-				commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
+			if(!commBox.toggle){
+				if((wager > ship.currency || wager <= 0) && wager.length > 0){
+					alert(wager);
+
+					commBox.drawNewBox("You don't have that much money! Enter another amount",true,5,560);
+					canBet = false;
+				}else if((guess > 10 || guess < 1) && wager.length > 0){
+					commBox.drawNewBox("A number between 1 and 10, no more and no less",true,5,560); 
+					canBet = false;
+				}else {
+					commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
+				}
 			}
-			var result = Math.floor((Math.random() * 10) + 1);
+			//var result = Math.floor((Math.random() * 10) + 1);
 			if(!canBet){
 				removeElement("chanceGo");
 			}
@@ -324,15 +327,15 @@ function start(presets)
 	function playChanceGame(guess,wager,result){
 		if(guess == result){
 			commBox.drawNewBox("Congratulations! You guessed the right number! You get 3x your wager!",true,5,560);
-			alert("Congratulations! You guessed the right number! You get 3x your wager!");
+			//alert("Congratulations! You guessed the right number! You get 3x your wager!");
 			ship.currency += (3 * wager);
 		}else if(guess == (result-1) || guess == (result+1)){
 			commBox.drawNewBox("You were very close! Only within one. You get 1.5x your wager!",true,5,560);
-			alert("You were very close! Only within one. You get 1.5x your wager!");
+			//alert("You were very close! Only within one. You get 1.5x your wager!");
 			ship.currency += (1.5 * wager);
 		}else { 
 			commBox.drawNewBox("Not close at all. You lose.",true,5,560);
-			alert("Not close at all. You lose.");
+			//alert("Not close at all. You lose.");
 			ship.currency -= wager;
 		}
 	}
@@ -381,6 +384,7 @@ function start(presets)
 		var chance = (Math.floor(Math.random() * 3));
 		if(chance == 0){
 			commBox.drawNewBox("BAD MAX SHOT YOU DOWN!",true,5,560);
+			musicPlayer.playMusic("badmax_kill_player.wav");
 			hitObstacle();
 		}
 		if(chance == 1){
@@ -396,6 +400,7 @@ function start(presets)
 	function win()
 	{
 		//play win sound
+		musicPlayer.playMusic("find_recipe.wav");
 		setTimeout(function()
 		{
 			window.location.reload();
@@ -440,15 +445,13 @@ function start(presets)
 		this.obstacles = [];
 
 		//BadMax NEEDS to be obstacles[0]
-		//obstacles.push(new BadMax((Math.floor(Math.random() * MAP_LENGTH_X - MAP_MAX_X)+1),Math.floor(Math.random() * MAP_LENGTH_Y - MAP_MAX_Y)+1));
-
-		//obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
-		obstacles.push(new BadMax(10, 15));
+		//obstacles.push(new BadMax((Math.floor(Math.random() * MAP_MAX_X)+1),Math.floor(Math.random() * MAP_MAX_Y)+1));
+		obstacles.push(new BadMax(0, 5));
 
 		//There may only be one!
 		let isXeon = false, isCeleron = false, isRyzen = false;
 
-		if(presets)
+		if(presets.length >= 1)
 		{
 			presets.forEach(function(presetItem)
 			{
@@ -473,28 +476,37 @@ function start(presets)
 				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
 			});
 		}
+		else
+		{
+			let randoms = generateRandomObstacles();
+			randoms.forEach(function(randomItem)
+			{
+				if(randomItem.constructor.name == "Xeon")
+				{
+					if(isXeon) return;
+					isXeon = true;
+				}
+				if(randomItem.constructor.name == "Celeron")
+				{
+					if(isCeleron) return;
+					isCeleron = true;
+				}
+				if(randomItem.constructor.name == "Ryzen")
+				{
+					if(isRyzen) return;
+					isRyzen = true;
+				}
+				//alert("Preset item: " + presetItem.constructor.name);
+				obstacles.push(randomItem);
+				//alert(presetItem.x + ", " + presetItem.y);
+				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
+			});
+		}
 
-		obstacles.push(new Asteroid(9, 9));
-		obstacles.push(new Asteroid(11, 11));
-		obstacles.push(new Asteroid(6, 6));
-		obstacles.push(new Asteroid(128, 128));
-		obstacles.push(new Asteroid(64, 64));
-		obstacles.push(new Asteroid(128, 0));
-		obstacles.push(new Asteroid(0, 128));
-		obstacles.push(new Asteroid(1, 1));
-		obstacles.push(new EnergyPotion(9, 11, 200));
-		obstacles.push(new Recipe(11, 9));
-		obstacles.push(new MeteorStorm(8,10));
-		obstacles.push(new DeathStar(15, 10));
-		obstacles.push(new SpaceStation(13, 15));
-		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
-		obstacles.push(new Planet(8, 8, 1));
-		obstacles.push(new Planet(10, 8, 2));
-		obstacles.push(new Planet(5, 10, 3));
-		obstacles.push(new Planet(3, 18, 4));
-		obstacles.push(new Planet(14, 14, 5));
-		obstacles.push(new Planet(14, 10, 6));
-		obstacles.push(new Planet(12, 10, 7));
+		obstacles.push(new DeathStar(Math.floor(Math.random() * 110) + 18, Math.floor(Math.random() * 110) + 18));
+		obstacles.push(new Recipe(Math.floor(Math.random() * 110) + 18, Math.floor(Math.random() * 110) + 18));
+		obstacles.push(new DeathStar(Math.floor(Math.random() * 10), Math.floor(Math.random() *10)));
+		obstacles.push(new Recipe(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)));
 
 		//There may only be one of each of the following:
 		if(!isCeleron)
@@ -860,7 +872,7 @@ function start(presets)
 	{
 		delete obstacles[0];
 		delete this.BadMax;
-		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1);
+		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE)+1);
 		//obstacles[0] = new BadMax(10*GRID_SIZE, 15*GRID_SIZE);
 		this.BadMax = obstacles[0];
 		// just testing save, will not want to call this here 
@@ -912,7 +924,7 @@ function start(presets)
 		
 		//boolean check statement isn't working for some reason.
 		//not sure why. I tried using an int and an == and no luck.
-		var check = false;
+		//var check = false;
 		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
 			musicPlayer.playMusic("badmax.wav");
 		}

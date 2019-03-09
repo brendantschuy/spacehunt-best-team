@@ -59,3 +59,29 @@ function randomDisaster(ship){
 	}
 	//alert(event);
 }
+
+// Removes an element from the document
+//Example usage is to remove potion from map after consumption
+function removeElement(elementId) {
+    if(document.getElementById(elementId)) {
+      var element = document.getElementById(elementId);
+      element.parentNode.removeChild(element);
+    }
+}
+
+//Toggles visibility of an object
+function switchVisibility(elementId) {
+  var element = document.getElementById(elementId);
+  if(element.style.visibility == "hidden"){
+    element.style.visibility = "visible";
+  }else{
+    element.style.visibility = "hidden";
+  }
+}
+
+function elementExists(elementId) {
+    if(document.getElementById(elementId)) {
+      return true;
+    }
+    return false;
+}
