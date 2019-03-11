@@ -176,9 +176,10 @@ function menu(params)
 		moreOptionsButton.id = "moreOptionsButton";
 		moreOptionsButton.type = "button";
 		moreOptionsButton.value = "More Options";
+		moreOptionsButton.className = "button-alt";
 		moreOptionsButton.style.position = "absolute";
 		moreOptionsButton.style.top = 380 + cvsCoords.y;
-		moreOptionsButton.style.left = 200 + cvsCoords.x;
+		moreOptionsButton.style.left = 241 + cvsCoords.x;
 		moreOptionsButton.onclick = function()
 		{
 			document.body.removeChild(bkgd);
@@ -268,6 +269,7 @@ function menu(params)
 		returnMainMenuFile = document.createElement("input");
 		returnMainMenuFile.id = "returnMainMenuFile";
 		returnMainMenuFile.type = "button";
+		returnMainMenuFile.className = "button-alt";
 		returnMainMenuFile.value = "Back to Menu";
 		returnMainMenuFile.style.position = "absolute";
 		returnMainMenuFile.style.top = 430 + cvsCoords.y;
@@ -427,26 +429,29 @@ function createEditOptions()
 
 	addButton = document.createElement("input");
 	addButton.id = "clickToAddButton";
+	addButton.className = "button-alt";
 	addButton.type = "button";
 	addButton.value = "Add Item";
 	addButton.style.position = "absolute";
 	addButton.style.top = 294 + cvsCoords.y;
-	addButton.style.left = 248 + cvsCoords.x;
+	addButton.style.left = 241 + cvsCoords.x;
 	//addButton.className = "addButtons";
 	document.body.appendChild(addButton);
 
 	randomValues = document.createElement("input");
 	randomValues.id = "randomizeXYButton";
+	randomValues.className = "button-alt";
 	randomValues.type = "button";
 	randomValues.value = "Randomize";
 	randomValues.style.position = "absolute";
-	randomValues.style.top = 244 + cvsCoords.y;
-	randomValues.style.left = 258 + cvsCoords.x;
+	randomValues.style.top = 248 + cvsCoords.y;
+	randomValues.style.left = 241 + cvsCoords.x;
 	document.body.appendChild(randomValues);
 
 	returnMainMenuButton = document.createElement("input");
 	returnMainMenuButton.id = "returnMainMenuButton";
 	returnMainMenuButton.type = "button";
+	returnMainMenuButton.className = "button-alt";
 	returnMainMenuButton.value = "Back to Menu";
 	returnMainMenuButton.style.position = "absolute";
 	returnMainMenuButton.style.top = 430 + cvsCoords.y;
@@ -766,6 +771,7 @@ function moreOptions(params)
 		submitOptionsButton.id = "submitOptionsButton";
 		submitOptionsButton.type = "button";
 		submitOptionsButton.value = "Submit";
+		submitOptionsButton.className = "button-alt";
 		submitOptionsButton.style.position = "absolute";
 		submitOptionsButton.style.top = 400 + cvsCoords.y;
 		submitOptionsButton.style.left = 250 + cvsCoords.x;
