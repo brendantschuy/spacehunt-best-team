@@ -56,7 +56,6 @@ class Ship 	//class names capitalized per js convention
 	//obstacles etc would just correspond with some CP
 	updatecp(worm)
 	{
-
 		var oldcpx = this.cpx;
 		var oldcpy = this.cpy;
 		this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
@@ -71,6 +70,7 @@ class Ship 	//class names capitalized per js convention
 			}
 			this.energy -= lostEnergy;
 		}
+		updateURL();
 	}
 
 	//is out of bounds? teleports somewhere random if so
@@ -157,7 +157,7 @@ class Ship 	//class names capitalized per js convention
 	{
 		if(this.distanceToTravel > 0)	//don't use supplies if not moving
 		{
-			this.supplies -= (0.003 * this.originalSupplies + 0.02 * this.supplies);
+			this.supplies -= Math.floor(0.003 * this.originalSupplies + 0.02 * this.supplies);
 		}
 
 		this.isMoving = true;
@@ -336,7 +336,6 @@ class Ship 	//class names capitalized per js convention
 			if(this.energy <= 0){ 
 				alert("You ran out of energy! Game over.");
 				location = location;
- 
 			} 
 		}
 	}
@@ -361,12 +360,6 @@ class Ship 	//class names capitalized per js convention
 
 	toggleRandWormholesMode(){
 		this.randWormholes = !(this.randWormholes);
-		//this.randWormholes ? false : true;
-
-		/*if(this.randWormholes == true)
-			this.randWormholes = false;
-		else
-			this.randWormholes = true;*/
 	}
 
 	//restores default info about ship 
