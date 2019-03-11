@@ -584,7 +584,7 @@ function start(presets, params)
 			var spaces = document.getElementById("spaces");
 			spaces.value = Math.floor(ship.distanceToTravel/GRID_SIZE);
 		});*/
-		document.getElementById("devMode").addEventListener("click", function()
+		/*document.getElementById("devMode").addEventListener("click", function()
 		{
 			ship.toggleDevMode();
 		});
@@ -597,7 +597,7 @@ function start(presets, params)
 			scan();
 			//recipe.hidden = 0;
 			//recipe.sprite.src = "img/recipe.png";
-		});
+		});*/
 		document.getElementById("OTBBtn").addEventListener("click", function() {
 			fireLaser();
 		});
@@ -607,7 +607,7 @@ function start(presets, params)
 		document.getElementById("FDBtn").addEventListener("click", function() {
 			fugaDaemonum();
 		});
-		document.getElementById("hud").addEventListener("click", function()
+		/*document.getElementById("hud").addEventListener("click", function()
 		{
 			toggleHud();
 		});
@@ -618,7 +618,7 @@ function start(presets, params)
 		document.getElementById("bgmusic").addEventListener("click", function()
 		{
 			backgroundMusic();
-		});
+		});*/
 	}
 
 	function backgroundMusic(){
