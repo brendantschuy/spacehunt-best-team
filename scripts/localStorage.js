@@ -59,6 +59,7 @@ function initializeSavedGame()
       b = SpaceStation.cpy;
       break;
   }
+
 }
 
 
@@ -92,7 +93,7 @@ function save() {
   activeGame = true;
 }
 
-// loads game from browser 
+/*// loads game from browser 
 function load() {
   if (!supportsLocalStorage() || localStorage["activeGame"] == "false") {
     console.log("Browser does not support localStorage!");
@@ -101,7 +102,7 @@ function load() {
   let gameToLoad = prompt("Which game do you want to load?");  
   let gameState = JSON.parse(localStorage.getItem(gameToLoad));
   return gameState;
-}
+}*/
 
 // clears entire storage (might not need as separate function)
 function clearAll() {

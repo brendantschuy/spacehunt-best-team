@@ -392,6 +392,6 @@ function load() {
 	  return false; 
 	}
 	let gameToLoad = prompt("Which game do you want to load?");  
-	let gameState = JSON.parse(localStorage.getItem(gameToLoad));
+	let gameState = JSON.parse(localStorage.getItem("gameToLoad"));
 	return gameState;
   }
