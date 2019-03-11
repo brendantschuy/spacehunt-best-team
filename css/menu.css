@@ -8,7 +8,7 @@
 	height: 100px;
 	width: 100px;
 	left: 400px;
-	top: 180px;
+	top: 130px;
 }
 
 .addButtons
@@ -35,4 +35,24 @@
 {
 	position: absolute;
 	height: 50;
+}
+
+.coordCaption
+{
+	color: white;
+}
+
+#addItemNameTag
+{
+	color: white;
+}
+
+#returnToMainMenuText
+{
+	color: white;
+}
+
+.CBoxCaptions
+{
+	color: white;
 }

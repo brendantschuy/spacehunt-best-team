@@ -5,15 +5,18 @@
 var explosionSound;
 var drawHeight = GAME_SCREEN_HEIGHT;
 
-function start(presets)
+function start(presets, params)
 {
+	setParameters(params);
+	this.params = params;
+
 	var resetHeight = true;
 
 	//this.presets = presets;
 	this.gameOver = false;
 	this.gameWon = false;
-	this.displayHud = true; //document.getElementById("hud").checked;
-	this.speedRun = document.getElementById("speedrun").checked;
+	//this.displayHud = true; //document.getElementById("hud").checked;
+	//this.speedRun = document.getElementById("speedrun").checked;
 	//var explosionSound = new sound("explosion.mp3");
 
 	//for debugging purposes
@@ -30,11 +33,27 @@ function start(presets)
 	//this section handles user input
 	document.onkeydown = getInput;
 
+	function setParameters(params)
+	{
+		this.map_max_x = params[0];
+		this.map_max_y = params[1];
+		this.starting_x = params[2];
+		this.starting_y = params[3];
+		//params[4] (immortality) is handled in initializeObjects()
+		if(params[5] == true)
+		{
+			backgroundMusic();
+		}
+		//params[6] (randWormholes) is handled in initializeObjects()
+		this.displayHud = params[7];
+		this.speedRun = params[8];
+	}
+
 	//this function goes off several times per second
 	function drawFrame()
 	{
 		//allows toggling of HUD
-		if(document.getElementById("hud").checked == true)
+		if(this.displayHud)
 		{
 			writeHud();
 		}
@@ -340,12 +359,12 @@ function start(presets)
 	function hitWormhole()
 	{
 		if(this.ship.randWormholes == true){
-			this.ship.y = (Math.floor(Math.random() * (MAP_MAX_X + 1))) * GRID_SIZE;
-			this.ship.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1))) * GRID_SIZE;
+			this.ship.y = (Math.floor(Math.random() * (map_max_x + 1))) * GRID_SIZE;
+			this.ship.x = (Math.floor(Math.random() * (map_max_y + 1))) * GRID_SIZE;
 		}
 		else{
-			this.ship.y = Math.floor(MAP_MAX_Y/2) * GRID_SIZE;
-			this.ship.x = Math.floor(MAP_MAX_X/2) * GRID_SIZE;
+			this.ship.y = Math.floor(map_max_y/2) * GRID_SIZE;
+			this.ship.x = Math.floor(map_max_x/2) * GRID_SIZE;
 		}
 
 		this.ship.cpx = Math.floor((this.ship.x - SHIP_WIDTH) / GRID_SIZE) + 1;
@@ -419,13 +438,15 @@ function start(presets)
 		this.ctx = cvs.getContext('2d');
 
 		//create ship
-		this.ship = new Ship();
+		this.ship = new Ship(starting_x, starting_y);
+		ship.dev = this.params[4];
+		ship.randWormholes = this.params[6];
 		this.target = new Target();
 
 		this.obstacles = [];
 
 		//BadMax NEEDS to be obstacles[0]
-		//obstacles.push(new BadMax((Math.floor(Math.random() * MAP_MAX_X)+1),Math.floor(Math.random() * MAP_MAX_Y)+1));
+		//obstacles.push(new BadMax((Math.floor(Math.random() * map_max_x)+1),Math.floor(Math.random() * map_max_y)+1));
 		obstacles.push(new BadMax(0, 5));
 
 		//There may only be one!
@@ -458,7 +479,7 @@ function start(presets)
 		}
 		else
 		{
-			let randoms = generateRandomObstacles();
+			let randoms = generateRandomObstacles(map_max_x, map_max_y);
 			randoms.forEach(function(randomItem)
 			{
 				if(randomItem.constructor.name == "Xeon")
@@ -483,10 +504,10 @@ function start(presets)
 			});
 		}
 
-		obstacles.push(new DeathStar(Math.floor(Math.random() * 110) + 18, Math.floor(Math.random() * 110) + 18));
-		obstacles.push(new Recipe(Math.floor(Math.random() * 110) + 18, Math.floor(Math.random() * 110) + 18));
-		obstacles.push(new DeathStar(Math.floor(Math.random() * 10), Math.floor(Math.random() *10)));
-		obstacles.push(new Recipe(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)));
+		obstacles.push(new DeathStar(Math.floor(Math.random() * 0.9 * map_max_x + 0.1 * map_max_x), Math.floor(Math.random() * 0.9 * map_max_y + 0.1 * map_max_y)));
+		obstacles.push(new Recipe(Math.floor(Math.random() * 0.9 * map_max_x + 0.1 * map_max_x), Math.floor(Math.random() * 0.9 * map_max_y + 0.1 * map_max_y)));
+		obstacles.push(new DeathStar(Math.floor(Math.random() * 0.1 * map_max_x), Math.floor(Math.random() * 0.1 * map_max_y)));
+		//obstacles.push(new Recipe(Math.floor(Math.random() * 0.1 * map_max_x), Math.floor(Math.random() * 0.1 * map_max_y)));
 
 		//There may only be one of each of the following:
 		if(!isCeleron)
@@ -497,15 +518,15 @@ function start(presets)
 			obstacles.push(new Ryzen(18, 18));
 
 		// Initialize Boarder Wormholes
-		for(var x = MAP_MIN_X - 1; x < MAP_MAX_X; x++){
+		for(var x = MAP_MIN_X - 1; x <= map_max_x; x++){
 			// Creates wormholes for the top and bottom rim of the boundary
 			obstacles.push(new Wormhole(x, MAP_MIN_Y - 1));
-			obstacles.push(new Wormhole(x, MAP_MAX_Y));
+			obstacles.push(new Wormhole(x, map_max_y));
 		}
-		for(var y = MAP_MIN_Y; y < MAP_MAX_Y; y++){
+		for(var y = MAP_MIN_Y; y < map_max_y; y++){
 			// Creates wormholes for left and right rim of the boundary
 			obstacles.push(new Wormhole(MAP_MIN_X - 1, y));
-			obstacles.push(new Wormhole(MAP_MAX_X, y));
+			obstacles.push(new Wormhole(map_max_x, y));
 		}
 
 		// Initialize other wormholes

@@ -5,7 +5,7 @@
 class Ship 	//class names capitalized per js convention
 {
 	//currently, CPX = X and CPY = Y but that can change if angles allowed are lower		
-	constructor()
+	constructor(start_x, start_y)
 	{	
 		this.dev = false; //tag for toggling developer options like never dying
 		//can be improved probably
@@ -40,12 +40,12 @@ class Ship 	//class names capitalized per js convention
 				These indicate the distance of the ship from the center of the square
 				in which it currently is located, in pixels. The ONLY use for these is
 				to draw the gridlines in the correct location as the ship moves.*/
-		this.x = 0;						//position on map, in pixels
-		this.y = 0;						//position on map, in pixels
 		this.offset_x = 0;					//distance from center of square
 		this.offset_y = 0;					//distance from center of square
-		this.cpx = SHIP_START_X;						//celestial position
-		this.cpy = SHIP_START_Y;
+		this.cpx = start_x;						//celestial position
+		this.cpy = start_y;
+		this.x = this.cpx * GRID_SIZE;						//position on map, in pixels
+		this.y = this.cpy * GRID_SIZE;						//position on map, in pixels
 		this.damage = 0;						//celestial position
 
 		//ship graphics

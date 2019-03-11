@@ -9,7 +9,7 @@ Menu produces a basic menu with three options:
 	- Load (load from file)
 
 ***************************/
-function menu()
+function menu(params)
 {
 	var cvs = document.getElementById("gameScreen");
 	var cvsCoords = getAbsPosition(cvs);
@@ -18,9 +18,21 @@ function menu()
 	setUpMenu();
 
 	//If statement is important to not overwrite the array
+	//obstacles in the game
 	if(!this.presets)
 	{
 		this.presets = [];
+	}
+
+	//parameters for the game
+	if(!this.params)
+	{
+		this.params = [];
+	}
+	else
+	{
+		this.params = params;
+		//alert(this.params);
 	}
 
 	function getInput(e)
@@ -39,8 +51,14 @@ function menu()
 		}
 		else if(e.keyCode == 78)	//N
 		{
+			if(!params)
+			{
+				params = setDefaultParameters();
+			}
+			removeOptions();
+			//alert(params);
 			clearMenu();
-			start(presets);
+			start(presets, params);
 		}
 		else
 		{
@@ -118,7 +136,7 @@ function menu()
 
 	//Creates edit menu options
 	//This will be split up into a few different functions soonTM
-	function editMapMenu()
+	function editMapMenu(params)
 	{
 		bkgd = document.createElement("img");
 		bkgd.className = "menu_bkgd";
@@ -154,8 +172,24 @@ function menu()
 			document.getElementById("coordInput_y").value = Math.floor(Math.random() * MAP_MAX_Y);
 		}
 
+		moreOptionsButton = document.createElement("input");
+		moreOptionsButton.id = "moreOptionsButton";
+		moreOptionsButton.type = "button";
+		moreOptionsButton.value = "More Options";
+		moreOptionsButton.style.position = "absolute";
+		moreOptionsButton.style.top = 380 + cvsCoords.y;
+		moreOptionsButton.style.left = 200 + cvsCoords.x;
+		moreOptionsButton.onclick = function()
+		{
+			document.body.removeChild(bkgd);
+			moreOptions();
+			clearEdit();
+		}
+		document.body.appendChild(moreOptionsButton);
+
 		return this.presets;
 	}
+
 
 	function clearMenu()
 	{
@@ -223,13 +257,32 @@ function menu()
 		fileInput.style.left = cvsCoords.x + 200;
 		document.body.appendChild(fileInput);
 
-		returnToMainMenu = document.createElement("P");
-		returnToMainMenu.appendChild(document.createTextNode("Press \"Q\" to return to main menu."));
-		returnToMainMenu.id = "returnToMainMenuText";
-		returnToMainMenu.style.position = "absolute";
-		returnToMainMenu.style.top = 410 + cvsCoords.y;
-		returnToMainMenu.style.left = 200 + cvsCoords.x;
-		document.body.appendChild(returnToMainMenu);
+		returnMainMenuText = document.createElement("P");
+		returnMainMenuText.appendChild(document.createTextNode("Press \"Q\" to return to main menu."));
+		returnMainMenuText.id = "returnMainMenuTextText";
+		returnMainMenuText.style.position = "absolute";
+		returnMainMenuText.style.top = 410 + cvsCoords.y;
+		returnMainMenuText.style.left = 200 + cvsCoords.x;
+		document.body.appendChild(returnMainMenuText);
+
+		returnMainMenuFile = document.createElement("input");
+		returnMainMenuFile.id = "returnMainMenuFile";
+		returnMainMenuFile.type = "button";
+		returnMainMenuFile.value = "Back to Menu";
+		returnMainMenuFile.style.position = "absolute";
+		returnMainMenuFile.style.top = 430 + cvsCoords.y;
+		returnMainMenuFile.style.left = 5 + cvsCoords.x;
+		document.body.appendChild(returnMainMenuFile);
+		returnMainMenuFile.onclick = function()
+		{
+			//document.body.removeChild(main_bkgd);
+			menu();
+			//deleteFileMenuOptions();
+			document.body.removeChild(bkgd);
+			document.body.removeChild(fileInput);
+			document.body.removeChild(returnMainMenuFile);
+			document.body.removeChild(returnMainMenuText);
+		}
 
 
 		new_presets = [];	//we want to overwrite whatever was previously in the obstacles array
@@ -269,23 +322,8 @@ function getInputEditMenu(e)
 	{
 		document.body.removeChild(bkgd);
 		menu();
-		for(i = 0; i < 7; i++)
-		{
-			addItemButton = document.getElementById("addItem" + i + 1);
-			document.body.removeChild(addItemButton);
-		}
-		document.body.removeChild(xCoord);
-		document.body.removeChild(yCoord);
-		document.body.removeChild(clickToAddButton);
-		document.body.removeChild(xCaption);
-		document.body.removeChild(yCaption);
-		document.body.removeChild(randomValues);
-		document.body.removeChild(returnToMainMenu);
-		if(document.getElementById("addItemNameTag"))
-		{
-			document.body.removeChild(addItemNameTag);
-			document.body.removeChild(addItemImage);
-		}
+		clearEdit();
+
 
 		/*presets.forEach(function(thing)
 		{
@@ -299,7 +337,7 @@ function getInputFileMenu(e)
 {
 	if(e.keyCode == 81 || e.keyCode == 27)	//q or <esc>
 	{
-		document.body.removeChild(main_bkgd);
+		//document.body.removeChild(main_bkgd);
 		menu();
 		//deleteFileMenuOptions();
 
@@ -332,7 +370,7 @@ function createEditOptions()
 		addItem.type = "button";
 		addItem.value = addables[i];
 		addItem.style.position = "absolute";
-		addItem.style.top = cvsCoords.y + 20 + 60 * i;
+		addItem.style.top = cvsCoords.y + 5 + 60 * i;
 		addItem.style.left = cvsCoords.x + 20;
 		addItem.className = "addButtons";
 		addItem.onclick = function()
@@ -348,7 +386,8 @@ function createEditOptions()
 	xCoord.className = "coordInput";
 	xCoord.id = "coordInput_x";
 	xCoord.style.position = "absolute";
-	xCoord.style.top = 304 + cvsCoords.y;
+	xCoord.style.color = "black";
+	xCoord.style.top = 204 + cvsCoords.y;
 	xCoord.style.left = 228 + cvsCoords.x;
 	xCoord.style.width = 50;
 	xCoord.style.font = "30px Arial";
@@ -359,7 +398,8 @@ function createEditOptions()
 	yCoord.className = "coordInput";
 	yCoord.id = "coordInput_y";
 	yCoord.style.position = "absolute";
-	yCoord.style.top = 304 + cvsCoords.y;
+	yCoord.style.color = "black";
+	yCoord.style.top = 204 + cvsCoords.y;
 	yCoord.style.left = 303 + cvsCoords.x;
 	yCoord.style.width = 50;
 	yCoord.style.font = "30px Arial";
@@ -368,9 +408,9 @@ function createEditOptions()
 	editHeaderX = document.createElement("p");
 	editHeaderX.appendChild(document.createTextNode("x"));
 	editHeaderX.id = "xCaption";
-	//editHeader.text = "Edit Game";
+	editHeaderX.className = "coordCaption";
 	editHeaderX.style.position = "absolute";
-	editHeaderX.style.top = 264 + cvsCoords.y;
+	editHeaderX.style.top = 164 + cvsCoords.y;
 	editHeaderX.style.left = 248 + cvsCoords.x;
 	//editHeader.appendChild(t);
 	document.body.appendChild(editHeaderX);
@@ -378,9 +418,9 @@ function createEditOptions()
 	editHeaderY = document.createElement("p");
 	editHeaderY.appendChild(document.createTextNode("y"));
 	editHeaderY.id = "yCaption";
-	//editHeader.text = "Edit Game";
+	editHeaderY.className = "coordCaption";
 	editHeaderY.style.position = "absolute";
-	editHeaderY.style.top = 264 + cvsCoords.y;
+	editHeaderY.style.top = 164 + cvsCoords.y;
 	editHeaderY.style.left = 323 + cvsCoords.x;
 	//editHeader.appendChild(t);
 	document.body.appendChild(editHeaderY);
@@ -390,7 +430,7 @@ function createEditOptions()
 	addButton.type = "button";
 	addButton.value = "Add Item";
 	addButton.style.position = "absolute";
-	addButton.style.top = 394 + cvsCoords.y;
+	addButton.style.top = 294 + cvsCoords.y;
 	addButton.style.left = 248 + cvsCoords.x;
 	//addButton.className = "addButtons";
 	document.body.appendChild(addButton);
@@ -400,17 +440,24 @@ function createEditOptions()
 	randomValues.type = "button";
 	randomValues.value = "Randomize";
 	randomValues.style.position = "absolute";
-	randomValues.style.top = 344 + cvsCoords.y;
+	randomValues.style.top = 244 + cvsCoords.y;
 	randomValues.style.left = 258 + cvsCoords.x;
 	document.body.appendChild(randomValues);
 
-	returnToMainMenu = document.createElement("P");
-	returnToMainMenu.appendChild(document.createTextNode("Press \"Q\" to return to main menu."));
-	returnToMainMenu.id = "returnToMainMenuText";
-	returnToMainMenu.style.position = "absolute";
-	returnToMainMenu.style.top = 410 + cvsCoords.y;
-	returnToMainMenu.style.left = 200 + cvsCoords.x;
-	document.body.appendChild(returnToMainMenu);
+	returnMainMenuButton = document.createElement("input");
+	returnMainMenuButton.id = "returnMainMenuButton";
+	returnMainMenuButton.type = "button";
+	returnMainMenuButton.value = "Back to Menu";
+	returnMainMenuButton.style.position = "absolute";
+	returnMainMenuButton.style.top = 430 + cvsCoords.y;
+	returnMainMenuButton.style.left = 5 + cvsCoords.x;
+	returnMainMenuButton.onclick = function()
+	{
+		document.body.removeChild(bkgd);
+		menu();
+		clearEdit();
+	}
+	document.body.appendChild(returnMainMenuButton);	
 }
 
 //dynamically changes what is on screen when adding objects
@@ -426,7 +473,7 @@ function writeAddItemName(val)
 	addItemNameTag.appendChild(document.createTextNode(val));
 	addItemNameTag.id = "addItemNameTag";
 	addItemNameTag.style.position = "absolute";
-	addItemNameTag.style.top = 54 + cvsCoords.y;
+	addItemNameTag.style.top = 4 + cvsCoords.y;
 	addItemNameTag.style.left = 248 + cvsCoords.x;
 	document.body.appendChild(addItemNameTag);
 
@@ -437,7 +484,7 @@ function writeAddItemName(val)
 	addItemImage = document.createElement("img");
 	addItemImage.id = "addItemImage";
 	addItemImage.style.position = "absolute";
-	addItemImage.style.top = 104 + cvsCoords.y;
+	addItemImage.style.top = 44 + cvsCoords.y;
 	addItemImage.style.left = 248 + cvsCoords.x;
 	addItemImage.src = "img/" + val + ".png";
 	if(val == "Space Station")
@@ -469,4 +516,359 @@ function load() {
 	let gameState = JSON.parse(localStorage.getItem(gameToLoad));
 	return gameState;
 }
+
+function clearEdit()
+{
+	for(i = 0; i < 7; i++)
+	{
+		addItemButton = document.getElementById("addItem" + i + 1);
+		document.body.removeChild(addItemButton);
+	}
+	document.body.removeChild(xCoord);
+	document.body.removeChild(yCoord);
+	document.body.removeChild(clickToAddButton);
+	document.body.removeChild(xCaption);
+	document.body.removeChild(yCaption);
+	document.body.removeChild(randomValues);
+	document.body.removeChild(returnMainMenuButton);
+	document.body.removeChild(moreOptionsButton);
+	if(document.getElementById("addItemNameTag"))
+	{
+		document.body.removeChild(addItemNameTag);
+		document.body.removeChild(addItemImage);
+	}
+}
+
+function moreOptions(params)
+{
+
+	let cvsCoords = getAbsPosition(document.getElementById("gameScreen"));
+	bkgd = document.createElement("img");
+	bkgd.className = "menu_bkgd";
+	bkgd.id = "moreOptionsBkgd";
+	bkgd.src = "img/menu_screen_2.png";
+	bkgd.style.left = cvsCoords.x;
+	bkgd.style.top = cvsCoords.y;
+	document.body.appendChild(bkgd);
+
+    if(!this.retParams)
+   	{
+		this.retParams = [];
+	}
+
+	document.onkeydown = getInputMOMenu;
+
+		//deleteMainMenuOptions();
+	createMOOptions();
+
+	//return gameOptions;
+
+	function createMOOptions()
+	{
+		let cvsCoords = getAbsPosition(document.getElementById("gameScreen"));
+
+		devOptionsCBox = document.createElement("input");
+		devOptionsCBox.id = "devOptionsCBox";
+		devOptionsCBox.type = "checkbox";
+		devOptionsCBox.value = "Back to Menu";
+		devOptionsCBox.style.position = "absolute";
+		devOptionsCBox.style.top = 300 + cvsCoords.y;
+		devOptionsCBox.style.left = 50 + cvsCoords.x;
+		devOptionsCBox.onclick = function()
+		{
+			/*document.body.removeChild(bkgd);
+			menu();
+			clearEdit();*/
+		}
+		document.body.appendChild(devOptionsCBox);	
+
+		randWormholeCBox = document.createElement("input");
+		randWormholeCBox.id = "randWormholeCBox";
+		randWormholeCBox.type = "checkbox";
+		randWormholeCBox.value = "Back to Menu";
+		randWormholeCBox.style.position = "absolute";
+		randWormholeCBox.style.top = 350 + cvsCoords.y;
+		randWormholeCBox.style.left = 50 + cvsCoords.x;
+		randWormholeCBox.onclick = function()
+		{
+			/*document.body.removeChild(bkgd);
+			menu();
+			clearEdit();*/
+		}
+		document.body.appendChild(randWormholeCBox);	
+
+		bgMusicCBox = document.createElement("input");
+		bgMusicCBox.id = "bgMusicCBox";
+		bgMusicCBox.type = "checkbox";
+		bgMusicCBox.value = "Back to Menu";
+		bgMusicCBox.style.position = "absolute";
+		bgMusicCBox.style.top = 400 + cvsCoords.y;
+		bgMusicCBox.style.left = 50 + cvsCoords.x;
+		bgMusicCBox.onclick = function()
+		{
+			/*document.body.removeChild(bkgd);
+			menu();
+			clearEdit();*/
+		}
+		document.body.appendChild(bgMusicCBox);	
+
+		toggleHudCBox = document.createElement("input");
+		toggleHudCBox.id = "toggleHudCBox";
+		toggleHudCBox.type = "checkbox";
+		toggleHudCBox.value = "Back to Menu";
+		toggleHudCBox.style.position = "absolute";
+		toggleHudCBox.style.top = 300 + cvsCoords.y;
+		toggleHudCBox.style.left = 250 + cvsCoords.x;
+		toggleHudCBox.onclick = function()
+		{
+			/*document.body.removeChild(bkgd);
+			menu();
+			clearEdit();*/
+		}
+		document.body.appendChild(toggleHudCBox);	
+
+		speedRunCBox = document.createElement("input");
+		speedRunCBox.id = "speedRunCBox";
+		speedRunCBox.type = "checkbox";
+		speedRunCBox.value = "Back to Menu";
+		speedRunCBox.style.position = "absolute";
+		speedRunCBox.style.top = 350 + cvsCoords.y;
+		speedRunCBox.style.left = 250 + cvsCoords.x;
+		speedRunCBox.onclick = function()
+		{
+			/*document.body.removeChild(bkgd);
+			menu();
+			clearEdit();*/
+		}
+		document.body.appendChild(speedRunCBox);	
+
+		devOptionsCBoxCaption = document.createElement("p");
+		devOptionsCBoxCaption.appendChild(document.createTextNode("Immortality"));
+		devOptionsCBoxCaption.id = "devOptionsCBoxCaption";
+		devOptionsCBoxCaption.className = "CBoxCaptions";
+		devOptionsCBoxCaption.style.position = "absolute";
+		devOptionsCBoxCaption.style.top = 285 + cvsCoords.y;
+		devOptionsCBoxCaption.style.left = 75 + cvsCoords.x;
+		document.body.appendChild(devOptionsCBoxCaption);
+
+		randWormholesCBoxCaption = document.createElement("p");
+		randWormholesCBoxCaption.appendChild(document.createTextNode("Random Wormholes"));
+		randWormholesCBoxCaption.id = "randWormholesCBoxCaption";
+		randWormholesCBoxCaption.className = "CBoxCaptions";
+		randWormholesCBoxCaption.style.position = "absolute";
+		randWormholesCBoxCaption.style.top = 335 + cvsCoords.y;
+		randWormholesCBoxCaption.style.left = 75 + cvsCoords.x;
+		document.body.appendChild(randWormholesCBoxCaption);
+
+		bgMusicCBoxCaption = document.createElement("p");
+		bgMusicCBoxCaption.appendChild(document.createTextNode("Background Music"));
+		bgMusicCBoxCaption.id = "bgMusicCBoxCaption";
+		bgMusicCBoxCaption.className = "CBoxCaptions";
+		bgMusicCBoxCaption.style.position = "absolute";
+		bgMusicCBoxCaption.style.top = 385 + cvsCoords.y;
+		bgMusicCBoxCaption.style.left = 75 + cvsCoords.x;
+		document.body.appendChild(bgMusicCBoxCaption);
+
+		toggleHudCBoxCaption = document.createElement("p");
+		toggleHudCBoxCaption.appendChild(document.createTextNode("Toggle HUD"));
+		toggleHudCBoxCaption.id = "toggleHudCBoxCaption";
+		toggleHudCBoxCaption.className = "CBoxCaptions";
+		toggleHudCBoxCaption.style.position = "absolute";
+		toggleHudCBoxCaption.style.top = 285 + cvsCoords.y;
+		toggleHudCBoxCaption.style.left = 275 + cvsCoords.x;
+		document.body.appendChild(toggleHudCBoxCaption);
+
+		speedRunModeCBoxCaption = document.createElement("p");
+		speedRunModeCBoxCaption.appendChild(document.createTextNode("SpeedRun Mode"));
+		speedRunModeCBoxCaption.id = "speedRunModeCBoxCaption";
+		speedRunModeCBoxCaption.className = "CBoxCaptions";
+		speedRunModeCBoxCaption.style.position = "absolute";
+		speedRunModeCBoxCaption.style.top = 335 + cvsCoords.y;
+		speedRunModeCBoxCaption.style.left = 275 + cvsCoords.x;
+		document.body.appendChild(speedRunModeCBoxCaption);
+
+		boardSizeInputCaption = document.createElement("p");
+		boardSizeInputCaption.appendChild(document.createTextNode("Board Size (x, y)"));
+		boardSizeInputCaption.id = "boardSizeInputCaption";
+		boardSizeInputCaption.className = "CBoxCaptions";
+		boardSizeInputCaption.style.position = "absolute";
+		boardSizeInputCaption.style.top = 75 + cvsCoords.y;
+		boardSizeInputCaption.style.left = 165 + cvsCoords.x;
+		document.body.appendChild(boardSizeInputCaption);
+
+		startingPositionInputCaption = document.createElement("p");
+		startingPositionInputCaption.appendChild(document.createTextNode("Starting Position (x, y)"));
+		startingPositionInputCaption.id = "startingPositionInputCaption";
+		startingPositionInputCaption.className = "CBoxCaptions";
+		startingPositionInputCaption.style.position = "absolute";
+		startingPositionInputCaption.style.top = 175 + cvsCoords.y;
+		startingPositionInputCaption.style.left = 145 + cvsCoords.x;
+		document.body.appendChild(startingPositionInputCaption);
+
+		boardSizeInputX = document.createElement("input");
+		boardSizeInputX.type = "text";
+		boardSizeInputX.className = "coordInput";
+		boardSizeInputX.id = "boardSizeInputX";
+		boardSizeInputX.value = 128;
+		boardSizeInputX.style.position = "absolute";
+		boardSizeInputX.style.color = "black";
+		boardSizeInputX.style.top = 130 + cvsCoords.y;
+		boardSizeInputX.style.left = 135 + cvsCoords.x;
+		boardSizeInputX.style.width = 70;
+		boardSizeInputX.style.font = "30px Arial";
+		boardSizeInputX.style.textAlign = "center";
+		document.body.appendChild(boardSizeInputX);	
+
+		boardSizeInputY = document.createElement("input");
+		boardSizeInputY.type = "text";
+		boardSizeInputY.className = "coordInput";
+		boardSizeInputY.id = "boardSizeInputY";
+		boardSizeInputY.value = 128;
+		boardSizeInputY.style.position = "absolute";
+		boardSizeInputY.style.color = "black";
+		boardSizeInputY.style.top = 130 + cvsCoords.y;
+		boardSizeInputY.style.left = 235 + cvsCoords.x;
+		boardSizeInputY.style.width = 70;
+		boardSizeInputY.style.font = "30px Arial";
+		boardSizeInputY.style.textAlign = "center";
+		document.body.appendChild(boardSizeInputY);	
+
+		startingPositionInputX = document.createElement("input");
+		startingPositionInputX.type = "text";
+		startingPositionInputX.className = "coordInput";
+		startingPositionInputX.id = "startingPositionInputX";
+		startingPositionInputX.value = 0;
+		startingPositionInputX.style.position = "absolute";
+		startingPositionInputX.style.color = "black";
+		startingPositionInputX.style.top = 230 + cvsCoords.y;
+		startingPositionInputX.style.left = 135 + cvsCoords.x;
+		startingPositionInputX.style.width = 70;
+		startingPositionInputX.style.font = "30px Arial";
+		startingPositionInputX.style.textAlign = "center";
+		document.body.appendChild(startingPositionInputX);	
+
+		startingPositionInputY = document.createElement("input");
+		startingPositionInputY.type = "text";
+		startingPositionInputY.className = "coordInput";
+		startingPositionInputY.id = "startingPositionInputY";
+		startingPositionInputY.value = 0;
+		startingPositionInputY.style.position = "absolute";
+		startingPositionInputY.style.color = "black";
+		startingPositionInputY.style.top = 230 + cvsCoords.y;
+		startingPositionInputY.style.left = 235 + cvsCoords.x;
+		startingPositionInputY.style.width = 70;
+		startingPositionInputY.style.font = "30px Arial";
+		startingPositionInputY.style.textAlign = "center";
+		document.body.appendChild(startingPositionInputY);	
+
+
+		submitOptionsButton = document.createElement("input");
+		submitOptionsButton.id = "submitOptionsButton";
+		submitOptionsButton.type = "button";
+		submitOptionsButton.value = "Submit";
+		submitOptionsButton.style.position = "absolute";
+		submitOptionsButton.style.top = 400 + cvsCoords.y;
+		submitOptionsButton.style.left = 250 + cvsCoords.x;
+		document.body.appendChild(submitOptionsButton);	
+		submitOptionsButton.onclick = function()
+		{
+			changeParams();
+			menu(retParams);
+			removeOptions();
+		}
+	}
+
+	function changeParams()
+	{
+		//alert(document.getElementById("boardSizeInputX").value);
+		var bsx = document.getElementById("boardSizeInputX").value;
+		var bsy = document.getElementById("boardSizeInputY").value;
+
+		var spx = document.getElementById("startingPositionInputX").value;
+		var spy = document.getElementById("startingPositionInputY").value;
+
+		var immortalityTrue = document.getElementById("devOptionsCBox").checked;	//this is a BOOLEAN T/F not 1/0
+		var bgMusicTrue = document.getElementById("bgMusicCBox").checked;
+		var randWormholeTrue = document.getElementById("randWormholeCBox").checked;
+		var hudTrue = document.getElementById("toggleHudCBox").checked;
+		var speedRunTrue = document.getElementById("speedRunCBox").checked;
+		if(spx > bsx || spx < 0 || spy > bsy || spy < 0)
+		{
+			alert("Invalid starting position entered. Must be less than board size and greater than zero.");
+		}
+		else if(bsx < 0 || bsx > 1000 || bsy < 0 || bsy > 1000)
+		{
+			alert("Invalid board size entered. Must be less than 1000 and greater than zero.");
+		}
+		else
+		{
+			this.retParams[0] = bsx;
+			this.retParams[1] = bsy;
+			this.retParams[2] = spx;
+			this.retParams[3] = spy;
+			this.retParams[4] = immortalityTrue;
+			this.retParams[5] = bgMusicTrue;
+			this.retParams[6] = randWormholeTrue;
+			this.retParams[7] = hudTrue;
+			this.retParams[8] = speedRunTrue;
+		}
+
+		//alert(this.retParams);
+	}
+
+	function getInputMOMenu(e)
+	{
+		if(e.keyCode == 81)	//Q
+		{
+			menu(retParams);
+			removeOptions();
+		}
+	}
+}
+
+function removeOptions()
+{
+	if(!document.getElementById("boardSizeInputX"))
+		return;
+	document.body.removeChild(boardSizeInputX);
+	document.body.removeChild(boardSizeInputY);
+	document.body.removeChild(startingPositionInputX);
+	document.body.removeChild(startingPositionInputY);
+	document.body.removeChild(devOptionsCBox);
+	document.body.removeChild(bgMusicCBox);
+	document.body.removeChild(randWormholeCBox);
+	document.body.removeChild(toggleHudCBox);
+	document.body.removeChild(speedRunCBox);
+	document.body.removeChild(submitOptionsButton);
+	document.body.removeChild(bkgd);
+	document.body.removeChild(startingPositionInputCaption);
+	document.body.removeChild(boardSizeInputCaption);
+	document.body.removeChild(devOptionsCBoxCaption);
+	document.body.removeChild(toggleHudCBoxCaption);
+	document.body.removeChild(speedRunModeCBoxCaption);
+	document.body.removeChild(bgMusicCBoxCaption);
+	document.body.removeChild(randWormholesCBoxCaption);
+}
+
+function setDefaultParameters()
+{
+	defaults = [];
+	defaults[0] = 128;
+	defaults[1] = 128;
+	defaults[2] = 0;
+	defaults[3] = 0;
+	defaults[4] = false;	//immortal
+	defaults[5] = false;	//bgm
+	defaults[6] = false;	//random wormhole
+	defaults[7] = false;	//hud
+	defaults[8] = false;	//speedrun
+
+	return defaults;
+}
+
+
+
+
+
+
 
