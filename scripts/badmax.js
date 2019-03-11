@@ -4,12 +4,12 @@
 
 class BadMax
 {
-	constructor(x, y)
+	constructor(cpx, cpy)
 	{
-		this.x = x-(x%GRID_SIZE);
-		this.y = y-(y%GRID_SIZE);
-		this.cpx = this.x/GRID_SIZE;
-		this.cpy = this.y/GRID_SIZE;
+		this.x = cpx*GRID_SIZE;
+		this.y = cpy*GRID_SIZE;
+		this.cpx = cpx;
+		this.cpy = cpy;
 
 		this.visible = true;
 		this.addToMap = true;

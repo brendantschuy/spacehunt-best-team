@@ -42,20 +42,46 @@ function makeitRain(){
 	meteor.style.pointerEvents = "none"; //makes it unclickable so you can click buttons still lol
 
 	document.body.appendChild(meteor);
-	setTimeout(function(){removeElement("meteor");tookDamage = false;},500); //remove element from celestialmap.js
+	setTimeout(function()
+	{
+		document.body.removeChild(meteor);
+		tookDamage = false;
+	},1000); //remove element from celestialmap.js
 }
 
 function randomDisaster(ship){
 	var event = (Math.floor(Math.random() * 100) % 5) + 1; //20% each case
 	switch(event){
-		case 4:
-			ship.supplies -= (ship.supplies / 20);
-			break;
 		case 5:
-			//ship.energy = 0;//hitObstacle();
-			break;
+			ship.supplies -= (ship.supplies / 20);
 		default:
 			ship.getDamaged(20);
 	}
 	//alert(event);
+}
+
+// Removes an element from the document
+//Example usage is to remove potion from map after consumption
+function removeElement(elementId) {
+    if(document.getElementById(elementId)) {
+      var element = document.getElementById(elementId);
+      element.parentNode.removeChild(element);
+    }
+}
+
+//Toggles visibility of an object
+function switchVisibility(elementId) {
+  var element = document.getElementById(elementId);
+  if(element.style.visibility == "hidden"){
+    element.style.visibility = "visible";
+  }else{
+    element.style.visibility = "hidden";
+  }
+}
+
+function elementExists(elementId) {
+    if(document.getElementById(elementId)) {
+      return true;
+    }
+    return false;
 }

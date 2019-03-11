@@ -5,15 +5,18 @@
 var explosionSound;
 var drawHeight = GAME_SCREEN_HEIGHT;
 
-function start(presets)
+function start(presets, params)
 {
+	setParameters(params);
+	this.params = params;
+
 	var resetHeight = true;
 
 	//this.presets = presets;
 	this.gameOver = false;
 	this.gameWon = false;
-	this.displayHud = false; //document.getElementById("hud").checked;
-	this.speedRun = document.getElementById("speedrun").checked;
+	//this.displayHud = true; //document.getElementById("hud").checked;
+	//this.speedRun = document.getElementById("speedrun").checked;
 	//var explosionSound = new sound("explosion.mp3");
 
 	//for debugging purposes
@@ -23,7 +26,6 @@ function start(presets)
 	this.commBox = new CommBox();
 	this.musicPlayer = new MusicPlayer();
 
-	createMap();
 	initializeObjects();	//creates objects
 	setUpEventListeners();	//creates event listeners, which hook up the
 							//on-screen buttons with in-game functionality
@@ -31,11 +33,27 @@ function start(presets)
 	//this section handles user input
 	document.onkeydown = getInput;
 
+	function setParameters(params)
+	{
+		this.map_max_x = params[0];
+		this.map_max_y = params[1];
+		this.starting_x = params[2];
+		this.starting_y = params[3];
+		//params[4] (immortality) is handled in initializeObjects()
+		if(params[5] == true)
+		{
+			backgroundMusic();
+		}
+		//params[6] (randWormholes) is handled in initializeObjects()
+		this.displayHud = params[7];
+		this.speedRun = params[8];
+	}
+
 	//this function goes off several times per second
 	function drawFrame()
 	{
 		//allows toggling of HUD
-		if(document.getElementById("hud").checked == true)
+		if(this.displayHud)
 		{
 			writeHud();
 		}
@@ -55,71 +73,58 @@ function start(presets)
 	//handles user input
 	function getInput(e)
 	{
-
-		if(e.keyCode == '32')		//spacebar
+		switch(e.keyCode)
 		{
-			e.preventDefault();		//prevents this from moving the window/canvas around
-			ship.beginMoving();
-			ship.commitMovement();
-			pursuit();
-		}
-
-		if(e.keyCode == '37' || e.keyCode == '65')		//left arrow key
-		{
-			e.preventDefault();
-			ship.rotateLeft();
-		}
-
-		else if(e.keyCode == '38' || e.keyCode == '87')		//up
-		{
-			e.preventDefault();
-			ship.increaseDistance();
-		}
-
-		else if(e.keyCode == '39' || e.keyCode == '68')		//right
-		{
-			e.preventDefault();
-			ship.rotateRight();
-		}
-
-		else if(e.keyCode == '40' || e.keyCode == '83')		//down
-		{
-			e.preventDefault();
-			ship.decreaseDistance();
-		}
-
-		else if(e.keyCode == '72')				//H
-		{
-			toggleHud();
-		}
-
-		else if(e.keyCode == '81' || e.keyCode == '17')		//Q or CTRL
-		{
-			scan();
-			ship.checkSupplies();
-		}
-		else if(e.keyCode == '90')							//Z
-		{
-			fireLaser();
-			ship.checkEnergy();
-		}
-		else if (e.keyCode == '67') //C
-		{
-			ghost();
-			ship.checkEnergy();
-			ship.checkSupplies();
-		}
-		else if(e.keyCode == '88') //X
-		{
-			genesisSaber();
-			ship.checkEnergy();
-			ship.checkSupplies();
-		}
-		else if(e.keyCode == '86') //V
-		{
-			fugaDaemonum();
-			ship.checkEnergy();
-			ship.checkSupplies();
+			case 32 : //spacebar
+				e.preventDefault();		//prevents this from moving the window/canvas around
+				ship.beginMoving();
+				ship.commitMovement();
+				pursuit();
+				break;
+			case 37 : case 65 : //<left> or <a>
+				e.preventDefault();
+				ship.rotateLeft();
+				break;
+			case 38 : case 87 : //<up> or <w>
+				e.preventDefault();
+				ship.increaseDistance();
+				break;
+			case 39 : case 68 : //<right> or <d>
+				e.preventDefault();
+				ship.rotateRight();
+				break;
+			case 40 : case 83 : //<down> or <s>
+				e.preventDefault();
+				ship.decreaseDistance();
+				break;
+			case 72 : //<h>
+				toggleHud();
+				break;
+			case 81 : case 17 : //<q> or <ctrl>
+				scan();
+				ship.checkSupplies();
+				break;
+			case 90 : //<z>
+				fireLaser();
+				ship.checkEnergy();
+				break;
+			case 67 : //<c>
+				ghost();
+				ship.checkEnergy();
+				ship.checkSupplies();
+				break;
+			case 88 : //<x>
+				genesisSaber();
+				ship.checkEnergy();
+				ship.checkSupplies();
+				break;
+			case 86 : //<z>
+				fugaDaemonum();
+				ship.checkEnergy();
+				ship.checkSupplies();
+				break;
+			default: 
+				break;
 		}
 	}
 
@@ -192,7 +197,6 @@ function start(presets)
 	function interact()
 	{
 		var toggleBox = false;
-		//not optimized at all (will search every obstacle regardless of how far away it is)
 		for(var i = 0; i < this.obstacles.length; i++)
 		{
 			if((this.ship.cpx == this.obstacles[i].cpx) && (this.ship.cpy == this.obstacles[i].cpy))	
@@ -203,59 +207,44 @@ function start(presets)
 					drawHeight = GAME_SCREEN_HEIGHT - GRID_SIZE;
 				}
 				objName = this.obstacles[i].constructor.name;
-				if(objName == "EnergyPotion")
+				switch(objName)
 				{
-					commBox.drawNewBox(this.obstacles[i], true);
-					i = getPotion(i);		
-				}
-				else if(objName == "Recipe" && !this.gameWon)
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-					win();
-				}
-				else if((objName == "Asteroid") && !this.ship.dev)
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-					hitObstacle();
-				}
-				else if(objName == "Xeon" || objName == "Celeron" || objName == "Ryzen")
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-				}
-				else if(objName == "DeathStar")
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-					musicPlayer.playMusic("march.mp3");
-				}
-				else if(objName == "SpaceStation"){
-					chanceGame(ship.offset_x,ship.offset_y, ship);
-				}
-				else if(objName == "AbandonedFreighter"){
-					this.ship.damage = 0;
-					commBox.drawNewBox(this.obstacles[i], true);
-					i = getFreighter(i);
-				}
-				else if ((objName == "MeteorStorm") && !this.ship.dev){
-					this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
-					commBox.drawNewBox(this.obstacles[i], true);
-				}
-				else if (objName == "Planet")
-				{
-					commBox.drawNewBox(this.obstacles[i], true);
-				}
-				if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev)
-				{
-					let chance = Math.floor(Math.random() * 3);
-					switch(chance)
-					{
-						case 0 :
-								break;
-						case 1 : 
-								break;
-						case 2 : 
-								break;
-					}
-					commBox.drawBadMaxBox(this.BadMax, true, chance);
+					case "EnergyPotion" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						i = getPotion(i);	
+						break;
+					case "Recipe" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						win();
+						break;
+					case "Asteroid" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						hitObstacle();
+						break;
+					case "Xeon" : case "Celeron" : case "Ryzen" : case "Planet" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						break;
+					case "DeathStar" : 
+						commBox.drawNewBox(this.obstacles[i], true);
+						musicPlayer.playMusic("march.mp3");
+						break;
+					case "SpaceStation" :
+						chanceGame(ship.offset_x,ship.offset_y, ship);
+						break;
+					case "AbandonedFreighter" :
+						this.ship.damage = 0;
+						commBox.drawNewBox(this.obstacles[i], true);
+						i = getFreighter(i);
+						break;
+					case "MeteorStorm" :
+						this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
+						commBox.drawNewBox(this.obstacles[i], true);
+						break;
+					case "Wormhole" :
+						commBox.drawNewBox(this.obstacles[i], true);
+						hitWormhole();
+						break;
+					default : break;
 				}
 				toggleBox = true;
 			}
@@ -270,7 +259,7 @@ function start(presets)
 					drawHeight = GAME_SCREEN_HEIGHT;
 					resetHeight = true;
 					commBox.toggle = false;
-				}, 10000);
+				}, 3500);
 			}
 			resetHeight = false;
 		}
@@ -310,16 +299,20 @@ function start(presets)
 		    }		
 			wager = document.getElementById("wager").value;
 			guess = document.getElementById("guess").value;
-			if(wager > ship.currency){
-				commBox.drawNewBox("You don't have that much money! Enter another amount",true,5,560);
-				canBet = false;
-			}else if(guess >= 10 || guess < 0){
-				commBox.drawNewBox("A number between 1 and 10, no more and no less",true,5,560); 
-				canBet = false;
-			}else {
-				commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
+			if(!commBox.toggle){
+				if((wager > ship.currency || wager <= 0) && wager.length > 0){
+					alert(wager);
+
+					commBox.drawNewBox("You don't have that much money! Enter another amount",true,5,560);
+					canBet = false;
+				}else if((guess > 10 || guess < 1) && wager.length > 0){
+					commBox.drawNewBox("A number between 1 and 10, no more and no less",true,5,560); 
+					canBet = false;
+				}else {
+					commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
+				}
 			}
-			var result = Math.floor((Math.random() * 10) + 1);
+			//var result = Math.floor((Math.random() * 10) + 1);
 			if(!canBet){
 				removeElement("chanceGo");
 			}
@@ -333,19 +326,15 @@ function start(presets)
 	function playChanceGame(guess,wager,result){
 		if(guess == result){
 			commBox.drawNewBox("Congratulations! You guessed the right number! You get 3x your wager!",true,5,560);
-			alert("Congratulations! You guessed the right number! You get 3x your wager!");
+			//alert("Congratulations! You guessed the right number! You get 3x your wager!");
 			ship.currency += (3 * wager);
 		}else if(guess == (result-1) || guess == (result+1)){
 			commBox.drawNewBox("You were very close! Only within one. You get 1.5x your wager!",true,5,560);
-			alert("You were very close! Only within one. You get 1.5x your wager!");
+			//alert("You were very close! Only within one. You get 1.5x your wager!");
 			ship.currency += (1.5 * wager);
-		}else if(guess == (result -2) || guess == (result + 2)){
-			commBox.drawNewBox("Not that close! Only within two. You made your wager back!",true,5,560);
-			alert("Not that close! Only within two. You made your wager back!");
-			ship.currency += (1 * wager);
 		}else { 
 			commBox.drawNewBox("Not close at all. You lose.",true,5,560);
-			alert("Not close at all. You lose.");
+			//alert("Not close at all. You lose.");
 			ship.currency -= wager;
 		}
 	}
@@ -366,10 +355,51 @@ function start(presets)
 			window.location.reload();	//changed to be a bit more clear than location = location
 		}, 1000);
 	}
+
+	function hitWormhole()
+	{
+		if(this.ship.randWormholes == true){
+			this.ship.y = (Math.floor(Math.random() * (map_max_x + 1))) * GRID_SIZE;
+			this.ship.x = (Math.floor(Math.random() * (map_max_y + 1))) * GRID_SIZE;
+		}
+		else{
+			this.ship.y = Math.floor(map_max_y/2) * GRID_SIZE;
+			this.ship.x = Math.floor(map_max_x/2) * GRID_SIZE;
+		}
+
+		this.ship.cpx = Math.floor((this.ship.x - SHIP_WIDTH) / GRID_SIZE) + 1;
+		this.ship.cpy = Math.floor((this.ship.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
+		this.ship.restoreDefaults();
+
+		var audio_wormhole = new Audio('audio/wormhole.wav');
+		audio_wormhole.volume = 1;
+		audio_wormhole.play();
+	}
+	
+	function hitBadmax()
+	{
+		
+		killBadMax();
+		var chance = (Math.floor(Math.random() * 3));
+		if(chance == 0){
+			commBox.drawNewBox("BAD MAX SHOT YOU DOWN!",true,5,560);
+			musicPlayer.playMusic("badmax_kill_player.wav");
+			hitObstacle();
+		}
+		if(chance == 1){
+			this.ship.supplies /= 2;
+			this.ship.energy /= 2;
+			commBox.drawNewBox("BadMax stole half of your energy and supplies.",true,5,560);
+		}
+		if(chance == 2){
+			commBox.drawNewBox("You successfully fended off BadMax for now.",true,5,560);
+		}
+	}
 	
 	function win()
 	{
 		//play win sound
+		musicPlayer.playMusic("find_recipe.wav");
 		setTimeout(function()
 		{
 			window.location.reload();
@@ -384,7 +414,7 @@ function start(presets)
 		audio_potion.play();
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
-
+		this.ship.damage = 0;
 		// testing save 
 		initializeSavedGame();
 		save();
@@ -395,6 +425,7 @@ function start(presets)
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].energy);
 		this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);
 		this.ship.currency += this.obstacles[index].currency;
+		this.ship.damage = 0;
 		this.obstacles.splice(index, 1);
 		return index + 1;
 	}
@@ -407,18 +438,25 @@ function start(presets)
 		this.ctx = cvs.getContext('2d');
 
 		//create ship
-		this.ship = new Ship();
+		this.ship = new Ship(starting_x, starting_y);
+		ship.dev = this.params[4];
+		ship.randWormholes = this.params[6];
+		ship.energy = parseInt(this.params[9]);	
+		ship.maxEnergy = parseInt(ship.energy);
+		ship.supplies = parseInt(this.params[10]);
+		ship.originalSupplies = parseInt(ship.supplies);
 		this.target = new Target();
 
 		this.obstacles = [];
 
 		//BadMax NEEDS to be obstacles[0]
-		obstacles.push(new BadMax((Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE*GRID_SIZE)+1));
+		//obstacles.push(new BadMax((Math.floor(Math.random() * map_max_x)+1),Math.floor(Math.random() * map_max_y)+1));
+		obstacles.push(new BadMax(0, 5));
 
 		//There may only be one!
 		let isXeon = false, isCeleron = false, isRyzen = false;
 
-		if(presets)
+		if(presets.length >= 1)
 		{
 			presets.forEach(function(presetItem)
 			{
@@ -443,28 +481,37 @@ function start(presets)
 				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
 			});
 		}
+		else
+		{
+			let randoms = generateRandomObstacles(map_max_x, map_max_y);
+			randoms.forEach(function(randomItem)
+			{
+				if(randomItem.constructor.name == "Xeon")
+				{
+					if(isXeon) return;
+					isXeon = true;
+				}
+				if(randomItem.constructor.name == "Celeron")
+				{
+					if(isCeleron) return;
+					isCeleron = true;
+				}
+				if(randomItem.constructor.name == "Ryzen")
+				{
+					if(isRyzen) return;
+					isRyzen = true;
+				}
+				//alert("Preset item: " + presetItem.constructor.name);
+				obstacles.push(randomItem);
+				//alert(presetItem.x + ", " + presetItem.y);
+				//obstacles.push(new Asteroid(presetItem.x, presetItem.y));
+			});
+		}
 
-		obstacles.push(new Asteroid(9, 9));
-		obstacles.push(new Asteroid(11, 11));
-		obstacles.push(new Asteroid(6, 6));
-		obstacles.push(new Asteroid(128, 128));
-		obstacles.push(new Asteroid(64, 64));
-		obstacles.push(new Asteroid(128, 0));
-		obstacles.push(new Asteroid(0, 128));
-		obstacles.push(new Asteroid(1, 1));
-		obstacles.push(new EnergyPotion(9, 11, 200));
-		obstacles.push(new Recipe(11, 9));
-		obstacles.push(new MeteorStorm(8,10));
-		obstacles.push(new DeathStar(15, 10));
-		obstacles.push(new SpaceStation(13, 15));
-		obstacles.push(new AbandonedFreighter(15, 17, 250, 300, 777));
-		obstacles.push(new Planet(8, 8, 1));
-		obstacles.push(new Planet(10, 8, 2));
-		obstacles.push(new Planet(5, 10, 3));
-		obstacles.push(new Planet(3, 18, 4));
-		obstacles.push(new Planet(14, 14, 5));
-		obstacles.push(new Planet(14, 10, 6));
-		obstacles.push(new Planet(12, 10, 7));
+		obstacles.push(new DeathStar(Math.floor(Math.random() * 0.9 * map_max_x + 0.1 * map_max_x), Math.floor(Math.random() * 0.9 * map_max_y + 0.1 * map_max_y)));
+		obstacles.push(new Recipe(Math.floor(Math.random() * 0.9 * map_max_x + 0.1 * map_max_x), Math.floor(Math.random() * 0.9 * map_max_y + 0.1 * map_max_y)));
+		obstacles.push(new DeathStar(Math.floor(Math.random() * 0.1 * map_max_x), Math.floor(Math.random() * 0.1 * map_max_y)));
+		//obstacles.push(new Recipe(Math.floor(Math.random() * 0.1 * map_max_x), Math.floor(Math.random() * 0.1 * map_max_y)));
 
 		//There may only be one of each of the following:
 		if(!isCeleron)
@@ -474,17 +521,22 @@ function start(presets)
 		if(!isRyzen)
 			obstacles.push(new Ryzen(18, 18));
 
-		// Initialize Wormholes
-		for(var x = MAP_MIN_X - 1; x < MAP_MAX_X; x++){
+		// Initialize Boarder Wormholes
+		for(var x = MAP_MIN_X - 1; x <= map_max_x; x++){
 			// Creates wormholes for the top and bottom rim of the boundary
 			obstacles.push(new Wormhole(x, MAP_MIN_Y - 1));
-			obstacles.push(new Wormhole(x, MAP_MAX_Y));
+			obstacles.push(new Wormhole(x, map_max_y));
 		}
-		for(var y = MAP_MIN_Y; y < MAP_MAX_Y; y++){
+		for(var y = MAP_MIN_Y; y < map_max_y; y++){
 			// Creates wormholes for left and right rim of the boundary
 			obstacles.push(new Wormhole(MAP_MIN_X - 1, y));
-			obstacles.push(new Wormhole(MAP_MAX_X, y));
+			obstacles.push(new Wormhole(map_max_x, y));
 		}
+
+		// Initialize other wormholes
+		obstacles.push(new Wormhole(1, 5));
+		obstacles.push(new Wormhole(10, 7));
+		obstacles.push(new Wormhole(7, 2));
 
 
 		this.BadMax = obstacles[0];
@@ -498,19 +550,23 @@ function start(presets)
 		//be able to use buttons too
 		document.getElementById("leftBtn").addEventListener("click", function()
 		{
-			ship.rotateLeft();
+			//ship.rotateLeft();
+			ship.faceLeft();
 		});
 		document.getElementById("rightBtn").addEventListener("click", function()
 		{
-			ship.rotateRight();
+			//ship.rotateRight();
+			ship.faceRight();
 		});
 		document.getElementById("upBtn").addEventListener("click", function()
 		{
-			ship.increaseDistance();
+			//ship.increaseDistance();
+			ship.faceUp();
 		});
 		document.getElementById("downBtn").addEventListener("click", function()
 		{
-			ship.decreaseDistance();
+			//ship.decreaseDistance();
+			ship.faceDown();
 		});
 		document.getElementById("moveBtn").addEventListener("click", function()
 		{
@@ -518,7 +574,17 @@ function start(presets)
 			ship.commitMovement();
 			pursuit();
 		});
-		document.getElementById("devMode").addEventListener("click", function()
+		// This should change the value in the drop down move menu to the value of spaces from 
+		// the key board
+		/*document.getElementById("spaces").addEventListener("change", function() 
+		{
+			if(Math.floor(ship.distanceToTravel/GRID_SIZE) > 10) {
+				ship.distanceToTravel = 10 * GRID_SIZE;
+			}
+			var spaces = document.getElementById("spaces");
+			spaces.value = Math.floor(ship.distanceToTravel/GRID_SIZE);
+		});*/
+		/*document.getElementById("devMode").addEventListener("click", function()
 		{
 			ship.toggleDevMode();
 		});
@@ -531,7 +597,7 @@ function start(presets)
 			scan();
 			//recipe.hidden = 0;
 			//recipe.sprite.src = "img/recipe.png";
-		});
+		});*/
 		document.getElementById("OTBBtn").addEventListener("click", function() {
 			fireLaser();
 		});
@@ -541,7 +607,7 @@ function start(presets)
 		document.getElementById("FDBtn").addEventListener("click", function() {
 			fugaDaemonum();
 		});
-		document.getElementById("hud").addEventListener("click", function()
+		/*document.getElementById("hud").addEventListener("click", function()
 		{
 			toggleHud();
 		});
@@ -552,7 +618,7 @@ function start(presets)
 		document.getElementById("bgmusic").addEventListener("click", function()
 		{
 			backgroundMusic();
-		});
+		});*/
 	}
 
 	function backgroundMusic(){
@@ -573,7 +639,7 @@ function start(presets)
 
 	    //writes numbers/info to GUI
 	    ctx.fillStyle = "#FFFFFF";
-	    ctx.fillText("angle = " + ship.angle, 10, 20);
+	    //ctx.fillText("angle = " + ship.angle, 10, 20);
 	    ctx.fillText("current CP = " + ship.cpx + ", " + ship.cpy + " (x, y)", 10, 40);
 	    ctx.fillStyle = "#00FF00";
 	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 60);
@@ -584,7 +650,7 @@ function start(presets)
 	    ctx.fillStyle = "#FFFFFF";
 	    ctx.fillText("distance to travel: " + ship.distanceToTravel.toFixed(0), 10, 120);
 	    ctx.fillText("damage: " + ship.damage.toFixed(0) + "%", 10, 160);
-	    ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 180);
+	    //ctx.fillText("average fps = " + this.fps.toFixed(0), 10, 180);
 	}
 
 	//draws obstacles, ship, other items on the canvas
@@ -612,7 +678,12 @@ function start(presets)
 	{
 		obstacles.forEach(function (obj)
 	    {
-	    	if(obj.visible)
+	    	if(Math.abs(obj.y - ship.y) > GAME_SCREEN_HEIGHT || Math.abs(obj.x - ship.x) > GAME_SCREEN_WIDTH)
+	    	{
+	    		return;
+	    	}
+
+	    	else if(obj.visible)
 	    	{
 	    		objName = obj.constructor.name;
 
@@ -632,9 +703,6 @@ function start(presets)
 					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
 					obj.x += obj.xv;
 					obj.y += obj.yv;
-					//ctx.drawImage(obj.sprite, obj.x - ship.x, obj.y - ship.y);
-					//obj.x += obj.xv;
-					//obj.y += obj.yv;
 				}
 				else if(objName =="GenesisSaber"){
 					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
@@ -722,7 +790,10 @@ function start(presets)
 	    		this.ship.animationFrame = (this.ship.animationFrame + 1);
 	    	}
 	    }
-
+		
+		if(this.ship.dev && (this.ship.cpy == this.BadMax.cpy) && (this.ship.cpx == this.BadMax.cpx)){
+			killBadMax();
+		}
 
 	    if(ship.isMoving == true)
 	    {
@@ -797,26 +868,37 @@ function start(presets)
 			ship.supplies -= (ship.originalSupplies * .02);
 		}
 	}
+	function killBadMax()
+	{
+		delete obstacles[0];
+		delete this.BadMax;
+		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE)+1);
+		//obstacles[0] = new BadMax(10*GRID_SIZE, 15*GRID_SIZE);
+		this.BadMax = obstacles[0];
+		// just testing save, will not want to call this here 
+		//save();
+		
+	}
 
 	function pursuit()
 	{
-		distx = this.ship.cpx - this.BadMax.cpx;
-		disty = this.ship.cpy - this.BadMax.cpy;
+		distx = this.BadMax.cpx - this.ship.cpx;
+		disty = this.BadMax.cpy - this.ship.cpy;
 		
 		absDist = Math.sqrt((distx * distx) + (disty * disty));
 		
 		if(absDist < 30){
 			if(Math.abs(distx) > Math.abs(disty)){
-				if(disty < 0)
-					this.BadMax.x -= GRID_SIZE;
-				else
+				if(distx < 0)
 					this.BadMax.x += GRID_SIZE;
+				else if(distx>0)
+					this.BadMax.x -= GRID_SIZE;
 			}
 			else{
 				if(disty < 0)
-					this.BadMax.y -= GRID_SIZE;
-				else
 					this.BadMax.y += GRID_SIZE;
+				else if(disty > 0)
+					this.BadMax.y -= GRID_SIZE;
 			}
 		}
 		else if (absDist >= 30){
@@ -836,12 +918,15 @@ function start(presets)
 		this.BadMax.cpx = Math.floor(this.BadMax.x/GRID_SIZE);
 		this.BadMax.cpy = Math.floor(this.BadMax.y/GRID_SIZE);
 		
+		if((this.ship.cpx == this.BadMax.cpx) && (this.ship.cpy == this.BadMax.cpy) && !this.ship.dev){
+			hitBadmax();
+		}
+		
 		//boolean check statement isn't working for some reason.
 		//not sure why. I tried using an int and an == and no luck.
-		var check = false;
+		//var check = false;
 		if(Math.abs(this.ship.cpx - this.BadMax.cpx) <= 2 && Math.abs(this.ship.cpy - this.BadMax.cpy) <=2){
 			musicPlayer.playMusic("badmax.wav");
-					
 		}
 
 	}
@@ -931,4 +1016,14 @@ function save() {
 	}
 	var savedState = prompt("Enter a name for this game.")
 	localStorage.setItem(savedState, JSON.stringify(obstacles)); 
+}
+
+function moveTarget(sel) {
+	var spaces = document.getElementById("spaces");
+	ship.distanceToTravel = spaces.value * GRID_SIZE;
+	this.drawTarget();
+}
+
+function resetMoves() {
+	document.getElementById("spaces").value = "0";
 }

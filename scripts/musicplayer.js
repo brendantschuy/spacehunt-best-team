@@ -13,13 +13,19 @@ class MusicPlayer
 	{
 		if(!this.playing)
 		{
-			var sound = new Audio("audio/" + soundName);
+			//let sound = new Audio("audio/" + soundName);
+			let sound = new Audio();
+			sound.src = "audio/" + soundName;
 			sound.play();
 			this.playing = true;
 			setTimeout(function()
 			{
 				this.playing = false;
-			}, 10000);
+				sound.pause();
+				sound.currentTime = 0;
+			}, 1200000);
 		}
+
+		return;
 	}
 }
