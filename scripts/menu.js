@@ -163,6 +163,8 @@ function menu(params)
 				xc = parseInt(xc);
 				yc = parseInt(yc);
 				addItemToPresets(xc, yc);
+				document.getElementById("coordInput_x").value = "";
+				document.getElementById("coordInput_y").value = "";
 			}
 		}
 
@@ -692,13 +694,31 @@ function moreOptions(params)
 		speedRunModeCBoxCaption.style.left = 275 + cvsCoords.x;
 		document.body.appendChild(speedRunModeCBoxCaption);
 
+		startingSuppliesEntryCaption = document.createElement("p");
+		startingSuppliesEntryCaption.appendChild(document.createTextNode("Starting Supplies"));
+		startingSuppliesEntryCaption.id = "startingSuppliesEntryCaption";
+		startingSuppliesEntryCaption.className = "CBoxCaptions";
+		startingSuppliesEntryCaption.style.position = "absolute";
+		startingSuppliesEntryCaption.style.top = 175 + cvsCoords.y;
+		startingSuppliesEntryCaption.style.left = 290 + cvsCoords.x;
+		document.body.appendChild(startingSuppliesEntryCaption);
+
+		startingEnergyEntryCaption = document.createElement("p");
+		startingEnergyEntryCaption.appendChild(document.createTextNode("Starting Energy"));
+		startingEnergyEntryCaption.id = "startingEnergyEntryCaption";
+		startingEnergyEntryCaption.className = "CBoxCaptions";
+		startingEnergyEntryCaption.style.position = "absolute";
+		startingEnergyEntryCaption.style.top = 75 + cvsCoords.y;
+		startingEnergyEntryCaption.style.left = 290 + cvsCoords.x;
+		document.body.appendChild(startingEnergyEntryCaption);
+
 		boardSizeInputCaption = document.createElement("p");
 		boardSizeInputCaption.appendChild(document.createTextNode("Board Size (x, y)"));
 		boardSizeInputCaption.id = "boardSizeInputCaption";
 		boardSizeInputCaption.className = "CBoxCaptions";
 		boardSizeInputCaption.style.position = "absolute";
 		boardSizeInputCaption.style.top = 75 + cvsCoords.y;
-		boardSizeInputCaption.style.left = 165 + cvsCoords.x;
+		boardSizeInputCaption.style.left = 75 + cvsCoords.x;
 		document.body.appendChild(boardSizeInputCaption);
 
 		startingPositionInputCaption = document.createElement("p");
@@ -707,7 +727,7 @@ function moreOptions(params)
 		startingPositionInputCaption.className = "CBoxCaptions";
 		startingPositionInputCaption.style.position = "absolute";
 		startingPositionInputCaption.style.top = 175 + cvsCoords.y;
-		startingPositionInputCaption.style.left = 145 + cvsCoords.x;
+		startingPositionInputCaption.style.left = 55 + cvsCoords.x;
 		document.body.appendChild(startingPositionInputCaption);
 
 		boardSizeInputX = document.createElement("input");
@@ -718,7 +738,7 @@ function moreOptions(params)
 		boardSizeInputX.style.position = "absolute";
 		boardSizeInputX.style.color = "black";
 		boardSizeInputX.style.top = 130 + cvsCoords.y;
-		boardSizeInputX.style.left = 135 + cvsCoords.x;
+		boardSizeInputX.style.left = 45 + cvsCoords.x;
 		boardSizeInputX.style.width = 70;
 		boardSizeInputX.style.font = "30px Arial";
 		boardSizeInputX.style.textAlign = "center";
@@ -732,7 +752,7 @@ function moreOptions(params)
 		boardSizeInputY.style.position = "absolute";
 		boardSizeInputY.style.color = "black";
 		boardSizeInputY.style.top = 130 + cvsCoords.y;
-		boardSizeInputY.style.left = 235 + cvsCoords.x;
+		boardSizeInputY.style.left = 145 + cvsCoords.x;
 		boardSizeInputY.style.width = 70;
 		boardSizeInputY.style.font = "30px Arial";
 		boardSizeInputY.style.textAlign = "center";
@@ -746,7 +766,7 @@ function moreOptions(params)
 		startingPositionInputX.style.position = "absolute";
 		startingPositionInputX.style.color = "black";
 		startingPositionInputX.style.top = 230 + cvsCoords.y;
-		startingPositionInputX.style.left = 135 + cvsCoords.x;
+		startingPositionInputX.style.left = 45 + cvsCoords.x;
 		startingPositionInputX.style.width = 70;
 		startingPositionInputX.style.font = "30px Arial";
 		startingPositionInputX.style.textAlign = "center";
@@ -760,11 +780,39 @@ function moreOptions(params)
 		startingPositionInputY.style.position = "absolute";
 		startingPositionInputY.style.color = "black";
 		startingPositionInputY.style.top = 230 + cvsCoords.y;
-		startingPositionInputY.style.left = 235 + cvsCoords.x;
+		startingPositionInputY.style.left = 145 + cvsCoords.x;
 		startingPositionInputY.style.width = 70;
 		startingPositionInputY.style.font = "30px Arial";
 		startingPositionInputY.style.textAlign = "center";
 		document.body.appendChild(startingPositionInputY);	
+
+		startingEnergyInput = document.createElement("input");
+		startingEnergyInput.type = "text";
+		startingEnergyInput.className = "coordInput";
+		startingEnergyInput.id = "startingEnergyInput";
+		startingEnergyInput.value = 1000;
+		startingEnergyInput.style.position = "absolute";
+		startingEnergyInput.style.color = "black";
+		startingEnergyInput.style.top = 130 + cvsCoords.y;
+		startingEnergyInput.style.left = 305 + cvsCoords.x;
+		startingEnergyInput.style.width = 70;
+		startingEnergyInput.style.font = "30px Arial";
+		startingEnergyInput.style.textAlign = "center";
+		document.body.appendChild(startingEnergyInput);	
+
+		startingSuppliesInput = document.createElement("input");
+		startingSuppliesInput.type = "text";
+		startingSuppliesInput.className = "coordInput";
+		startingSuppliesInput.id = "startingSuppliesInput";
+		startingSuppliesInput.value = 1000;
+		startingSuppliesInput.style.position = "absolute";
+		startingSuppliesInput.style.color = "black";
+		startingSuppliesInput.style.top = 230 + cvsCoords.y;
+		startingSuppliesInput.style.left = 305 + cvsCoords.x;
+		startingSuppliesInput.style.width = 70;
+		startingSuppliesInput.style.font = "30px Arial";
+		startingSuppliesInput.style.textAlign = "center";
+		document.body.appendChild(startingSuppliesInput);	
 
 
 		submitOptionsButton = document.createElement("input");
@@ -798,13 +846,20 @@ function moreOptions(params)
 		var randWormholeTrue = document.getElementById("randWormholeCBox").checked;
 		var hudTrue = document.getElementById("toggleHudCBox").checked;
 		var speedRunTrue = document.getElementById("speedRunCBox").checked;
+
+		var initEnergy = document.getElementById("startingEnergyInput").value;
+		var initSupplies = document.getElementById("startingSuppliesInput").value;
 		if(spx > bsx || spx < 0 || spy > bsy || spy < 0)
 		{
 			alert("Invalid starting position entered. Must be less than board size and greater than zero.");
 		}
-		else if(bsx < 0 || bsx > 1000 || bsy < 0 || bsy > 1000)
+		else if(bsx < 9 || bsx > 255 || bsy < 9 || bsy > 255)
 		{
-			alert("Invalid board size entered. Must be less than 1000 and greater than zero.");
+			alert("Invalid board size entered. Must be less than 255 and greater than 9.");
+		}
+		else if(initEnergy <= 0 || initSupplies <= 0)
+		{
+			alert("Invalid energy or supplies. Must be greater than zero.");
 		}
 		else
 		{
@@ -817,6 +872,8 @@ function moreOptions(params)
 			this.retParams[6] = randWormholeTrue;
 			this.retParams[7] = hudTrue;
 			this.retParams[8] = speedRunTrue;
+			this.retParams[9] = initEnergy;
+			this.retParams[10] = initSupplies;
 		}
 
 		//alert(this.retParams);
@@ -840,6 +897,8 @@ function removeOptions()
 	document.body.removeChild(boardSizeInputY);
 	document.body.removeChild(startingPositionInputX);
 	document.body.removeChild(startingPositionInputY);
+	document.body.removeChild(startingEnergyInput);
+	document.body.removeChild(startingSuppliesInput);
 	document.body.removeChild(devOptionsCBox);
 	document.body.removeChild(bgMusicCBox);
 	document.body.removeChild(randWormholeCBox);
@@ -854,6 +913,8 @@ function removeOptions()
 	document.body.removeChild(speedRunModeCBoxCaption);
 	document.body.removeChild(bgMusicCBoxCaption);
 	document.body.removeChild(randWormholesCBoxCaption);
+	document.body.removeChild(startingSuppliesEntryCaption);
+	document.body.removeChild(startingEnergyEntryCaption);
 }
 
 function setDefaultParameters()
@@ -868,6 +929,8 @@ function setDefaultParameters()
 	defaults[6] = false;	//random wormhole
 	defaults[7] = false;	//hud
 	defaults[8] = false;	//speedrun
+	defaults[9] = 1000; 	//energy
+	defaults[10] = 1000;	//supplies
 
 	return defaults;
 }

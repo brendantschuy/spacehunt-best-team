@@ -441,6 +441,10 @@ function start(presets, params)
 		this.ship = new Ship(starting_x, starting_y);
 		ship.dev = this.params[4];
 		ship.randWormholes = this.params[6];
+		ship.energy = parseInt(this.params[9]);	
+		ship.maxEnergy = parseInt(ship.energy);
+		ship.supplies = parseInt(this.params[10]);
+		ship.originalSupplies = parseInt(ship.supplies);
 		this.target = new Target();
 
 		this.obstacles = [];

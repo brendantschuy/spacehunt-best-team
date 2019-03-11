@@ -10,12 +10,11 @@ class Ship 	//class names capitalized per js convention
 		this.dev = false; //tag for toggling developer options like never dying
 		//can be improved probably
 		this.randWormholes = false; // Following above example for development		
-		this.maxEnergy = 1000;
 		this.energy = 1000;
-
-		//also can be improved probably
-		this.originalSupplies = 1000
 		this.supplies = 1000;
+		this.originalSupplies = 1000;
+		this.maxEnergy = 1000;
+
 		this.currency = 1000;
 		this.projectiles = [];
 
