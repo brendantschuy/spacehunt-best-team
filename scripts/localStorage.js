@@ -8,57 +8,21 @@ var gameState = {
   "energy": 1000, //ship.energy,  
   "currency": 1000, //ship.currency,  
   "obstacles": ["Asteroid", "Celeron", "Xeon", "Ryzen", "DeathStar", "Recipe", "BadMax", 
-                "AbandonedFreighter", "SpaceStation"],
+                "AbandonedFreighter", "SpaceStation", "Wormhole"],
   "activeGame": false
 };
 
 function initializeSavedGame()
 {
-  var a, b;
-  shipX = ship.cpx;
-  shipY = ship.cpy;
-  supplies = ship.supplies;
-  energy = ship.energy;
-  currency = ship.currency;
-  switch(obstacles) {
-    // assign correct coordinates 
-    case("Asteroid") : 
-      a = Asteroid.cpx;
-      b = Asteroid.cpy;
-      break;
-    case("Celeron") : 
-      a = Celeron.cpx;
-      b = Celeron.cpy;
-      break;
-    case("Xeon") : 
-      a = Xeon.cpx;
-      b = Xeon.cpy;
-      break;
-    case("Ryzen") : 
-      a = Ryzen.cpx;
-      b = Ryzen.cpy;
-      break;
-    case("DeathStar") : 
-      a = DeathStar.cpx;
-      b = DeathStar.cpy;
-      break;
-    case("Recipe") : 
-      a = Recipe.cpx;
-      b = Recipe.cpy;
-      break;
-    case("BadMax") : 
-      a = BadMax.cpx;
-      b = BadMax.cpy;
-      break;
-    case("AbandonedFreighter") : 
-      a = AbandonedFreighter.cpx;
-      b = AbandonedFreighter.cpy;
-      break;
-    case("SpaceStation") : 
-      a = SpaceStation.cpx;
-      b = SpaceStation.cpy;
-      break;
-  }
+  //var a, b;
+
+  // just trying to get these working for now
+  shipX = this.ship.cpx;
+  shipY = this.ship.cpy;
+  supplies = this.ship.supplies;
+  energy = this.ship.energy;
+  currency = this.ship.currency;
+  
 
 }
 
@@ -85,7 +49,7 @@ function save() {
     return false; 
   }
   var savedState = prompt("Enter a name for this game.")
-  var savedList = [];
+ // var savedList = [];
   localStorage.setItem(savedState, JSON.stringify(gameState)); 
   //savedList.push(savedState);
   //console.log(savedList);
