@@ -826,9 +826,11 @@ function moreOptions(params)
 		document.body.appendChild(submitOptionsButton);	
 		submitOptionsButton.onclick = function()
 		{
-			changeParams();
-			menu(retParams);
-			removeOptions();
+			if(changeParams())
+			{
+				menu(retParams);
+				removeOptions();
+			}
 		}
 	}
 
@@ -852,14 +854,17 @@ function moreOptions(params)
 		if(spx > bsx || spx < 0 || spy > bsy || spy < 0)
 		{
 			alert("Invalid starting position entered. Must be less than board size and greater than zero.");
+			return false;
 		}
 		else if(bsx < 9 || bsx > 255 || bsy < 9 || bsy > 255)
 		{
 			alert("Invalid board size entered. Must be less than 255 and greater than 9.");
+			return false;
 		}
 		else if(initEnergy <= 0 || initSupplies <= 0)
 		{
 			alert("Invalid energy or supplies. Must be greater than zero.");
+			return false;
 		}
 		else
 		{
@@ -874,6 +879,7 @@ function moreOptions(params)
 			this.retParams[8] = speedRunTrue;
 			this.retParams[9] = initEnergy;
 			this.retParams[10] = initSupplies;
+			return true;
 		}
 
 		//alert(this.retParams);
