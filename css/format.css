@@ -353,6 +353,12 @@ form input[type=button] {
 	margin-right: auto;
 }
 
+#controls-save {
+	width: 150px;
+	margin-left: 128px;
+	margin-right: auto;
+}
+
 button {
 	background-color: transparent;
 	border: none;

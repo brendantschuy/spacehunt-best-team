@@ -1,13 +1,15 @@
 //randomgeneration.js
 
-function generateRandomObstacles()
+function generateRandomObstacles(input_x, input_y)
 {
 	table = new hashTable();
 	randoms = [];
+	let map_max_x = input_x;
+	let map_max_y = input_y;
 
-	for(i = 1; i < MAP_MAX_X / 8; i++)
+	for(i = 1; i < map_max_x / 8; i++)
 	{
-		for(j = 1; j < MAP_MAX_Y / 8; j++)
+		for(j = 1; j < map_max_y / 8; j++)
 		{
 			for(k = 0; k < 8; k++)
 			{
