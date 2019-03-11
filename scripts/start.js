@@ -415,9 +415,6 @@ function start(presets, params)
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
 		this.ship.damage = 0;
-		// testing save 
-		initializeSavedGame();
-		save();
 		return index + 1;
 	}
 
