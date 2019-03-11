@@ -332,7 +332,12 @@ form input[type=button] {
 	margin-right: auto;
 }
 
-#controls-save {
+.save {
+	background-color: blue;
+	color: white;
+}
+
+#save {
 	width: 150px;
 	margin-left: 128px;
 	margin-right: auto;
