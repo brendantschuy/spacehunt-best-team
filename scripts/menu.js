@@ -44,9 +44,9 @@ function menu()
 		}
 		else
 		{
+			//clearMenu();
 			return;
 		}
-		clearMenu();
 	}
 
 	function setUpMenu()
@@ -55,7 +55,7 @@ function menu()
 		let cvsCoords = getAbsPosition(cvs);
 		let ctx = cvs.getContext('2d');
 		main_bkgd = document.createElement("img");
-		main_bkgd.className = "menu_main_bkgd";
+		main_bkgd.className = "menu_bkgd";
 		main_bkgd.src = "img/menu_screen_4.png";
 		main_bkgd.style.left = cvsCoords.x;
 		main_bkgd.style.top = cvsCoords.y;
@@ -299,7 +299,7 @@ function getInputFileMenu(e)
 {
 	if(e.keyCode == 81 || e.keyCode == 27)	//q or <esc>
 	{
-		document.body.removeChild(bkgd);
+		document.body.removeChild(main_bkgd);
 		menu();
 		//deleteFileMenuOptions();
 

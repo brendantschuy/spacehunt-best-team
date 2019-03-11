@@ -20,6 +20,10 @@ class hashTable
 	addHash(x, y)
 	{
 		let key = this.findKey(x, y);
+		if(key == 0)
+		{
+			return false;
+		}
 		if(this.table[key])
 		{
 			return false;
