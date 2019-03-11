@@ -121,8 +121,12 @@
 		</div>
 		
 		<div id="user-controls">
-			<!-- This will be where the user is able to change position, etc... -->
-			This will be where the user is able to change position, etc...
+			<form>
+				Location 		<input type="text" id="location" maxlength="8" onchange="changeLocation()"><br>
+				Energy   		<input type="text" id="energy" maxlength="4" onchange="changeEnergy()"><br>
+				Supplies 		<input type="text" id="supplies" maxlength="4" onchange="changeSupplies()"><br>
+				Digital Credits <input type="text" id="currency" maxlength="6" onchange="changeCurrency()"><br>
+			</form>
 		</div>
 
 		<div id="dev-modes">

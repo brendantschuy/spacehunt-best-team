@@ -1,6 +1,6 @@
 html { 
 	background-color: black;
-	/*background:  url("../video/background.gif") no-repeat center center fixed;*/
+	background:  url("../video/background.gif") no-repeat center center fixed;
 	background-size: cover;
 }
 
@@ -107,7 +107,7 @@ h2 {
 
 .dev-options-div {
 	color: white;
-	height: 200px;
+	height: 140px;
 	width: auto;
 	padding: 10px;
 	margin: 20px;
@@ -144,8 +144,29 @@ h2 {
 #user-controls{
 	/*background-color: green;*/
 	display: inline-block;
-	width: 550px;
+	width: 500px;
 	height: 100%;
+	padding-left: 50px;
+}
+
+input[type=text] {
+	width: 200px;
+}
+
+#location {
+	margin-left: 55px;
+}
+
+#energy {
+	margin-left: 67px;
+}
+
+#supplies {
+	margin-left: 55px;
+}
+
+#currency {
+	margin-left: 10px;
 }
 
 #dev-modes{

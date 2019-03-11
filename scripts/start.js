@@ -297,6 +297,7 @@ function start(presets)
 			if(!canBet){
 				removeElement("chanceGo");
 			}
+			//updateURL();
 		}else {
 			removeElement("wager");
 			removeElement("guess");
@@ -318,6 +319,7 @@ function start(presets)
 			//alert("Not close at all. You lose.");
 			ship.currency -= wager;
 		}
+		//updateURL();
 	}
 
 	function hitObstacle()
@@ -370,6 +372,7 @@ function start(presets)
 		if(chance == 1){
 			this.ship.supplies /= 2;
 			this.ship.energy /= 2;
+			//updateURL();
 			commBox.drawNewBox("BadMax stole half of your energy and supplies.",true,5,560);
 		}
 		if(chance == 2){
@@ -394,6 +397,7 @@ function start(presets)
 		audio_potion.volume = 1;
 		audio_potion.play();
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
+		//updateURL();
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
 		this.ship.damage = 0;
 		// testing save 
@@ -408,6 +412,9 @@ function start(presets)
 		this.ship.currency += this.obstacles[index].currency;
 		this.ship.damage = 0;
 		this.obstacles.splice(index, 1);
+
+		//updateURL();
+
 		return index + 1;
 	}
 
@@ -802,6 +809,8 @@ function start(presets)
 		
 		ship.energy -= 100;
 		ship.supplies -= 50;
+
+		//updateURL();
 	}
 
 	function fugaDaemonum(){
@@ -813,9 +822,13 @@ function start(presets)
 		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 240));
 		ship.energy -= 40;
 		ship.supplies -= 20;
+
+		//updateURL();
 	}
 
 	function scan(){
+		var foundSomething = false;
+
 		if(this.scanner)
 		{
 			delete this.scanner;
@@ -824,7 +837,7 @@ function start(presets)
 		//checks to see if obstacles are within half the screen distance from the ship
 		setTimeout(function()
 		{
-			var foundSomething = false;
+			//var foundSomething = false;
 			for(i = 0; i< this.obstacles.length; ++i)
 			{
 				if(Math.abs(this.obstacles[i].cpx - this.ship.cpx) <= SCAN_RANGE &&(Math.abs(this.obstacles[i].cpy - this.ship.cpy)) <= SCAN_RANGE){
@@ -840,7 +853,8 @@ function start(presets)
 
 		//uses up supplies for scanning
 		if(foundSomething) {
-			ship.supplies -= (ship.originalSupplies * .02);
+			ship.supplies -= Math.floor(ship.originalSupplies * .02);
+			//updateURL();
 		}
 	}
 	function killBadMax()
@@ -941,8 +955,10 @@ function start(presets)
     			}, 1000);
 		} 
 	}
+
 	function ghost(){
 		this.ship.supplies -= 100;
+		//updateURL();
 		var timelimit = 15;
 		var downloadTimer = setInterval(function(){
 			this.ship.dev = true;
@@ -993,7 +1009,7 @@ function save() {
 	localStorage.setItem(savedState, JSON.stringify(obstacles)); 
 }
 
-function moveTarget(sel) {
+function moveTarget() {
 	var spaces = document.getElementById("spaces");
 	ship.distanceToTravel = spaces.value * GRID_SIZE;
 	this.drawTarget();
@@ -1001,4 +1017,97 @@ function moveTarget(sel) {
 
 function resetMoves() {
 	document.getElementById("spaces").value = "0";
+}
+
+function changeLocation() {
+	var str = document.getElementById("location").value;
+	var coordinates = str.split(",", 2);
+	
+	if(coordinates.length != 2){
+		if(isNaN(coordinates[0])){
+			document.getElementById("location").value = "Invalid Entry";
+		}
+		return;
+	}
+
+	var x = Math.floor(Number(coordinates[0]));
+	var y = Math.floor(Number(coordinates[1]));
+
+	if(isNaN(x) || isNaN(y)){
+		document.getElementById("location").value = "Invalid Entry";
+	}
+	else{
+		if(x > MAP_MAX_X || x < MAP_MIN_X){
+			document.getElementById("location").value = "x out of range. (" + str + ")";
+		}
+		else if(y > MAP_MAX_Y || y < MAP_MIN_Y){
+			document.getElementById("location").value = "y out of range. (" + str + ")";
+		}
+		else{
+			ship.cpx = x;
+			ship.cpy = y;
+			ship.x = x * GRID_SIZE;
+			ship.y = y * GRID_SIZE;
+		}
+	}
+}
+
+function changeEnergy() {
+	var str = document.getElementById("energy").value;
+	var num = Math.floor(Number(str));
+
+	if(!isNaN(num)){
+		if((num < 1001) && (num > -1)){
+			ship.energy = num;
+		}
+		else{
+			document.getElementById("energy").value = "Out of range [0, " + String(ship.maxEnergy) + "]";
+		}
+	}
+	else{
+		document.getElementById("energy").value = "Invalid Entry";
+	}
+}
+
+function changeSupplies() {
+	var str = document.getElementById("supplies").value;
+	var num = Math.floor(Number(str));
+
+	if(!isNaN(num)){
+		if((num < 1001) && (num > -1)){
+			ship.supplies = num;
+		}
+		else{
+			document.getElementById("supplies").value = "Out of range [0, 1000]";
+		}
+	}
+	else{
+		document.getElementById("supplies").value = "Invalid Entry";
+	}
+}
+
+function changeCurrency() {
+	var str = document.getElementById("currency").value;
+	var num = Math.floor(Number(str));
+
+	if(!isNaN(num)){
+		if((num < 1000000) && (num > -1)){
+			ship.currency = num;
+		}
+		else{
+			document.getElementById("currency").value = "Out of range [0, 999999]";
+		}
+	}
+	else{
+		document.getElementById("currency").value = "Invalid Entry";
+	}
+}
+
+function updateURL(){
+	var str = String(ship.cpx) + "," + String(ship.cpy);
+	document.getElementById("location").value = str;
+
+	document.getElementById("energy").value = ship.energy;
+	document.getElementById("supplies").value = ship.supplies;
+	document.getElementById("currency").value = ship.currency;
 }
