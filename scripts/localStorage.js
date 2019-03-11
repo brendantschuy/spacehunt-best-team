@@ -22,7 +22,6 @@ function initializeSavedGame()
   supplies = this.ship.supplies;
   energy = this.ship.energy;
   currency = this.ship.currency;
-  
 
 }
 
@@ -57,7 +56,7 @@ function save() {
   activeGame = true;
 }
 
-/*// loads game from browser 
+/*// loads game from browser --- is now in menu.js
 function load() {
   if (!supportsLocalStorage() || localStorage["activeGame"] == "false") {
     console.log("Browser does not support localStorage!");
