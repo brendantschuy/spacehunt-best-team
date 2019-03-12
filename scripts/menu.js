@@ -51,7 +51,7 @@ function menu(params)
 		}
 		else if(e.keyCode == 78)	//N
 		{
-			if(!params)
+			if(params == undefined)
 			{
 				params = setDefaultParameters();
 			}
@@ -346,7 +346,9 @@ function getInputFileMenu(e)
 		//deleteFileMenuOptions();
 
 		document.body.removeChild(fileInput);
-		document.body.removeChild(returnToMainMenu);
+		document.body.removeChild(returnMainMenuFile);
+		document.body.removeChild(returnMainMenuText);
+		document.body.removeChild(bkgd);
 	}
 }
 
