@@ -526,11 +526,53 @@ function load() {
 	  return false; 
 	}
 	let gameToLoad = prompt("Which game do you want to load?");   //don't have multiple saved states yet
-	this.ship.cpx = JSON.parse(localStorage.getItem("shipX"));
+	/*this.ship.cpx = JSON.parse(localStorage.getItem("shipX"));
 	this.ship.cpy = JSON.parse(localStorage.getItem("shipY"));
 	this.ship.energy = JSON.parse(localStorage.getItem("energy"));
 	this.ship.supplies = JSON.parse(localStorage.getItem("supplies"));
 	this.ship.currency = JSON.parse(localStorage.getItem("currency"));
+	this.ship.damage = JSON.parse(localStorage.getItem("damage"));
+
+	for(var i = 0; i < obstacles.length; i++)
+	{
+		var objName = gameState.obstacles[i];
+		switch(objName) {
+      case "Asteroid X-Coord": 
+        this.obstacles.push(new Asteroid(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Celeron X-Coord": 
+				this.obstacles.push(new Celeron(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Ryzen X-Coord": 
+				this.obstacles.push(new Ryzen(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Xeon X-Coord": 
+				this.obstacles.push(new Xeon(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Space Station X-Coord": 
+				this.obstacles.push(new SpaceStation(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Abandoned Freighter X-Coord": 
+				this.obstacles.push(new AbandonedFreighter(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Meteor Storm X-Coord": 
+				this.obstacles.push(new MeteorStorm(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Bad Max X-Coord": 
+				this.obstacles.push(new BadMax(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Wormhole X-Coord": 
+				this.obstacles.push(new Wormhole(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Recipe X-Coord": 
+				this.obstacles.push(new Recipe(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Death Star X-Coord": 
+				this.obstacles.push(new DeathStar(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      default: break;
+    }
+	}*/
 }
 
 function clearEdit()
