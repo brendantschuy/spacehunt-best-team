@@ -1,4 +1,4 @@
-// localStorage.js, work in progress 
+// localStorage.js 
 
 // JSON game state object, work in progress 
 var gameState = {
@@ -7,9 +7,8 @@ var gameState = {
   "supplies": 1000, //ship.supplies,  
   "energy": 1000, //ship.energy,  
   "currency": 1000, //ship.currency,  
-  "obstacles": ["Asteroid", "Celeron", "Xeon", "Ryzen", "DeathStar", "Recipe", "BadMax", 
-                "AbandonedFreighter", "SpaceStation", "Wormhole"],
-  //"activeGame": false
+  "damage": 0,
+  "obstacles": []
 };
 
 // saves game state to browser 
@@ -33,19 +32,60 @@ function initializeSavedGame()
   gameState.supplies = this.ship.supplies;
   gameState.energy = this.ship.energy;
   gameState.currency = this.ship.currency;
+  gameState.damage = this.ship.damage;
   
   // saving obstacles
-  /*for(var i = 0; i < this.obstacles.length; i++)
+  for(var i = 0; i < this.obstacles.length; i++)
   { 
     objName = this.obstacles[i].constructor.name;
     switch(objName) {
       case "Asteroid": 
-        gameState.obstacles["Asteroid"] = this.obstacles[i].cpx;
-        gameState.obstacles["Asteroid"].cpy = this.obstacles[i].cpy;
+        gameState.obstacles.push("Asteroid X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Asteroid Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "Celeron": 
+        gameState.obstacles.push("Celeron X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Celeron Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "Ryzen": 
+        gameState.obstacles.push("Ryzen X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Ryzen Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "Xeon": 
+        gameState.obstacles.push("Xeon X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Xeon Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "SpaceStation": 
+        gameState.obstacles.push("Space Station X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Space Station Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "AbandonedFreighter": 
+        gameState.obstacles.push("Abandoned Freighter X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Abandoned Freighter Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "MeteorStorm": 
+        gameState.obstacles.push("Meteor Storm X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Meteor Storm Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "BadMax": 
+        gameState.obstacles.push("Bad Max X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Bad Max Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "Wormhole": 
+        gameState.obstacles.push("Wormhole X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Wormhole Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "Recipe": 
+        gameState.obstacles.push("Recipe X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Recipe Y-Coord: " + this.obstacles[i].cpy);
+        break;
+      case "DeathStar": 
+        gameState.obstacles.push("Death Star X-Coord: " + this.obstacles[i].cpx);
+        gameState.obstacles.push("Death Star Y-Coord: " + this.obstacles[i].cpy);
         break;
       default: break;
     }
-  }*/
+  }
   save();
 
 }
