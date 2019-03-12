@@ -301,7 +301,7 @@ function menu(params)
 		******************************************************/
 		//load();
 		//add what's in input file to new_presets
-		this.new_presets.push(load());
+		new_presets.push(load());
 		//console.log(new_presets);
 
 		document.onkeydown = getInputFileMenu;
