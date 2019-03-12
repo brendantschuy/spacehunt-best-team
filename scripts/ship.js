@@ -88,6 +88,7 @@ class Ship 	//class names capitalized per js convention
 
 			this.cpx = Math.floor((this.x - SHIP_WIDTH) / GRID_SIZE) + 1;
 			this.cpy = Math.floor((this.y - SHIP_HEIGHT) / GRID_SIZE) + 1;
+			updateLocation();
 
 			this.restoreDefaults();
 

@@ -338,7 +338,6 @@ function start(presets, params)
 			//alert("Not close at all. You lose.");
 			ship.currency -= wager;
 		}
-		//updateURL();
 	}
 
 	function hitObstacle()
@@ -391,7 +390,6 @@ function start(presets, params)
 		if(chance == 1){
 			this.ship.supplies /= 2;
 			this.ship.energy /= 2;
-			//updateURL();
 			commBox.drawNewBox("BadMax stole half of your energy and supplies.",true,5,560);
 		}
 		if(chance == 2){
@@ -416,7 +414,6 @@ function start(presets, params)
 		audio_potion.volume = 1;
 		audio_potion.play();
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].hp);
-		//updateURL();
 		this.obstacles.splice(index, 1);	//deletes 1 array member @ index 
 		this.ship.damage = 0;
 		return index + 1;
@@ -428,8 +425,6 @@ function start(presets, params)
 		this.ship.currency += this.obstacles[index].currency;
 		this.ship.damage = 0;
 		this.obstacles.splice(index, 1);
-
-		//updateURL();
 
 		return index + 1;
 	}
@@ -834,9 +829,7 @@ function start(presets, params)
 		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 315));
 		
 		ship.energy -= 100;
-		ship.supplies -= 50;
-
-		//updateURL();
+		ship.supplies -= 50
 	}
 
 	function fugaDaemonum(){
@@ -848,8 +841,6 @@ function start(presets, params)
 		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 240));
 		ship.energy -= 40;
 		ship.supplies -= 20;
-
-		//updateURL();
 	}
 
 	function scan(){
@@ -880,7 +871,6 @@ function start(presets, params)
 		//uses up supplies for scanning
 		if(foundSomething) {
 			ship.supplies -= Math.floor(ship.originalSupplies * .02);
-			//updateURL();
 		}
 	}
 	function killBadMax()
@@ -982,7 +972,6 @@ function start(presets, params)
 
 	function ghost(){
 		this.ship.supplies -= 100;
-		//updateURL();
 		var timelimit = 15;
 		var downloadTimer = setInterval(function(){
 			this.ship.dev = true;
@@ -1044,13 +1033,11 @@ function resetMoves() {
 }
 
 function changeLocation() {
-	var str = document.getElementById("location").value;
+	var str = document.getElementById("newLocation").value;
 	var coordinates = str.split(",", 2);
 	
 	if(coordinates.length != 2){
-		if(isNaN(coordinates[0])){
-			document.getElementById("location").value = "Invalid Entry";
-		}
+		document.getElementById("newLocation").value = "Invalid Entry";
 		return;
 	}
 
@@ -1058,72 +1045,76 @@ function changeLocation() {
 	var y = Math.floor(Number(coordinates[1]));
 
 	if(isNaN(x) || isNaN(y)){
-		document.getElementById("location").value = "Invalid Entry";
+		document.getElementById("newLocation").value = "Invalid Entry";
 	}
 	else{
 		if(x > MAP_MAX_X || x < MAP_MIN_X){
-			document.getElementById("location").value = "x out of range. (" + str + ")";
+			document.getElementById("newLocation").value = "x out of range";
 		}
 		else if(y > MAP_MAX_Y || y < MAP_MIN_Y){
-			document.getElementById("location").value = "y out of range. (" + str + ")";
+			document.getElementById("newLocation").value = "y out of range";
 		}
 		else{
 			ship.cpx = x;
 			ship.cpy = y;
 			ship.x = x * GRID_SIZE;
 			ship.y = y * GRID_SIZE;
+			document.getElementById("newLocation").value = "";
 		}
 	}
 }
 
 function changeEnergy() {
-	var str = document.getElementById("energy").value;
+	var str = document.getElementById("newEnergy").value;
 	var num = Math.floor(Number(str));
 
 	if(!isNaN(num)){
 		if((num < 1001) && (num > -1)){
 			ship.energy = num;
+			document.getElementById("newEnergy").value = "";
 		}
 		else{
-			document.getElementById("energy").value = "Out of range [0, " + String(ship.maxEnergy) + "]";
+			document.getElementById("newEnergy").value = "Out of range";
 		}
 	}
 	else{
-		document.getElementById("energy").value = "Invalid Entry";
+		document.getElementById("newEnergy").value = "Invalid Entry";
 	}
 }
 
 function changeSupplies() {
-	var str = document.getElementById("supplies").value;
+	var str = document.getElementById("newSupplies").value;
 	var num = Math.floor(Number(str));
 
 	if(!isNaN(num)){
 		if((num < 1001) && (num > -1)){
 			ship.supplies = num;
+			document.getElementById("newSupplies").value = "";
 		}
 		else{
-			document.getElementById("supplies").value = "Out of range [0, 1000]";
+			document.getElementById("newSupplies").value = "Out of range";
 		}
 	}
 	else{
-		document.getElementById("supplies").value = "Invalid Entry";
+		document.getElementById("newSupplies").value = "Invalid Entry";
 	}
 }
 
 function changeCurrency() {
-	var str = document.getElementById("currency").value;
+	var str = document.getElementById("newCurrency").value;
 	var num = Math.floor(Number(str));
 
 	if(!isNaN(num)){
 		if((num < 1000000) && (num > -1)){
 			ship.currency = num;
+			document.getElementById("newCurrency").value = "";
 		}
 		else{
-			document.getElementById("currency").value = "Out of range [0, 999999]";
+			document.getElementById("newCurrency").value = "Out of range";
 		}
 	}
 	else{
-		document.getElementById("currency").value = "Invalid Entry";
+		document.getElementById("newCurrency").value = "Invalid Entry";
 	}
 }
 
@@ -1131,7 +1122,24 @@ function updateURL(){
 	var str = String(ship.cpx) + "," + String(ship.cpy);
 	document.getElementById("location").value = str;
 
-	document.getElementById("energy").value = ship.energy;
-	document.getElementById("supplies").value = ship.supplies;
-	document.getElementById("currency").value = ship.currency;
+	document.getElementById("energy").value = Math.floor(ship.energy);
+	document.getElementById("supplies").value = Math.floor(ship.supplies);
+	document.getElementById("currency").value = Math.floor(ship.currency);
 }
+
+/* function updateLocation(){
+	var str = String(ship.cpx) + "," + String(ship.cpy);
+	document.getElementById("location").value = str;
+}
+
+function updateEnergy(){
+	document.getElementById("energy").value = ship.energy;
+}
+
+function updateSupplies(){
+	document.getElementById("supplies").value = ship.supplies;
+}
+
+function updateCurrency(){
+	document.getElementById("currency").value = ship.currency;
+} */

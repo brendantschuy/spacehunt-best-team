@@ -32,7 +32,7 @@
 	<!--	Don't need two style sheets currently, maybe later.
 	<link rel="stylesheet" media="screen and (max-width: 1369px)" href="css/format.css"/>
 	<link rel="stylesheet" media="screen and (min-width: 1370px)" href="css/widescreen.css"/>-->
-	<link rel="stylesheet" href="css/format.css"/>
+	<link rel="stylesheet" href="css/format2.css"/>
 	<link rel="stylesheet" href="css/menu.css"/>
 
 	<header>
@@ -44,66 +44,62 @@
 
 	<div class="time" id="timer"></div>
 
-	<!--<div id="left-side">-->
-		<div class="controls-div">
-			<h2>
-				<img src="img/controls.png" alt="Controls" id="controls-banner">
-			</h2>
+	<div id="left-side">
+        <div id="ship-hud">
+            <form>
+                <img id="locationIMG" src="img/location.png"><input type="text" id="location" maxlength="8"><br>
+                <img id="energyIMG" src="img/energy.png"><input type="text" id="energy" maxlength="4"><br>
+                <img id="suppliesIMG" src="img/supplies.png"><input type="text" id="supplies" maxlength="4"><br>
+                <img id="currencyIMG" src="img/currency.png"><input type="text" id="currency" maxlength="6"><br>
+            </form>
+        </div>
 
-			<div id="control-buttons-div">
-				<div id="controls-up">
-					<button class="controls-button" id="upBtn" type="button">UP</button><br />
-				</div>
-				<div id="controls-left">
-					<button class="controls-button" id="leftBtn" type="button">LEFT</button>
-				</div>
-				<div id="controls-right">
-					<button class="controls-button" id="rightBtn" type="button">RIGHT</button><br />
-				</div>
-				<div id="controls-down">
-					<button class="controls-button" id="downBtn" type="button">DOWN</button><br />
-				</div>
-				<div id="move-options">
-					<form>
-						<select id="spaces" name="spaces" onChange="moveTarget()">
-							<option value="0" id="0" selected>0</option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-							<input type="button" id="moveBtn" value="Submit" onclick="resetMoves()">
-						</select>
-					</form>
-				</div>
+        <div id="control-buttons-div">
+             <div id="controls-up">
+                <button class="controls-button" id="upBtn" type="button">UP</button><br />
+            </div>
+            <div id="controls-left">
+                <button class="controls-button" id="leftBtn" type="button">LEFT</button>
+            </div>
+            <div id="controls-right">
+                <button class="controls-button" id="rightBtn" type="button">RIGHT</button><br />
+            </div>
+            <div id="controls-down">
+                <button class="controls-button" id="downBtn" type="button">DOWN</button><br />
+            </div>
+            <div id="move-options">
+                <form>
+                    <select id="spaces" name="spaces" onChange="moveTarget()">
+                        <option value="0" id="0" selected>0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <input type="button" id="moveBtn" value="Submit" onclick="resetMoves()">
+                    </select>
+                </form>
+            </div>
+        </div>
 
-				<!--<p id="demo" style="color:white;">Test</p>-->
-				<!--<div id="controls-move">
-					<button class="controls-button" id="moveBtn" type="button">MOVE</button>
-				</div>-->
-				<div id="controls-GS">
-					<button class="controls-button" id="GSBtn" type="button">ATTACK</button>
-				</div>	
-				<div id="controls-OTB">
-					<button class="controls-button" id="OTBBtn" type="button">ATTACK</button>
-				</div>	
-				<div id="controls-FD">
-					<button class="controls-button" id="FDBtn" type="button">ATTACK</button>
-				</div>			
-				<div id="controls-scan">
-					<button class="scan" id="scan" type="button">SCAN</button>
-				</div>
-				<div id="save">
-					<input class="save" id="save" type="button" onclick="initializeSavedGame()"></button>
-				</div>
-			</div>
-		</div>
-	<!--</div>-->
+        <div id="controls-scan">
+            <button class="scan" id="scan" type="button">SCAN</button>
+        </div>
+        <div id="controls-GS">
+            <button class="controls-button" id="GSBtn" type="button">ATTACK</button>
+        </div>	
+        <div id="controls-OTB">
+            <button class="controls-button" id="OTBBtn" type="button">ATTACK</button>
+        </div>	
+        <div id="controls-FD">
+            <button class="controls-button" id="FDBtn" type="button">ATTACK</button>
+        </div>	
+	</div>
 
 	<div class="map-class">
 		<div id="map-banner-div">
@@ -113,25 +109,30 @@
 		</div>
 		<div id="map-container-div">
 		</div>
-	</div>
+    </div>
 
 	<div class="game" id="game">
 		<canvas id="gameScreen"></canvas>
 	</div>
 
 	<div class="dev-options-div">
+        
+        <div id="save-div">
+            <input class="save" id="save" type="button" onclick="initializeSavedGame()"></button>
+        </div>
+
 		<div id="dev-header">
 			<img src="img/development_options.png" alt="Development Options" id="dev-options-banner">
-		</div>
-		
-		<div id="user-controls">
-			<form>
-				<img src="img/location.png"><input type="text" id="location" maxlength="8" onchange="changeLocation()"><br>
-				<img src="img/energy.png"><input type="text" id="energy" maxlength="4" onchange="changeEnergy()"><br>
-				<img src="img/supplies.png"><input type="text" id="supplies" maxlength="4" onchange="changeSupplies()"><br>
-				<img src="img/currency.png"><input type="text" id="currency" maxlength="6" onchange="changeCurrency()"><br>
-			</form>
-		</div>
+        </div>
+        
+        <div id="change-hud">
+            <form>
+                <img id="locationIMG" src="img/location.png"><input type="text" id="newLocation" value="" maxlength="8" onchange="changeLocation()"><br>
+                <img id="energyIMG" src="img/energy.png"><input type="text" id="newEnergy" value="" maxlength="4" onchange="changeEnergy()"><br>
+                <img id="suppliesIMG" src="img/supplies.png"><input type="text" id="newSupplies" value="" maxlength="4" onchange="changeSupplies()"><br>
+                <img id="currencyIMG" src="img/currency.png"><input type="text" id="newCurrency" value="" maxlength="6" onchange="changeCurrency()"><br>
+            </form>
+        </div>
 
 		<div id="dev-modes">
 			<div class="dev-options-button-text" id="dev-mode">
@@ -154,7 +155,7 @@
 				<input type="checkbox" id="speedrun" name="speedrun">
 				<label for="speedrun">Speed Run Mode</label>
 			</div>
-		</div>
+        </div>
 	</div>
 </body>
 </html>
