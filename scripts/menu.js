@@ -525,7 +525,7 @@ function load() {
 	  console.log("Browser does not support localStorage!");
 	  return false; 
 	}
-	displaySaved();
+	//displaySaved();
 	let gameToLoad = prompt("Which game do you want to load?"); // can't pick from multiple states yet
 	
 	// used for only single state
