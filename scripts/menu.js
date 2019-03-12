@@ -526,7 +526,9 @@ function load() {
 	  return false; 
 	}
 	displaySaved();
-	let gameToLoad = prompt("Which game do you want to load?");   //don't have multiple saved states yet
+	let gameToLoad = prompt("Which game do you want to load?"); // can't pick from multiple states yet
+	
+	// used for only single state
 	/*this.ship.cpx = JSON.parse(localStorage.getItem("shipX"));
 	this.ship.cpy = JSON.parse(localStorage.getItem("shipY"));
 	this.ship.energy = JSON.parse(localStorage.getItem("energy"));

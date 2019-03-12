@@ -1,9 +1,9 @@
 // localStorage.js 
 
-// JSON game state object, work in progress 
+// JSON game state object
 var gameState = {
-  "shipX": 10, // ship.cpx
-  "shipY": 10, //ship.cpy,
+  "shipX": 0, // ship.cpx
+  "shipY": 0, //ship.cpy,
   "supplies": 1000, //ship.supplies,  
   "energy": 1000, //ship.energy,  
   "currency": 1000, //ship.currency,  
@@ -27,7 +27,6 @@ function save() {
 
 function initializeSavedGame()
 {
-  // just getting these working for now
   gameState.shipX = this.ship.cpx;
   gameState.shipY = this.ship.cpy;
   gameState.supplies = this.ship.supplies;
@@ -88,7 +87,6 @@ function initializeSavedGame()
     }
   }
   save();
-
 }
 
 // checks whether browser supports localStorage
