@@ -299,9 +299,9 @@ function menu(params)
 		*************READ INPUT FILE***************************
 		*******************************************************
 		******************************************************/
-		load();
+		//load();
 		//add what's in input file to new_presets
-
+		new_presets.push(load());
 
 		document.onkeydown = getInputFileMenu;
 
@@ -575,7 +575,8 @@ function load() {
         break;
       default: break;
     }
-	}*/
+	}
+	return obstacles;*/
 }
 
 function clearEdit()
@@ -905,12 +906,15 @@ function moreOptions(params)
 
 		var initEnergy = document.getElementById("startingEnergyInput").value;
 		var initSupplies = document.getElementById("startingSuppliesInput").value;
-		if(spx > bsx || spx < 0 || spy > bsy || spy < 0)
-		{
-			alert("Invalid starting position entered. Must be less than board size and greater than zero.");
-			return false;
-		}
-		else if(bsx < 9 || bsx > 255 || bsy < 9 || bsy > 255)
+
+		alert(spx + ", " + spy + ", " + bsx + ", " + bsy);
+		alert(spx == bsx);
+		//if(spx > bsx || spx < 0 || spy > bsy || spy < 0)
+		//{
+			//alert("Invalid starting position entered. Must be less than board size and greater than zero.");
+			//return false;
+		//}
+		if(bsx < 9 || bsx > 255 || bsy < 9 || bsy > 255)
 		{
 			alert("Invalid board size entered. Must be less than 255 and greater than 9.");
 			return false;
