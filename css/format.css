@@ -19,6 +19,16 @@ header {
 	 width: 365px;
 }
 
+@font-face {
+	font-family: 'digital-7';
+	src: url('../fonts/digital-7.ttf');
+}
+
+.customFont {
+	font-family: 'digital-7';
+	color: red;
+}
+
 body {
 	font-family: Impact, Charcoal, sans-serif;
 	overflow-y: scroll;
@@ -143,6 +153,7 @@ h2 {
 
 #user-controls{
 	/*background-color: green;*/
+	font-family: arial;
 	display: inline-block;
 	width: 500px;
 	height: 100%;
@@ -154,19 +165,39 @@ input[type=text] {
 }
 
 #location {
+	background-color: transparent;
+	border-color: transparent;
 	margin-left: 55px;
+	font-family: 'digital-7';
+	font-size: 35px;
+	color: rgb(255, 0, 0);
 }
 
 #energy {
-	margin-left: 67px;
+	background-color: transparent;
+	border-color: transparent;
+	margin-left: 45px;
+	font-family: 'digital-7';
+	font-size: 35px;
+	color: rgb(0, 255, 0);
 }
 
 #supplies {
-	margin-left: 55px;
+	background-color: transparent;
+	border-color: transparent;
+	margin-left: 45px;
+	font-family: 'digital-7';
+	font-size: 35px;
+	color: rgb(0, 128, 255);
 }
 
 #currency {
-	margin-left: 10px;
+	background-color: transparent;
+	border-color: transparent;
+	margin-left: 45px;
+	font-family: 'digital-7';
+	font-size: 35px;
+	color: yellow;
 }
 
 #dev-modes{

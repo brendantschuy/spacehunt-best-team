@@ -51,14 +51,7 @@ function menu(params)
 		}
 		else if(e.keyCode == 78)	//N
 		{
-			if(!params)
-			{
-				params = setDefaultParameters();
-			}
-			removeOptions();
-			//alert(params);
-			clearMenu();
-			start(presets, params);
+			beginGame();
 		}
 		else
 		{
@@ -67,6 +60,17 @@ function menu(params)
 		}
 	}
 
+	function beginGame()
+	{
+		if(params == undefined)
+		{
+			params = setDefaultParameters();
+		}
+		removeOptions();
+		//alert(params);
+		clearMenu();
+		start(presets, params);
+	}
 	function setUpMenu()
 	{
 		let cvs = document.getElementById("gameScreen");
@@ -92,8 +96,7 @@ function menu(params)
 		};
 		newGameButton.onclick = function()
 		{
-			clearMenu();
-			start(presets);
+			beginGame();
 		}
 		document.body.appendChild(newGameButton);
 
@@ -345,7 +348,9 @@ function getInputFileMenu(e)
 		//deleteFileMenuOptions();
 
 		document.body.removeChild(fileInput);
-		document.body.removeChild(returnToMainMenu);
+		document.body.removeChild(returnMainMenuFile);
+		document.body.removeChild(returnMainMenuText);
+		document.body.removeChild(bkgd);
 	}
 }
 
