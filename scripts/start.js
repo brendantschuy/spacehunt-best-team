@@ -275,7 +275,7 @@ function start(presets, params)
 		if(x + y == 0){
 			var test = document.getElementById("wager");
 			var test2 = document.getElementById("chanceGo");
-			var canBet = true;
+			var canBet = false;
 	  		if(!test){
 				var box1 = document.createElement("input");
 				box1.type = "text";
@@ -301,13 +301,14 @@ function start(presets, params)
 			wager = document.getElementById("wager").value;
 			guess = document.getElementById("guess").value;
 			//if(!commBox.toggle){
-				if((wager > ship.currency || wager <= 0) && wager.length > 0){
+				if(wager.length > 0 && (wager > ship.currency || wager <= 0)){
 					commBox.drawNewBox("You don't have that much money! Enter another amount",true,5,560);
 					canBet = false;
-				}else if((guess > 10 || guess < 1) && wager.length > 0){
+				}else if(guess.length > 0 && (guess > 10 || guess < 1)){
 					commBox.drawNewBox("A number between 1 and 10, no more and no less",true,5,560); 
 					canBet = false;
 				}else {
+					canBet = true;
 					commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
 				}
 			//}
