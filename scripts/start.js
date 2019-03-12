@@ -39,6 +39,8 @@ function start(presets, params)
 		this.map_max_y = params[1];
 		this.starting_x = params[2];
 		this.starting_y = params[3];
+
+		//alert(this.starting_x + ", " + this.starting_y);
 		//params[4] (immortality) is handled in initializeObjects()
 		if(params[5] == true)
 		{
@@ -448,8 +450,8 @@ function start(presets, params)
 		this.obstacles = [];
 
 		//BadMax NEEDS to be obstacles[0]
-		//obstacles.push(new BadMax((Math.floor(Math.random() * map_max_x)+1),Math.floor(Math.random() * map_max_y)+1));
-		obstacles.push(new BadMax(0, 5));
+		obstacles.push(new BadMax((Math.floor(Math.random() * map_max_x)+1),Math.floor(Math.random() * map_max_y)+1));
+		//obstacles.push(new BadMax(0, 5));
 
 		//There may only be one!
 		let isXeon = false, isCeleron = false, isRyzen = false;
