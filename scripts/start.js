@@ -602,6 +602,10 @@ function start(presets, params)
 			//recipe.hidden = 0;
 			//recipe.sprite.src = "img/recipe.png";
 		});
+		document.getElementById("save").addEventListener("click", function()
+		{
+			initializeSavedGame();
+		});
 		document.getElementById("OTBBtn").addEventListener("click", function() {
 			fireLaser();
 		});

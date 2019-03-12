@@ -215,8 +215,8 @@ input[type=text] {
 	font-size: 12px;
 	text-align: center;
 	display: inline-block;
-	width: 150px;
-	height: 150px;
+	width: 125px;
+	height: 125px;
 	padding: 6px;
 }
 
@@ -384,16 +384,36 @@ form input[type=button] {
 	margin-right: auto;
 }
 
-.save {
-	background-color: blue;
-	color: white;
+#save {
+	background: url("../img/save.gif") no-repeat center;
+	background-size: 50px 50px;
+	border-color: transparent;
+	width: 50px;
+	/*display: inline-block;
+	margin-top: 10px;*/
+	margin-left: auto;
+	margin-right: auto;
 }
 
+
+
+.save {
+	color: transparent;
+	font-size: 12px;
+	text-align: center;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	padding: 6px;
+}
+
+/*
 #save {
 	width: 150px;
 	margin-left: 128px;
 	margin-right: auto;
 }
+*/
 
 button {
 	background-color: transparent;
