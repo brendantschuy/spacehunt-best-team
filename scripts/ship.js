@@ -335,7 +335,7 @@ class Ship 	//class names capitalized per js convention
 	{
 		if(this.dev == false){
 			if(this.energy <= 0){ 
-				alert("You ran out of energy! Game over.");
+				alert("YOU RAN OUT OF ENERGY! GAME OVER!");
 				location = location;
 			} 
 		}
@@ -345,7 +345,7 @@ class Ship 	//class names capitalized per js convention
 	checkSupplies(){
 		if(this.dev == false){
 			if(this.supplies < (this.originalSupplies *.02)){
-				alert("You depleted your supplies! Game over.");
+				alert("YOU RAN OUT OF SUPPLIES! GAME OVER!");
 				location = location;
 			}
 		}

@@ -961,7 +961,7 @@ function start(presets, params)
 				}
 				this.gameOver = true;
 				setTimeout(function(){
-					alert("You ran out of time! Game over!");
+					alert("YOU RAN OUT OF TIME! GAME OVER!");
 					window.location.reload();	
 				}, 1000);
 				clearInterval(downloadTimer);
@@ -1072,6 +1072,7 @@ function changeEnergy() {
 		if((num < 1001) && (num > -1)){
 			ship.energy = num;
 			document.getElementById("newEnergy").value = "";
+			ship.checkEnergy();
 		}
 		else{
 			document.getElementById("newEnergy").value = "Out of range";
@@ -1090,6 +1091,7 @@ function changeSupplies() {
 		if((num < 1001) && (num > -1)){
 			ship.supplies = num;
 			document.getElementById("newSupplies").value = "";
+			ship.checkSupplies();
 		}
 		else{
 			document.getElementById("newSupplies").value = "Out of range";

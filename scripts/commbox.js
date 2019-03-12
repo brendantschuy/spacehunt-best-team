@@ -37,7 +37,7 @@ class CommBox
 				ctx.fillText("You obtained an energy potion! Your energy is restored by " + this.currentObstacle.hp + ".", 20, 560);
 				break;
 			case("Asteroid") : 
-				ctx.fillText("YOU HIT AN ASTEROID. Game over.", 20, 560);
+				ctx.fillText("YOU HIT AN ASTEROID! GAME OVER!", 20, 560);
 				break;
 			case("Xeon") : case ("Celeron") : case("Ryzen") : 
 				ctx.fillText("Welcome to the planet of " + obstacleName + "!", 20, 560);
@@ -46,7 +46,7 @@ class CommBox
 				ctx.fillText("Welcome to the planet of " + this.currentObstacle.planetName + "!", 20, 560);
 				break;
 			case("Recipe") : 
-				ctx.fillText("You win the game :)", 20, 560);
+				ctx.fillText("YOU FOUND THE RECIPE! YOU WIN!", 20, 560);
 				break;
 			case("DeathStar") : 
 				ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
