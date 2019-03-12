@@ -27,6 +27,11 @@ function start(presets, params)
 	this.musicPlayer = new MusicPlayer();
 
 	initializeObjects();	//creates objects
+	/*alert(this.obstacles.length);
+	for(i = 1500; i < 1510; i++)
+	{
+		alert(obstacles[i].cpx + ", " + obstacles[i].cpy);
+	}*/
 	setUpEventListeners();	//creates event listeners, which hook up the
 							//on-screen buttons with in-game functionality
 	
