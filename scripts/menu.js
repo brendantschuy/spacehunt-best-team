@@ -235,7 +235,7 @@ function menu(params)
 				this.presets.push(new SpaceStation(x, y));
 				break;
 			case("Abandoned Freighter") :
-				this.presets.push(new AbandonedFreighter(x, y));
+				this.presets.push(new AbandonedFreighter(x, y, 200, 200, 1000));
 				break;
 			case("Meteor Storm") :
 				this.presets.push(new MeteorStorm(x, y));
