@@ -1146,3 +1146,13 @@ function updateSupplies(){
 function updateCurrency(){
 	document.getElementById("currency").value = ship.currency;
 } */
+
+function displayDevOptions(){
+	var checkBox = document.getElementById("devMode");
+
+	if (checkBox.checked == true){
+		document.getElementById("user-controls").style.display = "inline-block";
+	} else {
+		document.getElementById("user-controls").style.display = "none";
+	}
+}
