@@ -51,7 +51,7 @@ function menu(params)
 		}
 		else if(e.keyCode == 78)	//N
 		{
-			if(!params)
+			if(params == undefined)
 			{
 				params = setDefaultParameters();
 			}
@@ -296,10 +296,9 @@ function menu(params)
 		*************READ INPUT FILE***************************
 		*******************************************************
 		******************************************************/
-		let existingGame = load();
-		
+		load();
 		//add what's in input file to new_presets
-		new_presets.push(existingGame);
+
 
 		document.onkeydown = getInputFileMenu;
 
@@ -346,7 +345,9 @@ function getInputFileMenu(e)
 		//deleteFileMenuOptions();
 
 		document.body.removeChild(fileInput);
-		document.body.removeChild(returnToMainMenu);
+		document.body.removeChild(returnMainMenuFile);
+		document.body.removeChild(returnMainMenuText);
+		document.body.removeChild(bkgd);
 	}
 }
 
@@ -513,15 +514,20 @@ function getAbsPosition(element)
    return {x:rect.left,y:rect.top}
 }
 
-// loads game from browser 
+/* persistent state stuff */ 
+
+// loads game state from browser 
 function load() {
 	if (!supportsLocalStorage() || localStorage["activeGame"] == "false") {
 	  console.log("Browser does not support localStorage!");
 	  return false; 
 	}
-	let gameToLoad = prompt("Which game do you want to load?");  
-	let gameState = JSON.parse(localStorage.getItem("gameToLoad"));
-	return gameState;
+	let gameToLoad = prompt("Which game do you want to load?");   //don't have multiple saved states yet
+	this.ship.cpx = JSON.parse(localStorage.getItem("shipX"));
+	this.ship.cpy = JSON.parse(localStorage.getItem("shipY"));
+	this.ship.energy = JSON.parse(localStorage.getItem("energy"));
+	this.ship.supplies = JSON.parse(localStorage.getItem("supplies"));
+	this.ship.currency = JSON.parse(localStorage.getItem("currency"));
 }
 
 function clearEdit()

@@ -580,15 +580,15 @@ function start(presets, params)
 		});
 		// This should change the value in the drop down move menu to the value of spaces from 
 		// the key board
-		/*document.getElementById("spaces").addEventListener("change", function() 
+		document.getElementById("spaces").addEventListener("change", function() 
 		{
 			if(Math.floor(ship.distanceToTravel/GRID_SIZE) > 10) {
 				ship.distanceToTravel = 10 * GRID_SIZE;
 			}
 			var spaces = document.getElementById("spaces");
 			spaces.value = Math.floor(ship.distanceToTravel/GRID_SIZE);
-		});*/
-		/*document.getElementById("devMode").addEventListener("click", function()
+		});
+		document.getElementById("devMode").addEventListener("click", function()
 		{
 			ship.toggleDevMode();
 		});
@@ -601,7 +601,7 @@ function start(presets, params)
 			scan();
 			//recipe.hidden = 0;
 			//recipe.sprite.src = "img/recipe.png";
-		});*/
+		});
 		document.getElementById("OTBBtn").addEventListener("click", function() {
 			fireLaser();
 		});
@@ -886,8 +886,6 @@ function start(presets, params)
 		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE)+1);
 		//obstacles[0] = new BadMax(10*GRID_SIZE, 15*GRID_SIZE);
 		this.BadMax = obstacles[0];
-		// just testing save, will not want to call this here 
-		//save();
 		
 	}
 
