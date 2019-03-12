@@ -60,7 +60,7 @@ h2 {
 	width: 20%;
 } */
 
-.controls-div{ 
+#left-side{ 
 	float: left;
 }
 
@@ -89,9 +89,9 @@ h2 {
 	float: right;
 }
 
-.map-class, .controls-div {
+.map-class, #left-side {
 	width: 300px;
-	height: 550px;
+	height: 580px;
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-left: 20px;
@@ -103,40 +103,40 @@ h2 {
 	display: block;*/
 }
 
-.map-class, .controls-div, .game {
+.map-class, #left-side, .game {
 	background-color: rgba(0, 0, 0, 0.45);
 	color: white;
 	border-radius: 30px;
 }
 
 /*For testing purposes: to see dimensions of divs*/
-.map-class, .controls-div, .game, .dev-options-div {
+.map-class, #left-side, .game, .dev-options-div {
 	background-color: rgba(0, 0, 0, 0.45);
-	/*background-color: purple;*/
+	/* background-color: purple; */
 }
 
 .dev-options-div {
 	color: white;
-	height: 140px;
+	height: 135px;
 	width: auto;
 	padding: 10px;
-	margin: 20px;
-	/*margin-top: 130px;*/
+    margin: 15px 20px;
+	/*margin-top: 20px;*/
 	border-radius: 30px;
 }
 
-#controls-banner {
+/* #controls-banner {
 	height: 40px;
 	width: 220px;
 	margin-left: auto;
 	margin-right: auto;
 	float: center;
-}
+} */
 
 #dev-options-banner {
 	height: 75px;
 	width: 275px;
-	display: inline-block;
+	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 25px;
@@ -145,24 +145,52 @@ h2 {
 
 #dev-header {
 	height: 100%;
-	width: 280px;
-	clear: left;
-	float: left;
-	top: 50%;
-	bottom: 50%;
+    width: 280px;
+    display: inline-block;
+    margin-left: 150px;
+	/*clear: left;
+	float: left;*/
+	/* top: 50%;
+	bottom: 50%; */
 }
 
-#user-controls{
+#ship-hud{
 	/*background-color: green;*/
 	font-family: arial;
 	display: inline-block;
 	width: 500px;
-	height: 100%;
+	height: 140px;
 	padding-left: 50px;
+	margin-top: 50px;
+}
+
+#change-hud{
+	/*background-color: green;*/
+	font-family: arial;
+	display: inline-block;
+	width: 300px;
+    height: 140px;
+    padding-left: 50px;
 }
 
 input[type=text] {
-	width: 200px;
+	width: 110px;
+}
+
+#locationIMG {
+	width: 110px;
+}
+
+#energyIMG {
+	width: 110px;
+}
+
+#suppliesIMG {
+	width: 110px;
+}
+
+#currencyIMG {
+	width: 110px;
 }
 
 #location {
@@ -170,7 +198,7 @@ input[type=text] {
 	border-color: transparent;
 	margin-left: 55px;
 	font-family: 'digital-7';
-	font-size: 35px;
+	font-size: 25px;
 	color: rgb(255, 0, 0);
 }
 
@@ -179,7 +207,7 @@ input[type=text] {
 	border-color: transparent;
 	margin-left: 45px;
 	font-family: 'digital-7';
-	font-size: 35px;
+	font-size: 25px;
 	color: rgb(0, 255, 0);
 }
 
@@ -188,7 +216,7 @@ input[type=text] {
 	border-color: transparent;
 	margin-left: 45px;
 	font-family: 'digital-7';
-	font-size: 35px;
+	font-size: 25px;
 	color: rgb(0, 128, 255);
 }
 
@@ -197,7 +225,7 @@ input[type=text] {
 	border-color: transparent;
 	margin-left: 45px;
 	font-family: 'digital-7';
-	font-size: 35px;
+	font-size: 25px;
 	color: yellow;
 }
 
@@ -207,8 +235,7 @@ input[type=text] {
 	height: 100%;
 	padding: 10px;
 	margin-left: 10px;
-	display: block;
-	float: right;
+	display: inline-block;
 }
 
 .scan {
@@ -216,9 +243,19 @@ input[type=text] {
 	font-size: 12px;
 	text-align: center;
 	display: inline-block;
-	width: 125px;
-	height: 125px;
+	width: 80px;
+	height: 80px;
 	padding: 6px;
+}
+
+#controls-scan {
+	background: url("../img/scan.gif") no-repeat center;
+	background-size: 80px 80px;
+	width: 80px;
+	/*display: inline-block;
+	margin-top: 10px;*/
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #map {
@@ -277,6 +314,7 @@ input[type=text] {
 	width: 50px;
 	margin-left: auto;
 	margin-right: auto;
+	/*margin-top: -25px;*/
 }
 
 #controls-down {
@@ -375,38 +413,36 @@ form input[type=button] {
 	margin-left: 25px;
 }
 
-#controls-scan {
-	background: url("../img/scan.gif") no-repeat center;
-	background-size: 100px 100px;
-	width: 100px;
-	/*display: inline-block;
-	margin-top: 10px;*/
-	margin-left: auto;
-	margin-right: auto;
-}
-
 #save {
 	background: url("../img/save.gif") no-repeat center;
 	background-size: 50px 50px;
 	border-color: transparent;
-	width: 50px;
-	/*display: inline-block;
-	margin-top: 10px;*/
-	margin-left: auto;
-	margin-right: auto;
+    width: 50px;
+    height: 50px;
+    /*display: inline-block;*/
+    /*margin: auto auto;*/
+	/*margin-left: auto;
+	margin-right: auto;*/
+}
+
+#save-div{
+    clear: left;
+	float: left;
+    margin-top: 40px;
+    margin-left: 120px;
 }
 
 
-
-.save {
+/*.save {
 	color: transparent;
 	font-size: 12px;
 	text-align: center;
 	display: inline-block;
 	width: 50px;
 	height: 50px;
-	padding: 6px;
-}
+    padding: 6px;
+    margin-right: 20px;
+}*/
 
 /*
 #save {
