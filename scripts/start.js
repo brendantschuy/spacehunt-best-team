@@ -40,7 +40,7 @@ function start(presets, params)
 		this.starting_x = params[2];
 		this.starting_y = params[3];
 
-		alert(this.starting_x + ", " + this.starting_y);
+		//alert(this.starting_x + ", " + this.starting_y);
 		//params[4] (immortality) is handled in initializeObjects()
 		if(params[5] == true)
 		{
