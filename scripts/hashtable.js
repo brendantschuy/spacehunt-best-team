@@ -20,7 +20,7 @@ class hashTable
 	addHash(x, y)
 	{
 		let key = this.findKey(x, y);
-		if(key == 0)
+		if(key == 0 || key == 8320)
 		{
 			return false;
 		}
