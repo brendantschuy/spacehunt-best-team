@@ -79,6 +79,7 @@ function start(presets, params)
 				e.preventDefault();		//prevents this from moving the window/canvas around
 				ship.beginMoving();
 				ship.commitMovement();
+				resetMoves();
 				pursuit();
 				break;
 			case 37 : case 65 : //<left> or <a>
