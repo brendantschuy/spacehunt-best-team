@@ -302,10 +302,8 @@ function start(presets, params)
 		    }		
 			wager = document.getElementById("wager").value;
 			guess = document.getElementById("guess").value;
-			if(!commBox.toggle){
+			//if(!commBox.toggle){
 				if((wager > ship.currency || wager <= 0) && wager.length > 0){
-					alert(wager);
-
 					commBox.drawNewBox("You don't have that much money! Enter another amount",true,5,560);
 					canBet = false;
 				}else if((guess > 10 || guess < 1) && wager.length > 0){
@@ -314,7 +312,7 @@ function start(presets, params)
 				}else {
 					commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
 				}
-			}
+			//}
 			//var result = Math.floor((Math.random() * 10) + 1);
 			if(!canBet){
 				removeElement("chanceGo");
@@ -330,15 +328,15 @@ function start(presets, params)
 	function playChanceGame(guess,wager,result){
 		if(guess == result){
 			commBox.drawNewBox("Congratulations! You guessed the right number! You get 3x your wager!",true,5,560);
-			//alert("Congratulations! You guessed the right number! You get 3x your wager!");
+			alert("Congratulations! You guessed the right number! You get 3x your wager!");
 			ship.currency += (3 * wager);
 		}else if(guess == (result-1) || guess == (result+1)){
 			commBox.drawNewBox("You were very close! Only within one. You get 1.5x your wager!",true,5,560);
-			//alert("You were very close! Only within one. You get 1.5x your wager!");
+			alert("You were very close! Only within one. You get 1.5x your wager!");
 			ship.currency += (1.5 * wager);
 		}else { 
 			commBox.drawNewBox("Not close at all. You lose.",true,5,560);
-			//alert("Not close at all. You lose.");
+			alert("Not close at all. You lose.");
 			ship.currency -= wager;
 		}
 	}
