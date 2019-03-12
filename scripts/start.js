@@ -886,8 +886,6 @@ function start(presets, params)
 		obstacles[0] = new BadMax((Math.floor(Math.random() *GRID_SIZE)+1),Math.floor(Math.random() *GRID_SIZE)+1);
 		//obstacles[0] = new BadMax(10*GRID_SIZE, 15*GRID_SIZE);
 		this.BadMax = obstacles[0];
-		// just testing save, will not want to call this here 
-		//save();
 		
 	}
 
