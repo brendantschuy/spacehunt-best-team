@@ -9,22 +9,46 @@ var gameState = {
   "currency": 1000, //ship.currency,  
   "obstacles": ["Asteroid", "Celeron", "Xeon", "Ryzen", "DeathStar", "Recipe", "BadMax", 
                 "AbandonedFreighter", "SpaceStation", "Wormhole"],
-  "activeGame": false
+  //"activeGame": false
 };
+
+// saves game state to browser 
+function save() {
+  if (!supportsLocalStorage()) {
+    console.log("Browser does not support localStorage!");
+    return false; 
+  }
+  var savedState = prompt("Enter a name for this game.")
+ // var savedList = [];
+  localStorage.setItem(savedState, JSON.stringify(gameState)); 
+  //savedList.push(savedState);
+  //console.log(savedList);
+}
 
 function initializeSavedGame()
 {
-  //var a, b;
-
-  // just trying to get these working for now
-  shipX = this.ship.cpx;
-  shipY = this.ship.cpy;
-  supplies = this.ship.supplies;
-  energy = this.ship.energy;
-  currency = this.ship.currency;
+  // just getting these working for now
+  gameState.shipX = this.ship.cpx;
+  gameState.shipY = this.ship.cpy;
+  gameState.supplies = this.ship.supplies;
+  gameState.energy = this.ship.energy;
+  gameState.currency = this.ship.currency;
+  
+  // saving obstacles
+  /*for(var i = 0; i < this.obstacles.length; i++)
+  { 
+    objName = this.obstacles[i].constructor.name;
+    switch(objName) {
+      case "Asteroid": 
+        gameState.obstacles["Asteroid"] = this.obstacles[i].cpx;
+        gameState.obstacles["Asteroid"].cpy = this.obstacles[i].cpy;
+        break;
+      default: break;
+    }
+  }*/
+  save();
 
 }
-
 
 // checks whether browser supports localStorage
 function supportsLocalStorage() {
@@ -40,32 +64,6 @@ function displaySaved(savedList) {
     for(var i = 0; i < savedList.length; i++)
       console.log(savedList[i]);
 }
-
-// saves game state to browser 
-function save() {
-  if (!supportsLocalStorage()) {
-    console.log("Browser does not support localStorage!");
-    return false; 
-  }
-  var savedState = prompt("Enter a name for this game.")
- // var savedList = [];
-  localStorage.setItem(savedState, JSON.stringify(gameState)); 
-  //savedList.push(savedState);
-  //console.log(savedList);
-
-  activeGame = true;
-}
-
-/*// loads game from browser --- is now in menu.js
-function load() {
-  if (!supportsLocalStorage() || localStorage["activeGame"] == "false") {
-    console.log("Browser does not support localStorage!");
-    return false; 
-  }
-  let gameToLoad = prompt("Which game do you want to load?");  
-  let gameState = JSON.parse(localStorage.getItem(gameToLoad));
-  return gameState;
-}*/
 
 // clears entire storage (might not need as separate function)
 function clearAll() {
