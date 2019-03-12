@@ -299,9 +299,10 @@ function menu(params)
 		*************READ INPUT FILE***************************
 		*******************************************************
 		******************************************************/
-		load();
+		//load();
 		//add what's in input file to new_presets
-
+		this.new_presets.push(load());
+		//console.log(new_presets);
 
 		document.onkeydown = getInputFileMenu;
 
@@ -575,7 +576,8 @@ function load() {
         break;
       default: break;
     }
-	}*/
+	}
+	return obstacles;*/
 }
 
 function clearEdit()
