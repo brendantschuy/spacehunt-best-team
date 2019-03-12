@@ -11,6 +11,8 @@ var gameState = {
   "obstacles": []
 };
 
+//var savedList = [];
+
 // saves game state to browser 
 function save() {
   if (!supportsLocalStorage()) {
@@ -18,9 +20,8 @@ function save() {
     return false; 
   }
   var savedState = prompt("Enter a name for this game.")
- // var savedList = [];
   localStorage.setItem(savedState, JSON.stringify(gameState)); 
-  //savedList.push(savedState);
+  savedList.push(savedState);
   //console.log(savedList);
 }
 

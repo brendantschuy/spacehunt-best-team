@@ -525,6 +525,7 @@ function load() {
 	  console.log("Browser does not support localStorage!");
 	  return false; 
 	}
+	displaySaved();
 	let gameToLoad = prompt("Which game do you want to load?");   //don't have multiple saved states yet
 	/*this.ship.cpx = JSON.parse(localStorage.getItem("shipX"));
 	this.ship.cpy = JSON.parse(localStorage.getItem("shipY"));
