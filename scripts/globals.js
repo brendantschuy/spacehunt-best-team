@@ -17,7 +17,7 @@ const SCAN_RANGE = 2;		//how far can we see when we hit scan?
 const SHIP_START_X = 0;	//starting position in cpx
 const SHIP_START_Y = 0;	//starting position in cpy
 
-const OBSTACLE_SPAWN_RATE = 8;	//lower is more
+const OBSTACLE_SPAWN_RATE = 4;	//lower is more
 
 //map dimensions:
 const MAP_MIN_X = 0;
