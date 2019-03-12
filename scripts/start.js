@@ -448,8 +448,8 @@ function start(presets, params)
 		this.obstacles = [];
 
 		//BadMax NEEDS to be obstacles[0]
-		//obstacles.push(new BadMax((Math.floor(Math.random() * map_max_x)+1),Math.floor(Math.random() * map_max_y)+1));
-		obstacles.push(new BadMax(0, 5));
+		obstacles.push(new BadMax((Math.floor(Math.random() * map_max_x)+1),Math.floor(Math.random() * map_max_y)+1));
+		//obstacles.push(new BadMax(0, 5));
 
 		//There may only be one!
 		let isXeon = false, isCeleron = false, isRyzen = false;
