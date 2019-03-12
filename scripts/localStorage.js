@@ -11,7 +11,7 @@ var gameState = {
   "obstacles": []
 };
 
-//var savedList = [];
+var savedList = [];
 
 // saves game state to browser 
 function save() {
