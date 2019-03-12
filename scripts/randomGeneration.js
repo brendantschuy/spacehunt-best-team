@@ -7,14 +7,16 @@ function generateRandomObstacles(input_x, input_y)
 	let map_max_x = input_x;
 	let map_max_y = input_y;
 
-	for(i = 1; i < map_max_x / 8; i++)
+	//OBSTACLE_SPAWN_RATE is INVERSELY PROPORTIONAL to actual spawn rate
+	//HIGHER constant = FEWER spawns
+	for(i = 0; i < map_max_x / OBSTACLE_SPAWN_RATE; i++)
 	{
-		for(j = 1; j < map_max_y / 8; j++)
+		for(j = 0; j < map_max_y / OBSTACLE_SPAWN_RATE; j++)
 		{
 			for(k = 0; k < 8; k++)
 			{
-				let x = Math.floor(Math.random() * 16) * i + 1;
-				let y = Math.floor(Math.random() * 16) * j + 1;
+				let x = Math.floor(Math.random() * 16) + 16 * i + 1;
+				let y = Math.floor(Math.random() * 16) + 16 * j + 1;
 				if(table.addHash(x, y))	//hash prevents things spawning on top of each other
 				{
 					addRandomItem(x, y);
@@ -31,9 +33,9 @@ function generateRandomObstacles(input_x, input_y)
 	function addRandomItem(x, y)
 	{
 		let type = Math.floor(Math.random() * 9) + 1;
-		switch(type)
+		switch(type % 10)
 		{
-			case 4 : case 3 : case 2 : case 1 :
+			case 4 : case 3 : case 2 : case 1 : case 0 :
 				randoms.push(new Asteroid(x, y));
 				break;
 			case 5 : case 6 : 
