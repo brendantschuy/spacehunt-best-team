@@ -32,7 +32,7 @@
 	<!--	Don't need two style sheets currently, maybe later.
 	<link rel="stylesheet" media="screen and (max-width: 1369px)" href="css/format.css"/>
 	<link rel="stylesheet" media="screen and (min-width: 1370px)" href="css/widescreen.css"/>-->
-	<link rel="stylesheet" href="css/format3.css"/>
+	<link rel="stylesheet" href="css/format.css"/>
 	<link rel="stylesheet" href="css/menu.css"/>
 
 	<header>
@@ -101,23 +101,11 @@
 				<div id="save">
 					<input class="save" id="save" type="button"></button>
 				</div>
-				<div id="load">
-					<input class="load" id="load" type="button" value="LOAD" onclick="load()"></button>
-				</div>
 			</div>
 		</div>
 	<!--</div>-->
 
 	<div class="map-class">
-        <div id="ship-hud">
-            <form>
-                <img id="locationIMG" src="img/location.png"><input type="text" id="location" maxlength="8"><br>
-                <img id="energyIMG" src="img/energy.png"><input type="text" id="energy" maxlength="4"><br>
-                <img id="suppliesIMG" src="img/supplies.png"><input type="text" id="supplies" maxlength="4"><br>
-                <img id="currencyIMG" src="img/currency.png"><input type="text" id="currency" maxlength="6"><br>
-            </form>
-        </div>
-
 		<div id="map-banner-div">
 			<h2>
 				<img src="img/celestial_map_banner.png"  id="celestial-map-banner" alt="Celestial Map">
@@ -133,17 +121,16 @@
 
 	<div class="dev-options-div">
 		<div id="dev-header">
-			<img src="img/development_options.png" alt="Development Options" id="dev-options-banner"><br>
-			<button type=button id="dev-menu-button" onclick="displayDevOptions()">Click here!</button>
+			<img src="img/development_options.png" alt="Development Options" id="dev-options-banner">
 		</div>
 		
 		<div id="user-controls">
 			<form>
-                <img id="locationIMG" src="img/location.png"><input type="text" id="newLocation" value="" maxlength="8" onchange="changeLocation()"><br>
-                <img id="energyIMG" src="img/energy.png"><input type="text" id="newEnergy" value="" maxlength="4" onchange="changeEnergy()"><br>
-                <img id="suppliesIMG" src="img/supplies.png"><input type="text" id="newSupplies" value="" maxlength="4" onchange="changeSupplies()"><br>
-                <img id="currencyIMG" src="img/currency.png"><input type="text" id="newCurrency" value="" maxlength="6" onchange="changeCurrency()"><br>
-            </form>
+				<img src="img/location.png"><input type="text" id="location" maxlength="8" onchange="changeLocation()"><br>
+				<img src="img/energy.png"><input type="text" id="energy" maxlength="4" onchange="changeEnergy()"><br>
+				<img src="img/supplies.png"><input type="text" id="supplies" maxlength="4" onchange="changeSupplies()"><br>
+				<img src="img/currency.png"><input type="text" id="currency" maxlength="6" onchange="changeCurrency()"><br>
+			</form>
 		</div>
 
 		<div id="dev-modes">
