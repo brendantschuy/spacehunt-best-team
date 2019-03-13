@@ -11,23 +11,27 @@ var gameState = {
   "obstacles": []  
 };
 
-var savedList = [];
-var savedState;
+var savedList = []; // list of saved states
+var savedState;     // user-defined name for state
 
 // saves game state to browser 
 function save() {
   if (!supportsLocalStorage()) {
     console.log("Browser does not support localStorage!");
-    return false; 
+    return false;
   }
   savedState = prompt("Enter a name for this game.")
   localStorage.setItem(savedState, JSON.stringify(gameState)); 
   savedList.push(savedState);
-  //console.log(savedList);
 }
 
 function initializeSavedGame()
 {
+  if(this.obstacles.length == 0) {
+    alert("Start the game to save!");
+    return;
+  }
+
   gameState.shipX = this.ship.cpx;
   gameState.shipY = this.ship.cpy;
   gameState.supplies = this.ship.supplies;
@@ -97,7 +101,7 @@ function load() {
 	  return false; 
 	}
 	displaySaved();
-	var gameToLoad = prompt("Which game do you want to load?"); // can't pick from multiple states yet
+	var gameToLoad = prompt("Which game do you want to load?"); // can't pick from multiple states yet so this is not useful except for testing
 	
 	gameState = JSON.parse(localStorage.getItem(savedState));
   
@@ -165,7 +169,3 @@ function displaySaved() {
       alert(savedList[i]);
 }
 
-// clears entire storage (might not need as separate function)
-function clearAll() {
-  return localStorage.clear();
-}
