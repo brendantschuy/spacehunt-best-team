@@ -1154,11 +1154,14 @@ function updateCurrency(){
 } */
 
 function displayDevOptions(){
-	var checkBox = document.getElementById("devMode");
+	var changeVar = document.getElementById("user-controls");
+	var devModes = document.getElementById("dev-modes");
 
-	if (checkBox.checked == true){
-		document.getElementById("user-controls").style.display = "inline-block";
+	if (changeVar.style.display === "none"){
+		changeVar.style.display = "inline-block";
+		devModes.style.display = "block";
 	} else {
-		document.getElementById("user-controls").style.display = "none";
+		changeVar.style.display = "none";
+		devModes.style.display = "none";
 	}
 }

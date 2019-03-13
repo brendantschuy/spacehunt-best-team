@@ -156,14 +156,21 @@ h2 {
 	bottom: 50%;
 }
 
+#dev-menu-button {
+	color: white;
+	text-align: center;
+	display: block;
+	margin-left: 60px;
+}
+
 #user-controls{
 	/*background-color: green;*/
 	font-family: arial;
 	/*display: inline-block;*/
+	display: none;
 	width: 500px;
 	height: 100%;
     padding-left: 50px;
-    display: none;
 }
 
 input[type=text] {
@@ -212,7 +219,8 @@ input[type=text] {
 	height: 100%;
 	padding: 10px;
 	margin-left: 10px;
-	display: block;
+	/*display: block;*/
+	display: none;
 	float: right;
 }
 
