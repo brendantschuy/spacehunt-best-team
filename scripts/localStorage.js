@@ -8,10 +8,11 @@ var gameState = {
   "energy": 1000, //ship.energy,  
   "currency": 1000, //ship.currency,  
   "damage": 0,
-  "obstacles": []
+  "obstacles": []  
 };
 
 var savedList = [];
+var savedState;
 
 // saves game state to browser 
 function save() {
@@ -19,7 +20,7 @@ function save() {
     console.log("Browser does not support localStorage!");
     return false; 
   }
-  var savedState = prompt("Enter a name for this game.")
+  savedState = prompt("Enter a name for this game.")
   localStorage.setItem(savedState, JSON.stringify(gameState)); 
   savedList.push(savedState);
   //console.log(savedList);
@@ -87,6 +88,66 @@ function initializeSavedGame()
     }
   }
   save();
+} 
+
+// loads game state from browser 
+function load() {
+	if (!supportsLocalStorage() || localStorage["activeGame"] == "false") {
+	  console.log("Browser does not support localStorage!");
+	  return false; 
+	}
+	displaySaved();
+	var gameToLoad = prompt("Which game do you want to load?"); // can't pick from multiple states yet
+	
+	gameState = JSON.parse(localStorage.getItem(savedState));
+  
+  this.ship.cpx = gameState.shipX;
+  this.ship.cpy = gameState.shipY;
+  this.ship.energy = gameState.energy;
+  this.ship.supplies = gameState.supplies;
+  this.ship.currency = gameState.currency;
+  this.ship.damage = gameState.damage;
+
+	for(var i = 0; i < obstacles.length; i++)
+	{
+		var objName = gameState.obstacles[i];
+		switch(objName) {
+      case "Asteroid X-Coord": 
+        this.obstacles.push(new Asteroid(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Celeron X-Coord": 
+				this.obstacles.push(new Celeron(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Ryzen X-Coord": 
+				this.obstacles.push(new Ryzen(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Xeon X-Coord": 
+				this.obstacles.push(new Xeon(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Space Station X-Coord": 
+				this.obstacles.push(new SpaceStation(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Abandoned Freighter X-Coord": 
+				this.obstacles.push(new AbandonedFreighter(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Meteor Storm X-Coord": 
+				this.obstacles.push(new MeteorStorm(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Bad Max X-Coord": 
+				this.obstacles.push(new BadMax(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Wormhole X-Coord": 
+				this.obstacles.push(new Wormhole(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Recipe X-Coord": 
+				this.obstacles.push(new Recipe(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      case "Death Star X-Coord": 
+				this.obstacles.push(new DeathStar(gameState.obstacles[i], gameState.obstacles[i+1]))
+        break;
+      default: break;
+    }
+  }
 }
 
 // checks whether browser supports localStorage
@@ -99,9 +160,9 @@ function supportsLocalStorage() {
 }
 
 // shows user a list of saved games, named by user
-function displaySaved(savedList) {
+function displaySaved() {
     for(var i = 0; i < savedList.length; i++)
-      console.log(savedList[i]);
+      alert(savedList[i]);
 }
 
 // clears entire storage (might not need as separate function)
