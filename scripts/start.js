@@ -638,7 +638,7 @@ function start(presets, params)
 		document.getElementById("FDBtn").addEventListener("click", function() {
 			fugaDaemonum();
 		});
-		/*document.getElementById("hud").addEventListener("click", function()
+		document.getElementById("hud").addEventListener("click", function()
 		{
 			toggleHud();
 		});
@@ -649,7 +649,7 @@ function start(presets, params)
 		document.getElementById("bgmusic").addEventListener("click", function()
 		{
 			backgroundMusic();
-		});*/
+		});
 	}
 
 	function backgroundMusic(){
