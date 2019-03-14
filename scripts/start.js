@@ -226,8 +226,10 @@ function start(presets, params)
 						win();
 						break;
 					case "Asteroid" :
-						commBox.drawNewBox(this.obstacles[i], true);
-						hitObstacle();
+						if(!this.ship.dev){
+							commBox.drawNewBox(this.obstacles[i], true);
+							hitObstacle();
+						}
 						break;
 					case "Xeon" : case "Celeron" : case "Ryzen" : case "Planet" :
 						commBox.drawNewBox(this.obstacles[i], true);
@@ -251,8 +253,10 @@ function start(presets, params)
 						i = getFreighter(i);
 						break;
 					case "MeteorStorm" :
-						this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
-						commBox.drawNewBox(this.obstacles[i], true);
+						if(!this,ship.dev){
+							this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
+							commBox.drawNewBox(this.obstacles[i], true);
+						}
 						break;
 					case "Wormhole" :
 						commBox.drawNewBox(this.obstacles[i], true);
