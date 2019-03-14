@@ -401,33 +401,35 @@ form input[type=button] {
 }
 
 #save {
-	background: url("../img/save.gif") no-repeat center;
+	background: url("../img/save.gif") no-repeat left;
 	background-size: 50px 50px;
 	border-color: transparent;
 	width: 50px;
-	/*display: inline-block;
-	margin-top: 10px;*/
-	margin-left: auto;
-	margin-right: auto;
+	display: inline-block;
 }
 
 .save {
 	color: transparent;
 	font-size: 12px;
-	text-align: center;
-	display: inline-block;
-	width: 50px;
 	height: 50px;
-	padding: 6px;
 }
 
-/*
-#save {
-	width: 150px;
-	margin-left: 128px;
-	margin-right: auto;
+#load {
+	background: url("../img/open.png") no-repeat right;
+	background-size: 50px 50px;
+	border-color: transparent;
+	width: 50px;
+	display: block;
+	float: right;
+}	
+
+.load {
+	color: transparent;
+	font-size: 12px;
+	text-align: center;
+	width: 70px;
+	height: 50px;
 }
-*/
 
 button {
 	background-color: transparent;

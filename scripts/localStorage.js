@@ -28,7 +28,7 @@ function save() {
 function initializeSavedGame()
 {
   if(this.obstacles.length == 0) {
-    alert("Start the game to save!");
+    alert("Start the game to save, silly!");
     return;
   }
 
