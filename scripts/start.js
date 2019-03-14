@@ -238,6 +238,12 @@ function start(presets, params)
 						break;
 					case "SpaceStation" :
 						chanceGame(ship.offset_x,ship.offset_y, ship);
+						//if((ship.damage > 0 || ship.energy < ship.maxEnergy || ship.supplies < ship.originalSupplies) && ship.currency >= 100){
+						if(ship.supplies < ship.originalSupplies && ship.currency >= 100){
+							//ship.damage = 0;
+							//this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + 100);
+							this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + 100);
+						}
 						break;
 					case "AbandonedFreighter" :
 						this.ship.damage = 0;
@@ -315,7 +321,9 @@ function start(presets, params)
 					commBox.drawNewBox("A number between 1 and 10, no more and no less",true,5,560); 
 					canBet = false;
 				}else {
-					canBet = true;
+					if(wager.length > 0 && guess.length > 0) {
+						canBet = true;
+					}
 					commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
 				}
 			//}
