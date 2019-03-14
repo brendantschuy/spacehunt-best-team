@@ -479,6 +479,8 @@ function start(presets, params)
 
 		//BadMax NEEDS to be obstacles[0]
 		obstacles.push(new BadMax((Math.floor(Math.random() * map_max_x)+1),Math.floor(Math.random() * map_max_y)+1));
+		obstacles.push(new Planet(1, 0, 2));
+		obstacles[1].planetName = "Alderaan";
 		//obstacles.push(new BadMax(0, 5));
 
 		//There may only be one!
@@ -879,6 +881,11 @@ function start(presets, params)
 	
 
 	function spliceObj(ID){
+		let j = Math.floor(Math.random() * 10);
+		if(j % 10 == 0)
+		{
+			this.obstacles.push(new Recipe(this.obstacles[ID].cpx, this.obstacles[ID].cpy));
+		}
 		this.obstacles.splice(ID,1);
 		return 1;
 	}
