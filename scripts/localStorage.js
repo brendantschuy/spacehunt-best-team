@@ -27,10 +27,10 @@ function save() {
 
 function initializeSavedGame()
 {
-  if(this.obstacles.length == 0) {
+  /*if(!ACTIVE_GAME) {
     alert("Start the game to save, silly!");
     return;
-  }
+  }*/
 
   gameState.shipX = this.ship.cpx;
   gameState.shipY = this.ship.cpy;

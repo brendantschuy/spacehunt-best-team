@@ -200,7 +200,7 @@ function start(presets, params)
 			ctx.stroke();
 		}
 	}
-	
+
 	//work in progress.
 	function interact()
 	{
@@ -570,7 +570,6 @@ function start(presets, params)
 		this.BadMax = obstacles[0];
 
 		ship.updatecp();
-		
 	}
 	
 	function setUpEventListeners()
@@ -1022,6 +1021,7 @@ function start(presets, params)
 	drawBackground("gameScreen");
 	drawFrame();
 	updateMap(obstacles);
+	ACTIVE_GAME = true;
 
 	//For testing purposes:
 	//speedRunMode();
@@ -1043,7 +1043,7 @@ function sound(src) {
   	}
 }
 
-// saves game state to browser 
+/*// saves game state to browser 
 function save() {
 	if (!supportsLocalStorage()) {
 		  console.log("Browser does not support localStorage!");
@@ -1051,7 +1051,7 @@ function save() {
 	}
 	var savedState = prompt("Enter a name for this game.")
 	localStorage.setItem(savedState, JSON.stringify(obstacles)); 
-}
+}*/
 
 function moveTarget() {
 	var spaces = document.getElementById("spaces");
