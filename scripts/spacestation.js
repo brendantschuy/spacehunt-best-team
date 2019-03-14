@@ -13,6 +13,7 @@ class SpaceStation
 
 		this.sprite = new Image();
 		this.addToMap = true;
-		this.sprite.src = "img/space station.png";
+		this.hasCasino = (Math.floor(Math.random() * 2)) == 0 ? false : true;
+		this.sprite.src = (this.hasCasino) ? "img/casino.png" : "img/space station.png";
 	}		
 }

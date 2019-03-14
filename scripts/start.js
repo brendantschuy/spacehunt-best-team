@@ -237,13 +237,24 @@ function start(presets, params)
 						musicPlayer.playMusic("march.mp3");
 						break;
 					case "SpaceStation" :
-						chanceGame(ship.offset_x,ship.offset_y, ship);
-						//if((ship.damage > 0 || ship.energy < ship.maxEnergy || ship.supplies < ship.originalSupplies) && ship.currency >= 100){
-						if(ship.supplies < ship.originalSupplies && ship.currency >= 100){
-							//ship.damage = 0;
-							//this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + 100);
-							this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + 100);
+						if(this.obstacles[i].hasCasino){
+							chanceGame(ship.offset_x,ship.offset_y, ship);
+						}else{
+							//if((ship.damage > 0 || ship.energy < ship.maxEnergy || ship.supplies < ship.originalSupplies) && ship.currency >= 100){
+							if(ship.offset_x + ship.offset_y == 0){
+								if(ship.supplies < ship.originalSupplies && ship.currency >= 10){
+									//ship.damage = 0;
+									//this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + 100);
+									this.ship.currency -= 10;
+									commBox.drawNewBox("You have paid 10 to dock and refill your supplies!",true,5,560);
+									this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + 100);
+								}else if(ship.currency < 10){
+									commBox.drawNewBox("You don't have enough money to dock!",true,5,560);
+								}
+							}
+							//commBox.drawNewBox(this.obstacles[i], true);
 						}
+						
 						break;
 					case "AbandonedFreighter" :
 						this.ship.damage = 0;
@@ -283,7 +294,6 @@ function start(presets, params)
 		}
 	}
 
-	//needs refining
 	function chanceGame(x,y){
 		if(x + y == 0){
 			var test = document.getElementById("wager");

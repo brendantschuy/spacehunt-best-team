@@ -52,7 +52,7 @@ class CommBox
 				ctx.fillText("Resistance is futile. Wait, wrong universe.", 20, 560);
 				break;
 			case("SpaceStation") :
-				ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
+				//ctx.fillText("You found a space station! Would you like to play a game of chance?", 7, 560);
 				break;
 			case("AbandonedFreighter") :
 				ctx.fillText("You found an abandoned freighter! You get some additional resources", 5, 560);
