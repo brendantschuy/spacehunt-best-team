@@ -1021,7 +1021,7 @@ function start(presets, params)
 	drawBackground("gameScreen");
 	drawFrame();
 	updateMap(obstacles);
-	ACTIVE_GAME = true;
+	//ACTIVE_GAME = true;
 
 	//For testing purposes:
 	//speedRunMode();
