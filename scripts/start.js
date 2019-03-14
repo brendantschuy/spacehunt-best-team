@@ -1021,7 +1021,6 @@ function start(presets, params)
 	drawBackground("gameScreen");
 	drawFrame();
 	updateMap(obstacles);
-	//ACTIVE_GAME = true;
 
 	//For testing purposes:
 	//speedRunMode();
@@ -1042,16 +1041,6 @@ function sound(src) {
     		this.sound.pause();
   	}
 }
-
-/*// saves game state to browser 
-function save() {
-	if (!supportsLocalStorage()) {
-		  console.log("Browser does not support localStorage!");
-		  return false; 
-	}
-	var savedState = prompt("Enter a name for this game.")
-	localStorage.setItem(savedState, JSON.stringify(obstacles)); 
-}*/
 
 function moveTarget() {
 	var spaces = document.getElementById("spaces");
