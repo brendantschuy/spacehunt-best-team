@@ -744,7 +744,7 @@ function start(presets, params)
 					//something else here to make sure the images are drawn correctly.
 					//Not complete yet.
 					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
-					ctx.rotate(obj.rotationAngle * Math.PI / 180);
+					//ctx.rotate(obj.rotationAngle * Math.PI / 180);
 					obj.x += obj.xv;
 					obj.y += obj.yv;
 				}	
