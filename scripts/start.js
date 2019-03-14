@@ -999,10 +999,12 @@ function start(presets, params)
 			timelimit--;
 			if(timelimit < 0){
 				this.ship.sprite.src = "img/ship1.png";
+				this.ship.energyEfficiency = 10;
 				this.ship.dev = false;
 				clearInterval(downloadTimer);
 			}
 			}, 1000);
+		this.ship.energyEfficiency = 10;
 		this.ship.dev = false;
 	}
 
