@@ -338,7 +338,7 @@ function start(presets, params)
 					if(wager.length > 0 && guess.length > 0) {
 						canBet = true;
 					}
-					commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
+					commBox.drawNewBox("You found a Casino! Would you like to play a game of chance?",true,5,560);
 				}
 			//}
 			//var result = Math.floor((Math.random() * 10) + 1);
