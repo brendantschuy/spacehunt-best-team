@@ -86,8 +86,8 @@ function menu(params)
 		newGameButton = document.createElement("img");
 		newGameButton.className = "menu_main_options";
 		newGameButton.src = "img/new_game.png";
-		newGameButton.style.left = cvsCoords.x + 150;
-		newGameButton.style.top = cvsCoords.y + 175;
+		newGameButton.style.left = cvsCoords.x + 127;
+		newGameButton.style.top = cvsCoords.y + 155;
 		newGameButton.onmouseover = function(){
 			this.src = "img/new_game_clicked.png";
 		};
@@ -103,8 +103,8 @@ function menu(params)
 		editGameButton = document.createElement("img");
 		editGameButton.className = "menu_main_options";
 		editGameButton.src = "img/edit_game.png";
-		editGameButton.style.left = cvsCoords.x + 135;
-		editGameButton.style.top = cvsCoords.y + 275;
+		editGameButton.style.left = cvsCoords.x + 119;
+		editGameButton.style.top = cvsCoords.y + 250;
 		editGameButton.onmouseover = function(){
 			this.src = "img/edit_game_clicked.png";
 		};
@@ -121,8 +121,8 @@ function menu(params)
 		loadGameButton = document.createElement("img");
 		loadGameButton.className = "menu_main_options";
 		loadGameButton.src = "img/load_game.png";
-		loadGameButton.style.left = cvsCoords.x + 135;
-		loadGameButton.style.top = cvsCoords.y + 375;
+		loadGameButton.style.left = cvsCoords.x + 90;
+		loadGameButton.style.top = cvsCoords.y + 350;
 		loadGameButton.onmouseover = function(){
 			this.src = "img/load_game_clicked.png";
 		};
@@ -846,8 +846,8 @@ function moreOptions(params)
 		var initEnergy = document.getElementById("startingEnergyInput").value;
 		var initSupplies = document.getElementById("startingSuppliesInput").value;
 
-		alert(spx + ", " + spy + ", " + bsx + ", " + bsy);
-		alert(spx == bsx);
+		//alert(spx + ", " + spy + ", " + bsx + ", " + bsy);
+		//alert(spx == bsx);
 		//if(spx > bsx || spx < 0 || spy > bsy || spy < 0)
 		//{
 			//alert("Invalid starting position entered. Must be less than board size and greater than zero.");
