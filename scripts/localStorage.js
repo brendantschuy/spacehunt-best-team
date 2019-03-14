@@ -99,7 +99,11 @@ function load() {
 	if (!supportsLocalStorage() || localStorage["activeGame"] == "false") {
 	  console.log("Browser does not support localStorage!");
 	  return false; 
-	}
+  }
+  if(savedList.length == 0) {
+    alert("No games to load!")
+    return;
+  }
 	displaySaved();
 	var gameToLoad = prompt("Which game do you want to load?"); // can't pick from multiple states yet so this is not useful except for testing
 	
