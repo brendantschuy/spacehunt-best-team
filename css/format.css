@@ -174,7 +174,7 @@ h2 {
 }
 
 input[type=text] {
-	width: 200px;
+	width: 100px;
 }
 
 #location {
@@ -211,6 +211,15 @@ input[type=text] {
 	font-family: 'digital-7';
 	font-size: 35px;
 	color: yellow;
+}
+
+#damage {
+	background-color: transparent;
+	border-color: transparent;
+	margin-left: 92px;
+	font-family: 'digital-7';
+	font-size: 35px;
+	color: rgb(255, 165, 0);
 }
 
 #dev-modes{

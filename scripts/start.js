@@ -1147,6 +1147,7 @@ function updateURL(){
 	document.getElementById("energy").value = Math.floor(ship.energy);
 	document.getElementById("supplies").value = Math.floor(ship.supplies);
 	document.getElementById("currency").value = Math.floor(ship.currency);
+	document.getElementById("damage").value = Math.floor(ship.damage);
 }
 
 /* function updateLocation(){
