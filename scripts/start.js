@@ -264,7 +264,7 @@ function start(presets, params)
 						i = getFreighter(i);
 						break;
 					case "MeteorStorm" :
-						if(!this,ship.dev){
+						if(!this.ship.dev){
 							this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
 							commBox.drawNewBox(this.obstacles[i], true);
 						}

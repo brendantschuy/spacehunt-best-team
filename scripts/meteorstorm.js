@@ -8,7 +8,6 @@ class MeteorStorm{
 		this.y = cpy*GRID_SIZE;
 		this.cpx = cpx;
 		this.cpy = cpy;
-		//this.dmg = dmg;
 
 		this.sprite = new Image();
 		this.addToMap = true;
@@ -16,13 +15,10 @@ class MeteorStorm{
 	}
 
 	tryMeteor(x,y, ship){
-		//alert((x) + (y));
 		if(x + y == 0){
-			//alert(this.tookDamage);
 			if(!tookDamage) {
-				//alert(tookDamage);
 				randomDisaster(ship);
-				makeitRain(ship);
+				makeitRain();
 				tookDamage = true;
 			}
 		}
@@ -30,7 +26,6 @@ class MeteorStorm{
 }
 
 function makeitRain(){
-	//alert("Check running");
 	var meteor = document.createElement("img");
 	meteor.src = "img/meteor_storm.gif";
 	meteor.id = "meteor";
@@ -40,13 +35,12 @@ function makeitRain(){
 	meteor.style.left = 0;
 	meteor.style.top = 0;
 	meteor.style.pointerEvents = "none"; //makes it unclickable so you can click buttons still lol
-
 	document.body.appendChild(meteor);
 	setTimeout(function()
 	{
-		document.body.removeChild(meteor);
+		removeElement("meteor");
 		tookDamage = false;
-	},1000); //remove element from celestialmap.js
+	},1000); 
 }
 
 function randomDisaster(ship){
@@ -57,7 +51,6 @@ function randomDisaster(ship){
 		default:
 			ship.getDamaged(20);
 	}
-	//alert(event);
 }
 
 // Removes an element from the document
