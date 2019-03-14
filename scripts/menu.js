@@ -846,8 +846,8 @@ function moreOptions(params)
 		var initEnergy = document.getElementById("startingEnergyInput").value;
 		var initSupplies = document.getElementById("startingSuppliesInput").value;
 
-		alert(spx + ", " + spy + ", " + bsx + ", " + bsy);
-		alert(spx == bsx);
+		//alert(spx + ", " + spy + ", " + bsx + ", " + bsy);
+		//alert(spx == bsx);
 		//if(spx > bsx || spx < 0 || spy > bsy || spy < 0)
 		//{
 			//alert("Invalid starting position entered. Must be less than board size and greater than zero.");
