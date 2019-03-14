@@ -840,7 +840,49 @@ function start(presets, params)
 		OverloadThunderBeam.play();
 		ship.projectiles.push(new LaserBeam(ship.x	, ship.y -35, ship.angle));
 		ship.energy -= 2;
+		var count = checkLaser();
 	}
+	//I've implemented this checkLaser the most basic and ugly way possible I think
+	function checkLaser(){
+		var count = 0;
+		var maxDist = 10; //this is furthest CP distance from the ship that can be broken by the laser.
+		if(this.ship.angle == 90){
+			for(var i = 0; i<this.obstacles.length; ++i){
+				if((this.ship.x<=this.obstacles[i].x) && (this.ship.cpy == this.obstacles[i].cpy) && (Math.abs(this.ship.cpx - this.obstacles[i].cpx) <= maxDist)){
+					count += spliceObj(i);
+				}
+			}
+		}
+		if(this.ship.angle == 0){
+			for(var i = 0; i<this.obstacles.length; ++i){
+				if((this.ship.x==this.obstacles[i].x) && (this.ship.cpy>=this.obstacles[i].cpy) && (Math.abs(this.ship.cpy - this.obstacles[i].cpy) <= maxDist)){
+					count += spliceObj(i);
+				}
+			}
+		}
+		if(this.ship.angle == 270){
+			for(var i = 0; i<this.obstacles.length; ++i){
+				if((this.ship.x>=this.obstacles[i].x) && (this.ship.cpy == this.obstacles[i].cpy) && (Math.abs(this.ship.cpx - this.obstacles[i].cpx) <= maxDist)){
+					count += spliceObj(i);
+				}
+			}
+		}
+		if(this.ship.angle == 180){
+			for(var i = 0; i<this.obstacles.length; ++i){
+				if((this.ship.x==this.obstacles[i].x) && (this.ship.cpy <= this.obstacles[i].cpy) && (Math.abs(this.ship.cpy - this.obstacles[i].cpy) <= maxDist)){
+					count += spliceObj(i);
+				}
+			}
+		}
+		return count;
+	}
+	
+
+	function spliceObj(ID){
+		this.obstacles.splice(ID,1);
+		return 1;
+	}
+	
 
 	function genesisSaber()
 	{
