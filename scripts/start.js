@@ -226,8 +226,10 @@ function start(presets, params)
 						win();
 						break;
 					case "Asteroid" :
-						commBox.drawNewBox(this.obstacles[i], true);
-						hitObstacle();
+						if(!this.ship.dev){
+							commBox.drawNewBox(this.obstacles[i], true);
+							hitObstacle();
+						}
 						break;
 					case "Xeon" : case "Celeron" : case "Ryzen" : case "Planet" :
 						commBox.drawNewBox(this.obstacles[i], true);
@@ -238,6 +240,12 @@ function start(presets, params)
 						break;
 					case "SpaceStation" :
 						chanceGame(ship.offset_x,ship.offset_y, ship);
+						//if((ship.damage > 0 || ship.energy < ship.maxEnergy || ship.supplies < ship.originalSupplies) && ship.currency >= 100){
+						if(ship.supplies < ship.originalSupplies && ship.currency >= 100){
+							//ship.damage = 0;
+							//this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + 100);
+							this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + 100);
+						}
 						break;
 					case "AbandonedFreighter" :
 						this.ship.damage = 0;
@@ -245,8 +253,10 @@ function start(presets, params)
 						i = getFreighter(i);
 						break;
 					case "MeteorStorm" :
-						this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
-						commBox.drawNewBox(this.obstacles[i], true);
+						if(!this,ship.dev){
+							this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
+							commBox.drawNewBox(this.obstacles[i], true);
+						}
 						break;
 					case "Wormhole" :
 						commBox.drawNewBox(this.obstacles[i], true);
@@ -315,7 +325,9 @@ function start(presets, params)
 					commBox.drawNewBox("A number between 1 and 10, no more and no less",true,5,560); 
 					canBet = false;
 				}else {
-					canBet = true;
+					if(wager.length > 0 && guess.length > 0) {
+						canBet = true;
+					}
 					commBox.drawNewBox("Enter a number of digital credits to bet",true,5,560);
 				}
 			//}
@@ -987,10 +999,12 @@ function start(presets, params)
 			timelimit--;
 			if(timelimit < 0){
 				this.ship.sprite.src = "img/ship1.png";
+				this.ship.energyEfficiency = 10;
 				this.ship.dev = false;
 				clearInterval(downloadTimer);
 			}
 			}, 1000);
+		this.ship.energyEfficiency = 10;
 		this.ship.dev = false;
 	}
 
