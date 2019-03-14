@@ -638,7 +638,7 @@ function start(presets, params)
 		document.getElementById("FDBtn").addEventListener("click", function() {
 			fugaDaemonum();
 		});
-		/*document.getElementById("hud").addEventListener("click", function()
+		document.getElementById("hud").addEventListener("click", function()
 		{
 			toggleHud();
 		});
@@ -649,7 +649,7 @@ function start(presets, params)
 		document.getElementById("bgmusic").addEventListener("click", function()
 		{
 			backgroundMusic();
-		});*/
+		});
 	}
 
 	function backgroundMusic(){
@@ -744,7 +744,7 @@ function start(presets, params)
 					//something else here to make sure the images are drawn correctly.
 					//Not complete yet.
 					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
-					ctx.rotate(obj.rotationAngle * Math.PI / 180);
+					//ctx.rotate(obj.rotationAngle * Math.PI / 180);
 					obj.x += obj.xv;
 					obj.y += obj.yv;
 				}	
@@ -1021,7 +1021,6 @@ function start(presets, params)
 	drawBackground("gameScreen");
 	drawFrame();
 	updateMap(obstacles);
-	ACTIVE_GAME = true;
 
 	//For testing purposes:
 	//speedRunMode();
@@ -1042,16 +1041,6 @@ function sound(src) {
     		this.sound.pause();
   	}
 }
-
-/*// saves game state to browser 
-function save() {
-	if (!supportsLocalStorage()) {
-		  console.log("Browser does not support localStorage!");
-		  return false; 
-	}
-	var savedState = prompt("Enter a name for this game.")
-	localStorage.setItem(savedState, JSON.stringify(obstacles)); 
-}*/
 
 function moveTarget() {
 	var spaces = document.getElementById("spaces");

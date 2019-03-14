@@ -404,13 +404,12 @@ form input[type=button] {
 	background: url("../img/save.gif") no-repeat left;
 	background-size: 50px 50px;
 	border-color: transparent;
-	width: 50px;
 	display: inline-block;
 }
 
 .save {
 	color: transparent;
-	font-size: 12px;
+	width: 50px;
 	height: 50px;
 }
 
@@ -418,15 +417,12 @@ form input[type=button] {
 	background: url("../img/open.png") no-repeat right;
 	background-size: 50px 50px;
 	border-color: transparent;
-	width: 50px;
 	display: block;
 	float: right;
 }	
 
 .load {
 	color: transparent;
-	font-size: 12px;
-	text-align: center;
 	width: 70px;
 	height: 50px;
 }
