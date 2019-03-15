@@ -35,10 +35,10 @@ function generateRandomObstacles(input_x, input_y)
 		let type = Math.floor(Math.random() * 9) + 1;
 		switch(type)
 		{
-			case 4 : case 3 : case 2 : case 1 : case 0 :
+			case 5 : case 4 : case 3 : case 2 : case 1 : case 0 :
 				randoms.push(new Asteroid(x, y));
 				break;
-			case 5 : case 6 : 
+			case 6 :
 				randoms.push(new EnergyPotion(x, y, 200));
 				break;
 			case 7 :
@@ -52,6 +52,19 @@ function generateRandomObstacles(input_x, input_y)
 				break;
 		}
 	}
+
+	//Some items should only spawn rarely (recipe, space station)
+	function generateFixedNumbers()
+	{
+		for(i = 0; i < 80; i++)
+		{
+			let randx = Math.floor(Math.random() * map_max_x);
+			let randy = Math.floor(Math.random() * map_max_y);
+			randoms.push(new SpaceStation(randx, randy));
+		}
+	}
+
+	generateFixedNumbers();
 
 	return randoms;
 }

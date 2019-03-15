@@ -272,7 +272,7 @@ function start(presets, params)
 						i = getFreighter(i);
 						break;
 					case "MeteorStorm" :
-						if(!this.ship.dev){
+						if(!this,ship.dev){
 							this.obstacles[i].tryMeteor(ship.offset_x,ship.offset_y, ship);
 							commBox.drawNewBox(this.obstacles[i], true);
 						}
@@ -487,8 +487,6 @@ function start(presets, params)
 
 		//BadMax NEEDS to be obstacles[0]
 		obstacles.push(new BadMax((Math.floor(Math.random() * map_max_x)+1),Math.floor(Math.random() * map_max_y)+1));
-		obstacles.push(new Planet(1, 0, 2));
-		obstacles[1].planetName = "Alderaan";
 		//obstacles.push(new BadMax(0, 5));
 
 		//There may only be one!
@@ -560,15 +558,15 @@ function start(presets, params)
 			obstacles.push(new Ryzen(18, 18));
 
 		// Initialize Boarder Wormholes
-		for(var x = MAP_MIN_X - 1; x <= map_max_x; x++){
+		for(var x = MAP_MIN_X - 1; x <= map_max_x + 1; x++){
 			// Creates wormholes for the top and bottom rim of the boundary
 			obstacles.push(new Wormhole(x, MAP_MIN_Y - 1));
-			obstacles.push(new Wormhole(x, map_max_y));
+			obstacles.push(new Wormhole(x, map_max_y + 1));
 		}
-		for(var y = MAP_MIN_Y; y < map_max_y; y++){
+		for(var y = MAP_MIN_Y; y <= map_max_y; y++){
 			// Creates wormholes for left and right rim of the boundary
 			obstacles.push(new Wormhole(MAP_MIN_X - 1, y));
-			obstacles.push(new Wormhole(map_max_x, y));
+			obstacles.push(new Wormhole(map_max_x + 1, y));
 		}
 
 		// Initialize other wormholes
@@ -648,7 +646,7 @@ function start(presets, params)
 		document.getElementById("FDBtn").addEventListener("click", function() {
 			fugaDaemonum();
 		});
-		document.getElementById("hud").addEventListener("click", function()
+		/*document.getElementById("hud").addEventListener("click", function()
 		{
 			toggleHud();
 		});
@@ -659,7 +657,7 @@ function start(presets, params)
 		document.getElementById("bgmusic").addEventListener("click", function()
 		{
 			backgroundMusic();
-		});
+		});*/
 	}
 
 	function backgroundMusic(){
@@ -754,7 +752,7 @@ function start(presets, params)
 					//something else here to make sure the images are drawn correctly.
 					//Not complete yet.
 					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
-					//ctx.rotate(obj.rotationAngle * Math.PI / 180);
+					ctx.rotate(obj.rotationAngle * Math.PI / 180);
 					obj.x += obj.xv;
 					obj.y += obj.yv;
 				}	
@@ -850,54 +848,7 @@ function start(presets, params)
 		OverloadThunderBeam.play();
 		ship.projectiles.push(new LaserBeam(ship.x	, ship.y -35, ship.angle));
 		ship.energy -= 2;
-		var count = checkLaser();
 	}
-	//I've implemented this checkLaser the most basic and ugly way possible I think
-	function checkLaser(){
-		var count = 0;
-		var maxDist = 10; //this is furthest CP distance from the ship that can be broken by the laser.
-		if(this.ship.angle == 90){
-			for(var i = 0; i<this.obstacles.length; ++i){
-				if((this.ship.x<=this.obstacles[i].x) && (this.ship.cpy == this.obstacles[i].cpy) && (Math.abs(this.ship.cpx - this.obstacles[i].cpx) <= maxDist)){
-					count += spliceObj(i);
-				}
-			}
-		}
-		if(this.ship.angle == 0){
-			for(var i = 0; i<this.obstacles.length; ++i){
-				if((this.ship.x==this.obstacles[i].x) && (this.ship.cpy>=this.obstacles[i].cpy) && (Math.abs(this.ship.cpy - this.obstacles[i].cpy) <= maxDist)){
-					count += spliceObj(i);
-				}
-			}
-		}
-		if(this.ship.angle == 270){
-			for(var i = 0; i<this.obstacles.length; ++i){
-				if((this.ship.x>=this.obstacles[i].x) && (this.ship.cpy == this.obstacles[i].cpy) && (Math.abs(this.ship.cpx - this.obstacles[i].cpx) <= maxDist)){
-					count += spliceObj(i);
-				}
-			}
-		}
-		if(this.ship.angle == 180){
-			for(var i = 0; i<this.obstacles.length; ++i){
-				if((this.ship.x==this.obstacles[i].x) && (this.ship.cpy <= this.obstacles[i].cpy) && (Math.abs(this.ship.cpy - this.obstacles[i].cpy) <= maxDist)){
-					count += spliceObj(i);
-				}
-			}
-		}
-		return count;
-	}
-	
-
-	function spliceObj(ID){
-		let j = Math.floor(Math.random() * 10);
-		if(j % 10 == 0)
-		{
-			this.obstacles.push(new Recipe(this.obstacles[ID].cpx, this.obstacles[ID].cpy));
-		}
-		this.obstacles.splice(ID,1);
-		return 1;
-	}
-	
 
 	function genesisSaber()
 	{
@@ -1104,6 +1055,7 @@ function start(presets, params)
 	drawBackground("gameScreen");
 	drawFrame();
 	updateMap(obstacles);
+	ACTIVE_GAME = true;
 
 	//For testing purposes:
 	//speedRunMode();
@@ -1127,6 +1079,16 @@ function sound(src) {
     		this.sound.pause();
   	}
 }
+
+/*// saves game state to browser 
+function save() {
+	if (!supportsLocalStorage()) {
+		  console.log("Browser does not support localStorage!");
+		  return false; 
+	}
+	var savedState = prompt("Enter a name for this game.")
+	localStorage.setItem(savedState, JSON.stringify(obstacles)); 
+}*/
 
 function moveTarget() {
 	var spaces = document.getElementById("spaces");
@@ -1233,7 +1195,6 @@ function updateURL(){
 	document.getElementById("energy").value = Math.floor(ship.energy);
 	document.getElementById("supplies").value = Math.floor(ship.supplies);
 	document.getElementById("currency").value = Math.floor(ship.currency);
-	document.getElementById("damage").value = Math.floor(ship.damage);
 }
 
 /* function updateLocation(){
