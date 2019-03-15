@@ -76,7 +76,7 @@ class Ship 	//class names capitalized per js convention
 	//is out of bounds? teleports somewhere random if so
 	checkBoundary()
 	{
-		if(this.cpy >= MAP_MAX_Y || this.cpy < MAP_MIN_Y || this.cpx >= MAP_MAX_X || this.cpx < MAP_MIN_X) {
+		if(this.cpy > MAP_MAX_Y || this.cpy < MAP_MIN_Y || this.cpx > MAP_MAX_X || this.cpx < MAP_MIN_X) {
 			if(this.randWormholes == true){	
 				this.y = (Math.floor(Math.random() * (MAP_MAX_X + 1))) * GRID_SIZE;
 				this.x = (Math.floor(Math.random() * (MAP_MAX_Y + 1))) * GRID_SIZE;
