@@ -1079,6 +1079,7 @@ function start(presets, params)
 		var three = new Audio('audio/levelthree.wav');
 		three.volume = 1;
 		three.play();
+		this.ship.energy -= 500;
 		this.ship.supplies -= 350;
 		var timelimit = 30;
 		var downloadTimer = setInterval(function(){
