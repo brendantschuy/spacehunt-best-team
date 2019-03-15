@@ -4,6 +4,7 @@
 
 var explosionSound;
 var drawHeight = GAME_SCREEN_HEIGHT;
+var levelThreeTime = 10;
 
 function start(presets, params)
 {
@@ -131,6 +132,13 @@ function start(presets, params)
 				ship.checkEnergy();
 				ship.checkSupplies();
 				break;
+			case 80 : //<p>
+				//if(levelThreeTime == 0){
+					levelThree();
+					ship.checkEnergy();
+					break;
+				//}
+				//break;
 			default: 
 				break;
 		}
@@ -1066,6 +1074,32 @@ function start(presets, params)
 		this.ship.dev = false;
 	}
 
+	//weird name to prevent xenoblade spoilers
+	function levelThree(){
+		var three = new Audio('audio/levelthree.wav');
+		three.volume = 1;
+		three.play();
+		this.ship.supplies -= 350;
+		var timelimit = 30;
+		var downloadTimer = setInterval(function(){
+			this.ship.dev = true;
+			this.ship.energyEfficiency = 0;
+			SHIP_SPEED = 9;
+			this.ship.damage = 0;
+			this.ship.sprite.src = "img/ship3.png";	
+			timelimit--;
+			if(timelimit < 0){
+				this.ship.sprite.src = "img/ship1.png";
+				this.ship.energyEfficiency = 10;
+				this.ship.dev = false;
+				SHIP_SPEED = GRID_SIZE / 32;
+				clearInterval(downloadTimer);
+			}
+			}, 1000);
+		this.ship.energyEfficiency = 10;
+		this.ship.dev = false;
+	}
+
 	//kicks it all off
 	drawBackground("gameScreen");
 	drawFrame();
@@ -1074,6 +1108,9 @@ function start(presets, params)
 	//For testing purposes:
 	//speedRunMode();
 	//ghost();
+
+	ProgressCountdown(levelThreeTime, 'pageBeginCountdown', 'pageBeginCountdownText').then(value => alert(`Page has started: ${value}.`));
+
 }
 
 function sound(src) {
@@ -1227,4 +1264,21 @@ function displayDevOptions(){
 		changeVar.style.display = "none";
 		devModes.style.display = "none";
 	}
+}
+
+function ProgressCountdown(timeleft, bar, text) {
+  return new Promise((resolve, reject) => {
+    var countdownTimer = setInterval(() => {
+      timeleft--;
+
+      document.getElementById(bar).value = timeleft;
+      document.getElementById(text).textContent = timeleft;
+
+      if (timeleft <= 0) {
+	levelThreeTime = 0;
+        clearInterval(countdownTimer);
+        resolve(true);
+      }
+    }, 1000);
+  });
 }
