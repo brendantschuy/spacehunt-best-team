@@ -739,6 +739,9 @@ function start(presets, params)
 				{
 					ctx.drawImage(obj.sprite, (obj.x - ship.x - GRID_SIZE/2)-1, (obj.y - ship.y - GRID_SIZE/2)-1);
 				}
+				else if(objName == "BikeSkeleton"){
+					ctx.drawImage(obj.sprite, (obj.x - ship.x - GRID_SIZE/2)-1, (obj.y - ship.y - GRID_SIZE/2)-1);
+				}					
 				else if(objName == "LaserBeam")
 				{
 					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);

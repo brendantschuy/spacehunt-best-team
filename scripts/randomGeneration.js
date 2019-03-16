@@ -32,7 +32,7 @@ function generateRandomObstacles(input_x, input_y)
 	//For each 16x16 square, create 4 asteroids, 1 planet, 1 meteorstorm, 1 freighter, 2 potions
 	function addRandomItem(x, y)
 	{
-		let type = Math.floor(Math.random() * 9) + 1;
+		let type = Math.floor(Math.random() * 10) + 1;
 		switch(type)
 		{
 			case 5 : case 4 : case 3 : case 2 : case 1 : case 0 :
@@ -49,6 +49,9 @@ function generateRandomObstacles(input_x, input_y)
 				break;
 			case 9 : 
 				randoms.push(new AbandonedFreighter(x, y, 200, 200, 1000));
+				break;
+			case 10 :
+				randoms.push(new BikeSkeleton(x, y));
 				break;
 		}
 	}

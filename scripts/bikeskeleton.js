@@ -1,4 +1,4 @@
-//motorcycleskeleton.js
+//bikeskeleton.js
 
 //contains skeletons on bikes definition etc
 
