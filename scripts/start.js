@@ -1038,7 +1038,7 @@ function start(presets, params)
 			document.getElementById("bgmusic").innerHTML = '<iframe src="audio/speedrun.mp3" allow="autoplay" id="audio" style="display:none"></iframe>';
 			var timelimit = 10;
 			var downloadTimer = setInterval(function(){
-			document.getElementById("timer").textContent = "Time: " + timelimit;
+			document.getElementById("timer").textContent = 	"Time: " + timelimit;
 			timelimit--;
 			if(timelimit < 0) {
 				if(!this.gameOver){
@@ -1083,9 +1083,10 @@ function start(presets, params)
 		this.ship.supplies -= 350;
 		var timelimit = 30;
 		var downloadTimer = setInterval(function(){
+			//document.getElementById("timer").textContent = 	"Artifices online for " + timelimit + " seconds";
 			this.ship.dev = true;
 			this.ship.energyEfficiency = 0;
-			SHIP_SPEED = 9;
+			SHIP_SPEED = 12;
 			this.ship.damage = 0;
 			this.ship.sprite.src = "img/ship3.png";	
 			timelimit--;
