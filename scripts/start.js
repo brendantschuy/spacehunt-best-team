@@ -252,12 +252,16 @@ function start(presets, params)
 						}else{
 							//if((ship.damage > 0 || ship.energy < ship.maxEnergy || ship.supplies < ship.originalSupplies) && ship.currency >= 100){
 							if(ship.offset_x + ship.offset_y == 0){
-								if(ship.supplies < ship.originalSupplies && ship.currency >= 10){
+								/*if(ship.supplies < ship.originalSupplies && ship.currency >= 10){
 									//ship.damage = 0;
 									//this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + 100);
 									this.ship.currency -= 10;
 									commBox.drawNewBox("You have paid 10 to dock and refill your supplies!",true,5,560);
-									this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + 100);
+									this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + 100);*/
+								if(ship.currency >= 10){
+									this.ship.currency -= 10;
+									this.ship.supplies = 100;
+									commBox.drawNewBox("You have paid 10 to dock and refill your supplies!",true,5,560);
 								}else if(ship.currency < 10){
 									commBox.drawNewBox("You don't have enough money to dock!",true,5,560);
 								}
@@ -458,7 +462,8 @@ function start(presets, params)
 
 	function getFreighter(index){
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].energy);
-		this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);
+		/*this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);*/
+		this.ship.supplies = 100;
 		this.ship.currency += this.obstacles[index].currency;
 		this.ship.damage = 0;
 		this.obstacles.splice(index, 1);
@@ -480,7 +485,7 @@ function start(presets, params)
 		ship.energy = parseInt(this.params[9]);	
 		ship.maxEnergy = parseInt(ship.energy);
 		ship.supplies = parseInt(this.params[10]);
-		ship.originalSupplies = parseInt(ship.supplies);
+		/*ship.originalSupplies = parseInt(ship.supplies);*/
 		this.target = new Target();
 
 		this.obstacles = [];
@@ -685,7 +690,8 @@ function start(presets, params)
 	    ctx.fillStyle = "#00FF00";
 	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 60);
 	    ctx.fillStyle = "#FF0000";
-	    ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 80);
+		/*ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 80);*/
+		ctx.fillText("supplies: " + ship.supplies.toFixed(0) + "%", 10, 80);
 	    ctx.fillStyle = "#FFFF00";
 	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 100);
 	    ctx.fillStyle = "#FFFFFF";
@@ -917,7 +923,8 @@ function start(presets, params)
 		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 315));
 		
 		ship.energy -= 100;
-		ship.supplies -= 50
+		/*ship.supplies -= 50;*/
+		ship.supplies -= 8;
 	}
 
 	function fugaDaemonum(){
@@ -928,7 +935,8 @@ function start(presets, params)
 		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 120));
 		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 240));
 		ship.energy -= 40;
-		ship.supplies -= 20;
+		/*ship.supplies -= 20;*/
+		ship.supplies -= 4;
 	}
 
 	function scan(){
@@ -958,7 +966,8 @@ function start(presets, params)
 
 		//uses up supplies for scanning
 		if(foundSomething) {
-			ship.supplies -= Math.floor(ship.originalSupplies * .02);
+			/*ship.supplies -= Math.floor(ship.originalSupplies * .02);*/
+			ship.supplies -= ship.supplies * 0.02;
 		}
 	}
 	function killBadMax()
@@ -1059,7 +1068,8 @@ function start(presets, params)
 	}
 
 	function ghost(){
-		this.ship.supplies -= 100;
+		/*this.ship.supplies -= 100;*/
+		this.ship.supplies -= 10;
 		var timelimit = 15;
 		var downloadTimer = setInterval(function(){
 			this.ship.dev = true;
@@ -1083,7 +1093,8 @@ function start(presets, params)
 		three.volume = 1;
 		three.play();
 		this.ship.energy -= 500;
-		this.ship.supplies -= 350;
+		/*this.ship.supplies -= 350;*/
+		this.ship.supplies -= 14;
 		var timelimit = 30;
 		var downloadTimer = setInterval(function(){
 			//document.getElementById("timer").textContent = 	"Artifices online for " + timelimit + " seconds";
@@ -1247,23 +1258,6 @@ function updateURL(){
 	document.getElementById("currency").value = Math.floor(ship.currency);
 	document.getElementById("damage").value = Math.floor(ship.damage);
 }
-
-/* function updateLocation(){
-	var str = String(ship.cpx) + "," + String(ship.cpy);
-	document.getElementById("location").value = str;
-}
-
-function updateEnergy(){
-	document.getElementById("energy").value = ship.energy;
-}
-
-function updateSupplies(){
-	document.getElementById("supplies").value = ship.supplies;
-}
-
-function updateCurrency(){
-	document.getElementById("currency").value = ship.currency;
-} */
 
 function displayDevOptions(){
 	var changeVar = document.getElementById("user-controls");

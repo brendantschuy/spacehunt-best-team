@@ -933,7 +933,8 @@ function setDefaultParameters()
 	defaults[7] = false;	//hud
 	defaults[8] = false;	//speedrun
 	defaults[9] = 1000; 	//energy
-	defaults[10] = 1000;	//supplies
+	/*defaults[10] = 1000;	//supplies*/
+	defaults[10] = 100;		//supplies
 
 	return defaults;
 }

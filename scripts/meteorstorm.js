@@ -47,7 +47,8 @@ function randomDisaster(ship){
 	var event = (Math.floor(Math.random() * 100) % 5) + 1; //20% each case
 	switch(event){
 		case 5:
-			ship.supplies -= (ship.supplies / 20);
+			/*ship.supplies -= (ship.supplies / 20);*/
+			ship.supplies -= ship.supplies * 0.2;
 		default:
 			ship.getDamaged(20);
 	}

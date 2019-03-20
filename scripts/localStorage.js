@@ -4,7 +4,8 @@
 var gameState = {
   "shipX": 0, // ship.cpx
   "shipY": 0, //ship.cpy,
-  "supplies": 1000, //ship.supplies,  
+  /*"supplies": 1000, //ship.supplies, */
+  "supplies": 100, //ship.supplies, 
   "energy": 1000, //ship.energy,  
   "currency": 1000, //ship.currency,  
   "damage": 0,

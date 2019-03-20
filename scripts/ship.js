@@ -11,8 +11,9 @@ class Ship 	//class names capitalized per js convention
 		//can be improved probably
 		this.randWormholes = false; // Following above example for development		
 		this.energy = 1000;
-		this.supplies = 1000;
-		this.originalSupplies = 1000;
+		/*this.supplies = 1000;*/
+		this.supplies = 100;
+		/*this.originalSupplies = 1000;*/
 		this.maxEnergy = 1000;
 
 		this.currency = 1000;
@@ -158,7 +159,8 @@ class Ship 	//class names capitalized per js convention
 	{
 		if(this.distanceToTravel > 0)	//don't use supplies if not moving
 		{
-			this.supplies -= Math.floor(0.003 * this.originalSupplies + 0.02 * this.supplies);
+			/*this.supplies -= Math.floor(0.003 * this.originalSupplies + 0.02 * this.supplies);*/
+			this.supplies -= this.supplies * 0.02;
 		}
 
 		this.isMoving = true;
@@ -343,11 +345,15 @@ class Ship 	//class names capitalized per js convention
 
 	//work in progress
 	checkSupplies(){
-		if(this.dev == false){
+		/*if(this.dev == false){
 			if(this.supplies < (this.originalSupplies *.02)){
 				alert("YOU RAN OUT OF SUPPLIES! GAME OVER!");
 				location = location;
 			}
+		}*/
+		if(this.dev == false && this.supplies < 1){
+			alert("YOU RAN OUT OF SUPPLIES! GAME OVER!");
+			location = location;
 		}
 	}
 
