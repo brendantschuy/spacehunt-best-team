@@ -12,7 +12,7 @@ class BikeSkeleton
 		this.cpy = cpy;
 
 		this.visible = true;
-		this.addToMap = true;
+		this.addToMap = false;
 		this.sprite = new Image();
 		this.sprite.src = "img/skeleton_on_motorcycle.png";
 	}
