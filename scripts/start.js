@@ -250,7 +250,6 @@ function start(presets, params)
 						if(this.obstacles[i].hasCasino){
 							chanceGame(ship.offset_x,ship.offset_y, ship);
 						}else{
-							//if((ship.damage > 0 || ship.energy < ship.maxEnergy || ship.supplies < ship.originalSupplies) && ship.currency >= 100){
 							if(ship.offset_x + ship.offset_y == 0){
 								/*if(ship.supplies < ship.originalSupplies && ship.currency >= 10){
 									//ship.damage = 0;
@@ -462,8 +461,7 @@ function start(presets, params)
 
 	function getFreighter(index){
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].energy);
-		/*this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);*/
-		this.ship.supplies = 100;
+		this.ship.supplies = Math.min(100, this.ship.supplies + 20);
 		this.ship.currency += this.obstacles[index].currency;
 		this.ship.damage = 0;
 		this.obstacles.splice(index, 1);
@@ -485,7 +483,6 @@ function start(presets, params)
 		ship.energy = parseInt(this.params[9]);	
 		ship.maxEnergy = parseInt(ship.energy);
 		ship.supplies = parseInt(this.params[10]);
-		/*ship.originalSupplies = parseInt(ship.supplies);*/
 		this.target = new Target();
 
 		this.obstacles = [];
@@ -690,7 +687,6 @@ function start(presets, params)
 	    ctx.fillStyle = "#00FF00";
 	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 60);
 	    ctx.fillStyle = "#FF0000";
-		/*ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 80);*/
 		ctx.fillText("supplies: " + ship.supplies.toFixed(0) + "%", 10, 80);
 	    ctx.fillStyle = "#FFFF00";
 	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 100);
@@ -923,8 +919,7 @@ function start(presets, params)
 		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 315));
 		
 		ship.energy -= 100;
-		/*ship.supplies -= 50;*/
-		ship.supplies -= 8;
+		ship.supplies -= 10;
 	}
 
 	function fugaDaemonum(){
@@ -935,7 +930,6 @@ function start(presets, params)
 		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 120));
 		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 240));
 		ship.energy -= 40;
-		/*ship.supplies -= 20;*/
 		ship.supplies -= 4;
 	}
 
@@ -966,8 +960,7 @@ function start(presets, params)
 
 		//uses up supplies for scanning
 		if(foundSomething) {
-			/*ship.supplies -= Math.floor(ship.originalSupplies * .02);*/
-			ship.supplies -= ship.supplies * 0.02;
+			ship.supplies -= Math.max(Math.floor(ship.supplies * 0.02), 1);
 		}
 	}
 	function killBadMax()
@@ -1068,8 +1061,7 @@ function start(presets, params)
 	}
 
 	function ghost(){
-		/*this.ship.supplies -= 100;*/
-		this.ship.supplies -= 10;
+		this.ship.supplies -= 14;
 		var timelimit = 15;
 		var downloadTimer = setInterval(function(){
 			this.ship.dev = true;
@@ -1093,8 +1085,7 @@ function start(presets, params)
 		three.volume = 1;
 		three.play();
 		this.ship.energy -= 500;
-		/*this.ship.supplies -= 350;*/
-		this.ship.supplies -= 14;
+		this.ship.supplies -= 20;
 		var timelimit = 30;
 		var downloadTimer = setInterval(function(){
 			//document.getElementById("timer").textContent = 	"Artifices online for " + timelimit + " seconds";
