@@ -5,7 +5,7 @@
 <h3>Contributors:</h3>
 <ul>
 	<li>Kareem Aboueich</li>
-	<li>Natalie Guerrero</li>
+	<li>Natalie Leon Guerrero</li>
 	<li>Bryttanie House</li>
 	<li>Jack Sherman</li>
 	<li>Brendan Tschuy</li>
