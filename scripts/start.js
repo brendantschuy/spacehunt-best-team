@@ -4,6 +4,7 @@
 
 var explosionSound;
 var drawHeight = GAME_SCREEN_HEIGHT;
+var levelThreeTime = 10;
 
 function start(presets, params)
 {
@@ -131,6 +132,13 @@ function start(presets, params)
 				ship.checkEnergy();
 				ship.checkSupplies();
 				break;
+			case 80 : //<p>
+				//if(levelThreeTime == 0){
+					levelThree();
+					ship.checkEnergy();
+					break;
+				//}
+				//break;
 			default: 
 				break;
 		}
@@ -244,12 +252,16 @@ function start(presets, params)
 						}else{
 							//if((ship.damage > 0 || ship.energy < ship.maxEnergy || ship.supplies < ship.originalSupplies) && ship.currency >= 100){
 							if(ship.offset_x + ship.offset_y == 0){
-								if(ship.supplies < ship.originalSupplies && ship.currency >= 10){
+								/*if(ship.supplies < ship.originalSupplies && ship.currency >= 10){
 									//ship.damage = 0;
 									//this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + 100);
 									this.ship.currency -= 10;
 									commBox.drawNewBox("You have paid 10 to dock and refill your supplies!",true,5,560);
-									this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + 100);
+									this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + 100);*/
+								if(ship.currency >= 10){
+									this.ship.currency -= 10;
+									this.ship.supplies = 100;
+									commBox.drawNewBox("You have paid 10 to dock and refill your supplies!",true,5,560);
 								}else if(ship.currency < 10){
 									commBox.drawNewBox("You don't have enough money to dock!",true,5,560);
 								}
@@ -450,7 +462,8 @@ function start(presets, params)
 
 	function getFreighter(index){
 		this.ship.energy = Math.min(this.ship.maxEnergy, this.ship.energy + this.obstacles[index].energy);
-		this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);
+		/*this.ship.supplies = Math.min(this.ship.originalSupplies, this.ship.supplies + this.obstacles[index].supplies);*/
+		this.ship.supplies = 100;
 		this.ship.currency += this.obstacles[index].currency;
 		this.ship.damage = 0;
 		this.obstacles.splice(index, 1);
@@ -472,7 +485,7 @@ function start(presets, params)
 		ship.energy = parseInt(this.params[9]);	
 		ship.maxEnergy = parseInt(ship.energy);
 		ship.supplies = parseInt(this.params[10]);
-		ship.originalSupplies = parseInt(ship.supplies);
+		/*ship.originalSupplies = parseInt(ship.supplies);*/
 		this.target = new Target();
 
 		this.obstacles = [];
@@ -677,7 +690,8 @@ function start(presets, params)
 	    ctx.fillStyle = "#00FF00";
 	    ctx.fillText("energy: " + ship.energy.toFixed(0) + " / " + ship.maxEnergy.toFixed(0), 10, 60);
 	    ctx.fillStyle = "#FF0000";
-	    ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 80);
+		/*ctx.fillText("supplies: " + ship.supplies.toFixed(0) + " / " + ship.originalSupplies.toFixed(0), 10, 80);*/
+		ctx.fillText("supplies: " + ship.supplies.toFixed(0) + "%", 10, 80);
 	    ctx.fillStyle = "#FFFF00";
 	    ctx.fillText("currency: " + ship.currency.toFixed(0) + " digital credits", 10, 100);
 	    ctx.fillStyle = "#FFFFFF";
@@ -731,6 +745,9 @@ function start(presets, params)
 				{
 					ctx.drawImage(obj.sprite, (obj.x - ship.x - GRID_SIZE/2)-1, (obj.y - ship.y - GRID_SIZE/2)-1);
 				}
+				else if(objName == "BikeSkeleton"){
+					ctx.drawImage(obj.sprite, (obj.x - ship.x - GRID_SIZE/2)-1, (obj.y - ship.y - GRID_SIZE/2)-1);
+				}					
 				else if(objName == "LaserBeam")
 				{
 					ctx.drawImage(obj.sprite, obj.x - ship.x - 4, obj.y - ship.y - 4);
@@ -906,7 +923,8 @@ function start(presets, params)
 		obstacles.push(new GenesisSaber(ship.x -45, ship.y -90, 315));
 		
 		ship.energy -= 100;
-		ship.supplies -= 50
+		/*ship.supplies -= 50;*/
+		ship.supplies -= 8;
 	}
 
 	function fugaDaemonum(){
@@ -917,7 +935,8 @@ function start(presets, params)
 		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 120));
 		obstacles.push(new FugaDaemonum(ship.x -45, ship.y -90, 240));
 		ship.energy -= 40;
-		ship.supplies -= 20;
+		/*ship.supplies -= 20;*/
+		ship.supplies -= 4;
 	}
 
 	function scan(){
@@ -947,7 +966,8 @@ function start(presets, params)
 
 		//uses up supplies for scanning
 		if(foundSomething) {
-			ship.supplies -= Math.floor(ship.originalSupplies * .02);
+			/*ship.supplies -= Math.floor(ship.originalSupplies * .02);*/
+			ship.supplies -= ship.supplies * 0.02;
 		}
 	}
 	function killBadMax()
@@ -1030,7 +1050,7 @@ function start(presets, params)
 			document.getElementById("bgmusic").innerHTML = '<iframe src="audio/speedrun.mp3" allow="autoplay" id="audio" style="display:none"></iframe>';
 			var timelimit = 10;
 			var downloadTimer = setInterval(function(){
-			document.getElementById("timer").textContent = "Time: " + timelimit;
+			document.getElementById("timer").textContent = 	"Time: " + timelimit;
 			timelimit--;
 			if(timelimit < 0) {
 				if(!this.gameOver){
@@ -1048,7 +1068,8 @@ function start(presets, params)
 	}
 
 	function ghost(){
-		this.ship.supplies -= 100;
+		/*this.ship.supplies -= 100;*/
+		this.ship.supplies -= 10;
 		var timelimit = 15;
 		var downloadTimer = setInterval(function(){
 			this.ship.dev = true;
@@ -1066,6 +1087,35 @@ function start(presets, params)
 		this.ship.dev = false;
 	}
 
+	//weird name to prevent xenoblade spoilers
+	function levelThree(){
+		var three = new Audio('audio/levelthree.wav');
+		three.volume = 1;
+		three.play();
+		this.ship.energy -= 500;
+		/*this.ship.supplies -= 350;*/
+		this.ship.supplies -= 14;
+		var timelimit = 30;
+		var downloadTimer = setInterval(function(){
+			//document.getElementById("timer").textContent = 	"Artifices online for " + timelimit + " seconds";
+			this.ship.dev = true;
+			this.ship.energyEfficiency = 0;
+			SHIP_SPEED = 12;
+			this.ship.damage = 0;
+			this.ship.sprite.src = "img/ship3.png";	
+			timelimit--;
+			if(timelimit < 0){
+				this.ship.sprite.src = "img/ship1.png";
+				this.ship.energyEfficiency = 10;
+				this.ship.dev = false;
+				SHIP_SPEED = GRID_SIZE / 32;
+				clearInterval(downloadTimer);
+			}
+			}, 1000);
+		this.ship.energyEfficiency = 10;
+		this.ship.dev = false;
+	}
+
 	//kicks it all off
 	drawBackground("gameScreen");
 	drawFrame();
@@ -1074,6 +1124,9 @@ function start(presets, params)
 	//For testing purposes:
 	//speedRunMode();
 	//ghost();
+
+	//ProgressCountdown(levelThreeTime, 'pageBeginCountdown', 'pageBeginCountdownText').then(value => alert(`Page has started: ${value}.`));
+
 }
 
 function sound(src) {
@@ -1115,15 +1168,12 @@ function changeLocation() {
 
 	if(isNaN(x) || isNaN(y)){
 		document.getElementById("newLocation").value = "Invalid Entry";
-	}
-	else{
+	} else{
 		if(x > MAP_MAX_X || x < MAP_MIN_X){
 			document.getElementById("newLocation").value = "x out of range";
-		}
-		else if(y > MAP_MAX_Y || y < MAP_MIN_Y){
+		} else if(y > MAP_MAX_Y || y < MAP_MIN_Y){
 			document.getElementById("newLocation").value = "y out of range";
-		}
-		else{
+		} else{
 			ship.cpx = x;
 			ship.cpy = y;
 			ship.x = x * GRID_SIZE;
@@ -1142,12 +1192,10 @@ function changeEnergy() {
 			ship.energy = num;
 			document.getElementById("newEnergy").value = "";
 			ship.checkEnergy();
-		}
-		else{
+		} else{
 			document.getElementById("newEnergy").value = "Out of range";
 		}
-	}
-	else{
+	} else{
 		document.getElementById("newEnergy").value = "Invalid Entry";
 	}
 }
@@ -1157,16 +1205,14 @@ function changeSupplies() {
 	var num = Math.floor(Number(str));
 
 	if(!isNaN(num)){
-		if((num < 1001) && (num > -1)){
+		if((num < 101) && (num > -1)){
 			ship.supplies = num;
 			document.getElementById("newSupplies").value = "";
 			ship.checkSupplies();
-		}
-		else{
+		} else{
 			document.getElementById("newSupplies").value = "Out of range";
 		}
-	}
-	else{
+	} else{
 		document.getElementById("newSupplies").value = "Invalid Entry";
 	}
 }
@@ -1179,13 +1225,27 @@ function changeCurrency() {
 		if((num < 1000000) && (num > -1)){
 			ship.currency = num;
 			document.getElementById("newCurrency").value = "";
-		}
-		else{
+		} else{
 			document.getElementById("newCurrency").value = "Out of range";
 		}
-	}
-	else{
+	} else{
 		document.getElementById("newCurrency").value = "Invalid Entry";
+	}
+}
+
+function changeDamage() {
+	var str = document.getElementById("newDamage").value;
+	var num = Math.floor(Number(str));
+
+	if(!isNaN(num)){
+		if((num < 101) && (num > -1)){
+			ship.damage = num;
+			document.getElementById("newDamage").value = "";
+		} else{
+			document.getElementById("newDamage").value = "Out of range";
+		}
+	} else{
+		document.getElementById("newDamage").value = "Invalid Entry";
 	}
 }
 
@@ -1199,23 +1259,6 @@ function updateURL(){
 	document.getElementById("damage").value = Math.floor(ship.damage);
 }
 
-/* function updateLocation(){
-	var str = String(ship.cpx) + "," + String(ship.cpy);
-	document.getElementById("location").value = str;
-}
-
-function updateEnergy(){
-	document.getElementById("energy").value = ship.energy;
-}
-
-function updateSupplies(){
-	document.getElementById("supplies").value = ship.supplies;
-}
-
-function updateCurrency(){
-	document.getElementById("currency").value = ship.currency;
-} */
-
 function displayDevOptions(){
 	var changeVar = document.getElementById("user-controls");
 	var devModes = document.getElementById("dev-modes");
@@ -1227,4 +1270,21 @@ function displayDevOptions(){
 		changeVar.style.display = "none";
 		devModes.style.display = "none";
 	}
+}
+
+function ProgressCountdown(timeleft, bar, text) {
+  return new Promise((resolve, reject) => {
+    var countdownTimer = setInterval(() => {
+      timeleft--;
+
+      document.getElementById(bar).value = timeleft;
+      document.getElementById(text).textContent = timeleft;
+
+      if (timeleft <= 0) {
+	levelThreeTime = 0;
+        clearInterval(countdownTimer);
+        resolve(true);
+      }
+    }, 1000);
+  });
 }
