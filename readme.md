@@ -5,7 +5,7 @@
 <h3>Contributors:</h3>
 <ul>
 	<li>Kareem Aboueich</li>
-	<li>Natalie Guerrero</li>
+	<li>Natalie Leon Guerrero</li>
 	<li>Bryttanie House</li>
 	<li>Jack Sherman</li>
 	<li>Brendan Tschuy</li>
@@ -15,6 +15,11 @@
 <p>
 This is a game where the objective is to find the recipe in the shortest amount of time possible.<br/>
 There are several obstacles one can encounter, including asteroids, meteor storms, and other secrets.<br/>
+</p>
+<p>
+The link to our sprint and user story analysis is <a href="https://docs.google.com/document/d/1gtgs7ZUXTkIaTi4frheoyAbgGXZ8OHWhcfvpzAMCLkE/">here</a>.
+The link to our commits spreadsheet is <a href="https://docs.google.com/spreadsheets/d/1_MqEJVtIiEBKSkghaUa3P9iF5VL0JSuRiehgBTsrmAA/">here</a>.
+</p>
 The options are as follows:<br/>
 <ul>
 	<li>W - Increase distance to travel</li>
