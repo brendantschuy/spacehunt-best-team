@@ -32,6 +32,7 @@ The options are as follows:<br/>
 	<li>"LEFT" onscreen button - Face left</li>
 	<li>"RIGHT" onscreen button - Face right</li>
 	<li>"DOWN" onscreen button - Face downward</li>
+	<li>Q - Scan your surroundings</li>
 	<li>Z, X - Fire weapons</li>
 	<li>C - activate ghost mode</li>
 </ul>
