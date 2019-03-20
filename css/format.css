@@ -178,11 +178,11 @@ input[type=text] {
 	text-align: right;
 }
 
-input[type=text2] {
+/*input[type=text2] {
 	width: 50px;
 
 	text-align: right;
-}
+}*/
 
 #location {
 	background-color: transparent;
@@ -223,7 +223,8 @@ input[type=text2] {
 #damage {
 	background-color: transparent;
 	border-color: transparent;
-	margin-left: 65px;
+	/*margin-left: 65px;*/
+	margin-left: 15px;
 	font-family: 'digital-7';
 	font-size: 35px;
 	color: rgb(255, 165, 0);

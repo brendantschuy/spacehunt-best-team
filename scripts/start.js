@@ -1157,15 +1157,12 @@ function changeLocation() {
 
 	if(isNaN(x) || isNaN(y)){
 		document.getElementById("newLocation").value = "Invalid Entry";
-	}
-	else{
+	} else{
 		if(x > MAP_MAX_X || x < MAP_MIN_X){
 			document.getElementById("newLocation").value = "x out of range";
-		}
-		else if(y > MAP_MAX_Y || y < MAP_MIN_Y){
+		} else if(y > MAP_MAX_Y || y < MAP_MIN_Y){
 			document.getElementById("newLocation").value = "y out of range";
-		}
-		else{
+		} else{
 			ship.cpx = x;
 			ship.cpy = y;
 			ship.x = x * GRID_SIZE;
@@ -1184,12 +1181,10 @@ function changeEnergy() {
 			ship.energy = num;
 			document.getElementById("newEnergy").value = "";
 			ship.checkEnergy();
-		}
-		else{
+		} else{
 			document.getElementById("newEnergy").value = "Out of range";
 		}
-	}
-	else{
+	} else{
 		document.getElementById("newEnergy").value = "Invalid Entry";
 	}
 }
@@ -1199,16 +1194,14 @@ function changeSupplies() {
 	var num = Math.floor(Number(str));
 
 	if(!isNaN(num)){
-		if((num < 1001) && (num > -1)){
+		if((num < 101) && (num > -1)){
 			ship.supplies = num;
 			document.getElementById("newSupplies").value = "";
 			ship.checkSupplies();
-		}
-		else{
+		} else{
 			document.getElementById("newSupplies").value = "Out of range";
 		}
-	}
-	else{
+	} else{
 		document.getElementById("newSupplies").value = "Invalid Entry";
 	}
 }
@@ -1221,13 +1214,27 @@ function changeCurrency() {
 		if((num < 1000000) && (num > -1)){
 			ship.currency = num;
 			document.getElementById("newCurrency").value = "";
-		}
-		else{
+		} else{
 			document.getElementById("newCurrency").value = "Out of range";
 		}
-	}
-	else{
+	} else{
 		document.getElementById("newCurrency").value = "Invalid Entry";
+	}
+}
+
+function changeDamage() {
+	var str = document.getElementById("newDamage").value;
+	var num = Math.floor(Number(str));
+
+	if(!isNaN(num)){
+		if((num < 101) && (num > -1)){
+			ship.damage = num;
+			document.getElementById("newDamage").value = "";
+		} else{
+			document.getElementById("newDamage").value = "Out of range";
+		}
+	} else{
+		document.getElementById("newDamage").value = "Invalid Entry";
 	}
 }
 
