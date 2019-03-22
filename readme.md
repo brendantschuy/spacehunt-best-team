@@ -19,10 +19,10 @@ There are several obstacles one can encounter, including asteroids, meteor storm
 <p>
 http://web.cecs.pdx.edu/~aboueich/spacehunt-best-team/index.html
 </p>
-<p>
+<p><b>
 The link to our sprint and user story analysis is <a href="https://docs.google.com/document/d/1gtgs7ZUXTkIaTi4frheoyAbgGXZ8OHWhcfvpzAMCLkE/">here</a>.
 The link to our commits spreadsheet is <a href="https://docs.google.com/spreadsheets/d/1_MqEJVtIiEBKSkghaUa3P9iF5VL0JSuRiehgBTsrmAA/">here</a>.
-</p>
+</p></b>
 The options are as follows:<br/>
 <ul>
 	<li>W - Increase distance to travel</li>
